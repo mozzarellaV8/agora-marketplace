@@ -7,7 +7,7 @@ _student work in R_
 
 Agora was a referral-based darknet market that rose to prominence after the demise of Silk Road 2 in 2013. 
 
-The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically the `Grams` (darknet market search engine) crawls. The data itself is comprised of daily listings of goods/services on offer from vendors, and ranges from the dates 06-29-2014 until 07-12-2015. Some data is missing; likely due to markets going offline while taking measures to avoid law enforcement or hackers. 
+The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically the `Grams` (darknet market search engine) crawls. The data itself is comprised of daily listings of goods and services on offer from vendors, and ranges from 06-29-2014 until 07-12-2015. Some data is missing; likely due to markets going offline while taking measures to avoid law enforcement or hackers. 
 
 Here is a glimpse of the data:
 
