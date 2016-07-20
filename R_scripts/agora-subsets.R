@@ -142,7 +142,7 @@ vendorplot <- ggplot(vendors10k, aes(reorder(Vendor, NumListings),
   scale_fill_gradient(low = "antiquewhite2", high = "firebrick4") +
   scale_y_continuous(breaks = c(0, 10000, 25000, 50000, 75000, 100000, 125000),
                                 labels = comma) +
-  theme_minimal(base_size = 12, base_family = "Arial Rounded MT Bold") +
+  theme_minimal(base_size = 12, base_family = "AveriaSerif-Light") +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
   labs(title = "AgMarketplace: vendors w/ over 10k listings",
@@ -224,27 +224,34 @@ length(unique(agora$name))
 length(unique(agora$description))
 # 67141 out of 4371382 listings
 
-uniquenames <- as.data.frame(table(agora$name))
-colnames(uniquenames) <- c("name", "frequency")
-# remove blank names
-uniquenames$name[uniquenames$name == ""] <- NA
-uniquenames <- na.omit(uniquenames)
-
-uniquenames <- uniquenames[order(uniquenames$frequency, decreasing = TRUE), ]
-rownames(uniquenames) <- NULL
-
-unique(agora$name)
-unique(description)
-
 agora$name <- as.factor(agora$name)
 products <- as.data.frame(table(agora$name))
-products <- rename(products, replace = c("Var1" = "Product", 
-                                         "Freq" = "NumListings"))
+colnames(products) <- c("Product", "NumListings")
 
+# remove blanks
+products$Product[products$Product == ""] <- NA
+products <- na.omit(products)
+ 
 products <- products[order(products$NumListings, decreasing = T), ]
 rownames(products) <- NULL
 
-write.table(products, file = "data/products.csv", sep = ",", row.names = F)
+write.table(products, file = "~/GitHub/agora-data/data/products.csv", 
+            sep = ",", row.names = F)
+
+book <- grep("book", products$Product)
+# 781 listings contain 'book'
+
+molly <- grep("mdma", products$Product)
+# 7316 contain 'mdma'
+
+molly2 <- grep("xtc", products$Product)
+# 2323 contain 'xtc'
+
+molly3 <- grep("molly", products$Product)
+# 280 contain 'molly'
+
+molly4 <- grep("moon rock", products$Product)
+# 47 contain 'moon rock'
 
 # Description (of product) --------------------------------
 
@@ -254,10 +261,25 @@ colnames(descriptions) <- c("Description", "NumListings")
 descriptions <- descriptions[order(descriptions$NumListings, decreasing = T), ]
 rownames(descriptions) <- NULL
 
-write.table(descriptions, file = "descriptions.csv", sep = ",", row.names = F)
+write.table(descriptions, file = "~/GitHub/agora-data/descriptions.csv", 
+            sep = ",", row.names = F)
 
-# DF of names+descriptions
+descriptions[1, ]
+# 1 this is wakeside917 formerly of sr now proud to be a part of the new site. 
+# i 39 ve kept my pricing and shipping the same as before. 
+# the pricing displayed is for high speed direct download links and is s ...
+descriptions[2, ]
+# this shipment is with tracking number. 
+# the shipment must be signed to receive it. 
+# in case that the track is stuck i offer 50 reship.
+descriptions[3, ]
+# we don 39 t have that many sales on agora because 
+# all of our permanent customers are purchasing directly 
+# from us via our clearnet website www.dutyfree.io 
+# you are welcome to do so as it 39 s much cheape ...
 
+
+# DF of names+descriptions ----------------------------------------------------
 agoratexts <- subset(agora, select = c(agora$name, agora$description))
 
 
