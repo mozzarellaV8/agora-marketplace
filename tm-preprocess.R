@@ -13,9 +13,9 @@ agora <- tm_map(agora, removeNumbers)
 agora <- tm_map(agora, tolower)
 agora <- tm_map(agora, removeWords, stopwords("english"))
 agora <- tm_map(agora, removeWords, c("forums", "quote", "thread")
-                agora <- tm_map(agora, stemDocument)
-                agora <- tm_map(agora, stripWhitespace)
-                agora <- tm_map(agora, PlainTextDocument)
+agora <- tm_map(agora, stemDocument)
+agora <- tm_map(agora, stripWhitespace)
+agora <- tm_map(agora, PlainTextDocument)
                 
  # stage the DocumentTermMatrix ------------------------------------------------
 dtm <- DocumentTermMatrix(agora) # tf vs. tf-idf
