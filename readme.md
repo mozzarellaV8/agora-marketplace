@@ -36,9 +36,7 @@ Their currently-in-development Medical Marijuana, Research Chemical, and Counter
 
 They want to develop a rough model of the type of person who is interested in such things, so they can get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'. 
 
-The client will decide, based on this analysis, the necessary scale for their newly legal departments. They'll also decide whether to implement these products into their affinity network: i.e. "Customers Who Bought This Item Also Bought...".
-
-Ultimately they'll also decide if it is worth aggregating these darknet vendors into their network. By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
+The client will decide, based on this analysis, the necessary scale for their newly legal departments, and they'll also decide if it is worth aggregating these darknet vendors into their network. By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
 
 
 ## Agora and Darknet Markets
