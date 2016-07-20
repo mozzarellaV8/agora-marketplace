@@ -224,4 +224,6 @@ plot(kmTable$cluster, kmTable$size, xlab = "cluster",
 
 library(fastcluster)
 
+d <- dist(m_norm, method = "euclidean")
+hclust.vector(X, method="single", members=NULL, metric='euclidean', p=NULL)
 
