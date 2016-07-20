@@ -14,7 +14,6 @@ Here is a glimpse of the data:
 ![agora-data](pics/agora-data.png)
 
 - 4,371,382 observations of 9 variables
-- hash, Date, btc, usd, rate, ship_from, vendor\_name, name, description
 
 variable info:
 - **hash**: hash value of listing
@@ -37,6 +36,12 @@ Their currently-in-development Medical Marijuana, Research Chemical, and Counter
 They want to develop a rough model of the type of person who is interested in such things, so they can get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'. 
 
 The client will decide, based on this analysis, the necessary scale for their newly legal departments, and they'll also decide if it is worth aggregating these darknet vendors into their network. By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
+
+## current Strategy
+
+Because of the size of the dataset, I've went in and [subsetted the whole by month](R_scripts/agora-subsets.R). From here, I was looking into the `name` field of the data, and doing text mining for keywords to hopefully reveal product clusters.  
+
+Also in this script are categorical subsets for Location (based on the `ship_from` field) and Vendor name (based on the `vendor_name` field).
 
 
 ## Agora and Darknet Markets
