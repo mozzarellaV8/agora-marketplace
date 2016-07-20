@@ -2,6 +2,11 @@
 
 _student work in R_
 
+- [the Data](#the-data)
+- [the Problem](#the-problem)
+- [current Strategy](#current-strategy)
+- [Agora and Darknet Markets](#agora-and-darknet-markets)
+
 
 ## the Data
 
