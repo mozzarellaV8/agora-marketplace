@@ -16,15 +16,22 @@ Here is a glimpse of the data:
 - 4,371,382 observations of 9 variables
 - hash, Date, btc, usd, rate, ship_from, vendor\_name, name, description
 
+info:
+- **hash**: hash value of listing
+- **Date**: date of listing
+- **btc** : list price of product/service in Bitcoin
+- **usd** : list price of product/service in US Dollar
+- **rate**: exchange rate of Bitcoin to Dollar for that particular Date. 
+- **ship_from**: where product/service claims to originate from
+- **name**: 'headline' of the product/service listing
+- **description**: further information on the product/service
 
-- **hash**: 		hash value of listing
-- **Date**: 		date of listing
-- **btc** : 		list price of product/service in Bitcoin
-- **usd** : 		list price of product/service in US Dollar
-- **rate**: 		exchange rate of Bitcoin to Dollar for that particular Date. 
-- **ship_from**: 	where product/service claims to originate from
-- **name**: 		'headline' of the product/service listing
-- **description**: 	further information of the product/service
+## the Problem
+
+
+
+
+
 
 ## Agora and Darknet Markets
 
