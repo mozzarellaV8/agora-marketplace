@@ -16,7 +16,7 @@ Here is a glimpse of the data:
 - 4,371,382 observations of 9 variables
 - hash, Date, btc, usd, rate, ship_from, vendor\_name, name, description
 
-info:
+variable info:
 - **hash**: hash value of listing
 - **Date**: date of listing
 - **btc** : list price of product/service in Bitcoin
@@ -28,9 +28,17 @@ info:
 
 ## the Problem
 
+_Who is your client and why do they care about this problem? In other words, what will your client DO or DECIDE based on your analysis that they wouldn’t have otherwise?_
 
+My client is Amazon.com. 
 
+Their currently-in-development Medical Marijuana, Research Chemical, and Counterfeit Outerwear departments are lacking in street market values and potential consumer behaviors due to the previously illegal nature of the products to be offered. 
 
+They want to develop a rough model of the type of person who is interested in such things, so they can get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'. 
+
+The client will decide, based on this analysis, the necessary scale for their newly legal departments. They'll also decide whether to implement these products into their affinity network: i.e. "Customers Who Bought This Item Also Bought...".
+
+Ultimately they'll also decide if it is worth aggregating these darknet vendors into their network. By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
 
 
 ## Agora and Darknet Markets
