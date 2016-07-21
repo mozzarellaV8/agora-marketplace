@@ -51,10 +51,10 @@ hist(nov2014$usd, breaks = 200, xlab = "price in USD",
      xlim = c(0, 10000), ylim = c(0, 500000),
      main = "AgMarket Nov 2014: all listings")
 
-binsize <- diff(range(nov2014$usd))/503360
-novHist <- ggplot(nov2014, aes(usd, fill = usd)) +
-  geom_histogram(binwidth = binsize)
-novHist
+# binsize <- diff(range(nov2014$usd))/503360
+# novHist <- ggplot(nov2014, aes(usd, fill = usd)) +
+#  geom_histogram(binwidth = binsize)
+#novHist
 
 # keyword text mining -------------------------------------
 
@@ -114,7 +114,8 @@ nov2014listings$listing[nov2014listings$listing == ""] <- NA
 nov2014listings <- na.omit(nov2014listings)
 
 # write out unsorted table
-write.table(nov2014listings, file = "06-nov2014-listings.csv",
+write.table(nov2014listings, 
+            file = "~/GitHub/agora-data/data-dtm/06-nov2014-listings.csv",
             sep = ",", row.names = FALSE)
 
 # sort listings by frequency
@@ -124,17 +125,38 @@ rownames(nov2014listings) <- NULL
 # wordcloud -------------------------------------------------------------------
 library(wordcloud)
 library(RColorBrewer)
+library(extrafont)
+library(extrafontdb)
 
-nov2014wf <- fread("data-dtm/06-nov2014-wf.csv")
-dtm <- fread("data-dtm/06-nov2014-dtm.csv")
+font_import()
+fonts()
 
-redpal <- brewer.pal(7, "Reds")
+nov2014wf <- fread("~/GitHub/agora-data/data-dtm/06-nov2014-wf.csv")
+nov2014listings <- fread("~/GitHub/agora-data/data-dtm/06-nov2014-listings.csv")
 
-par(family = "Arial Rounded MT Bold")
-set.seed(144)
+dtm <- fread("~/GitHub/agora-data/data-dtm/06-nov2014-dtm.csv")
+
+redpal <- brewer.pal(6, "Reds")
+redpal2 <- c("#FFF5F0", "#FEE0D2", "#FC9272", "#EF3B2C", "#A50F15", "#67000D")
+
+par(family = "AveriaSerif-Light")
+set.seed(16)
 wordcloud(nov2014wf$word, nov2014wf$frequency, scale = c(4.5, 0.75),
           min.freq = 500, random.order = T, random.color = F,
           colors = redpal)
+
+set.seed(4)
+wordcloud(nov2014wf$word, nov2014wf$frequency, scale = c(4.5, 0.75),
+          min.freq = 500, random.order = T, random.color = F,
+          colors = redpal)
+
+# worldcloud full listing
+
+4^6
+set.seed(4096)
+wordcloud(nov2014listings$listing, nov2014listings$frequency, 
+          scale = c(3.5, 0.25), min.freq = 50, max.words = 250,
+          random.order = T, random.color = F, color = redpal2)
 
 # frequency plot --------------------------------------------------------------
 
