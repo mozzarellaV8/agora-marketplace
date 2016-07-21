@@ -33,11 +33,13 @@ rownames(products) <- NULL
 write.table(products, file = "~/GitHub/agora-data/data/products.csv", 
             sep = ",", row.names = F)
 
+# quick curiosities 
 book <- grep("book", products$Product)        # 781 listings contain 'book'
 molly <- grep("mdma", products$Product)       # 7316 contain 'mdma'
 molly2 <- grep("xtc", products$Product)       # 2323 contain 'xtc'
 molly3 <- grep("molly", products$Product)     # 280 contain 'molly'
 molly4 <- grep("moon rock", products$Product) # 47 contain 'moon rock'
+
 
 # Name (Product) plots --------------------------------------------------------
 
