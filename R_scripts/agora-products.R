@@ -6,7 +6,7 @@
 
 library(data.table)
 
-# agora <- fread("~/GitHub/agora-data/data/agora.csv)
+agora <- fread("~/GitHub/agora-data/data/agora.csv")
 products <- read.csv("~/GitHub/agora-data/data/products.csv")
 
 # name (Product 'headlines') ------------------------------
