@@ -53,45 +53,21 @@ library(wordcloud)
 library(RColorBrewer)
 library(extrafont)
 library(extrafontdb)
+library(Hmisc)
 font_import()
 fonts()
 
 redpal <- brewer.pal(4, "Reds")
 redpal2 <- brewer.pal(6, "Reds")
 
-# ok - min freq 500, max words 200
-par(mar = c(0, 0, 0, 0), family = "Arial Rounded MT Bold")
-wordcloud(descriptions$Description, descriptions$NumListings, min.freq = 500, 
-          max.words = 200, scale = c(4, 0.25), random.order = T, 
-          random.color = F, color = redpal)
+summary(descriptions$Description)
+describe(descriptions)
 
-# ok
-set.seed(8)
-wordcloud(description$descriptions, description$NumListings, min.freq = 500, 
-          max.words = 250, scale = c(2, 0.25), random.order = T, 
-          random.color = F, color = redpal)
-
-# good
 set.seed(8)
 wordcloud(description$descriptions, description$NumListings, min.freq = 500, 
           max.words = 250, scale = c(2, 0.25), random.order = T, 
           random.color = F, color = redpal2)
 
-# ok
-par(mar = c(0, 0, 0, 0), family = "Verdana")
-set.seed(64)
-wordcloud(description$descriptions, description$NumListings, min.freq = 1, 
-          max.words = 250, scale = c(2.5, 0.25), random.order = T, 
-          random.color = F, color = redpal)
-
-# good
-par(mar = c(0, 0, 0, 0), family = "AveriaSerif-Light")
-set.seed(144)
-wordcloud(description$descriptions, description$NumListings, min.freq = 1, 
-          max.words = 250, scale = c(2.25, 0.25), random.order = T, 
-          random.color = F, color = redpal)
-
-# good
 par(mar = c(0, 0, 0, 0), family = "AveriaSerif-Light")
 set.seed(144)
 wordcloud(description$descriptions, description$NumListings, min.freq = 1, 
