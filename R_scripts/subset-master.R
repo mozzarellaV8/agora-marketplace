@@ -15,7 +15,39 @@ agora$Date <- as.Date(agora$Date)
 agora$vendor_name <- as.factor(agora$vendor_name)
 agora$description <- as.factor(agora$description)
 
-# Subset by Date --------------------------------------------------------------
+##
+# Subset Variables  -----------------------------------------------------------
+##
+
+# Given 4371382 observations across 9 variables, what follows is subsetting
+# each variable from the dataset in order to look at some basic summary and 
+# exploratory statistics. Getting a sense of the data this way. 
+
+# Not every subset will likely be necessary, but will carry out this process
+# nonetheless for completeness.
+
+# Numeric Variables ------------------------------------------------------------
+
+# for these variables, will be looking at btc, usd, and rate.
+
+# 'usd' -----------------------------------------------------------------------
+
+# list prices for products, servcies in USD
+
+summary(agora$usd)
+quantile(agora$usd)
+
+
+
+
+
+# Date Variable ----------------------------------------------------------------
+
+# the following subsets the entire dataset by month, for in-depth looks at each
+
+# 'date'  ----------------------------------------------------------------------
+
+# subsetting the entire dataset by month
 
 june14 <- subset(agora, grepl("2014-06", agora$Date))
 summary(june14$Date)
@@ -101,7 +133,55 @@ nrow(july15) # 218751
 write.table(july15, file = "~/GitHub/agora-data/data/14-july2015.csv", 
             sep = ",", row.names = F)
 
-# 'Description' ---------------------------------------------------------------
+
+##
+# Factor Variables ------------------------------------------------------------
+##
+
+
+# The following subsets are for hash, ship_from, vendor_name, name, and description.
+
+# 'hash'  ---------------------------------------------------------------------
+
+length(unique(agora$hash))
+# 82200 of 4371382
+hash <- as.data.frame(table(agora$hash))
+colnames(hash) <- c("hash", "freq")
+summary(hash)
+
+
+# 'name' ----------------------------------------------------------------------
+
+# name and description variables are text based and 
+# provide info on what is being sold and in what amount.
+
+length(unique(agora$name))
+# 85448 out of 4371382 listings
+length(unique(agora$description))
+# 67141 out of 4371382 listings
+
+agora$name <- as.factor(agora$name)
+products <- as.data.frame(table(agora$name))
+colnames(products) <- c("Product", "NumListings")
+
+# remove blanks
+products$Product[products$Product == ""] <- NA
+products <- na.omit(products)
+
+products <- products[order(products$NumListings, decreasing = T), ]
+rownames(products) <- NULL
+
+write.table(products, file = "~/GitHub/agora-data/data/products.csv", 
+            sep = ",", row.names = F)
+
+# street name string search - curiousity
+book <- grep("book", products$Product) # 781 listings contain 'book'
+molly <- grep("mdma", products$Product) # 7316 contain 'mdma'
+molly2 <- grep("xtc", products$Product) # 2323 contain 'xtc'
+molly3 <- grep("molly", products$Product) # 280 contain 'molly'
+molly4 <- grep("moon rock", products$Product) # 47 contain 'moon rock'
+
+# 'description' ---------------------------------------------------------------
 
 # name and description variables are text based and 
 # provide info on the product, service, or offer within the listing.
@@ -138,4 +218,24 @@ vendors <- vendors[order(vendors$NumListings, decreasing = TRUE), ]
 rownames(vendors) <- NULL
 
 # write out csv in case
-# write.table(vendors, file = "data/vendors.csv", sep = ",", row.names = FALSE)
+write.table(vendors, file = "data/vendors.csv", sep = ",", row.names = FALSE)
+
+
+# 'ship_from' ------------------------------------------------------------------
+
+# where products, services, offers purport to ship from
+# usually a country - sometimes anonymous
+
+agora$ship_from <- as.factor(agora$ship_from)
+# 117 levels
+
+location <- as.data.frame(table(agora$ship_from))
+colnames(location) <- c("shipFrom", "NumListings")
+
+# order by frequency/number of listings - option
+location <- location[order(location$NumListings, decreasing = T), ]
+rownames(location) <- NULL
+
+write.table(location, file = "data/byLocation.csv", sep = ",", row.names = F)
+
+
