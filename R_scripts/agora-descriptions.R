@@ -13,16 +13,6 @@ agora$Date <- as.Date(agora$Date)
 agora$vendor_name <- as.factor(agora$vendor_name)
 agora$description <- as.factor(agora$description)
 
-# 'hash'  ---------------------------------------------------------------------
-
-length(unique(agora$hash))
-# 82200 of 4371382
-hash <- as.data.frame(table(agora$hash))
-colnames(hash) <- c("hash", "freq")
-
-
-
-
 # 'Description' ---------------------------------------------------------------
 
 # name and description variables are text based and 
