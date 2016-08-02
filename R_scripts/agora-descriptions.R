@@ -13,6 +13,16 @@ agora$Date <- as.Date(agora$Date)
 agora$vendor_name <- as.factor(agora$vendor_name)
 agora$description <- as.factor(agora$description)
 
+# 'hash'  ---------------------------------------------------------------------
+
+length(unique(agora$hash))
+# 82200 of 4371382
+hash <- as.data.frame(table(agora$hash))
+colnames(hash) <- c("hash", "freq")
+
+
+
+
 # 'Description' ---------------------------------------------------------------
 
 # name and description variables are text based and 
@@ -38,14 +48,10 @@ rownames(descriptions) <- NULL
 write.table(descriptions, file = "~/GitHub/agora-data/data/descriptions.csv", 
             sep = ",", row.names = F)
 
-# quick curiosities  ----------------------------------------------------------
 
-book <- grep("book", descriptions$Description)  # 991        
-molly <- grep("mdma", descriptions$Description) # 5101
-molly2 <- grep("xtc", descriptions$Description) # 1160
-molly3 <- grep("molly", descriptions$Description) # 160     
-molly4 <- grep("moon rock", descriptions$Description) # 26
-
+library(data.table)
+description <- fread("~/GitHub/agora-data/data/descriptions.csv")
+str(description)
 
 # description field plots -----------------------------------------------------
 
