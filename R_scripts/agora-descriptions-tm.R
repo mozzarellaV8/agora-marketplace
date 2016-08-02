@@ -95,6 +95,7 @@ tail(tdmFreq[tdmOrd])
 library(fpc)
 library(cluster)
 library(NbClust)
+library(factoextra)
 
 dtm_tfidf <- weightTfIdf(deskTMs)
 
@@ -116,4 +117,15 @@ set.seed(64)
 desk.km <- kmeans(desk_norm, centers = 4, iter.max = 10, nstart = 3)
 desk.km
 
+par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), family = "HersheySans")
+clusplot(desk.km, clus = desk.km$cluster)
+
+clusterplot <- fviz_cluster(desk.km, desk_norm, repel = TRUE) +
+  scale_fill_brewer(palette = "YlOrRd", direction = -1) +
+  scale_color_brewer(palette = "YlOrRd", direction = -1) +
+  theme_minimal(base_size = 12, base_family = "Arial Rounded MT Bold") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "K-Means - Cluster Plot")
+
+clusterplot
 
