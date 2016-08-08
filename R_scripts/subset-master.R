@@ -30,15 +30,40 @@ agora$description <- as.factor(agora$description)
 
 # for these variables, will be looking at btc, usd, and rate.
 
-# 'usd' -----------------------------------------------------------------------
+# 'usd' summary ---------------------------------------------------------------
 
 # list prices for products, servcies in USD
 
 summary(agora$usd)
+#     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#       0       24       89     4159      314 81080000
 quantile(agora$usd)
+#            0%          25%          50%          75%         100% 
+# $2.206400e-05 2.422576e+01 8.851539e+01 3.145000e+02 8.108429e+07 
 
+length(max(agora$usd)) # [1] 81084293
+which(agora$usd == 81084293) # row 406257
+agora[406257, ] # hbo account - likely a placeholder
 
+# the question comes to mind - how much is one person willing to spend on a
+# darknet market transaction at a time? is 1500 too much? It certainly doesn't 
+# reduce the dataset size by much at all. 
 
+avg1500 <- subset(agora, agora$usd <= 1500) # 4037383; seems a lot of listings
+summary(avg1500$usd)
+summary(avg1500$btc)
+
+avg500 <- subset(agora, agora$usd <= 500) # 3572666 listings at 500 usd and below.
+nrow(avg500)
+summary(avg500)
+
+avg100 <- subset(agora, agora$usd <= 100)
+summary(avg100$usd)
+#     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+# 0.00002   7.46700  26.83000  34.07000  56.30000 100.00000 
+
+hist(avg100$usd)
+hist(avg500$usd, breaks = 60)
 
 
 # Date Variable ----------------------------------------------------------------
@@ -206,7 +231,7 @@ rownames(descriptions) <- NULL
 write.table(descriptions, file = "~/GitHub/agora-data/data/descriptions.csv", 
             sep = ",", row.names = F)
 
-# Vendor_Name -----------------------------------------------------------------
+# 'vendor_name' -----------------------------------------------------------------
 
 # data frame for vendor counts by number of listings
 vendors <- as.data.frame(table(agora$vendor_name))
