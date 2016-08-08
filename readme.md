@@ -4,7 +4,7 @@ _student work in R_
 
 - [the Problem](#the-problem)
 - [the Data](#the-data)
-- [wrangling](wrangling/readme.md)
+- [cleansing the scrapes](scrape-cleanse/readme.md)
 
 ## the Problem
 
@@ -22,5 +22,5 @@ The client will decide, based on this analysis, the necessary scale for their ne
 
 Agora was a referral-based darknet market that rose to prominence after the demise of Silk Road 2 in 2013. 
 
-The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Agora was chosen as a market to analyze because of it's immense popularity (high usage). Because of the scale of gwern's data harvest, it can't be posted here. But to get an idea of what the data looks like, please do refer to the [wrangling](wrangling/readme.md) directory.
+The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Agora was chosen as a market to analyze because of it's immense popularity (high usage). Because of the scale of gwern's data harvest, it can't be posted here. But to get an idea of what the data looks like, please do refer to the [scrape-cleanse](wrangling/readme.md) directory.
 
