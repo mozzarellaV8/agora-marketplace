@@ -1,4 +1,6 @@
-# agora scrape - relevant tags
+# agora harvest - relevant tags
+
+What follows below is some manual parsing of the html files from the Agora Marketplace harvest. This was done in preparation for using `rvest` to import the information into dataframes.
 
 ### Product title: title
 
