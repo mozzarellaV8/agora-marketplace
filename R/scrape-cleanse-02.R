@@ -21,7 +21,6 @@ title02 <- agora02 %>%
 title02
 # [1] "10 regular seeds - Skunk Kush - pain relief"
 
-
 # extract description -------------------------------------
 
 # selector for html_nodes() is not specific enough. 
