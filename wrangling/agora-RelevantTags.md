@@ -1,6 +1,6 @@
 # agora harvest - relevant tags
 
-What follows below is some manual parsing of the html files from the Agora Marketplace harvest. This was done in preparation for using `rvest` to import the information into dataframes.
+What follows below is some manual parsing of the html files from the Agora Marketplace harvest. This was done in preparation for using `rvest` to import the information into dataframes. The html pages are from the directory `p` within the daily listing directories from the harvest. 
 
 ### Product title: title
 
