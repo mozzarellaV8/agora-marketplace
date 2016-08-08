@@ -1,4 +1,4 @@
-# grams (archive) - Exploratory Data Anaylsis
+# (archive) grams - Exploratory Data Anaylsis
 
 In this directory are initial data explorations on the subject - but conducted on the [Grams](http://www.gwern.net/Black-market%20archives#grams) dataset compiled by Gwern. 
 
