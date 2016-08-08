@@ -58,7 +58,6 @@ vendor02
 # [1] "budbrother"
 
 # ratings -------------------------------------------------
-
 rating02 <- agora02 %>%
   html_nodes(".gen-user-ratings") %>%
   html_text()
@@ -67,7 +66,6 @@ rating02
 # [1] " [0 deals]"
 
 # ships from ----------------------------------------------
-
 ship_from02 <- agora02 %>%
   html_nodes(".product-page-ships") %>%
   html_text()
@@ -82,6 +80,5 @@ ship_from02
 # [1] " Australia "
 
 # data frame ------------------------------------------------------------------
-
 agora <- data.frame(title = title, price = price, description = description, 
                     vendor = vendor, rating = rating, ship_from = ship_from)
