@@ -20,7 +20,6 @@ title <- agora01 %>%
 title
 # [1] "Secret of Methamphetamine Manufacture 8th Edition"
 
-
 # extract description -------------------------------------
 
 # selector for html_nodes() is not specific enough. 
@@ -56,7 +55,6 @@ vendor <- gsub("/vendor/", "", vendor)
 vendor
 
 # ratings -------------------------------------------------
-
 rating <- agora01 %>%
   html_nodes(".gen-user-ratings") %>%
   html_text()
@@ -65,15 +63,13 @@ rating
 # [1] "  5.0/5, 15~25 deals"
 
 # ships from ----------------------------------------------
-
 ship_from <- agora01 %>%
   html_nodes(".product-page-ships") %>%
   html_text()
 
 ship_from
 
-
-# data frame ----------------------------------------------
+# data frame ------------------------------------------------------------------
 
 agora <- data.frame(title = title, price = price, description = description, 
                     vendor = vendor, rating = rating)
