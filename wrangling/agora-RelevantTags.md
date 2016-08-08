@@ -1,11 +1,11 @@
 agora scrape - relevant tags
 ----------------------------
 
-## Product title: title
+### Product title: title
 
 e.g. \<title>1kg pure bk-MDMA/ METHYLONE- with FREE shipping\</title> 
 
-## Product title: div id="single-product" h1
+#### Product title: div id="single-product" h1
 
 e.g. \<div id="single-product" class="nofirstmargin">
 	    \<h1>1kg pure bk-MDMA/ METHYLONE- with FREE shipping\</h1>
