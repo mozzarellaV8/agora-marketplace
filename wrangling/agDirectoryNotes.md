@@ -1,10 +1,10 @@
-# agora - directory + html page structure notes
+# Agora - Directory/HTML page structure
 
 What follows below are notes on the structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such).
 
 To view the pages locally, I used `simpleHTTPServer` in python. 
 
-Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. Further notes on relevant tags for sorting with `rvest` can be [found here](agora-RelevantTags.md).
+Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. Further notes on relevant tags for sorting the scrape using `rvest` can be [found here](agora-RelevantTags.md).
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
