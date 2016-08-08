@@ -3,7 +3,7 @@ agora scrape - relevant tags
 
 ## Product title: title
 
-e.g. " <title>1kg pure bk-MDMA/ METHYLONE- with FREE shipping</title> "
+e.g. \<title>1kg pure bk-MDMA/ METHYLONE- with FREE shipping</title> 
 
 ## Product title: div id="single-product" h1
 
