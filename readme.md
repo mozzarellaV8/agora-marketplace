@@ -5,7 +5,6 @@ _student work in R_
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
-
 - [cleansing the scrapes](scrape-cleanse/readme.md)
 
 ## the Problem
