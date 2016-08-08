@@ -1,10 +1,12 @@
 # (archive) grams - Exploratory Data Anaylsis
 
-In this directory are initial data explorations on the subject - but conducted on the [Grams](http://www.gwern.net/Black-market%20archives#grams) dataset compiled by Gwern. 
+In this directory are initial data explorations on the subject - conducted on the [Grams](http://www.gwern.net/Black-market%20archives#grams) dataset compiled by Gwern. 
 
 It came to my attention that the raw, unstructured data from Agora Marketplace was available to work with - so anaylsis henceforth will be conducted on that. 
 
-The strategy followed in the [scripts](grams-R_scripts) was to subset the 4.3 million listings by month, and from there mine the product listings to conduct clustering and find out what was being sold on Agora, and by whom. This proved computationally expensive, and was not carried out fully. Given the new data at hand, it will also be less necessary. 
+The strategy followed in the [scripts](grams-R_scripts) was to subset the 4.3 million listings by month. From there, the goal was to mine the product listings and conduct clustering to find out what was being sold on Agora, and by whom. Essentially, I created a vector-sourced Document-Term Matrix from each month's listings, and after Euclidean normalization was trying to run k-means clustering on said matrix. 
+
+This proved computationally expensive, and was not carried out fully. It's very likely that my normalization methods were flawed, and likely should've explored binarization or other reductions. Another flaw may have been using a Document-Term Matrix as opposed to Term-Document Matrix for the tf-idf normalization. But given the new data at hand, a new strategy will be put into place. 
 
 # (archive) readme for EDA on 'grams' dataset
 
