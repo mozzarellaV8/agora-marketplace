@@ -2,10 +2,6 @@
 
 What follows below are notes on the structure of the harvest. Handwritten notes and images were a way to deal with the unstructured nature and scale of the data. Data was originally compiled by indpendent researcher Gwern and is available [here](gwern.net/Black-market archives).
 
-
-![AgDirectoryNotes.jpg](img/AgDirectoryNotes.jpg)
-
-
 The main directory, with weekly and sometimes more frequent crawls. 208 total.
 
 ![agScrape-mainDir.png](img/agScrape-mainDir.png)
@@ -30,6 +26,8 @@ The `p` directory, which contains individual product listings. This will likely 
 The `vendor` directory, which acts as a vendor's 'storefront' with a description of their wares and process - and also a list of all their listings for that particular day.
 
 ![agScrape-vendorDir.png](img/agScrape-vendorDir.png)
+
+![AgDirectoryNotes.jpg](img/AgDirectoryNotes.jpg)
 
 
 
