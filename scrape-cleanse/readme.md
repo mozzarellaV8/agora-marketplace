@@ -1,4 +1,4 @@
-# Agora Marketplace Analysis - wrangling
+# Agora Marketplace Analysis - cleanse
 
 What follows here are detailed notes and images on the wrangling process to get the data into R. 
 
