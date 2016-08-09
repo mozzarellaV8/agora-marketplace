@@ -20,6 +20,12 @@ title <- agora01 %>%
 title
 # [1] "Secret of Methamphetamine Manufacture 8th Edition"
 
+titleH1 <- agora01 %>%
+  html_nodes("#single-product h1") %>%
+  html_text()
+titleH1
+# [1] "Secret of Methamphetamine Manufacture 8th Edition"
+
 # extract description -------------------------------------
 
 # selector for html_nodes() is not specific enough. 
