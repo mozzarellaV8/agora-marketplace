@@ -15,7 +15,14 @@ e.g. _\<span class="pgptoken">-----BEGIN PGP PUBLIC KEY BLOCK-----\<br/>_
 
 e.g. _\<div class="embedded-feedback-list">_
 
-### product list: "#product-list" 
+
+### product list (as a table): "table.products-list"
+
+e.g. _\<table class="products-list">_
+
+This is great because it returns a table; the only drawback is it combines two columns into one, twice. The first case of this combines the product name and product description; the second combines "ship from" location and "ship to". The second case is handled easily; the first case less so, and especially less so given number of vendor pages to go through. 
+
+### product list : "#product-list" 
 
 e.g. _\<div id="product-list">_
 
@@ -23,13 +30,13 @@ This div id refers to a table that contains: product name (link), product descri
 
 ## children of the #product-list id:
 
-### Product Name: "a"
+### Product Name: "#product-list a"
 
-raw: _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg x 50 (free shipping)\</a>_
+e.g. _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg x 50 (free shipping)\</a>_
 
 ### Product Description preview: ".description-preview"
 
-raw: _\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
+e.g. _\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
 
 ### Price in BTC: "td"
 
