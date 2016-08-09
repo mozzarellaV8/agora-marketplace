@@ -116,5 +116,4 @@ write.table(vendorListings,
             file = "~/GitHub/agora-data/AgScrape/3damesListings.csv",
             sep = ",", row.names = F)
 
-ag3dames <- read.csv("~/GitHub/agora-data/AgScrape/3damesListings.csv")
-
+ag_3dames <- read.csv("~/GitHub/agora-data/AgScrape/3damesListings.csv")
