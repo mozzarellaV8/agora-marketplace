@@ -32,11 +32,11 @@ This div id refers to a table that contains: product name (link), product descri
 
 ### Product Name: "#product-list a"
 
-e.g. _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg x 50 (free shipping)\</a>_
+_\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg x 50 (free shipping)\</a>_
 
 ### Product Description preview: ".description-preview"
 
-`_\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_`
+_\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
 
 ### Price in BTC: "#product-list td"
 
