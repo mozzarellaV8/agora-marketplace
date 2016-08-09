@@ -51,3 +51,7 @@ Unfortunately shipping information doesn't seem to have it's own class or id - j
 ### Ship\_To location: "td" or ".column-name~ td+ td"
 
 Unfortunately shipping information doesn't seem to have it's own class or id - just the td tag. 
+
+# to do
+
+- add vendor bio, pgp key, feedback to product-list dataframe
