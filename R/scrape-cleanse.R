@@ -2,15 +2,18 @@
 # getting the information out
 # with rvest
 
-library("rvest")
+library(rvest)
+library(tm)
+library(XML)
 
 # p directory - single page ---------------------------------------------------
 
 # set path to scraped files
-datDir <- "~/GitHub/agora/2014-01-01/p/a1BkWEipyk"
+datDir <- "~/GitHub/agora/2014-01-01/p/a1BkWEipyk.html"
 
 # test
 agora01 <- read_html(datDir)
+ag01 <- htmlParse(datDir, ignoreBlanks = T, isHTML = T, trim = T)
 
 # extract product name/listing headline -------------------
 title <- agora01 %>%
@@ -75,7 +78,18 @@ ship_from <- agora01 %>%
 
 ship_from
 
+# feedback ------------------------------------------------
+feedback <- agora01 %>%
+  html_nodes(".embedded-feedback-list") %>%
+  html_text()
+
+feedback <- stripWhitespace(feedback)
+feedback
+# [1] " Feedbacks: No feedbacks found. "
+
 # data frame ------------------------------------------------------------------
 
-agora <- data.frame(title = title, price = price, description = description, 
-                    vendor = vendor, rating = rating)
+agora <- data.frame(price = price, title = title, description = description, 
+                    vendor = vendor, rating = rating, ship_from = ship_from,
+                    feedback = feedback)
+
