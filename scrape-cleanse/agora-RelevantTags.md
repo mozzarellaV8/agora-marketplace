@@ -31,7 +31,7 @@ Brought to you by:\<br/>\<a class="gen-user-link" href="/vendor/drzheng"/>drzhen
 
 Brought to you by:\<br/>\<a class="gen-user-link" href="/vendor/drzheng"/>drzheng\</a>\<span class="gen-user-ratings"> [0 deals]\</span>
 
-### ships from: ".product-page-ships"
+### ship_from: ".product-page-ships"
 
 uses image of flag as button
 
@@ -39,7 +39,7 @@ potentially also within
 
 i class = "fa fa-globe", img src, class="flag-img"
 
-### ships to: div class=".product-page-ships"
+### ship_to: div class=".product-page-ships"
 
 i class="fa fa-home"
 
