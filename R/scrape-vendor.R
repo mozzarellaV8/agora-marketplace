@@ -26,10 +26,10 @@ vendorvendor
 # vendor bio ----------------------------------------------
 bio <- vend01 %>%
   html_nodes(".vendorbio-description") %>%
-  html_text()
+  html_text(trim = T)
 
-bio
-# [1] "\r\n            New shop on Agora-INTRODUCTIONI have been providing 
+head(bio)
+# [1] "New shop on Agora-INTRODUCTIONI have been providing 
 # trusted service and high quality products on SR since the ......
 # goes on through the PGP key
 
@@ -53,6 +53,9 @@ vendor_fb
 # [1] "Feedbacks: No feedbacks found."
 
 # products of [this vendor] -------------------------------
+
+# this is not as clean as creating a dataframe 
+# from individual nodes of #product-list class
 
 vendorProducts <- vend01 %>%
   html_nodes("table.products-list") %>%
@@ -114,8 +117,4 @@ write.table(vendorListings,
             sep = ",", row.names = F)
 
 ag3dames <- read.csv("~/GitHub/agora-data/AgScrape/3damesListings.csv")
-
-
-
-
 
