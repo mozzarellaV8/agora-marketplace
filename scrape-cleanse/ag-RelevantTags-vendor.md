@@ -36,7 +36,7 @@ e.g. _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg 
 
 ### Product Description preview: ".description-preview"
 
-e.g. _\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
+`_\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_`
 
 ### Price in BTC: "#product-list td"
 
