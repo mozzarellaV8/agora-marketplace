@@ -38,9 +38,11 @@ e.g. _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg 
 
 e.g. _\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
 
-### Price in BTC: "td"
+### Price in BTC: "#product-list td"
 
-e.g. _\<td>0.05989857 BTC\</td>
+e.g. _\<td>0.05989857 BTC\</td>_
+
+The price is the 7th `td` element that shows up under the `#product-list` class, so it'd be good to use `extract2(7)` from `magrittr` to extract this. 
 
 ### Ship_From location: "td" or ".column-name~ td+ td"
 
