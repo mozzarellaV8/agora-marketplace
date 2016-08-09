@@ -5,14 +5,16 @@
 library(rvest)
 library(tm)
 library(XML)
+library(magrittr)
 
 # p directory - single page ---------------------------------------------------
 
 # set path to scraped files
 datDir <- "~/GitHub/agora/2014-01-01/p/a1BkWEipyk.html"
 
-# test
+# this works
 agora01 <- read_html(datDir)
+# this doesn't
 ag01 <- htmlParse(datDir, ignoreBlanks = T, isHTML = T, trim = T)
 
 # extract product name/listing headline -------------------
