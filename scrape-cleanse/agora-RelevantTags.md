@@ -14,7 +14,7 @@ e.g. _\<div id="single-product" class="nofirstmargin">_
 
 ### product description: "#single-product"
 
-This one is problematic so far. There are no clean css selectors I can find, nor xml. The "#single-product" CSS selector ends up extracting much more information that needed. But it might be possible to simply extract all that information, and then use regex later to select out the description. The description itself falls between the patterns `alt=""/>` and `Brought` on each page. 
+This one is problematic so far. There are no clean css selectors I can find, nor xml. The "#single-product" CSS selector ends up extracting much more information that needed. But it might be possible to simply extract all that information, and then use regex later to select out the description. The description itself falls between the patterns `alt=""/>` and `<br/>Brought` on each page. 
 
 Possibly within \<p> tags too
 
