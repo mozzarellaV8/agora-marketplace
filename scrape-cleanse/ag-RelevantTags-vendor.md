@@ -11,40 +11,32 @@ e.g. _\<div class="vendorbio-description">_
 e.g. _\<span class="pgptoken">-----BEGIN PGP PUBLIC KEY BLOCK-----\<br/>
 
 
-### product description: "#single-product"
-
-This one is problematic so far. There are no clean css selectors I can find, nor xml. The "#single-product" CSS selector ends up extracting much more information that needed. But it might be possible to simply extract all that information, and then use regex later to select out the description. The description itself falls between the patterns `alt=""/>` and `<br/>Brought` on each page. 
-
-Possibly within \<p> tags too
-
-e.g.     _\<div style="clear: both;">\</div>_
-    
-_\<img src="/liabilities/p/ALDcahdCtn.jpg" style="display: block; float: right; padding: 0 0 20px 20px; max-width: 400px;" alt=""/>_
-    
-_1kg of pure bk-MDMA/ METHYLONE shipped worldwide using discreet methods.\<br/>\<br/>For more info please see our profile.\<br/>\<br/>Please note:\<br/>\<br/>Listing is for powder product- same quality as crystal but different texture + much cheaper, due to its appearance we must assure that quality or potency therefore is not affected. Some buyers prefer powder material.\<br/>We also offer translucent white crystal appearance- please see our listings.\<br/>\<br/>Shipping to EU,US not a problem. Tracking provided.\<br/>\<br/>Depending on receiving destination In unlikely event of getting items seized, lost or misplaced, we offer 50% re-shipping option.\<br/>\<br/>Buyers from high risk countries Australia, New Zealand, Russia, Ukraine, Germany, Scandinavia etc. order at own risk + must FE there are no refunds, no reshipping- please read our profile for info.\<br/>Brought to you by:_
-
-### vendor name: "a.gen-user-link" 
-
-e.g. _Brought to you by:\<br/>\<a class="gen-user-link" href="/vendor/drzheng"/>drzheng\</a>\<span class="gen-user-ratings"> [0 deals]\</span>_
-
-### vendor rating: ".gen-user-ratings"
-
-e.g. _Brought to you by:\<br/>\<a class="gen-user-link" href="/vendor/drzheng"/>drzheng\</a>\<span class="gen-user-ratings"> [0 deals]\</span>_
-
-### ship_from: ".product-page-ships"
-
-e.g. _\<div class="product-page-ships">_
-
-### ship_to: div class=".product-page-ships"
-
-e.g. _\<div class="product-page-ships">_
-
-### list price: ".product-page-price"
-
-e.g. _\<div class="product-page-price">0.00266844 BTC\</div>_
-
 ### feedback: ".embedded-feedback-list"
 
-potentially also within \<h4> header.
+e.g. _\<div class="embedded-feedback-list">_
 
-h4 style="margin: 10px 0 5px 0;"
+### product list: "#product-list" 
+
+e.g. _\<div id="product-list">_
+
+What follows under the product list ID is a table with the following info for each row:
+
+##### Product Name: "a"
+
+raw: _\<td class="column-name">\<a href="/p/kiXPY0dXUV">Lorazepam (Ativan) 1 mg x 50 (free shipping)\</a>_
+
+##### Product Description preview: ".description-preview"
+
+raw: _\<span class="description-preview">Top-quality branded generic equivalent of Ativan. 100% correct dosage guaranteed.\</span>_
+
+##### Price in BTC: "td"
+
+e.g. _\<td>0.05989857 BTC\</td>
+
+##### Ship_From location: "td" or ".column-name~ td+ td"
+
+Unfortunately shipping information doesn't seem to have it's own class or id - just the td tag. 
+
+##### Ship\_To location: "td" or ".column-name~ td+ td"
+
+Unfortunately shipping information doesn't seem to have it's own class or id - just the td tag. 
