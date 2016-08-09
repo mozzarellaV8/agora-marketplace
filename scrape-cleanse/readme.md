@@ -3,5 +3,5 @@
 What follows here are detailed notes and images on the wrangling process to get the data into R. 
 
 - [agDirectoryNotes.md](agDirectoryNotes.md) - initial looks at the harvested data
-- [agora-RelevantTags.md](agora-RelevantTags.md) - sorting relevant tags from the html files
-
+- [ag-RelevantTags-p.md](ag-RelevantTags-p.md) - relevant tags from html - 'p' (individual product) directory
+- [ag-RelevantTags-vendor.md](ag-RelevantTags-vendor.md) - relevant tags from html - 'vendor' directory
