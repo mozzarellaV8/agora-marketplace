@@ -5,7 +5,7 @@ _student work in R_
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
-- [cleansing the scrapes](scrape-cleanse/readme.md)
+- [scrape cleanse / html parsing](parse-html/readme.md)
 - [grams](grams) - archive of exploratory analysis on the 'Grams' dataset.
 
 ## the Problem
