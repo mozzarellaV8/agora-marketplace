@@ -20,13 +20,6 @@ The main directory, with weekly and sometimes more frequent crawls. 208 total.
 
 ![agScrape-mainDir.png](img/agScrape-mainDir.png)
 
-
-The `cat` directory, which contains pages grouped by category. These categories are found on the left sidebar of the webpages. Examples of categories include `Chemicals`, `Counterfeits`, `Data`, and `Drugs`. These categories drill down into more specific categories such as `Weed`, `MDMA`, `Books`, and such. 
-
-The number of pages in directory varies by day, as it corresponds to the listings that were made available for that day. There are also subfolders for categories that had many listings and thus many pages.
-
-![agScrape-catDir.png](img/agScrape-catDir.png)
-
 The `p` directory, which contains individual product listings. This will likely be the main directory working data will be harvested from. From the pages in `p`, we have information on 
 
 	- name of product
@@ -37,13 +30,20 @@ The `p` directory, which contains individual product listings. This will likely 
 	- ship to
 	- vendor feedback
 
-This directory would also vary in number of listings on a day to day basis. 	
+The number of pages in directory varies by day, as it corresponds to the listings that were made available for that day. 
 
 ![agScrape-pDir.png](img/agScrape-pDir.png)
 
-The `vendor` directory, which acts as a vendor's 'storefront' with a description of their wares and process - and also a list of all their listings for that particular day.
+The `vendor` directory, which acts as a vendor's 'storefront' with a description of their wares and process - and also a table of all their listings for that particular day.
 
 ![agScrape-vendorDir.png](img/agScrape-vendorDir.png)
+
+The `cat` directory, which contains pages grouped by category. These categories are found on the left sidebar of the webpages. Examples of categories include `Chemicals`, `Counterfeits`, `Data`, and `Drugs`. These categories drill down into more specific categories such as `Weed`, `MDMA`, `Books`, and such. 
+
+This directory would also vary in number of listings on a day to day basis, and there re also subfolders for categories that had many listings and thus many pages.
+
+![agScrape-catDir.png](img/agScrape-catDir.png)
+
 
 
 
