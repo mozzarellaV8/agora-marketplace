@@ -6,8 +6,8 @@ To view the pages locally, I used `simpleHTTPServer` in Python.
 
 Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
 
-- [Directory Structure Images](#directory-structure-notes)
-- [Relevant Tags](#relevant-tags)
+- [directory structure](#directory-structure-notes)
+- [relevant tags](#relevant-tags)
 
 Further notes on relevant tags for sorting the scrape using `rvest` can be found here:
 
