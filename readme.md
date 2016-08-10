@@ -2,14 +2,14 @@
 
 _student work in R_
 
-
-writing:
+data:
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
+
+domain: 
 - [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 - [some images](#images)
-
 
 programming:
 - [scrape cleanse / html parsing](parse-html/readme.md)
@@ -21,11 +21,13 @@ _Who is your client and why do they care about this problem? In other words, wha
 
 My client is Amazon.com. 
 
-Their currently-in-development Medical Marijuana, Research Chemical, and Counterfeit Outerwear departments are lacking in street market values and potential consumer behaviors due to the previously illegal nature of the products to be offered. 
+Their currently-in-development Medical Marijuana, Research Chemical, and Counterfeit Outerwear departments are lacking in market values and product groupings due to the previously illegal nature of the goods to be offered. 
 
 They want to develop a rough model of the type of person who is interested in such things, so they can get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'. 
 
-The client will decide, based on this analysis, the necessary scale for their newly legal departments, and they'll also decide if it is worth aggregating these darknet vendors into their network. By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
+By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
+
+_This client scenario is fictional._
 
 ## the Data
 
@@ -35,7 +37,15 @@ The data was acquired via gwern's [black market archives](http://www.gwern.net/B
 
 For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, occurring weekly and occassionally more frequently.
 
-Because of the scale of gwern's data harvest, it can't be posted here. But to get an idea of what the data looks like, please do refer to the [parse-html](parse-html/readme.md) folder.
+From these daily crawls, I found the most relevant directories to be: 
+
+- [cat]() - pages of listings by category e.g. "Books", "Drugs", "Counterfeits"
+- [p](parse-html/ag-RelevantTags-p.md) - individual product listing pages
+- [vendor](parse-html/ag-RelevantTags-vendor.md) - vendor pages with bio, pgp key, and vendor's listings.
+
+The scale of gwern's harvest prevents it from being posted here. To get more of an idea of the data, please do refer to the [parse-html](parse-html/readme.md) folder. 
+
+To download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download time. 
 
 ## current strategy
 
