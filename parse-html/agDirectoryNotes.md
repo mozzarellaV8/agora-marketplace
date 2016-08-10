@@ -6,11 +6,16 @@ To view the pages locally, I used `simpleHTTPServer` in Python.
 
 Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
 
+- [Directory Structure Images](#directory-structure-notes)
+- [Relevant Tags](#relevant-tags)
+
 Further notes on relevant tags for sorting the scrape using `rvest` can be found here:
 
 - [p directory tags](ag-RelevantTags-p.md)
 - [vendor directory tags](ag-RelevantTags-vendor.md)
 - [cat directory tags](ag-RelevantTags-vendor.md)
+
+## directory structure notes
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
@@ -41,6 +46,52 @@ The `cat` directory, which contains pages grouped by category. These categories 
 This directory would also vary in number of listings on a day to day basis, and there are also subfolders for categories that had many listings and thus many pages.
 
 ![agScrape-catDir.png](img/agScrape-catDir.png)
+
+# Relevant Tags
+
+For extraction: 
+
+**'p' directory:**
+
+- product title via page title: "title"
+- product title via header: "#single-product h1"
+- product description: "#single-product"
+- vendor name: "a.gen-user-link" 
+- vendor rating: ".gen-user-ratings"
+- ship_from: ".product-page-ships"
+- ship_to: div class=".product-page-ships"
+- list price: ".product-page-price"
+- vendor feedback: ".embedded-feedback-list"
+
+**'vendor' directory:**
+
+- vendor bio: ".vendorbio-description"
+- vendor pgp public key: ".pgptoken"
+- feedback: ".embedded-feedback-list"
+- product list (as a table): "table.products-list"
+- product list : "#product-list" 
+
+_children of div id Product List:_
+
+- Product Name: "#product-list a"
+- Product Description preview: ".description-preview"
+- Price in BTC: "#product-list td"
+- Ship_From location: ".column-name~ td+ td"
+- Ship\_To location: "td" or ".column-name~ td+ td"
+
+**'cat' directory:**
+
+- Category on Page- ".topnav-element"
+- Subcategory List - ".leftmenu-subelements a"
+- Main Categories - ".leftmenu-element a"
+- Category Product List Table - "table.products-list"
+- Listing Headers - ".products-list-header"
+- Product Name - ".column-name a"
+- Product Description (preview) - ".description-preview"
+- Price - ".products-list td"
+- Shipping info - ".column-name~ td+ td" "//td[((count(preceding-sibling::*) + 1) = 4)]" (xpath)
+- Vendor - "a.gen-user-link"
+- Vendor Rating - ".gen-user-ratings"
 
 
 
