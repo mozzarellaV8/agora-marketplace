@@ -3,8 +3,8 @@
 What follows below is some manual parsing of the html files from the Agora Marketplace harvest. This was done in preparation for using `rvest` to import the information into dataframes. The html pages are from the directory `vendor` within the daily listing directories from the harvest. 
 
 - [p directory tags](ag-RelevantTags-p.md)
-- [vendor directory tags](ag-RelevantTags-vendor.md)
 - [cat directory tags]() - coming soon.
+- [initial directory notes](agDirectoryNotes.md)]
 
 ### vendor bio: ".vendorbio-description"
 
