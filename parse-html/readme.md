@@ -11,7 +11,7 @@ What follows here are detailed notes and images on the parsing/cleansing process
 
 For extraction: 
 
-**'p' directory:**
+### **'p' directory:**
 
 - product title via page title: **"title"**
 - product title via header: **"#single-product h1"**
@@ -23,7 +23,7 @@ For extraction:
 - list price: **".product-page-price"**
 - vendor feedback: **".embedded-feedback-list"**
 
-**'vendor' directory:**
+### **'vendor' directory:**
 
 - vendor bio: **".vendorbio-description"**
 - vendor pgp public key: **".pgptoken"**
@@ -39,7 +39,7 @@ _children of div id Product List:_
 - Ship_From location: **".column-name~ td+ td"**
 - Ship\_To location: **"td"** or **".column-name~ td+ td"**
 
-**'cat' directory:**
+### **'cat' directory:**
 
 - Category on Page- **".topnav-element"**
 - Subcategory List - **".leftmenu-subelements a"**
