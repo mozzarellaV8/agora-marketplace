@@ -1,4 +1,5 @@
-# scrape-clean v1
+# Agora Marketplace Analysis
+# scrape - p directory pages
 # getting the information out
 # with rvest
 
