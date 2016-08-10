@@ -7,7 +7,7 @@ writing:
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
-- [choosing agora](#choosing-agora)
+- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 - [some images](#images)
 
 
