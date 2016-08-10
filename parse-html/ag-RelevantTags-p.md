@@ -1,6 +1,8 @@
 # Agora - Relevant Tags - 'p' directory
 
-What follows below is some manual parsing of the html files from the Agora Marketplace harvest. This was done in preparation for using `rvest` to import the information into dataframes. The html pages are from the directory `p` within the daily listing directories from the harvest. 
+What follows below is some manual parsing of the html files from the Agora Marketplace harvest using a combination of Chrome Developer Tools and selectorgadget.
+
+This was done in preparation for using `rvest` to import the information into dataframes. The html pages are from the directory `p` within the daily crawls, and contain all individual product listings for that day's crawl. 
 
 - [vendor directory tags](ag-RelevantTags-vendor.md)
 - [cat directory tags](ag-RelevantTags-cat.md)
