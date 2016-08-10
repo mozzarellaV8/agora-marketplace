@@ -8,7 +8,23 @@ This was done in preparation for using `rvest` to import the information into da
 - [cat directory tags](ag-RelevantTags-cat.md)
 - [initial directory notes](agDirectoryNotes.md)
 
-## HTML TAGS / CSS SELECTORS
+## 'vendor' tags
+
+- vendor bio: ".vendorbio-description"
+- vendor pgp public key: ".pgptoken"
+- feedback: ".embedded-feedback-list"
+- product list (as a table): "table.products-list"
+- product list : "#product-list" 
+
+**children of div id Product List:**
+
+- Product Name: "#product-list a"
+- Product Description preview: ".description-preview"
+- Price in BTC: "#product-list td"
+- Ship_From location: ".column-name~ td+ td"
+- Ship\_To location: "td" or ".column-name~ td+ td"
+
+## NOTES ON TAGS
 
 ### vendor bio: ".vendorbio-description"
 
