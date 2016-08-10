@@ -132,4 +132,7 @@ catList <- data.frame(vendor = catVendor, rating = catVR, name = catName,
 
 catList <- separate(catList, shipping, into = c("ship_from", "ship_to"))
 
+write.table(catList, file = "~/GitHub/agora-data/AgScrape/drugsOther-2014-01-01.csv",
+            sep = ",", row.names = F)
 
+# test <- read.csv("~/GitHub/agora-data/AgScrape/drugsOther-2014-01-01.csv")
