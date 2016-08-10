@@ -18,8 +18,8 @@ Tags for other folders:
 - Category Product List Table - "table.products-list"
 - Listing Headers - ".products-list-header"
 - Product Name - ".column-name a"
-- Product Description (preview) - ".description-prevew"
+- Product Description (preview) - ".description-preview"
 - Price - ".products-list td"
-- Shipping info - ".column-name~ td+ td"; "//td[((count(preceding-sibling::*) + 1) = 4)]" (xpath)
+- Shipping info - ".column-name~ td+ td" "//td[((count(preceding-sibling::*) + 1) = 4)]" (xpath)
 - Vendor - "a.gen-user-link"
 - Vendor Rating - ".gen-user-ratings"
