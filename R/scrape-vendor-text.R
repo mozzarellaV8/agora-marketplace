@@ -1,4 +1,5 @@
-## scrape - vendor text
+# Agora Marketplace Analysis
+# scrape - vendor text
 # harvesting text data from vendor pages
 
 library(rvest)
