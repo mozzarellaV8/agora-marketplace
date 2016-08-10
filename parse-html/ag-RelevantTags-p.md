@@ -8,7 +8,19 @@ This was done in preparation for using `rvest` to import the information into da
 - [cat directory tags](ag-RelevantTags-cat.md)
 - [initial directory notes](agDirectoryNotes.md)
 
-## HTML TAGS / CSS SELECTORS
+## 'p' HTML/CSS tags
+
+- product title via page title: "title"
+- product title via header: "#single-product h1"
+- product description: "#single-product"
+- vendor name: "a.gen-user-link" 
+- vendor rating: ".gen-user-ratings"
+- ship_from: ".product-page-ships"
+- ship_to: div class=".product-page-ships"
+- list price: ".product-page-price"
+- vendor feedback: ".embedded-feedback-list"
+
+## NOTES ON TAGS
 
 ### product title via page title: "title"
 
