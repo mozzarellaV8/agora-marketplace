@@ -10,7 +10,7 @@ Further notes on relevant tags for sorting the scrape using `rvest` can be found
 
 - [p directory tags](ag-RelevantTags-p.md)
 - [vendor directory tags](ag-RelevantTags-vendor.md)
-- [cat directory tags]() - coming soon.
+- [cat directory tags](ag-RelevantTags-vendor.md)
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
