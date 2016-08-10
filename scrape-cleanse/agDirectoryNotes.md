@@ -2,14 +2,14 @@
 
 What follows below are notes on the structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such).
 
-To view the pages locally, I used `simpleHTTPServer` in python. 
+To view the pages locally, I used `simpleHTTPServer` in Python. 
 
 Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
 
 Further notes on relevant tags for sorting the scrape using `rvest` can be found here:
 
-- [p directory tags](agora-RelevantTags-p.md)
-- [vendor directory tags](agora-RelevantTags-vendor.md)
+- [p directory tags](ag-RelevantTags-p.md)
+- [vendor directory tags](ag-RelevantTags-vendor.md)
 - [cat directory tags]() - coming soon.
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
