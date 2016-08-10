@@ -7,12 +7,12 @@ library(tm)
 library(XML)
 library(tidyr)
 
-# p directory - single page ---------------------------------------------------
+# vendor directory - single page ---------------------------------------------------
 
 # set path to scraped files
 vendDir <- "~/GitHub/agora/2014-01-01/vendor/3dames.html"
 
-# test
+# parse html
 vend01 <- read_html(vendDir)
 
 # vendor name ---------------------------------------------
