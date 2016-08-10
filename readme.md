@@ -2,12 +2,16 @@
 
 _student work in R_
 
+
+writing:
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
 - [choosing agora](#choosing-agora)
 - [some images](#images)
 
+
+programming:
 - [scrape cleanse / html parsing](parse-html/readme.md)
 - [grams](grams) - archive of exploratory analysis on the 'Grams' dataset.
 
