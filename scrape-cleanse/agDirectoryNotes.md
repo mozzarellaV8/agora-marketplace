@@ -4,7 +4,13 @@ What follows below are notes on the structure of the harvest. For each day the m
 
 To view the pages locally, I used `simpleHTTPServer` in python. 
 
-Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. Further notes on relevant tags for sorting the scrape using `rvest` can be [found here](agora-RelevantTags.md).
+Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
+
+Further notes on relevant tags for sorting the scrape using `rvest` can be found here:
+
+- [p directory tags](agora-RelevantTags-p.md)
+- [vendor directory tags](agora-RelevantTags-vendor.md)
+- [cat directory tags]() - coming soon.
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
