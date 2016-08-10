@@ -89,10 +89,22 @@ vpListDP
 # [1] "Top-quality branded generic equivalent of Ativan. 100% correct dosage...
 
 # price
-vpListPrice <- vend01 %>%
-  html_nodes("#product-list td") %>%
-  extract2(7) %>%
-  html_text()
+# this only extracts one price of many -------------------- FIX 
+# vpListPrice <- vend01 %>%
+#   html_nodes("#product-list td") %>%
+#   extract2(7) %>%
+#   html_text()
+#
+# vpListPrice
+# [1] "0.05989857 BTC"
+
+# or
+
+# draw it from earlier html_table() output
+vpListPrice <- vendorProducts$Price
+vpListPrice
+# [1] "0.05989857 BTC" "0.06389180 BTC" "0.04126346 BTC"
+# it checks out.
 
 vpListPrice
 # [1] "0.05989857 BTC"
@@ -114,7 +126,7 @@ vendorListings <- separate(vendorListings, shipping,
                            into = c("ship_from", "ship_to"))
 
 write.table(vendorListings, 
-            file = "~/GitHub/agora-data/AgScrape/3damesListings.csv",
+            file = "~/GitHub/agora-data/AgScrape/3dames.csv",
             sep = ",", row.names = F)
 
-ag_3dames <- read.csv("~/GitHub/agora-data/AgScrape/3damesListings.csv")
+# ag3dames <- read.csv("~/GitHub/agora-data/AgScrape/3dames.csv")
