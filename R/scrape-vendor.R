@@ -1,5 +1,6 @@
+# Agora Marketplace Analysis
 # scrape - vendor
-# harvesting information from vendor pages
+# extracting from vendor pages
 
 library(rvest)
 library(magrittr)
