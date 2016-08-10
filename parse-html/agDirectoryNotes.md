@@ -20,7 +20,7 @@ The main directory, with weekly and sometimes more frequent crawls. 208 total.
 
 ![agScrape-mainDir.png](img/agScrape-mainDir.png)
 
-The `p` directory, which contains individual product listings. This will likely be the main directory working data will be harvested from. From the pages in `p`, we have information on 
+The `p` directory, which contains individual product listings. The number of pages in directory varies by day, as it corresponds to the listings that were made available for that day. This will likely be the main directory working data will be extracted from. From the pages in `p`, we have information on 
 
 	- name of product
 	- description
@@ -30,11 +30,9 @@ The `p` directory, which contains individual product listings. This will likely 
 	- ship to
 	- vendor feedback
 
-The number of pages in directory varies by day, as it corresponds to the listings that were made available for that day. 
-
 ![agScrape-pDir.png](img/agScrape-pDir.png)
 
-The `vendor` directory, which acts as a vendor's 'storefront' with a description of their wares and process - and also a table of all their listings for that particular day.
+The `vendor` directory, which acts as a vendor's 'storefront' with a description of their wares and process - and also a table of all their listings for that particular day. This directory might be useful, if not exhaustive, for aggregating vendors by product.
 
 ![agScrape-vendorDir.png](img/agScrape-vendorDir.png)
 
