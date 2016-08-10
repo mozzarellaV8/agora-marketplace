@@ -43,11 +43,11 @@ The ultimate goal will be to conduct a Market Basket Analysis; to create associa
 
 There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
 
-## choosing Agora
+## Agora and anonymous marketplaces
 
-Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally, the conditions of Agora's shutdown were uniqute to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that threatened to de-anonymize Tor users. This is in contrast to other markets of similar scale; Silk Road's demise at the hands of law enforcement; [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
+Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally, the conditions of Agora's shutdown were uniqute to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. This is in contrast to other markets of similar scale; Silk Road's demise at the hands of law enforcement; [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
 
-It's a stretch to say that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients suggests that conducting business in a professional manner was a priority.
+It's a stretch to say that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business in a professionally was a priority above others. 
 
 ## images
 
