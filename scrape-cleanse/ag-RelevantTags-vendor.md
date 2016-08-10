@@ -4,7 +4,9 @@ What follows below is some manual parsing of the html files from the Agora Marke
 
 - [p directory tags](ag-RelevantTags-p.md)
 - [cat directory tags]() - coming soon.
-- [initial directory notes](agDirectoryNotes.md)]
+- [initial directory notes](agDirectoryNotes.md)
+
+## HTML TAGS / CSS SELECTORS
 
 ### vendor bio: ".vendorbio-description"
 

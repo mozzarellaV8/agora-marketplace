@@ -6,6 +6,8 @@ What follows below is some manual parsing of the html files from the Agora Marke
 - [cat directory tags]() - coming soon.
 - [initial directory notes](agDirectoryNotes.md)
 
+## HTML TAGS / CSS SELECTORS
+
 ### product title via page title: "title"
 
 e.g. _\<title>1kg pure bk-MDMA/ METHYLONE- with FREE shipping\</title>_
