@@ -17,7 +17,7 @@ programming:
 
 ## the Problem
 
-_Who is your client and why do they care about this problem? In other words, what will your client DO or DECIDE based on your analysis that they wouldn’t have otherwise?_
+_**Who is your client and why do they care about this problem? In other words, what will your client DO or DECIDE based on your analysis that they wouldn’t have otherwise?**_
 
 My client is Amazon.com. 
 
@@ -25,7 +25,7 @@ Their currently-in-development Medical Marijuana, Research Chemical, and Counter
 
 They want to develop a rough model of the type of person who is interested in such things, so they can get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'. 
 
-By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their ecommerce network. 
+By conducting a market basket analysis of vendor listings, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their e-commerce network. 
 
 _This client scenario is fictional._
 
