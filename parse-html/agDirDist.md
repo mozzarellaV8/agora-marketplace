@@ -1,6 +1,6 @@
 # Agora Directory Distribution
 
-Counts of pages per relevant directory: product & vendor pages by date.
+Counts of pages per relevant directory: product & vendor pages by date. The **'p directory'** column sometimes contains 2 values - the first is number of pages directly from the harvest, and the second being number of pages after removing files with no information (e.g. login-credential pages vs. listing pages).
 
 date | p directory | vendor directory
 ---- | :---------: | ---------------:
