@@ -1,6 +1,6 @@
 # Agora Marketplace Analysis - parse and cleanse
 
-What follows here are detailed notes and images on the parsing/cleansing process to get the raw html data into R. 
+What follows here are detailed notes and images on the parsing/cleansing process to get the raw html data into R. Quick notes below here, more detailed notes in the links:
 
 - [agDirectoryNotes.md](agDirectoryNotes.md) - initial looks at the harvested data and extraction process
 - [ag-RelevantTags-p.md](ag-RelevantTags-p.md) - relevant tags from html - 'p' (individual product) directory
