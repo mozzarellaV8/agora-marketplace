@@ -1,6 +1,6 @@
 # Agora Directory Distribution
 
-
+Counts of pages per relevant directory: product & vendor pages by date.
 
 date | p directory | vendor directory
 ---- | :---------: | ---------------:
