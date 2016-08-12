@@ -2,6 +2,10 @@
 
 Counts of pages per relevant directory: product & vendor pages by date. The **'p directory'** column sometimes contains 2 values - the first is number of pages directly from the harvest, and the second being number of pages after removing files with no information (e.g. login-credential pages vs. listing pages).
 
+- date: date of crawl
+- p directory: number of product listing pages
+- vendor directory: number of vendor pages
+
 date | p directory | vendor directory
 ---- | :---------: | ---------------:
 2014-01-01 | 1539 1082 | 119
