@@ -6,7 +6,7 @@ What follows here are detailed notes and images on the parsing/cleansing process
 - [ag-RelevantTags-p.md](ag-RelevantTags-p.md) - relevant tags from html - 'p' (individual product) directory
 - [ag-RelevantTags-vendor.md](ag-RelevantTags-vendor.md) - relevant tags from html - 'vendor' directory
 - [ag-RelevantTags-cat.md](ag-RelevantTags-cat.md) - relevant tags from html - 'cat' directory
-- [ag-Directory-Distribution](ag-DirDistribution.md) - tables of page counts by crawl date.
+- [ag-Directory-Distribution](agDirDistribution.md) - tables of page counts by crawl date.
 
 # Relevant Tags
 
