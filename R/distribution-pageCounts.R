@@ -21,6 +21,7 @@ summary(p2014)
 
 # explore data ----------------------------------------------------------------
 
+# gg line plots -------------------------------------------
 library(ggplot2)
 
 p1 <- ggplot(p2014, aes(x = date, y = p)) + 
@@ -91,15 +92,16 @@ par(mar = c(8, 8, 8, 8), mfrow = c(2, 2))
 plot(lm.p14)
 
 # boxplot - histogram ---------------------------------------------------------
-
 hist(p2014$p, breaks = 200)
 
-library(car)
-
+# base densityPlot ----------------------------------------
 pDensity <- density(p2014$p, kernel = c("gaussian", "cosine"))
 
 par(mar = c(8, 8, 8, 8), mfrow = c(1, 1))
 plot(pDensity, col = "#CD0000")
+
+# car densityPlot -----------------------------------------
+library(car)
 
 par(mfrow = c(2, 2), mar = c(8, 8, 8, 8))
 densityPlot(p2014$p, kernel = c("gaussian"), ylab = "gaussian density")
@@ -107,6 +109,7 @@ densityPlot(p2014$p, kernel = c("cosine"), ylab = "cosine density")
 densityPlot(p2014$p, kernel = c("epanechnikov"), ylab = "epanechnikov density")
 densityPlot(p2014$p, kernel = c("triangular"), ylab = "triangular density")
 
+# gg density plot -----------------------------------------
 pKde02 <- ggplot(p2014, aes(x = p)) + 
   geom_density(fill = "red2", colour = NA, alpha = 0.2) +
   geom_line(stat = "density", adjust = 0.25, colour = "red") +
@@ -123,14 +126,12 @@ vKde01 <- ggplot(p2014, aes(x = vendor)) +
        x = "num vendor pages")
 vKde01
 
+# boxplot -------------------------------------------------
 boxplot(p2014$p)
 boxplot(p2014$vendor)
 
-# violin
-pVio <- ggplot(p2014, aes(x = vendor, y = p)) + geom_violin()
-pVio
 
-# wilkinson dot
+# wilkinson dot -------------------------------------------
 pDot <- ggplot(p2014, aes(x = p)) + 
   geom_dotplot() +
   geom_rug()
