@@ -24,6 +24,29 @@ vendorvendor <- vend01 %>%
 vendorvendor
 # [1] "3dames"
 
+# products of [this vendor] ---------------------------------------------------
+
+# this is not as clean as creating a dataframe 
+# from individual nodes of #product-list class
+
+# but really its actually just fine
+vendorProducts <- vend01 %>%
+  html_nodes("table.products-list") %>%
+  html_table(header = T)
+
+vendorProducts <- as.data.frame(vendorProducts)
+vendorProducts$Var.1 <- NULL
+colnames(vendorProducts) <- c("Name", "Price", "Shipping")
+
+library(tidyr)
+vendorProducts <- separate(vendorProducts, Shipping, 
+                           into  = c("Ship_From", "Ship_To"))
+
+vendorProducts$vendor <- vendorvendor
+vendorProducts <- vendorProducts[c(5, 1, 2, 3, 4)]
+
+# for later analysis ----------------------------------------------------------
+
 # vendor bio ----------------------------------------------
 bio <- vend01 %>%
   html_nodes(".vendorbio-description") %>%
@@ -53,21 +76,6 @@ vendor_fb <- stripWhitespace(vendor_fb)
 vendor_fb
 # [1] "Feedbacks: No feedbacks found."
 
-# products of [this vendor] -------------------------------
-
-# this is not as clean as creating a dataframe 
-# from individual nodes of #product-list class
-
-vendorProducts <- vend01 %>%
-  html_nodes("table.products-list") %>%
-  html_table(header = T)
-
-vendorProducts <- as.data.frame(vendorProducts)
-vendorProducts$Var.1 <- NULL
-colnames(vendorProducts) <- c("Name", "Price", "Shipping")
-
-vendorProducts <- separate(vendorProducts, Shipping, 
-                           into  = c("Ship_From", "Ship_To"))
 
 # product list - name, description, price, shipping ---------------------------
 
