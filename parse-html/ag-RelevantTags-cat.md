@@ -6,7 +6,7 @@ The html pages are from the directory `cat` within the daily listing directories
 
 Tags for other folders:
 - [p directory tags](ag-RelevantTags-p.md)
-- [vendor directory tags](g-RelevantTags-vendor.md)
+- [vendor directory tags](ag-RelevantTags-vendor.md)
 - [initial directory notes](agDirectoryNotes.md)
 
 
