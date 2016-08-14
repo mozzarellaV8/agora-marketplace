@@ -12,6 +12,8 @@ This was done in preparation for using `rvest` to import the information into da
 
 For extraction:
 
+- vendorname: "#middlestuff strong"
+
 - vendor bio: ".vendorbio-description"
 - vendor pgp public key: ".pgptoken"
 - feedback: ".embedded-feedback-list"
