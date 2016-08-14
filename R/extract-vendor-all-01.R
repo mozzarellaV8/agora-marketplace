@@ -64,4 +64,6 @@ vendorall$price <- as.double(vendorall$price)
 
 write.csv(vendorall, file = "vendorall-2014-01.csv", row.names = F)
 
-test <- read.csv("vendorall-2014-01.csv")
+vN01 <- read.csv("~/GitHub/ag-Vendor/2014-01/vendorall-2014-01.csv")
+
+levels(vN01$date)
