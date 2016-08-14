@@ -18,16 +18,43 @@ library(tidyr)
 mainVendDir <- "~/GitHub/ag-Vendor/2014-02"
 setwd(mainVendDir)
 
+# create list of files to extract data from -----------------------------------
+
 vlist <- list.files(path = mainVendDir, pattern = ".html", all.files = T, recursive = T)
-# 16013 elements
+# 16011 elements
 head(vlist)
 # [1] "2014-04-06/_drugs.inc_.html"
 tail(vlist)
 # [1] "2014-09-30/Weedland.html" 
 
+# inspect list for date discrepancies
+vlistTest <- as.data.frame(vlist)
+
+# test on single page ---------------------------------------------------------
+vlist[108]
+# [1] "2014-04-06/_drugs.inc_.html"
+
+# read in html
+test <- read_html(vlist[108])
+
+# extract table of vendor's listings
+vname <- test %>%
+  html_nodes("table.products-list") %>%
+  html_table(header = T)
+
+# create data frame, add date of listing and vendor name as columns
+vname <- as.data.frame(vname)
+vname$date <- paste(sub(" *\\/.*", "", vlist[108]))
+
+vname$vendor <- test %>%
+  html_nodes("#middlestuff strong") %>%
+  extract2(1) %>%
+  html_text()
+
+
 # vendor products via table ---------------------------------------------------
 
-vendorall <- data.frame()
+vendorall <- data.frame(stringsAsFactors = F)
 
 for (i in 1:length(vlist)) {
   log <- read_html(vlist[i])
@@ -37,12 +64,12 @@ for (i in 1:length(vlist)) {
     html_table(header = T)
   
   pTab <- as.data.frame(pTab)
-  
   pTab$date <- sub(" *\\/.*", "", vlist[i])
   
-  for (j in 1:length(pTab)) {
-    pTab$vendor <- paste(vlist[i])
-  }
+  pTab$vendor <- log %>%
+    html_nodes("#middlestuff strong") %>%
+    extract2(1) %>%
+    html_text()
   
   vendorall <- rbind(vendorall, pTab)
 }
