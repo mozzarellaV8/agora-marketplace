@@ -30,6 +30,10 @@ By conducting a market basket analysis of vendor listings on the anonymous marke
 
 _This client scenario is fictional._
 
+_**Deliverables**_ 
+
+It'd probably be nice to have a network map written in d3, wouldn't it? Maybe a [force-directed tree](https://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37) or [radial tidy tree](https://bl.ocks.org/mbostock/2e12b0bd732e7fe4000e2d11ecab0268). But only after the information is dense and the analysis is sturdy. 
+
 ## the Data
 
 Agora was a referral-based darknet market that rose to prominence after the demise of Silk Road 2 in 2013. 
