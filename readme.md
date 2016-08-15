@@ -8,8 +8,8 @@ data:
 - [current strategy](#current-strategy)
 
 domain: 
-- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 - [some images](#images)
+- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 
 programming:
 - [vendor page extractions](R/extract-vendor-all-01B.R)
@@ -59,6 +59,12 @@ The ultimate goal will be to conduct a Market Basket Analysis; to create associa
 
 There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
 
+## images
+
+Agora Marketplace index page on July 7th, 2015:
+
+![2015-07-07-index](vis/index-2015-07-07.jpg)
+
 ## Agora and anonymous marketplaces
 
 Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally and subjectively, the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
@@ -67,8 +73,3 @@ This is in contrast to other markets of similar scale. The largest examples are 
 
 It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
 
-## images
-
-Agora Marketplace index page on July 7th, 2015:
-
-![2015-07-07-index](vis/index-2015-07-07.jpg)
