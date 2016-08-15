@@ -21,7 +21,7 @@ summary(pv)
 
 sum(pv$p)
 # [1] 2467200
-# so we have 2467200 total vendor pages from 2914-01-01 til 2015-07-07.
+# so we have 2467200 total product pages from 2914-01-01 til 2015-07-07.
 
 sum(pv$vendor)
 # [1] 19245
@@ -157,6 +157,7 @@ summary(d15)
 # 13 days
 
 
+# Determine what is an 'active' marketplace -----------------------------------
 # 10000 listings as one cutoff point for determining an active market.
 quantile(pv$p)
 #    0%   25%   50%   75%  100% 
@@ -167,19 +168,37 @@ summary(pv$p)
 pvStd <- subset(pv, pv$p >= 10000)
 plot(pvStd$date, pvStd$p)
 
+pv10k.lm <- lm(p ~ date, data = pvStd)
+summary(pv10k.lm)
+#                 Estimate Std. Error t value Pr(>|t|)    
+#   (Intercept) -2.417e+05  6.761e+04  -3.575 0.000517 ***
+#   date         1.579e+01  4.109e+00   3.843 0.000201 ***
+# Multiple R-squared:  0.1156,	Adjusted R-squared:  0.1078 
+
+RMSE_10k <- (sqrt(sum(pv10k.lm$residuals^2)))/(nrow(pv))
+RMSE_10k
+# 214.5388
+
 # 5000 listings as cutoff - quarter of listings in general.
 pv5000 <- subset(pv, pv$p >= 5000)
 plot(pv5000$date, pv5000$p)
 
 pv5k.lm <- lm(p ~ date, data = pv5000)
 summary(pv5k.lm)
+#               Estimate Std. Error t value Pr(>|t|)   
+# (Intercept) -2.787e+05  6.565e+04  -4.245 3.84e-05 ***
+# date         1.791e+01  3.994e+00   4.484 1.46e-05 ***
+# Multiple R-squared:  0.1196,	Adjusted R-squared:  0.1137 
+# given only 3 variables total in this data, they're bound to be significant.
 
 par(mfrow = c(2, 2), mar = c(4, 4, 4, 4))
 plot(pv5k.lm)
 
-RMSE_5k <- sqrt(sum(pv5k.lm$residuals^2))
+SSE_5k <- sum(pv5k.lm$residuals^2)
+# [1] 4536483133
+RMSE_5k <- (sqrt(sum(pv5k.lm$residuals^2)))/(nrow(pv))
 RMSE_5k
-# 67353.42
+# 331.7902
 
 # number of vendors by date -------------------------------
 
