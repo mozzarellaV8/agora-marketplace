@@ -12,6 +12,7 @@ domain:
 - [some images](#images)
 
 programming:
+- [vendor page extractions](R/extract-vendor-all-01B.R)
 - [individual html page extractions](R)
 - [scrape cleanse / html parsing](parse-html/readme.md)
 - [grams](grams) - archive of exploratory analysis on the 'Grams' dataset.
