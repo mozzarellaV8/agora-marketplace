@@ -21,11 +21,16 @@ summary(pv)
 
 sum(pv$p)
 # [1] 2467200
+# so we have 2467200 total vendor pages from 2914-01-01 til 2015-07-07.
 
 sum(pv$vendor)
 # [1] 19245
+# so we have 19425 total vendor pages from 2914-01-01 til 2015-07-07.
 
-# explore ---------------------------------------------------------------------
+# these are raw counts that don't take into account bad crawls, pages
+# with no information, and repeat listings.
+
+# exploratory -----------------------------------------------------------------
 
 par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
 
@@ -35,18 +40,13 @@ hist(pv$vendor, breaks = 100, xlim = c(0, 200))
 plot(pv$p, main = "scatterplot: product page count")
 plot(pv$vendor, main = "scatterplot: vendor page count")
 
-
-
 # product by date
 par(mar = c(6, 6, 6, 6), mfrow = c(1, 1))
 plot(pv$date, pv$p, main = "AgMarket - product page count by date", xlab = "date",
      ylab = "product page count")
 
 # tempting to fit a linear model but it likely wouldnt be accurate.
-
-# add lines to product
-plot(pv$date, pv$p, type = "b", main = "AgMarket - product page count by date", 
-     xlab = "date", ylab = "product page count")
+# needs to be converted to a time series.
 
 # vendor pages by date
 plot(pv$date, pv$vendor, main = "AgMarket - vendor page count by date", 
@@ -61,11 +61,9 @@ products <- ggplot(pv, aes(date, p)) + theme_minimal() +
   
 products + stat_smooth(method = lm, level = 0.95, se = FALSE, color = "#CD2626")
 
-# linear model ----------------------------------------------------------------
-# give in to temptation
+# linear models ---------------------------------------------------------------
 
 # number of product listings by date ----------------------
-
 pd.lm <- lm(p ~ date, data = pv)
 summary(pd.lm)
 #                  Estimate Std. Error t value Pr(>|t|)    
@@ -84,7 +82,7 @@ plot(pd.lm)
 pd.lm01 <- ggplot(pv, aes(date, p)) + 
   theme_minimal() +
   geom_point(aes(color = p), size = 4.75, shape = 17) +
-  ggtitle("AgMarket: Number of Product Listings ~ Date") +
+  ggtitle("Agora Marketplace: Number of Product Listings ~ Date") +
   theme(plot.title = element_text(family = "Times", face = "bold", size = 18)) +
   labs(x = "Date", y = "number of product listings (pages)") +
   theme(axis.title.x = element_text(family = "Times", face = "italic", size = 14)) +
@@ -97,6 +95,91 @@ pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626")
   theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
   theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0)))
 
+# number of product listings by date 02 ---------------------------------------
+
+# What if the market never got shut down? What would the trend be? 
+# We know Agora began operations sometime in 2013, and picked up steam
+# in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated 
+# over to Agora to continue business. 
+
+# Agora was also subject to frequent downtime, which likely accounts for sudden 
+# drops in number of product listings. What if we assume there was no downtime
+# for security issues? Can we project a reasonable market size if growth 
+# were to stabilize? 
+
+# number of products by downtime ----------------------------------------------
+
+# read in downtime data
+updown <- read.csv("data/agoraDNS.csv")
+str(updown)
+summary(updown)
+# range is from 2014-04-23 - 2015-04-04 - April to April
+
+# look at highest downtimes and compare to number products/vendors
+# is it possible to throw out product/vendor counts on days of highest downtime?
+
+max(updown$hours_down)
+# [1] 30.45 // more hours than in a day
+max(updown$hours_up)
+# [1] 23.92
+
+updown$date <- as.Date(updown$date)
+
+par(mfrow = c(1, 1), mar = c(6, 6, 6, 6))
+plot(updown$date, updown$hours_down, 
+     main = "Agora Marketplace: # of hours downtime by date",
+     ylab = "number of hours downtime")
+
+agDown <- ggplot(updown, aes(date, hours_down)) + 
+  theme_minimal() +
+  geom_point(aes(color = hours_down), size = 4.75, shape = 17) +
+  ggtitle("Agora Marketplace: Downtime (hours) by Date") +
+  theme(plot.title = element_text(family = "Times", face = "bold", size = 18)) +
+  labs(x = "Date", y = "number of hours down") +
+  theme(axis.title.x = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.title.y = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.text.x = element_text(family = "Times", face = "plain", size = 11, angle = 45)) +
+  theme(axis.text.y = element_text(family = "Times", face = "plain", size = 11)) +
+  theme(plot.margin = unit(c(3, 3, 3, 3), "cm"))
+
+agDown
+
+# assuming a 8 hour workday - more than 10 hours of downtime would be a 'day off'
+# online markets are 24-7 though; so perhaps 15 hours of downtime is a more 
+# reasonable cutoff to say that a market is 'off'.
+
+d10 <- subset(updown, updown$hours_down >= 10)
+summary(d10)
+# 28 days
+
+d15 <- subset(updown, updown$hours_down >= 15)
+summary(d15)
+# 13 days
+
+
+# 10000 listings as one cutoff point for determining an active market.
+quantile(pv$p)
+#    0%   25%   50%   75%  100% 
+#     1  4453 12697 19030 27654 
+summary(pv$p)
+#    Min.  1st Qu.  Median   Mean 3rd Qu.     Max. 
+#       1    4453   12700   12150   19030   27650 
+pvStd <- subset(pv, pv$p >= 10000)
+plot(pvStd$date, pvStd$p)
+
+# 5000 listings as cutoff - quarter of listings in general.
+pv5000 <- subset(pv, pv$p >= 5000)
+plot(pv5000$date, pv5000$p)
+
+pv5k.lm <- lm(p ~ date, data = pv5000)
+summary(pv5k.lm)
+
+par(mfrow = c(2, 2), mar = c(4, 4, 4, 4))
+plot(pv5k.lm)
+
+RMSE_5k <- sqrt(sum(pv5k.lm$residuals^2))
+RMSE_5k
+# 67353.42
 
 # number of vendors by date -------------------------------
 
