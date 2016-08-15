@@ -231,11 +231,16 @@ summary(product.vd.lm)
 #   vendor       5.757e+01  8.291e+00   6.944 5.22e-11 ***
 #   date         2.282e+01  3.166e+00   7.208 1.14e-11 ***
 
+# Multiple R-squared:  0.4021,	Adjusted R-squared:  0.3962
 par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
 plot(product.vd.lm)
 
 
-# prediction of product listings
+
+
+
+
+# prediction of number products ---------------------------
 til_now <- data.frame(date = seq(as.Date("2015-07-08"), 
                              as.Date("2016-08-31"), 
                              by = "day"), vendor = 0)
