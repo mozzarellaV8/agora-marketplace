@@ -490,3 +490,771 @@ vendorall_0714$price <- as.double(vendorall_0714$price)
 
 write.csv(vendorall_0714, file = "vendorall_0714.csv", row.names = F)
 test <- read.csv("vendorall_0714.csv")
+
+##
+# Aug 2014 ---------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+aug2014Dir <- "~/GitHub/ag-Vendor/2014-08"
+setwd(aug2014Dir)
+
+# 2685 files
+vlist <- list.files(path = aug2014Dir, pattern = ".html", all.files = T, recursive = T)
+vendorall_0814 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_0814 <- rbind(vendorall_0814, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_0814)
+
+#      user  system elapsed 
+#   111.719   3.204 115.011 
+
+# 63215 obs. of 6 variables
+
+# 0814 clean extracted dataframe ----------------------------------------------
+
+vendorall_0814$Var.1 <- NULL
+vendorall_0814 <- vendorall_0814[c(4, 5, 1, 2, 3)]
+colnames(vendorall_0814) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_0814$vendor <- as.factor(vendorall_0814$vendor)
+# 1087 levels
+
+vendorall_0814 <- separate(vendorall_0814, shipping, into = c("from", "to"), sep = "To:")
+vendorall_0814$from <- gsub("From: ", "", vendorall_0814$from)
+vendorall_0814$from[vendorall_0814$from == ""] <- NA
+
+vendorall_0814$from <- as.factor(vendorall_0814$from) # 116
+vendorall_0814$to <- as.factor(vendorall_0814$to) # 374
+
+vendorall_0814$name <- stripWhitespace(vendorall_0814$name)
+vendorall_0814$name <- gsub(",", " ", vendorall_0814$name)
+vendorall_0814$name <- as.factor(vendorall_0814$name)
+# 19412 levels
+
+vendorall_0814$price <- gsub(" BTC", "", vendorall_0814$price)
+vendorall_0814$price <- as.double(vendorall_0814$price)
+
+write.csv(vendorall_0814, file = "vendorall_0814.csv", row.names = F)
+test <- read.csv("vendorall_0814.csv")
+
+##
+# Sept 2014 ---------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+sept2014Dir <- "~/GitHub/ag-Vendor/2014-09"
+setwd(sept2014Dir)
+
+# 4007 files
+vlist <- list.files(path = sept2014Dir, pattern = ".html", all.files = T, recursive = T)
+vendorall_0914 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_0914 <- rbind(vendorall_0914, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_0914)
+
+#      user  system elapsed 
+#   168.069   7.335 177.533
+
+# 77186 obs. of 6 variables
+
+# 0914 clean extracted dataframe ----------------------------------------------
+
+vendorall_0914$Var.1 <- NULL
+vendorall_0914 <- vendorall_0914[c(4, 5, 1, 2, 3)]
+colnames(vendorall_0914) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_0914$vendor <- as.factor(vendorall_0914$vendor)
+# 1175 levels
+
+vendorall_0914 <- separate(vendorall_0914, shipping, into = c("from", "to"), sep = "To:")
+vendorall_0914$from <- gsub("From: ", "", vendorall_0914$from)
+vendorall_0914$from[vendorall_0914$from == ""] <- NA
+
+vendorall_0914$from <- as.factor(vendorall_0914$from) # 115
+vendorall_0914$to <- as.factor(vendorall_0914$to) # 407
+
+vendorall_0914$name <- stripWhitespace(vendorall_0914$name)
+vendorall_0914$name <- gsub(",", " ", vendorall_0914$name)
+vendorall_0914$name <- as.factor(vendorall_0914$name)
+# 20809 levels
+
+vendorall_0914$price <- gsub(" BTC", "", vendorall_0914$price)
+vendorall_0914$price <- as.double(vendorall_0914$price)
+
+write.csv(vendorall_0914, file = "vendorall_0914.csv", row.names = F)
+test <- read.csv("vendorall_0914.csv")
+
+##
+# Oct 2014 01 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+oct2014Dir01 <- "~/GitHub/ag-Vendor/2014-10-01"
+setwd(oct2014Dir01)
+
+# 9385 total Oct 2010 files
+# 3321 files in round 01
+vlist <- list.files(path = oct2014Dir01, pattern = ".html", all.files = T, recursive = T)
+vendorall_1014_01 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1014_01 <- rbind(vendorall_1014_01, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1014_01)
+
+#      user  system elapsed 
+#   126.232   5.593 131.912 
+
+# 64647 obs. of 6 variables
+
+# 1014 clean extracted dataframe ----------------------------------------------
+
+vendorall_1014_01$Var.1 <- NULL
+vendorall_1014_01 <- vendorall_1014_01[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1014_01) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1014_01$vendor <- as.factor(vendorall_1014_01$vendor)
+# 1143 levels
+
+vendorall_1014_01 <- separate(vendorall_1014_01, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1014_01$from <- gsub("From: ", "", vendorall_1014_01$from)
+vendorall_1014_01$from[vendorall_1014_01$from == ""] <- NA
+
+vendorall_1014_01$from <- as.factor(vendorall_1014_01$from) # 111
+vendorall_1014_01$to <- as.factor(vendorall_1014_01$to) # 379
+
+vendorall_1014_01$name <- stripWhitespace(vendorall_1014_01$name)
+vendorall_1014_01$name <- gsub(",", " ", vendorall_1014_01$name)
+vendorall_1014_01$name <- as.factor(vendorall_1014_01$name)
+# 19601 levels
+
+vendorall_1014_01$price <- gsub(" BTC", "", vendorall_1014_01$price)
+vendorall_1014_01$price <- as.double(vendorall_1014_01$price)
+
+write.csv(vendorall_1014_01, file = "vendorall_1014_01.csv", row.names = F)
+test <- read.csv("vendorall_1014_01.csv")
+
+##
+# Oct 2014 02 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+oct2014Dir02 <- "~/GitHub/ag-Vendor/2014-10-02"
+setwd(oct2014Dir02)
+
+# 9385 total Oct 2010 files
+# 3032 files in round 01
+vlist <- list.files(path = oct2014Dir02, pattern = ".html", all.files = T, recursive = T)
+vendorall_1014_02 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1014_02 <- rbind(vendorall_1014_02, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1014_02)
+
+#      user  system elapsed 
+#   114.655   4.103 119.198 
+
+# 50946 obs. of 6 variables
+
+# 1014-02 clean extracted dataframe -------------------------------------------
+
+vendorall_1014_02$Var.1 <- NULL
+vendorall_1014_02 <- vendorall_1014_02[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1014_02) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1014_02$vendor <- as.factor(vendorall_1014_02$vendor)
+# 1158 levels
+
+vendorall_1014_02 <- separate(vendorall_1014_02, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1014_02$from <- gsub("From: ", "", vendorall_1014_02$from)
+vendorall_1014_02$from[vendorall_1014_02$from == ""] <- NA
+
+vendorall_1014_02$from <- as.factor(vendorall_1014_02$from) # 103
+vendorall_1014_02$to <- as.factor(vendorall_1014_02$to) # 386
+
+vendorall_1014_02$name <- stripWhitespace(vendorall_1014_02$name)
+vendorall_1014_02$name <- gsub(",", " ", vendorall_1014_02$name)
+vendorall_1014_02$name <- as.factor(vendorall_1014_02$name)
+# 18795 levels
+
+vendorall_1014_02$price <- gsub(" BTC", "", vendorall_1014_02$price)
+vendorall_1014_02$price <- as.double(vendorall_1014_02$price)
+
+write.csv(vendorall_1014_02, file = "vendorall_1014_02.csv", row.names = F)
+test <- read.csv("vendorall_1014_02.csv")
+
+##
+# Oct 2014 03 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+oct2014Dir03 <- "~/GitHub/ag-Vendor/2014-10-03"
+setwd(oct2014Dir03)
+
+# 9385 total Oct 2014 files
+# 3032 files in round 01
+vlist <- list.files(path = oct2014Dir03, pattern = ".html", all.files = T, recursive = T)
+vendorall_1014_03 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1014_03 <- rbind(vendorall_1014_03, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1014_03)
+
+#      user  system elapsed 
+#   111.163   3.948 115.566  
+
+# 54110 obs. of 6 variables
+
+# 1014-03 clean extracted dataframe -------------------------------------------
+
+vendorall_1014_03$Var.1 <- NULL
+vendorall_1014_03 <- vendorall_1014_03[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1014_03) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1014_03$vendor <- as.factor(vendorall_1014_03$vendor)
+# 1152 levels
+
+vendorall_1014_03 <- separate(vendorall_1014_03, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1014_03$from <- gsub("From: ", "", vendorall_1014_03$from)
+vendorall_1014_03$from[vendorall_1014_03$from == ""] <- NA
+
+vendorall_1014_03$from <- as.factor(vendorall_1014_03$from) # 104
+vendorall_1014_03$to <- as.factor(vendorall_1014_03$to) # 394
+
+vendorall_1014_03$name <- stripWhitespace(vendorall_1014_03$name)
+vendorall_1014_03$name <- gsub(",", " ", vendorall_1014_03$name)
+vendorall_1014_03$name <- as.factor(vendorall_1014_03$name)
+# 19091 levels
+
+vendorall_1014_03$price <- gsub(" BTC", "", vendorall_1014_03$price)
+vendorall_1014_03$price <- as.double(vendorall_1014_03$price)
+
+write.csv(vendorall_1014_03, file = "vendorall_1014_03.csv", row.names = F)
+test <- read.csv("vendorall_1014_03.csv")
+
+##
+# Nov 2014 01 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+nov2014Dir01 <- "~/GitHub/ag-Vendor/2014-11-d1"
+setwd(nov2014Dir01)
+
+# 9385 total Nov 2014 files
+# 4579 files in round 01
+vlist <- list.files(path = nov2014Dir01, pattern = ".html", all.files = T, recursive = T)
+vendorall_1114_01 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1114_01 <- rbind(vendorall_1114_01, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1114_01)
+
+#      user  system elapsed 
+#   189.144   8.774 197.881 
+
+# 86150 obs. of 6 variables
+
+# 1114-01 clean extracted dataframe -------------------------------------------
+
+vendorall_1114_01$Var.1 <- NULL
+vendorall_1114_01 <- vendorall_1114_01[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1114_01) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1114_01$vendor <- as.factor(vendorall_1114_01$vendor)
+# 1225 levels
+
+vendorall_1114_01 <- separate(vendorall_1114_01, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1114_01$from <- gsub("From: ", "", vendorall_1114_01$from)
+vendorall_1114_01$from[vendorall_1114_01$from == ""] <- NA
+
+vendorall_1114_01$from <- as.factor(vendorall_1114_01$from) # 101
+vendorall_1114_01$to <- as.factor(vendorall_1114_01$to) # 415
+
+vendorall_1114_01$name <- stripWhitespace(vendorall_1114_01$name)
+vendorall_1114_01$name <- gsub(",", " ", vendorall_1114_01$name)
+vendorall_1114_01$name <- as.factor(vendorall_1114_01$name)
+# 20778 levels
+
+vendorall_1114_01$price <- gsub(" BTC", "", vendorall_1114_01$price)
+vendorall_1114_01$price <- as.double(vendorall_1114_01$price)
+
+write.csv(vendorall_1114_01, file = "vendorall_1114_01.csv", row.names = F)
+test <- read.csv("vendorall_1114_01.csv")
+
+##
+# Nov 2014 02 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+nov2014Dir02 <- "~/GitHub/ag-Vendor/2014-11-d2"
+setwd(nov2014Dir02)
+
+# 9385 total Nov 2014 files
+# 4479 files in round 02
+vlist <- list.files(path = nov2014Dir02, pattern = ".html", all.files = T, recursive = T)
+vendorall_1114_02 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1114_02 <- rbind(vendorall_1114_02, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1114_02)
+
+#      user  system elapsed 
+#   211.553   8.967 220.475  
+
+# 100290 obs. of 6 variables
+
+# 1114-02 clean extracted dataframe -------------------------------------------
+
+vendorall_1114_02$Var.1 <- NULL
+vendorall_1114_02 <- vendorall_1114_02[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1114_02) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1114_02$vendor <- as.factor(vendorall_1114_02$vendor)
+# 1056 levels
+
+vendorall_1114_02 <- separate(vendorall_1114_02, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1114_02$from <- gsub("From: ", "", vendorall_1114_02$from)
+vendorall_1114_02$from[vendorall_1114_02$from == ""] <- NA
+
+vendorall_1114_02$from <- as.factor(vendorall_1114_02$from) # 101
+vendorall_1114_02$to <- as.factor(vendorall_1114_02$to) # 379
+
+vendorall_1114_02$name <- stripWhitespace(vendorall_1114_02$name)
+vendorall_1114_02$name <- gsub(",", " ", vendorall_1114_02$name)
+vendorall_1114_02$name <- as.factor(vendorall_1114_02$name)
+# 21224 levels
+
+vendorall_1114_02$price <- gsub(" BTC", "", vendorall_1114_02$price)
+vendorall_1114_02$price <- as.double(vendorall_1114_02$price)
+
+write.csv(vendorall_1114_02, file = "vendorall_1114_02.csv", row.names = F)
+test <- read.csv("vendorall_1114_02.csv")
+
+##
+# Nov 2014 03 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+nov2014Dir03 <- "~/GitHub/ag-Vendor/2014-11-d3"
+setwd(nov2014Dir03)
+
+# 9385 total Nov 2014 files
+# 4783 files in round 03
+vlist <- list.files(path = nov2014Dir03, pattern = ".html", all.files = T, recursive = T)
+vendorall_1114_03 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1114_03 <- rbind(vendorall_1114_03, pTab)
+  }
+)
+
+# if loop stalls:
+tail(vendorall_1114_03)
+
+#      user  system elapsed 
+#   247.868  11.645 260.624  
+
+# 125311 obs. of 6 variables
+
+# 1114-03 clean extracted dataframe -------------------------------------------
+
+vendorall_1114_03$Var.1 <- NULL
+vendorall_1114_03 <- vendorall_1114_03[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1114_03) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1114_03$vendor <- as.factor(vendorall_1114_03$vendor)
+# 1073 levels
+
+vendorall_1114_03 <- separate(vendorall_1114_03, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1114_03$from <- gsub("From: ", "", vendorall_1114_03$from)
+vendorall_1114_03$from[vendorall_1114_03$from == ""] <- NA
+
+vendorall_1114_03$from <- as.factor(vendorall_1114_03$from) # 99
+vendorall_1114_03$to <- as.factor(vendorall_1114_03$to) # 369
+
+vendorall_1114_03$name <- stripWhitespace(vendorall_1114_03$name)
+vendorall_1114_03$name <- gsub(",", " ", vendorall_1114_03$name)
+vendorall_1114_03$name <- as.factor(vendorall_1114_03$name)
+# 21123 levels
+
+vendorall_1114_03$price <- gsub(" BTC", "", vendorall_1114_03$price)
+vendorall_1114_03$price <- as.double(vendorall_1114_03$price)
+
+write.csv(vendorall_1114_03, file = "vendorall_1114_03.csv", row.names = F)
+test <- read.csv("vendorall_1114_03.csv")
+
+##
+# Dec 2014 01 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+dec2014Dir01 <- "~/GitHub/ag-Vendor/2014-12-d1"
+setwd(dec2014Dir01)
+
+# 11577 total Dec 2014 files
+# 3782 files in round 01
+vlist <- list.files(path = dec2014Dir01, pattern = ".html", all.files = T, recursive = T)
+vendorall_1214_01 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1214_01 <- rbind(vendorall_1214_01, pTab)
+  }
+)
+
+# when loop stalls:
+tail(vendorall_1214_01)
+
+#      user  system elapsed 
+#   170.908   6.786 177.820   
+
+# 86093 obs. of 6 variables
+
+# 1214-01 clean extracted dataframe -------------------------------------------
+
+vendorall_1214_01$Var.1 <- NULL
+vendorall_1214_01 <- vendorall_1214_01[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1214_01) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1214_01$vendor <- as.factor(vendorall_1214_01$vendor)
+# 1052 levels
+
+vendorall_1214_01 <- separate(vendorall_1214_01, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1214_01$from <- gsub("From: ", "", vendorall_1214_01$from)
+vendorall_1214_01$from[vendorall_1214_01$from == ""] <- NA
+
+vendorall_1214_01$from <- as.factor(vendorall_1214_01$from) # 106
+vendorall_1214_01$to <- as.factor(vendorall_1214_01$to) # 375
+
+vendorall_1214_01$name <- stripWhitespace(vendorall_1214_01$name)
+vendorall_1214_01$name <- gsub(",", " ", vendorall_1214_01$name)
+vendorall_1214_01$name <- as.factor(vendorall_1214_01$name)
+# 20969 levels
+
+vendorall_1214_01$price <- gsub(" BTC", "", vendorall_1214_01$price)
+vendorall_1214_01$price <- as.double(vendorall_1214_01$price)
+
+write.csv(vendorall_1214_01, file = "vendorall_1214_01.csv", row.names = F)
+test <- read.csv("vendorall_1214_01.csv")
+
+##
+# Dec 2014 02 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+dec2014Dir02 <- "~/GitHub/ag-Vendor/2014-12-d2"
+setwd(dec2014Dir02)
+
+# 11577 total Dec 2014 files
+# 3645 files in round 01
+vlist <- list.files(path = dec2014Dir02, pattern = ".html", all.files = T, recursive = T)
+vendorall_1214_02 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1214_02 <- rbind(vendorall_1214_02, pTab)
+  }
+)
+
+# when loop stalls:
+tail(vendorall_1214_02)
+
+#      user  system elapsed 
+#   155.575   7.402 163.400  
+
+# 86615 obs. of 6 variables
+
+# 1214-02 clean extracted dataframe -------------------------------------------
+
+vendorall_1214_02$Var.1 <- NULL
+vendorall_1214_02 <- vendorall_1214_02[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1214_02) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1214_02$vendor <- as.factor(vendorall_1214_02$vendor)
+# 1013 levels
+
+vendorall_1214_02 <- separate(vendorall_1214_02, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1214_02$from <- gsub("From: ", "", vendorall_1214_02$from)
+vendorall_1214_02$from[vendorall_1214_02$from == ""] <- NA
+
+vendorall_1214_02$from <- as.factor(vendorall_1214_02$from) # 94
+vendorall_1214_02$to <- as.factor(vendorall_1214_02$to) # 347
+
+vendorall_1214_02$name <- stripWhitespace(vendorall_1214_02$name)
+vendorall_1214_02$name <- gsub(",", " ", vendorall_1214_02$name)
+vendorall_1214_02$name <- as.factor(vendorall_1214_02$name)
+# 20911 levels
+
+vendorall_1214_02$price <- gsub(" BTC", "", vendorall_1214_02$price)
+vendorall_1214_02$price <- as.double(vendorall_1214_02$price)
+
+write.csv(vendorall_1214_02, file = "vendorall_1214_02.csv", row.names = F)
+test <- read.csv("vendorall_1214_02.csv")
+
+##
+# Dec 2014 03 -----------------------------------------------------------------
+##
+
+rm(list = ls())
+
+# list of files to extract from by MONTH
+dec2014Dir03 <- "~/GitHub/ag-Vendor/2014-12-d3"
+setwd(dec2014Dir03)
+
+# 11577 total Dec 2014 files
+# 4089 files in round 01
+vlist <- list.files(path = dec2014Dir03, pattern = ".html", all.files = T, recursive = T)
+vendorall_1214_03 <- data.frame()
+
+system.time(
+  for (i in 1:length(vlist)) {
+    log <- read_html(vlist[i])
+    
+    pTab <- log %>%
+      html_nodes("table.products-list") %>%
+      html_table(header = T, fill = T)
+    
+    pTab <- as.data.frame(pTab)
+    pTab$date <- sub(" *\\__.*", "", vlist[i])
+    
+    pTab$vendor <- log %>%
+      html_nodes("#middlestuff strong") %>%
+      extract2(1) %>%
+      html_text()
+    
+    vendorall_1214_03 <- rbind(vendorall_1214_03, pTab)
+  }
+)
+
+# when loop stalls:
+tail(vendorall_1214_03)
+
+#      user  system elapsed 
+#   218.456   8.004 226.470   
+
+# 102381 obs. of 6 variables
+
+# 1214-03 clean extracted dataframe -------------------------------------------
+
+vendorall_1214_03$Var.1 <- NULL
+vendorall_1214_03 <- vendorall_1214_03[c(4, 5, 1, 2, 3)]
+colnames(vendorall_1214_03) <- c("date", "vendor", "name", "price", "shipping")
+
+vendorall_1214_03$vendor <- as.factor(vendorall_1214_03$vendor)
+# 954 levels
+
+vendorall_1214_03 <- separate(vendorall_1214_03, shipping, into = c("from", "to"), sep = "To:")
+vendorall_1214_03$from <- gsub("From: ", "", vendorall_1214_03$from)
+vendorall_1214_03$from[vendorall_1214_03$from == ""] <- NA
+
+vendorall_1214_03$from <- as.factor(vendorall_1214_03$from) # 91
+vendorall_1214_03$to <- as.factor(vendorall_1214_03$to) # 326
+
+vendorall_1214_03$name <- stripWhitespace(vendorall_1214_03$name)
+vendorall_1214_03$name <- gsub(",", " ", vendorall_1214_03$name)
+vendorall_1214_03$name <- as.factor(vendorall_1214_03$name)
+# 20249 levels
+
+vendorall_1214_03$price <- gsub(" BTC", "", vendorall_1214_03$price)
+vendorall_1214_03$price <- as.double(vendorall_1214_03$price)
+
+write.csv(vendorall_1214_03, file = "vendorall_1214_03.csv", row.names = F)
+test <- read.csv("vendorall_1214_03.csv")
