@@ -1,0 +1,10 @@
+v0114corpus <- tm_map(v0114corpus, removeWords, c("accepted", "agora", "this", "the",
+                                                  "quality", "please", "listing", "what", "ever",
+                                                  "dont", "nice", "look", "listings", "will", "order",
+                                                  "read", "for", "profile", "free", "name", "how", "new",
+                                                  "total", "appearance", "you", "day", "available",
+                                                  "sweet", "and", "made", "account", "questioning",
+                                                  "early", "just", "ordering", "top", "replica",
+                                                  "all", "tracking", "check", "orders", "next", "money",
+                                                  "now", "per", "with", "also", "your", "must", "well",
+                                                  "make", "these", "great", "can", "best", "sent"))
