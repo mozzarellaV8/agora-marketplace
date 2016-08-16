@@ -702,14 +702,14 @@ system.time(
 tail(vendorall_1014_01)
 
 #      user  system elapsed 
-#   126.232   5.593 131.912 
+#   182.825   5.822 197.033 
 
 # 64647 obs. of 6 variables
 
 # 1014 clean extracted dataframe ----------------------------------------------
 
 vendorall_1014_01$Var.1 <- NULL
-vendorall_1014_01 <- vendorall_1014_01[c(4, 5, 1, 2, 3)]
+vendorall_1014_01 <- vendorall_1014_01[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1014_01) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1014_01$vendor <- as.factor(vendorall_1014_01$vendor)
@@ -722,9 +722,9 @@ vendorall_1014_01$from[vendorall_1014_01$from == ""] <- NA
 vendorall_1014_01$from <- as.factor(vendorall_1014_01$from) # 111
 vendorall_1014_01$to <- as.factor(vendorall_1014_01$to) # 379
 
-vendorall_1014_01$name <- stripWhitespace(vendorall_1014_01$name)
-vendorall_1014_01$name <- gsub(",", " ", vendorall_1014_01$name)
-vendorall_1014_01$name <- as.factor(vendorall_1014_01$name)
+vendorall_1014_01$description <- stripWhitespace(vendorall_1014_01$description)
+vendorall_1014_01$description <- gsub(",", " ", vendorall_1014_01$description)
+vendorall_1014_01$description <- as.factor(vendorall_1014_01$description)
 # 19601 levels
 
 vendorall_1014_01$price <- gsub(" BTC", "", vendorall_1014_01$price)
@@ -763,7 +763,7 @@ system.time(
       html_nodes("#middlestuff strong") %>%
       extract2(1) %>%
       html_text()
-    
+
     pTab$product <- log %>%
       html_nodes("#product-list a") %>%
       html_text()
@@ -776,14 +776,14 @@ system.time(
 tail(vendorall_1014_02)
 
 #      user  system elapsed 
-#   114.655   4.103 119.198 
+#   153.911   4.568 163.068 
 
-# 50946 obs. of 6 variables
+# 50946 obs. of 7 variables
 
 # 1014-02 clean extracted dataframe -------------------------------------------
 
 vendorall_1014_02$Var.1 <- NULL
-vendorall_1014_02 <- vendorall_1014_02[c(4, 5, 1, 2, 3)]
+vendorall_1014_02 <- vendorall_1014_02[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1014_02) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1014_02$vendor <- as.factor(vendorall_1014_02$vendor)
@@ -796,9 +796,9 @@ vendorall_1014_02$from[vendorall_1014_02$from == ""] <- NA
 vendorall_1014_02$from <- as.factor(vendorall_1014_02$from) # 103
 vendorall_1014_02$to <- as.factor(vendorall_1014_02$to) # 386
 
-vendorall_1014_02$name <- stripWhitespace(vendorall_1014_02$name)
-vendorall_1014_02$name <- gsub(",", " ", vendorall_1014_02$name)
-vendorall_1014_02$name <- as.factor(vendorall_1014_02$name)
+vendorall_1014_02$description <- stripWhitespace(vendorall_1014_02$description)
+vendorall_1014_02$description <- gsub(",", " ", vendorall_1014_02$description)
+vendorall_1014_02$description <- as.factor(vendorall_1014_02$description)
 # 18795 levels
 
 vendorall_1014_02$price <- gsub(" BTC", "", vendorall_1014_02$price)
@@ -850,14 +850,14 @@ system.time(
 tail(vendorall_1014_03)
 
 #      user  system elapsed 
-#   111.163   3.948 115.566  
+#   159.680   5.664 175.033  
 
-# 54110 obs. of 6 variables
+# 54110 obs. of 7 variables
 
 # 1014-03 clean extracted dataframe -------------------------------------------
 
 vendorall_1014_03$Var.1 <- NULL
-vendorall_1014_03 <- vendorall_1014_03[c(4, 5, 1, 2, 3)]
+vendorall_1014_03 <- vendorall_1014_03[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1014_03) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1014_03$vendor <- as.factor(vendorall_1014_03$vendor)
@@ -870,9 +870,9 @@ vendorall_1014_03$from[vendorall_1014_03$from == ""] <- NA
 vendorall_1014_03$from <- as.factor(vendorall_1014_03$from) # 104
 vendorall_1014_03$to <- as.factor(vendorall_1014_03$to) # 394
 
-vendorall_1014_03$name <- stripWhitespace(vendorall_1014_03$name)
-vendorall_1014_03$name <- gsub(",", " ", vendorall_1014_03$name)
-vendorall_1014_03$name <- as.factor(vendorall_1014_03$name)
+vendorall_1014_03$description <- stripWhitespace(vendorall_1014_03$description)
+vendorall_1014_03$description <- gsub(",", " ", vendorall_1014_03$description)
+vendorall_1014_03$description <- as.factor(vendorall_1014_03$description)
 # 19091 levels
 
 vendorall_1014_03$price <- gsub(" BTC", "", vendorall_1014_03$price)
@@ -924,14 +924,15 @@ system.time(
 tail(vendorall_1114_01)
 
 #      user  system elapsed 
-#   189.144   8.774 197.881 
+#   288.482  12.104 318.363
+# crunching filenames in finder simultaneously
 
-# 86150 obs. of 6 variables
+# 86150 obs. of 7 variables
 
 # 1114-01 clean extracted dataframe -------------------------------------------
 
 vendorall_1114_01$Var.1 <- NULL
-vendorall_1114_01 <- vendorall_1114_01[c(4, 5, 1, 2, 3)]
+vendorall_1114_01 <- vendorall_1114_01[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1114_01) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1114_01$vendor <- as.factor(vendorall_1114_01$vendor)
@@ -944,9 +945,9 @@ vendorall_1114_01$from[vendorall_1114_01$from == ""] <- NA
 vendorall_1114_01$from <- as.factor(vendorall_1114_01$from) # 101
 vendorall_1114_01$to <- as.factor(vendorall_1114_01$to) # 415
 
-vendorall_1114_01$name <- stripWhitespace(vendorall_1114_01$name)
-vendorall_1114_01$name <- gsub(",", " ", vendorall_1114_01$name)
-vendorall_1114_01$name <- as.factor(vendorall_1114_01$name)
+vendorall_1114_01$description <- stripWhitespace(vendorall_1114_01$description)
+vendorall_1114_01$description <- gsub(",", " ", vendorall_1114_01$description)
+vendorall_1114_01$description <- as.factor(vendorall_1114_01$description)
 # 20778 levels
 
 vendorall_1114_01$price <- gsub(" BTC", "", vendorall_1114_01$price)
@@ -998,14 +999,15 @@ system.time(
 tail(vendorall_1114_02)
 
 #      user  system elapsed 
-#   211.553   8.967 220.475  
+#   328.530  10.203 350.949  
 
-# 100290 obs. of 6 variables
+# 100284 obs. of 6 variables
+# removed HollandOnline 2014-11-14
 
 # 1114-02 clean extracted dataframe -------------------------------------------
 
 vendorall_1114_02$Var.1 <- NULL
-vendorall_1114_02 <- vendorall_1114_02[c(4, 5, 1, 2, 3)]
+vendorall_1114_02 <- vendorall_1114_02[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1114_02) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1114_02$vendor <- as.factor(vendorall_1114_02$vendor)
@@ -1018,9 +1020,9 @@ vendorall_1114_02$from[vendorall_1114_02$from == ""] <- NA
 vendorall_1114_02$from <- as.factor(vendorall_1114_02$from) # 101
 vendorall_1114_02$to <- as.factor(vendorall_1114_02$to) # 379
 
-vendorall_1114_02$name <- stripWhitespace(vendorall_1114_02$name)
-vendorall_1114_02$name <- gsub(",", " ", vendorall_1114_02$name)
-vendorall_1114_02$name <- as.factor(vendorall_1114_02$name)
+vendorall_1114_02$description <- stripWhitespace(vendorall_1114_02$description)
+vendorall_1114_02$description <- gsub(",", " ", vendorall_1114_02$description)
+vendorall_1114_02$description <- as.factor(vendorall_1114_02$description)
 # 21224 levels
 
 vendorall_1114_02$price <- gsub(" BTC", "", vendorall_1114_02$price)
@@ -1072,14 +1074,15 @@ system.time(
 tail(vendorall_1114_03)
 
 #      user  system elapsed 
-#   247.868  11.645 260.624  
+#   362.480  10.123 374.235  
 
-# 125311 obs. of 6 variables
+# 125166 obs. of 6 variables
+# removed Cyberzen - big vendor - 2014-11-25
 
 # 1114-03 clean extracted dataframe -------------------------------------------
 
 vendorall_1114_03$Var.1 <- NULL
-vendorall_1114_03 <- vendorall_1114_03[c(4, 5, 1, 2, 3)]
+vendorall_1114_03 <- vendorall_1114_03[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1114_03) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1114_03$vendor <- as.factor(vendorall_1114_03$vendor)
@@ -1092,9 +1095,9 @@ vendorall_1114_03$from[vendorall_1114_03$from == ""] <- NA
 vendorall_1114_03$from <- as.factor(vendorall_1114_03$from) # 99
 vendorall_1114_03$to <- as.factor(vendorall_1114_03$to) # 369
 
-vendorall_1114_03$name <- stripWhitespace(vendorall_1114_03$name)
-vendorall_1114_03$name <- gsub(",", " ", vendorall_1114_03$name)
-vendorall_1114_03$name <- as.factor(vendorall_1114_03$name)
+vendorall_1114_03$description <- stripWhitespace(vendorall_1114_03$description)
+vendorall_1114_03$description <- gsub(",", " ", vendorall_1114_03$description)
+vendorall_1114_03$description <- as.factor(vendorall_1114_03$description)
 # 21123 levels
 
 vendorall_1114_03$price <- gsub(" BTC", "", vendorall_1114_03$price)
@@ -1146,14 +1149,15 @@ system.time(
 tail(vendorall_1214_01)
 
 #      user  system elapsed 
-#   170.908   6.786 177.820   
+#   238.949   7.671 253.473    
 
-# 86093 obs. of 6 variables
+# 86058 obs. of 7 variables
+# removed Luckys who had 34 listings (mdma)
 
 # 1214-01 clean extracted dataframe -------------------------------------------
 
 vendorall_1214_01$Var.1 <- NULL
-vendorall_1214_01 <- vendorall_1214_01[c(4, 5, 1, 2, 3)]
+vendorall_1214_01 <- vendorall_1214_01[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1214_01) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1214_01$vendor <- as.factor(vendorall_1214_01$vendor)
@@ -1166,9 +1170,9 @@ vendorall_1214_01$from[vendorall_1214_01$from == ""] <- NA
 vendorall_1214_01$from <- as.factor(vendorall_1214_01$from) # 106
 vendorall_1214_01$to <- as.factor(vendorall_1214_01$to) # 375
 
-vendorall_1214_01$name <- stripWhitespace(vendorall_1214_01$name)
-vendorall_1214_01$name <- gsub(",", " ", vendorall_1214_01$name)
-vendorall_1214_01$name <- as.factor(vendorall_1214_01$name)
+vendorall_1214_01$description <- stripWhitespace(vendorall_1214_01$description)
+vendorall_1214_01$description <- gsub(",", " ", vendorall_1214_01$description)
+vendorall_1214_01$description <- as.factor(vendorall_1214_01$description)
 # 20969 levels
 
 vendorall_1214_01$price <- gsub(" BTC", "", vendorall_1214_01$price)
@@ -1220,14 +1224,14 @@ system.time(
 tail(vendorall_1214_02)
 
 #      user  system elapsed 
-#   155.575   7.402 163.400  
+#   215.879   8.414 233.028   
 
-# 86615 obs. of 6 variables
+# 83615 obs. of 7 variables
 
 # 1214-02 clean extracted dataframe -------------------------------------------
 
 vendorall_1214_02$Var.1 <- NULL
-vendorall_1214_02 <- vendorall_1214_02[c(4, 5, 1, 2, 3)]
+vendorall_1214_02 <- vendorall_1214_02[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1214_02) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1214_02$vendor <- as.factor(vendorall_1214_02$vendor)
@@ -1240,9 +1244,9 @@ vendorall_1214_02$from[vendorall_1214_02$from == ""] <- NA
 vendorall_1214_02$from <- as.factor(vendorall_1214_02$from) # 94
 vendorall_1214_02$to <- as.factor(vendorall_1214_02$to) # 347
 
-vendorall_1214_02$name <- stripWhitespace(vendorall_1214_02$name)
-vendorall_1214_02$name <- gsub(",", " ", vendorall_1214_02$name)
-vendorall_1214_02$name <- as.factor(vendorall_1214_02$name)
+vendorall_1214_02$description <- stripWhitespace(vendorall_1214_02$description)
+vendorall_1214_02$description <- gsub(",", " ", vendorall_1214_02$description)
+vendorall_1214_02$description <- as.factor(vendorall_1214_02$description)
 # 20911 levels
 
 vendorall_1214_02$price <- gsub(" BTC", "", vendorall_1214_02$price)
@@ -1294,14 +1298,15 @@ system.time(
 tail(vendorall_1214_03)
 
 #      user  system elapsed 
-#   218.456   8.004 226.470   
+#   266.463  10.855 288.393   
 
-# 102381 obs. of 6 variables
+# 102315 obs. of 7 variables
+# removed zeltasgarden - many feedbacks
 
 # 1214-03 clean extracted dataframe -------------------------------------------
 
 vendorall_1214_03$Var.1 <- NULL
-vendorall_1214_03 <- vendorall_1214_03[c(4, 5, 1, 2, 3)]
+vendorall_1214_03 <- vendorall_1214_03[c(4, 5, 6, 1, 2, 3)]
 colnames(vendorall_1214_03) <- c("date", "vendor", "product", "description", "price", "shipping")
 
 vendorall_1214_03$vendor <- as.factor(vendorall_1214_03$vendor)
@@ -1314,9 +1319,9 @@ vendorall_1214_03$from[vendorall_1214_03$from == ""] <- NA
 vendorall_1214_03$from <- as.factor(vendorall_1214_03$from) # 91
 vendorall_1214_03$to <- as.factor(vendorall_1214_03$to) # 326
 
-vendorall_1214_03$name <- stripWhitespace(vendorall_1214_03$name)
-vendorall_1214_03$name <- gsub(",", " ", vendorall_1214_03$name)
-vendorall_1214_03$name <- as.factor(vendorall_1214_03$name)
+vendorall_1214_03$description <- stripWhitespace(vendorall_1214_03$description)
+vendorall_1214_03$description <- gsub(",", " ", vendorall_1214_03$description)
+vendorall_1214_03$description <- as.factor(vendorall_1214_03$description)
 # 20249 levels
 
 vendorall_1214_03$price <- gsub(" BTC", "", vendorall_1214_03$price)
