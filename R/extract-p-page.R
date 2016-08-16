@@ -11,7 +11,7 @@ library(magrittr)
 # p directory - single page ---------------------------------------------------
 
 # set path to scraped files
-datDir <- "~/GitHub/agora/2014-01-01/p/a1BkWEipyk.html"
+datDir <- "~/GitHub/ag-Product/2014-01/2014-01-01__a1BkWEipyk.html"
 
 # this works
 agora01 <- read_html(datDir)
@@ -90,9 +90,15 @@ feedback <- stripWhitespace(feedback)
 feedback
 # [1] " Feedbacks: No feedbacks found. "
 
+
+cat <- agora01 %>%
+  html_nodes(".topnav-element") %>%
+  html_text()
+
+cat
 # data frame ------------------------------------------------------------------
 
-agora <- data.frame(price = price, title = title, description = description, 
+agora <- data.frame(price = price, title = title, description = description, cat = cat,
                     vendor = vendor, rating = rating, ship_from = ship_from,
                     feedback = feedback)
 
