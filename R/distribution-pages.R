@@ -200,6 +200,15 @@ RMSE_5k <- (sqrt(sum(pv5k.lm$residuals^2)))/(nrow(pv))
 RMSE_5k
 # 331.7902
 
+
+
+
+
+
+
+
+
+
 # number of vendors by date -------------------------------
 
 vd.lm <- lm(vendor ~ date, data = pv)
