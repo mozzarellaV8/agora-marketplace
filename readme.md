@@ -12,7 +12,7 @@ domain:
 - [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 
 exploratory:
-- [product counts](#exploratory)
+- [product and vendor counts](#exploratory-data-analysis)
 
 programming:
 - [product page extraction](R/product-page-extraction.R)
