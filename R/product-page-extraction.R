@@ -199,7 +199,8 @@ products0114 <- bind0114
 # final pre-arules
 write.csv(products0114, file = "products-2014-01.csv", row.names = F)
 
-# Binarization for arules -----------------------------------------------------
+# explore categories ---------------------------------------------------------
+
 getwd()
 setwd("~/GitHub/agora-marketplace")
 
@@ -228,4 +229,9 @@ levels(fb$subcat)
 levels(fb$subsubcat)
 # [1] "2C"         "5-MeO"      "Cocaine"    "DMT"        "Edibles"    "GBL"        "GHB"        "Hash"       "Ketamine"  
 # [10] "LSD"        "MDA"        "MDMA"       "Mescaline"  "Meth"       "Mushrooms"  "MXE"        "NB"         "Other"     
-# [19] "Others"     "Pills"      "Salvia"     "Speed"      "Spores"     "Synthetics" "Weed"  
+# [19] "Others"     "Pills"      "Salvia"     "Speed"      "Spores"     "Synthetics" "Weed" 
+
+
+
+# binarization for arules -----------------------------------------------------
+
