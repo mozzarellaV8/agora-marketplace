@@ -124,7 +124,7 @@ Vendor Pages: 19,245
 Avg. Vendors per day: 34
 
 
-![](plots/pgDist-gg-vendor-lm-01.png)
+![](pgDist-gg-product-lm-01.png)
 
 ![](plots/pgDist-gg-vendor-lm-01.png)
 
