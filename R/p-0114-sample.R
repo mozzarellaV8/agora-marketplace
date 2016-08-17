@@ -206,3 +206,6 @@ plot(p14$cat, p14$from, main = "AgMarket: listing category by location",
 par(mar = c(12, 18, 8, 8), family = "FranklinGothicSSK", las = 2)
 plot(p14$subsubcat, p14$from, main = "AgMarket: sub-subcategory by location",
      xlab = "", ylab = "")
+
+library(vcd)
+assoc( ~ subcat + subsubcat, data = fb, shade = TRUE)
