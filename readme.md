@@ -88,6 +88,12 @@ It's a stretch to say (and impossible to prove) that Agora's administrators were
 
 Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
 
+While not definitive in it's conclusion, the purpose of this exploration was to explore the question
+	
+		"What if Agora never shut down? What would the trend be?"
+
+We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
+
 ``` r
 pv <- read.csv("data/counts/crawl-distribution.csv")
 str(pv)
@@ -121,28 +127,33 @@ Avg. Listings per day: 4461
 
 Vendor Pages: 19,245
 
-Avg. Vendors per day: 34
-
+Avg. Vendors per day: 34 
 
 ![](plots/pgDist-lm-product-01.png)
 
 ``` r
-#                  Estimate Std. Error t value Pr(>|t|)    
-#   (Intercept) -4.542e+05  5.579e+04  -8.142 4.04e-14 ***
-#   date         2.843e+01  3.401e+00   8.360 1.03e-14 ***
-# Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
+#                 Estimate  Std.Error  t value 		Pr(>|t|)    
+#   (Intercept) -4.542e+05  5.579e+04  	-8.142 	4.04e-14 ***
+#   date         2.843e+01  3.401e+00    8.360 	1.03e-14 ***
+# 	Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
 ```
+
+Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. 
 
 ![](plots/pgDist-lm-vendor-01.png)
 
 # Coefficients:
-#                  Estimate Std. Error t value Pr(>|t|)    
-#   (Intercept) -1.505e+03  4.271e+02  -3.523 0.000528 ***
-#   date         9.752e-02  2.604e-02   3.745 0.000235 ***
-# Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
+#                 Estimate   Std.Error  t value Pr(>|t|)    
+#   (Intercept) -1.505e+03   4.271e+02  -3.523 	0.000528 ***
+#   date         9.752e-02   2.604e-02   3.745 	0.000235 ***
+# 	Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
 ```
 
-Market downtimes - an influence on number of listings and vendors
+Since the market could go offline for periods ranging from hours to days, listings could disappear and then reappear somewhat randomly as well. The anonymous nature of the marketplace did not contribute to traiditional efficiency in this respect. What follows is a partial plot of market downtimes - ranging from the dates 2014-04-23 until 2015-04-04. 
+
+What if we assume there was no downtime for security issues? Can we project a reasonable market size if growth were to stabilize? 	
+
+Actual Market downtimes - an influence on number of listings and vendors:
 
 ![](plots/DowntimesByDate.png)
 
