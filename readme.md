@@ -65,6 +65,10 @@ Agora Marketplace index page on July 7th, 2015:
 
 ![2015-07-07-index](vis/index-2015-07-07.jpg)
 
+Agora Marketplace index page on January 1st, 2014 (printout with notes)
+
+![](vis/index-2014-01-01.jpg)
+
 ## Agora and anonymous marketplaces
 
 Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally and subjectively, the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
