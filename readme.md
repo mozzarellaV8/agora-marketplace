@@ -11,7 +11,11 @@ domain:
 - [some images](#images)
 - [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
 
+exploratory:
+- [product counts](#exploratory)
+
 programming:
+- [product page extraction](R/product-page-extraction.R)
 - [vendor page extractions](R/extract-vendor-all-01B.R)
 - [individual html page extractions](R)
 - [scrape cleanse / html parsing](parse-html/readme.md)
@@ -79,4 +83,33 @@ Agora was chosen as a market to analyze because of it's immense popularity and h
 This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
 
 It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
+
+## Exploratory Data Analysis
+
+Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
+
+``` r
+pv <- read.csv("data/counts/crawl-distribution.csv")
+str(pv)
+
+pv$date <- as.Date(pv$date)
+pv$vendor <- as.integer(pv$vendor)
+summary(pv)
+
+#         date                  p             vendor     
+# Min.   :2014-01-01   Min.   :    1   Min.   :  1.0  
+# 1st Qu.:2014-09-11   1st Qu.: 4453   1st Qu.: 49.5  
+# Median :2014-12-07   Median :12697   Median : 96.0  
+# Mean   :2014-11-26   Mean   :12154   Mean   : 94.8  
+# 3rd Qu.:2015-03-17   3rd Qu.:19030   3rd Qu.:140.5  
+# Max.   :2015-07-07   Max.   :27654   Max.   :184.0 
+
+```
+
+![](plots/)
+
+
+
+
+
 
