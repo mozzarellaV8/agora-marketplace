@@ -4,7 +4,7 @@
 
 # load data -------------------------------------------------------------------
 
-pv <- read.csv("data/crawl-distribution.csv")
+pv <- read.csv("data/counts/crawl-distribution.csv")
 str(pv)
 
 pv$date <- as.Date(pv$date)
@@ -21,11 +21,9 @@ summary(pv)
 
 sum(pv$p)
 # [1] 2467200
-# so we have 2467200 total product pages from 2914-01-01 til 2015-07-07.
 
 sum(pv$vendor)
 # [1] 19245
-# so we have 19425 total vendor pages from 2914-01-01 til 2015-07-07.
 
 # these are raw counts that don't take into account bad crawls, pages
 # with no information, and repeat listings.
