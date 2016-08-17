@@ -198,5 +198,34 @@ products0114 <- bind0114
 
 # final pre-arules
 write.csv(products0114, file = "products-2014-01.csv", row.names = F)
-test <- read.csv("products-2014-01.csv")
 
+# Binarization for arules -----------------------------------------------------
+getwd()
+setwd("~/GitHub/agora-marketplace")
+
+products0114 <- read.csv("~/GitHub/agora-marketplace/data/product/products-2014-01.csv")
+str(products0114)
+
+
+# feedback as transaction - how many?
+products0114$feedback <- as.character(products0114$feedback)
+fb <- subset(products0114, products0114$feedback != "\n    Feedbacks:\n    No feedbacks found.\n")
+# drops from 7986 listings to 1430. 
+
+levels(fb$cat)
+#  [1] "Counterfeits"       "Data"               "Drug paraphernalia" "Drugs"              "Forgeries"         
+#  [6] "Information"        "Listings"           "Services"           "Tobacco"            "Weapons"
+
+levels(fb$subcat)
+# [1] "Accessories"         "Accounts"            "Ammunition"          "Benzos"              "Cannabis"           
+# [6] "Clothing"            "Containers"          "Disassociatives"     "eBooks"              "Ecstasy"            
+# [11] "Ecstasy-MDMA"        "Electronics"         "Guides"              "Hacking"             "Lethal firearms"    
+# [16] "Melee"               "Methylone"           "Money"               "Non-lethal firearms" "Opioids"            
+# [21] "Other"               "Pipes"               "Pirated"             "Prescription"        "Psychedelics"       
+# [26] "RCs"                 "Smoked"              "Software"            "Steroids"            "Stimulants"         
+# [31] "Watches"             "Weight loss" 
+
+levels(fb$subsubcat)
+# [1] "2C"         "5-MeO"      "Cocaine"    "DMT"        "Edibles"    "GBL"        "GHB"        "Hash"       "Ketamine"  
+# [10] "LSD"        "MDA"        "MDMA"       "Mescaline"  "Meth"       "Mushrooms"  "MXE"        "NB"         "Other"     
+# [19] "Others"     "Pills"      "Salvia"     "Speed"      "Spores"     "Synthetics" "Weed"  
