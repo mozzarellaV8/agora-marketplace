@@ -53,7 +53,7 @@ The scale of gwern's harvest prevents it from being posted here. Here is a glimp
 
 ![](vis/extractedSample.png)
 
-_*to download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download time._
+_*to download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download and tar.gz extraction time._
 
 ## current strategy
 
