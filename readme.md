@@ -49,7 +49,9 @@ From these daily crawls, I found the most relevant directories to be:
 - [p](parse-html/ag-RelevantTags-p.md) - individual product listing pages
 - [vendor](parse-html/ag-RelevantTags-vendor.md) - vendor pages with bio, pgp key, and vendor's listings.
 
-The scale of gwern's harvest prevents it from being posted here. To get more of an idea of the data, please do refer to the [parse-html](parse-html/readme.md) folder. 
+The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction, subsetted for listings that contained client feedback - potential indicator of a transaction.
+
+![](vis/extractedSample.png)
 
 To download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download time. 
 
