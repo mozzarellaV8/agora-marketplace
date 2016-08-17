@@ -104,6 +104,14 @@ summary(pv)
 # 3rd Qu.:2015-03-17   3rd Qu.:19030   3rd Qu.:140.5  
 # Max.   :2015-07-07   Max.   :27654   Max.   :184.0 
 
+sum(pv$p)
+# [1] 2467200
+# so we have 2467200 total product pages from 2914-01-01 til 2015-07-07.
+
+sum(pv$vendor)
+# [1] 19245
+# so we have 19425 total vendor pages from 2914-01-01 til 2015-07-07.
+
 ```
 
 ![](plots/)
