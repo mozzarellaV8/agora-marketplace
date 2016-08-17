@@ -196,7 +196,7 @@ colnames(bind0114) <- c("list", "date", "vendor", "product", "price",
 
 products0114 <- bind0114
 
-# final pre-arules
+# final extracted data pre-arules/contigency table transformations
 write.csv(products0114, file = "products-2014-01.csv", row.names = F)
 
 # explore categories ---------------------------------------------------------
