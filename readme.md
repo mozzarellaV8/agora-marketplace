@@ -126,7 +126,21 @@ Avg. Vendors per day: 34
 
 ![](plots/pgDist-lm-product-01.png)
 
+``` r
+#                  Estimate Std. Error t value Pr(>|t|)    
+#   (Intercept) -4.542e+05  5.579e+04  -8.142 4.04e-14 ***
+#   date         2.843e+01  3.401e+00   8.360 1.03e-14 ***
+# Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
+```
+
 ![](plots/pgDist-lm-vendor-01.png)
+
+# Coefficients:
+#                  Estimate Std. Error t value Pr(>|t|)    
+#   (Intercept) -1.505e+03  4.271e+02  -3.523 0.000528 ***
+#   date         9.752e-02  2.604e-02   3.745 0.000235 ***
+# Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
+```
 
 Market downtimes - an influence on number of listings and vendors
 
