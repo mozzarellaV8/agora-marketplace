@@ -62,7 +62,7 @@ _*to download the data for yourself, please refer to gwern's black market archiv
 
 ## current strategy
 
-The ultimate goal will be to conduct a Market Basket Analysis; to create associate rules given the products and services available in the data. While some transaction data is available, in much more abundace is vendor data. Given this, it will likely be that associate rules will be created from vendor listings - i.e. "vendors who sell this, also sell that". 
+The ultimate goal will be to conduct a Market Basket Analysis; to mine associate rules given the products and services available in the data. While some transaction data is available, in much more abundace is vendor data. Given this, it will likely be that associate rules will be created from vendor listings - i.e. "vendors who sell this, also sell that". 
 
 There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
 
