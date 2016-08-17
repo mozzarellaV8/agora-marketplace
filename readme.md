@@ -106,15 +106,31 @@ summary(pv)
 
 sum(pv$p)
 # [1] 2467200
-# so we have 2467200 total product pages from 2914-01-01 til 2015-07-07.
 
 sum(pv$vendor)
 # [1] 19245
-# so we have 19425 total vendor pages from 2914-01-01 til 2015-07-07.
 
 ```
+Time Period: January 1st, 2014 through July 7th, 2015
 
-![](plots/)
+Total days: 553
+
+Product Listings: 2,467,200
+
+Avg. Listings per day: 4461
+
+Vendor Pages: 19,245
+
+Avg. Vendors per day: 34
+
+
+![](plots/pgDist-gg-vendor-lm-01.png)
+
+![](plots/pgDist-gg-vendor-lm-01.png)
+
+Market downtimes - an influence on number of listings and vendors
+
+![](plots/DowntimesByDate.png)
 
 
 
