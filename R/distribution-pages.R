@@ -224,10 +224,11 @@ vd.lm01 <- ggplot(pv, aes(date, vendor)) + theme_minimal() +
   theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0))) +
   theme(plot.margin = unit(c(3, 3, 3, 2), "cm"))
 
-vd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626")
+vd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
+                      linetype = "dashed")
 
 par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
-plot(vd.lm)
+plot(vd.lm01)
 
 
 # number of products by vendor ----------------------------
