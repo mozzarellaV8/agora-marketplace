@@ -122,6 +122,6 @@ colnames(test0314) <- c("list", "date", "vendor", "product", "price",
                         "cat", "subcat", "feedback", "from", "to")
 
 products0314 <- test0314
-write.csv(products0314, file = "p-2014-03-01.csv", row.names = F)
-test <- read.csv("p-2014-03-01.csv")
+write.csv(products0314, file = "products-2014-03-01.csv", row.names = F)
+test <- read.csv("products-2014-03-01.csv")
 
