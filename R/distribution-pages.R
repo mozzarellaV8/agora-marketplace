@@ -89,7 +89,8 @@ pd.lm01 <- ggplot(pv, aes(date, p)) +
   theme(axis.text.y = element_text(family = "Times", face = "plain", size = 11)) +
   theme(plot.margin = unit(c(3, 3, 3, 3), "cm"))
 
-pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626") +
+pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
+                      linetype = "dashed") +
   theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
   theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0)))
 
@@ -130,7 +131,7 @@ plot(updown$date, updown$hours_down,
 
 agDown <- ggplot(updown, aes(date, hours_down)) + 
   theme_minimal() +
-  geom_point(aes(color = hours_down), size = 4.75, shape = 17) +
+  geom_point(aes(colour = hours_down), size = 2, shape = 25) +
   ggtitle("Agora Marketplace: Downtime (hours) by Date") +
   theme(plot.title = element_text(family = "Times", face = "bold", size = 18)) +
   labs(x = "Date", y = "number of hours down") +
@@ -198,15 +199,6 @@ RMSE_5k <- (sqrt(sum(pv5k.lm$residuals^2)))/(nrow(pv))
 RMSE_5k
 # 331.7902
 
-
-
-
-
-
-
-
-
-
 # number of vendors by date -------------------------------
 
 vd.lm <- lm(vendor ~ date, data = pv)
@@ -260,10 +252,6 @@ summary(product.vd.lm)
 # Multiple R-squared:  0.4021,	Adjusted R-squared:  0.3962
 par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
 plot(product.vd.lm)
-
-
-
-
 
 
 # prediction of number products ---------------------------
