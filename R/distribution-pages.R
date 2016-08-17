@@ -94,6 +94,49 @@ pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
   theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
   theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0)))
 
+# number of vendors by date -------------------------------
+
+vd.lm <- lm(vendor ~ date, data = pv)
+summary(vd.lm)
+# Coefficients:
+#                  Estimate Std. Error t value Pr(>|t|)    
+#   (Intercept) -1.505e+03  4.271e+02  -3.523 0.000528 ***
+#   date         9.752e-02  2.604e-02   3.745 0.000235 ***
+# Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
+
+# I've seen better values than these. Plot it quick and check out p ~ vendor.
+
+vd.lm01 <- ggplot(pv, aes(date, vendor)) + theme_minimal() +
+  geom_point(aes(color = vendor), size = 4.75, shape = 18) +
+  ggtitle("AgMarket: Number of Vendors ~ Date") +
+  theme(plot.title = element_text(family= "Times", face = "bold", size = 18)) +
+  labs(x = "Date", y = "number of vendors (by page count)") +
+  theme(axis.title.x = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.title.y = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.text.x = element_text(family = "Times", face = "plain", size = 11)) +
+  theme(axis.text.y = element_text(family = "Times", face = "plain", size = 11)) +
+  theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
+  theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0))) +
+  theme(plot.margin = unit(c(3, 3, 3, 2), "cm"))
+
+vd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
+                      linetype = "dashed")
+
+par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
+plot(vd.lm01)
+
+
+# number of products by vendor ----------------------------
+
+product.v.lm <- lm(p ~ vendor, data = pv)
+summary(product.v.lm)
+#               Estimate Std. Error t value Pr(>|t|)    
+#  (Intercept) 5248.481    976.419   5.375 2.11e-07 ***
+#  vendor        72.838      8.975   8.116 4.75e-14 ***
+# Multiple R-squared:  0.2468,	Adjusted R-squared:  0.2431
+
+# again, seen better. 
+
 # number of product listings by date 02 ---------------------------------------
 
 # What if the market never got shut down? What would the trend be? 
@@ -199,48 +242,6 @@ RMSE_5k <- (sqrt(sum(pv5k.lm$residuals^2)))/(nrow(pv))
 RMSE_5k
 # 331.7902
 
-# number of vendors by date -------------------------------
-
-vd.lm <- lm(vendor ~ date, data = pv)
-summary(vd.lm)
-# Coefficients:
-#                  Estimate Std. Error t value Pr(>|t|)    
-#   (Intercept) -1.505e+03  4.271e+02  -3.523 0.000528 ***
-#   date         9.752e-02  2.604e-02   3.745 0.000235 ***
-# Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
-
-# I've seen better values than these. Plot it quick and check out p ~ vendor.
-
-vd.lm01 <- ggplot(pv, aes(date, vendor)) + theme_minimal() +
-  geom_point(aes(color = vendor), size = 4.75, shape = 18) +
-  ggtitle("AgMarket: Number of Vendors ~ Date") +
-  theme(plot.title = element_text(family= "Times", face = "bold", size = 18)) +
-  labs(x = "Date", y = "number of vendors (by page count)") +
-  theme(axis.title.x = element_text(family = "Times", face = "italic", size = 14)) +
-  theme(axis.title.y = element_text(family = "Times", face = "italic", size = 14)) +
-  theme(axis.text.x = element_text(family = "Times", face = "plain", size = 11)) +
-  theme(axis.text.y = element_text(family = "Times", face = "plain", size = 11)) +
-  theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
-  theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0))) +
-  theme(plot.margin = unit(c(3, 3, 3, 2), "cm"))
-
-vd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
-                      linetype = "dashed")
-
-par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
-plot(vd.lm01)
-
-
-# number of products by vendor ----------------------------
-
-product.v.lm <- lm(p ~ vendor, data = pv)
-summary(product.v.lm)
-#               Estimate Std. Error t value Pr(>|t|)    
-#  (Intercept) 5248.481    976.419   5.375 2.11e-07 ***
-#  vendor        72.838      8.975   8.116 4.75e-14 ***
-# Multiple R-squared:  0.2468,	Adjusted R-squared:  0.2431
-
-# again, seen better. 
 
 # number of products by vendor + date ---------------------
 product.vd.lm <- lm(p ~ vendor + date, data = pv)
