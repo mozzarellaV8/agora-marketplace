@@ -14,25 +14,6 @@ p14$date <- as.Date(p14$date)
 # feedback as transaction - how many?
 p14$feedback <- as.character(p14$feedback)
 fb <- subset(p14, p14$feedback != "\n    Feedbacks:\n    No feedbacks found.\n")
-# number of listings drops from 7986 listings to 1430. 
-
-levels(fb$cat)
-#  [1] "Counterfeits"       "Data"               "Drug paraphernalia" "Drugs"              "Forgeries"         
-#  [6] "Information"        "Listings"           "Services"           "Tobacco"            "Weapons"
-
-levels(fb$subcat)
-# [1] "Accessories"         "Accounts"            "Ammunition"          "Benzos"              "Cannabis"           
-# [6] "Clothing"            "Containers"          "Disassociatives"     "eBooks"              "Ecstasy"            
-# [11] "Ecstasy-MDMA"        "Electronics"         "Guides"              "Hacking"             "Lethal firearms"    
-# [16] "Melee"               "Methylone"           "Money"               "Non-lethal firearms" "Opioids"            
-# [21] "Other"               "Pipes"               "Pirated"             "Prescription"        "Psychedelics"       
-# [26] "RCs"                 "Smoked"              "Software"            "Steroids"            "Stimulants"         
-# [31] "Watches"             "Weight loss" 
-
-levels(fb$subsubcat)
-# [1] "2C"         "5-MeO"      "Cocaine"    "DMT"        "Edibles"    "GBL"        "GHB"        "Hash"       "Ketamine"  
-# [10] "LSD"        "MDA"        "MDMA"       "Mescaline"  "Meth"       "Mushrooms"  "MXE"        "NB"         "Other"     
-# [19] "Others"     "Pills"      "Salvia"     "Speed"      "Spores"     "Synthetics" "Weed" 
 
 
 # explore categories ---------------------------------------------------------
@@ -40,9 +21,9 @@ levels(fb$subsubcat)
 library(ggplot2)
 library(RColorBrewer)
 library(vcd)
+
 library(extrafont)
 library(colorRamps)
-library(grDevices)
 
 display.brewer.all()
 font_import()
@@ -93,7 +74,7 @@ subcat <- subcat +
   theme(legend.position = "none") +
   labs(title = "Agora Marketplace: subcategories",
        x = "", y  = "count")
-  
+
 subcat
 # revise NAs in subcategory - fill in with category value
 
@@ -108,7 +89,7 @@ subsub <- ggplot(na.omit(p14), aes(x = subsubcat, fill = subsubcat)) +
   theme(plot.margin = unit(c(2, 2, 0.5, 2), "cm"))
 
 subsub + theme(axis.text.x = element_text(angle = 45, hjust = 1.1, vjust = 1.25,
-                                   size = 14, face = "bold")) +
+                                          size = 14, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(plot.title = element_text(size = 18, face = "bold")) +
   theme(legend.position = "none") +
@@ -161,51 +142,9 @@ fb.subsub <- ggplot(na.omit(p14), aes(x = subsubcat, fill = subsubcat)) +
   theme(plot.margin = unit(c(2, 2, 0.5, 2), "cm"))
 
 fb.subsub + theme(axis.text.x = element_text(angle = 45, hjust = 1.1, vjust = 1.25,
-                                          size = 14, face = "bold")) +
+                                             size = 14, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(plot.title = element_text(size = 18, face = "bold")) +
   theme(legend.position = "none") +
   labs(title = "Agora Marketplace: sub-subcategories with feedback/transactions",
        x = "", y  = "count")
-
-
-# cat by subcat
-par(mar = c(12, 12, 8, 8), family = "FranklinGothicSSK", las = 2)
-plot(p14$cat, p14$subcat, xlab = "", ylab = "", 
-     main = "AgMarketplace: categories by subcategories")
-
-#main
-par(mar = c(12, 12, 12, 8), las = 1)
-plot(p14$cat, main = "AgMarketplace: listing categories", horiz = TRUE)
-
-# sub
-par(mar = c(12, 12, 12, 8), las = 1)
-plot(p14$subcat, main = "AgMarketplace: listing subcategories", horiz = TRUE)
-
-# subsub
-par(mar = c(12, 12, 12, 8), las = 1)
-plot(p14$subsubcat, main = "AgMarketplace: listing sub-subcategories", horiz = TRUE)
-
-# categories by location
-
-p14$from <- stripWhitespace(as.character(p14$from))
-levels(as.factor(p14$from))
-p14$from <- as.factor(p14$from)
-
-# subcat by ship_from
-par(mar = c(12, 18, 8, 8), family = "FranklinGothicSSK", las = 2)
-plot(p14$subcat, p14$from, main = "AgMarket: subcategory by location",
-     xlab = "", ylab = "")
-
-# cat by ship_from
-par(mar = c(12, 18, 8, 8), family = "FranklinGothicSSK", las = 2)
-plot(p14$cat, p14$from, main = "AgMarket: listing category by location",
-     xlab = "", ylab = "")
-
-# subsubcat by location
-par(mar = c(12, 18, 8, 8), family = "FranklinGothicSSK", las = 2)
-plot(p14$subsubcat, p14$from, main = "AgMarket: sub-subcategory by location",
-     xlab = "", ylab = "")
-
-library(vcd)
-assoc( ~ subcat + subsubcat, data = fb, shade = TRUE)
