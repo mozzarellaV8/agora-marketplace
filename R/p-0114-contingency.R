@@ -14,19 +14,26 @@ p14ct$cat <- as.character(p14ct$cat)
 p14ct$subcat <- as.character(p14ct$subcat)
 p14ct$subsubcat <- as.character(p14ct$subsubcat)
 
+# create binary columans ------------------------------------------------------
+
+# high level / main categories
 levels(as.factor(p14ctct$cat))
 
 p14ctct$drugs <- ifelse(p14ct$cat == "Drugs", 1, 0)
 p14ct$counterfeits <- ifelse(p14ct$cat == "Counterfeits", 1, 0)
 p14ct$data <- ifelse(p14ct$cat == "Data", 1, 0)
 p14ct$dp <- ifelse(p14ct$cat == "Drug paraphernalia", 1, 0)
-p14ct$info
+p14ct$info <- ifelse(p14ct$cat == "Information", 1, 0)
+p14ct$forgeries <- ifelse(p14ct$cat == "Forgeries", 1, 0)
+p14ct$Listings <- ifelse(p14ct$cat == "Listings", 1, 0)
+p14ct$services <- ifelse(p14$cat == "Services", 1, 0)
+p14ct$tobacco <- ifelse(p14$cat == "Tobacco", 1, 0)
+p14ct$weapons <- ifelse(p14$cat == "Weapons", 1, 0)
+
 
 p14ct$guides
 p14ct$books
 
-p14ct$services
-p14ct$weapons
 
 p14ct$benzos
 p14ct$cannabis
