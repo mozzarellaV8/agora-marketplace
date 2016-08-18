@@ -142,6 +142,7 @@ Given the limited number of variables, these models probably shouldn't be consid
 
 ![](plots/pgDist-lm-vendor-01.png)
 
+``` r
 # Coefficients:
 #                 Estimate   Std.Error  t value Pr(>|t|)    
 #   (Intercept) -1.505e+03   4.271e+02  -3.523 	0.000528 ***
