@@ -172,6 +172,8 @@ levels(fb$from) # 28
 fb$to <- as.factor(fb$to)
 levels(fb$to) # 25
 
+write.csv(fb, file = "p-2014-01-fb-clean.csv", row.names = F)
+
 # mosaic plots ----------------------------------------------------------------
 library(vcd)
 mosaic( ~ cat + from, data = fb, shade = TRUE)
@@ -192,4 +194,9 @@ levels(as.factor(fb$subcat))
 fb$subcat <- as.factor(fb$subcat)
 
 plot(fb$subcat, fb$from, xlab = "", ylab = "", 
-     main = "AgMarketplace: Category by Location")
+     main = "AgMarketplace: SubCategory by Location")
+
+# subsubcategory by location
+plot(fb$subsubcat, fb$from, xlab= "", ylab = "",
+     main = "AgMarketplace: SubSubCategory by Location")
+
