@@ -51,8 +51,8 @@ p14ct$other
 p14ct$prescription
 p14ct$psychedelics
 p14ct$mescaline
-p14ct$2c
-p14ct$5meo
+p14ct$x2c
+p14ct$xs5meo
 p14ct$dmt
 p14ct$lsd
 p14ct$mushrooms
