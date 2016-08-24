@@ -146,7 +146,7 @@ p1114.12$subcat <- as.character(p1114.12$subcat)
 
 p1114.12 <- read.csv("~/GitHub/ag-product-safety/p-2014-11-12.csv", stringsAsFactors = F)
 
-# 14769 > 13318 > 5436 > 3266
+# 14769 > 13318 > 5436 > 3737
 drugs1114.12 <- subset(p1114.12, p1114.12$cat == "Drugs")
 drugs1114.12 <- subset(drugs1114.12, drugs1114.12$subcat != "Other" & 
                          drugs1114.12$subcat != "Weight loss" &
@@ -155,7 +155,6 @@ drugs1114.12 <- subset(drugs1114.12, drugs1114.12$subcat != "Other" &
                          drugs1114.12$subcat != "RCs" &
                          drugs1114.12$subcat != "Steroids" &
                          drugs1114.12$subcat != "Methylone" &
-                         drugs1114.12$subcat != "Opioids" &
                          drugs1114.12$subcat != "Ecstasy-MDMA" &
                          drugs1114.12$subcat != "Barbiturates")
 
