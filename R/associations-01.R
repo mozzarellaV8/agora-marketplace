@@ -120,19 +120,77 @@ class(fb$date)
 
 # look at counts --------------------------------------------------------------
 
+# frequencies of specific products
 c1 <- as.data.frame(table(fb$product))
 rownames(c1) <- NULL
-colnames(c1) <- c("product", "pFreq")
+colnames(c1) <- c("product", "pCount")
+
+c3 <- as.data.frame(table(fb$date, fb$vendor))
+rownames(c3) <- NULL
+colnames(c3) <- c("date", "vendor", "vCount")
+c3$vendor <- gsub("%7E", "", c3$vendor)
+c3$vendor <- gsub("/user/", "", c3$vendor)
+c3 <- subset(c3, c3$vCount != 0)
 
 c2 <- as.data.frame(table(fb$date))
 rownames(c2) <- NULL
-colnames(c2) <- c("date", "dFreq")
+colnames(c2) <- c("date", "productCount")
 c2$date <- as.Date(c2$date)
 
-c3 <- as.data.frame(table(fb$vendor))
-rownames(c3) <- NULL
-colnames(c3) <- c("vendor", "vFreq")
-c3$vendor <- gsub("%7E", "", c3$vendor)
-c3$vendor <- gsub("/user/", "", c3$vendor)
+sum(c2$productCount) # 349478
+mean(c2$productCount) # 3120.339
+summary(c2)
+#               date     productCount   
+# Min.   :2014-01-01   Min.   :   1.0  
+# 1st Qu.:2014-05-31   1st Qu.: 794.8  
+# Median :2014-09-27   Median :2539.0  
+# Mean   :2014-08-14   Mean   :3120.3  
+# 3rd Qu.:2014-11-04   3rd Qu.:5222.5  
+# Max.   :2014-12-03   Max.   :9300.0 
+
+# number of pages by date
+plot(c2$date, c2$productCount)
+
+c2p <- ggplot(c2, aes(date, productCount, colour = productCount)) +
+  geom_point(size = 3, shape = 19, alpha = 0.80) +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  theme(plot.title = element_text(vjust = 2)) +
+  labs(title = "Agora Marketplace 2014: Product Count by Date",
+       x = "", y = "")
+
+c2p
+c2p + geom_rug(position = "jitter", size = 0.2)
+
+c2p2 <- c2p + theme_minimal(base_family = "FranklinGothicSSK") +
+  geom_rug(size = 0.2)
+
+# look at total crawl counts --------------------------------------------------
+
+p <- read.csv("data/counts/crawl-distribution.csv")
+str(p)
+p$date <- as.Date(p$date)
+p$vendor <- as.integer(p$vendor)
+
+# linear model 01 -------------------------------------------------------------
+pd.lm01 <- ggplot(p, aes(date, p)) + 
+  theme_minimal() +
+  geom_point(aes(color = p), size = 4.75, shape = 17) +
+  ggtitle("Agora Marketplace: Number of Product Listings ~ Date") +
+  theme(plot.title = element_text(family = "Times", face = "bold", size = 18)) +
+  labs(x = "Date", y = "number of product listings (pages)") +
+  theme(axis.title.x = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.title.y = element_text(family = "Times", face = "italic", size = 14)) +
+  theme(axis.text.x = element_text(family = "Times", face = "plain", size = 11)) +
+  theme(axis.text.y = element_text(family = "Times", face = "plain", size = 11)) +
+  theme(plot.margin = unit(c(3, 3, 3, 3), "cm"))
+
+pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
+                      linetype = "dashed") +
+  theme(axis.title.y = element_text(margin = margin(0, 20, 0, 0))) + 
+  theme(axis.title.x = element_text(margin = margin(40, 0, 0, 0)))
+
+
+
 
 
