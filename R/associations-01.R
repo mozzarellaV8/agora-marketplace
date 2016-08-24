@@ -225,6 +225,7 @@ summary(pd.glm02)
 # Residual deviance:  768506  on 200  degrees of freedom
 # AIC: 770700
 
-
+# So the residual deviance is 4000x the number of degrees of freedom in model 2,
+# and about 4600x the number of degrees of freedom in model 1. 
 
 
