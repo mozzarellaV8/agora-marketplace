@@ -3,11 +3,11 @@
 
 ### [product 2015](product-2015) 
 
-- individual product page extractions (near daily). This is the meat of the analysis - containing: crawl date, url path, product listing, vendor name, product category, product sub-category, product sub-sub-category, feedback, ship-from locations, ship-to locations.
+- individual product page extractions (near daily). This is the meat of the data for analysis, containing: crawl date, url path, product listing, vendor name, product category, product sub-category, product sub-sub-category, feedback, ship-from locations, ship-to locations. Approx 50-65 CSV files once completed.
 
 ### [product 2014](product) 
 
-- individual product page extractions (grows from weekly to near daily). Same variables as 2015. 
+- individual product page extractions (grows from weekly to near daily). Same variables as 2015; 57 CSV files total. 
 
 ### more data
 
