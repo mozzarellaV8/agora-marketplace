@@ -5,7 +5,7 @@
 
 This folder is comprised of individual product page extractions (site crawled near daily). The meat of the data for analysis, containing:
 
-- crawl date
+- listing date
 - url path 
 - product listing
 - vendor name
