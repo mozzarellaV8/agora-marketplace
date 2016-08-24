@@ -1,0 +1,138 @@
+# Agora Marketplace Analysis
+# arules - 2014 data
+
+# load data -------------------------------------------------------------------
+
+library(data.table)
+
+# clear workspace and set directory
+getwd()
+setwd("~/GitHub/agora-marketplace")
+
+p2014 <- fread("~/GitHub/agora-data/agora-2014.csv", verbose = T, 
+               stringsAsFactors = F)
+
+fb <- fread("~/GitHub/agora-data/2014-AgFb2.csv")
+fb$V1 <- NULL
+
+# cleanse further -------------------------------------------------------------
+
+# What do I want? clean url paths, no duplicates in locations, 
+# possibly impute categorical data (replace NAs, for transactions)
+# Sooner or Later: subset for positive feedbacks (inferring transaction)
+# Later: url paths, BTC-dollar ratio.
+
+library(tm)
+library(dplyr)
+library(tidyr)
+
+p2014$date <- as.Date(p2014$date)
+
+
+# explore ---------------------------------------------------------------------
+
+length(unique(p2014$date)) # 112
+772632/112 # 6898.5 - avg. number of listings per day
+
+# This average is a loose approximation, contingent on crawl frequency
+# and accuracy. Cross-reference these counts with the grams dataset.
+
+summary(fb$price)
+plot(fb$price)
+
+# subset prices at or under 1000 BTC / approx 5K USD
+fb <- subset(fb, fb$price <= 1000)
+fb$date <- as.Date(fb$date)
+
+summary(fb$price)
+#      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#   0.0000    0.0494    0.1534    0.9518    0.4583 1000.0000
+
+options(scipen = 999)
+quantile(fb$price)
+#            0%           25%           50%           75%          100% 
+#    0.00000010    0.04944194    0.15342762    0.45833938 1000.00000000
+
+par(mar = c(6, 6, 6, 6), mfrow = c(1, 1), family = "FranklinGothicSSK")
+plot(fb$date, fb$price)
+plot(fb$date, fb$price, ylim = c(0, 400))
+plot(fb$date, fb$price, ylim = c(0, 50),
+     main = "Agora Marketplace 2014: List Prices under 50 BTC")
+
+# density of listings (likely based on more frequent crawls) goes up
+# mid september and becomes quite dense in Nov. Silk Road 2 shut down 
+# in early November, with multiple news outlets reporting this as early
+# as November 8th, 2014.
+
+# explore prices --------------------------------------------------------------
+
+
+library(ggplot2)
+library(hexbin)
+
+p1 <- ggplot(fb, aes(date, price, colour = price)) +
+  geom_point(size = 4, shape = 19, alpha = 0.40) +
+  theme_minimal(base_size = 12, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Product Prices in BTC", x = "", y = "")
+  
+p1
+
+# subset for large but not outrageous price
+fb2 <- subset(fb, fb$price <= 300)
+# subset for casual purchase price
+fb3 <- subset(fb, fb$price <= 50)
+# prices above 1 and below 10
+fb4 <- subset(fb, fb$price >= 1 & fb$price <= 10)
+
+p2 <- ggplot(fb2, aes(date, price, colour = price)) +
+  geom_point(size = 4, shape = 19, alpha = 0.30) + 
+  theme_minimal(base_size = 12, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Product Prices in BTC", x = "", y = "")
+
+p2
+
+p3 <- ggplot(fb3, aes(date, price, colour = price)) +
+  geom_point(size = 4, shape = 19, alpha = 0.20) + 
+  theme_minimal(base_size = 12, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Product Prices in BTC", x = "", y = "")
+
+p3
+
+p4 <- ggplot(fb4, aes(date, price, colour = price)) +
+  geom_point(size = 4, shape = 19, alpha = 0.15) + 
+  theme_minimal(base_size = 12, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Product Prices in BTC", x = "", y = "")
+
+p4 + annotate("text", x = as.Date("2014-11-02"), y = 2,
+              label = "Silk Road 2 shuts down (2014-11-04)",
+              colour = "red3", size = 4, angle = 45)
+
+summary(fb4$date)
+class(fb$date)
+
+# look at counts --------------------------------------------------------------
+
+c1 <- as.data.frame(table(fb$product))
+rownames(c1) <- NULL
+colnames(c1) <- c("product", "pFreq")
+
+c2 <- as.data.frame(table(fb$date))
+rownames(c2) <- NULL
+colnames(c2) <- c("date", "dFreq")
+c2$date <- as.Date(c2$date)
+
+c3 <- as.data.frame(table(fb$vendor))
+rownames(c3) <- NULL
+colnames(c3) <- c("vendor", "vFreq")
+c3$vendor <- gsub("%7E", "", c3$vendor)
+c3$vendor <- gsub("/user/", "", c3$vendor)
+
+
