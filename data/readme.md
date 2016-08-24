@@ -3,7 +3,7 @@
 
 ### [product 2015](product-2015) 
 
-- individual product page extractions (near daily). This is the meat of the data for analysis, containing:
+This folder is comprised of individual product page extractions (site crawled near daily). The meat of the data for analysis, containing:
 
 - crawl date
 - url path 
@@ -16,7 +16,7 @@
 - ship-from locations
 - ship-to locations
 
-- Will total approximately 50-65 CSV files once completed.
+Will total approximately 55-70 CSV files once completed.
 
 ### [product 2014](product) 
 
