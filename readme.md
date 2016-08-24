@@ -117,17 +117,14 @@ sum(pv$vendor)
 # [1] 19245
 
 ```
+
+total days | product listings | vendor pages  |
+-----------| :--------------: | :------------:|
+533			  2,467,200			19,245
+
 Time Period: January 1st, 2014 through July 7th, 2015
 
-Total days: 553
-
-Product Listings: 2,467,200
-
 Avg. Listings per day: 4461
-
-Vendor Pages: 19,245
-
-Avg. Vendors per day: 34 
 
 ![](plots/pgDist-lm-product-01.png)
 
