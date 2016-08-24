@@ -5,13 +5,35 @@
 # load data -------------------------------------------------------------------
 
 library(data.table)
-agora <- fread("~/GitHub/agora-data/data/agora.csv")
+agora <- fread("~/GitHub/agora-data/grams/data/agora.csv")
 str(agora)
 
 agora$hash <- as.factor(agora$hash)
 agora$Date <- as.Date(agora$Date)
 agora$vendor_name <- as.factor(agora$vendor_name)
 agora$description <- as.factor(agora$description)
+
+# 2014 Listings ---------------------------------------------------------------
+
+a2014 <- subset(agora, agora$Date < "2015-01-01")
+# 2013569 obs of 9 variables
+
+length(unique(a2014$name))
+# 46419 unique listings
+
+length(unique(a2014$Date))
+# 120 days out of a possible 186 days from
+# 2014-06-28 until 2014-12-31.
+
+summary(a2014$Date)
+#         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+# "2014-06-28" "2014-08-31" "2014-10-18" "2014-10-11" "2014-11-25" "2014-12-31"
+
+2013569/120 # 16779.74 - avg all listings over time period
+46419/120 # 386 - avg unique listings over time period
+
+summary(as.factor(a2014$name))
+
 
 # 'Description' ---------------------------------------------------------------
 
