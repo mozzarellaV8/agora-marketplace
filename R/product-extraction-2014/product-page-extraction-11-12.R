@@ -13,7 +13,7 @@ library(dplyr)
 rm(list = ls())
 
 # set directory
-pDir <- "~/GitHub/ag-Product/2014-11-12"
+pDir <- "~/GitHub/ag-Product/2014/2014-11-12"
 setwd(pDir)
 
 # Vendor and Date extraction --------------------------------------------------
@@ -144,6 +144,8 @@ write.csv(p1114.12, file = "p-2014-11-12.csv", row.names = F)
 levels(p1114.12$subcat)
 p1114.12$subcat <- as.character(p1114.12$subcat)
 
+p1114.12 <- read.csv("~/GitHub/ag-product-safety/p-2014-11-12.csv", stringsAsFactors = F)
+
 # 14769 > 13318 > 5436 > 3266
 drugs1114.12 <- subset(p1114.12, p1114.12$cat == "Drugs")
 drugs1114.12 <- subset(drugs1114.12, drugs1114.12$subcat != "Other" & 
@@ -177,8 +179,8 @@ system.time(
     subcat2 <- rbind(subcat2, pTab3)
   })
 
-#    user  system elapsed 
-#  37.558   0.414  38.012
+#     user  system elapsed 
+#   49.556   0.945  52.816
 
 # bind sub-subcategories
 bind1114_12b <- dplyr::left_join(p1114.12, subcat2, by = "list")

@@ -13,10 +13,10 @@ library(dplyr)
 # Vendor and Date extraction --------------------------------------------------
 
 rm(list = ls())
-pDir <- "~/GitHub/ag-Product/2014-12-07"
+pDir <- "~/GitHub/ag-Product/2014/2014-12-07"
 setwd(pDir)
 
-# 18828
+# 21780
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
 p1214.07 <- data.frame()
 
@@ -57,8 +57,13 @@ system.time(
   }
 )
 
-#       user  system elapsed 
-#    516.830   4.923 529.929
+#         user  system elapsed 
+#   1159.748   14.918 1187.175 
+
+pList[11956] # YkfCV51sAJ - 1000 xanax bars
+pList[11956] # yKhw7aWXLN - literally same number - 'shake/trimmings'
+pList[13640] # CvFR7LZMdA - hand-rubbed
+pList[13640] # cVlceNbiB - mickey mouse XTC
 
 # safety
 write.csv(p1214.07, file = "p-1214-07-raw.csv", row.names = F)
@@ -81,8 +86,8 @@ is.na(p1214.07$shipping)
 p1214.07 <- separate(p1214.07, shipping, c("from", "to"), sep = "To: ")
 p1214.07$from <- gsub("From: ", "", p1214.07$from)
 
-levels(as.factor(p1214.07$from)) # 49
-levels(as.factor(p1214.07$to)) # 228
+levels(as.factor(p1214.07$from)) # 58
+levels(as.factor(p1214.07$to)) # 337
 
 p1214.07$price <- gsub(" BTC", "", p1214.07$price)
 p1214.07$price <- as.double(p1214.07$price)
@@ -98,7 +103,7 @@ p1214.07$cat <- as.character(p1214.07$cat)
 p1214 <- subset(p1214.07,  p1214.07$cat != "Listings" & p1214.07$cat != "Jewelry"
                 & p1214.07$cat != "Electronics" & p1214.07$cat != "Other")
 
-# 11484 > 10892
+# 21776 > 20918
 pList2 <- as.character(p1214$list)
 subcat <- data.frame(stringsAsFactors = F)
 
@@ -117,7 +122,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#  122.037   2.219 124.293 
+#  262.135   9.498 276.256 
 
 # bind subcategories
 bind1214_07 <- dplyr::left_join(p1214.07, subcat, by = "list")
@@ -138,7 +143,7 @@ write.csv(p1214.07, file = "p-2014-12-07.csv", row.names = F)
 levels(p1214.07$subcat)
 p1214.07$subcat <- as.character(p1214.07$subcat)
 
-# 11484 > 10892 > 8220 > 4076
+# 21776 > 20918 > 15638 > 10576
 drugs1214.07 <- subset(p1214.07, p1214.07$cat == "Drugs")
 drugs1214.07 <- subset(drugs1214.07, drugs1214.07$subcat != "Other" & 
                          drugs1214.07$subcat != "Weight loss" &
@@ -172,7 +177,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#   43.449   0.462  43.907
+#  121.405   1.424 122.995
 
 # bind sub-subcategories
 bind1214_07b <- dplyr::left_join(p1214.07, subcat2, by = "list")

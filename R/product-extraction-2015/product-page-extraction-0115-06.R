@@ -1,6 +1,6 @@
 # Agora Marketplace Analysis
 # Product info extraction
-# 2015-01-02
+# 2015-01-06
 
 # load ------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ setwd(pDir)
 
 # 22211
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
-p0115.02 <- data.frame()
+p0115.06 <- data.frame()
 
 system.time(
   for (i in 1:length(pList)) {
@@ -53,7 +53,7 @@ system.time(
       html_text()
     
     pTab$list <- pList[i]
-    p0115.02 <- rbind(p0115.02, pTab)
+    p0115.06 <- rbind(p0115.06, pTab)
   }
 )
 
@@ -61,42 +61,42 @@ system.time(
 #  1121.786   21.314 1185.201
 
 # safety
-write.csv(p0115.02, file = "p-0115-06-raw.csv", row.names = F)
-p0115.02 <- read.csv("p-0115-06-raw.csv")
+write.csv(p0115.06, file = "p-0115-06-raw.csv", row.names = F)
+p0115.06 <- read.csv("p-0115-06-raw.csv")
 
 # clean extracted data
-p0115.02 <- p0115.02[c(8, 2, 1, 3, 4, 5, 6, 7)]
-colnames(p0115.02) <- c("list", "date", "vendor", "product", 
+p0115.06 <- p0115.06[c(8, 2, 1, 3, 4, 5, 6, 7)]
+colnames(p0115.06) <- c("list", "date", "vendor", "product", 
                         "price", "cat", "feedback", "shipping")
 
-p0115.02$vendor <- gsub("/vendor/", "", p0115.02$vendor)
-p0115.02$vendor <- gsub("/user/", "", p0115.02$vendor)
-p0115.02$vendor <- gsub("#", "", p0115.02$vendor)
+p0115.06$vendor <- gsub("/vendor/", "", p0115.06$vendor)
+p0115.06$vendor <- gsub("/user/", "", p0115.06$vendor)
+p0115.06$vendor <- gsub("#", "", p0115.06$vendor)
 
-p0115.02$shipping <- as.character(p0115.02$shipping)
-p0115.02$shipping <- stripWhitespace(p0115.02$shipping)
-p0115.02$shipping[p0115.02$shipping == " "] <- NA
-is.na(p0115.02$shipping)
+p0115.06$shipping <- as.character(p0115.06$shipping)
+p0115.06$shipping <- stripWhitespace(p0115.06$shipping)
+p0115.06$shipping[p0115.06$shipping == " "] <- NA
+is.na(p0115.06$shipping)
 
-p0115.02 <- separate(p0115.02, shipping, c("from", "to"), sep = "To: ")
-p0115.02$from <- gsub("From: ", "", p0115.02$from)
+p0115.06 <- separate(p0115.06, shipping, c("from", "to"), sep = "To: ")
+p0115.06$from <- gsub("From: ", "", p0115.06$from)
 
-levels(as.factor(p0115.02$from)) # 49
-levels(as.factor(p0115.02$to)) # 300
+levels(as.factor(p0115.06$from)) # 49
+levels(as.factor(p0115.06$to)) # 300
 
-p0115.02$price <- gsub(" BTC", "", p0115.02$price)
-p0115.02$price <- as.double(p0115.02$price)
+p0115.06$price <- gsub(" BTC", "", p0115.06$price)
+p0115.06$price <- as.double(p0115.06$price)
 
-write.csv(p0115.02, file = "p0115.06-c1.csv", row.names = F)
+write.csv(p0115.06, file = "p0115.06-c1.csv", row.names = F)
 
 # extract subcategories -------------------------------------------------------
 
 # subset out variables w/o a subcategory
-levels(as.factor(p0115.02$cat))
+levels(as.factor(p0115.06$cat))
 
-p0115.02$cat <- as.character(p0115.02$cat)
-p0115 <- subset(p0115.02,  p0115.02$cat != "Listings" & p0115.02$cat != "Jewelry"
-                & p0115.02$cat != "Electronics" & p0115.02$cat != "Other")
+p0115.06$cat <- as.character(p0115.06$cat)
+p0115 <- subset(p0115.06,  p0115.06$cat != "Listings" & p0115.06$cat != "Jewelry"
+                & p0115.06$cat != "Electronics" & p0115.06$cat != "Other")
 
 # 22211 > 21512
 pList2 <- as.character(p0115$list)
@@ -120,26 +120,26 @@ system.time(
 #  271.130  10.882 283.107 
 
 # bind subcategories
-bind0115_06 <- dplyr::left_join(p0115.02, subcat, by = "list")
+bind0115_06 <- dplyr::left_join(p0115.06, subcat, by = "list")
 is.na(bind0115_06$pTab2)
 
 bind0115_06 <- bind0115_06[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
 colnames(bind0115_06) <- c("list", "date", "vendor", "product", "price", 
                            "cat", "subcat", "feedback", "from", "to")
 
-p0115.02 <- bind0115_06
+p0115.06 <- bind0115_06
 
 # safety
-write.csv(p0115.02, file = "p-2015-01-06.csv", row.names = F)
+write.csv(p0115.06, file = "p-2015-01-06.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
 # subset subsubcategories
-levels(p0115.02$subcat)
-p0115.02$subcat <- as.character(p0115.02$subcat)
+levels(p0115.06$subcat)
+p0115.06$subcat <- as.character(p0115.06$subcat)
 
 # 22211 > 21512 > 18009 > 9000
-drugs0115.06 <- subset(p0115.02, p0115.02$cat == "Drugs")
+drugs0115.06 <- subset(p0115.06, p0115.06$cat == "Drugs")
 drugs0115.06 <- subset(drugs0115.06, drugs0115.06$subcat != "Other" & 
                          drugs0115.06$subcat != "Weight loss" &
                          drugs0115.06$subcat != "Benzos" &
@@ -175,15 +175,15 @@ system.time(
 #   96.235   1.760  98.010  
 
 # bind sub-subcategories
-bind0115_06b <- dplyr::left_join(p0115.02, subcat2, by = "list")
+bind0115_06b <- dplyr::left_join(p0115.06, subcat2, by = "list")
 is.na(bind0115_06b$pTab3)
 
 bind0115_06b  <- bind0115_06b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind0115_06b) <- c("list", "date", "vendor", "product", "price", 
                             "cat", "subcat", "subsubcat", "feedback", "from", "to")
 
-p0115.02 <- bind0115_06b
+p0115.06 <- bind0115_06b
 
 # final extracted data pre-arules/contigency table transformations
-write.csv(p0115.02, file = "products-2015-01-06.csv", row.names = F)
+write.csv(p0115.06, file = "products-2015-01-06.csv", row.names = F)
 test <- read.csv("products-2015-01-06.csv")
