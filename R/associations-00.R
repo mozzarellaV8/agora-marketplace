@@ -147,11 +147,116 @@ write.csv(fb14, file = "~/GitHub/agora-data/2014-AgFb.csv", row.names = F)
 
 # Cleanse Shipping Destinations -----------------------------------------------
 
+fb14 <- fread("~/GitHub/agora-data/2014-AgFb.csv", stringsAsFactors = F)
 levels(as.factor(fb14$to)) # 899 levels.
-# 899>624>505
+# 899>624>505>468
 
-fb14$to <- stripWhitespace(fb$to)
+fb14$to <- stripWhitespace(fb14$to)
 fb14$to <- tolower(fb14$to)
 fb14$to[is.na(fb14$to)] <- "blank"
+
+# fb14$to <- gsub("\\s", "", fb14$to)
+fb14$to <- gsub("^\\s\'merica(.*)", "\'merica", fb14$to)
+fb14$to <- gsub("\'merica(.*)", "\'merica", fb14$to)
+fb14$to <- gsub("\"\"\"\"fcuk..your couch\"\"\"\" ", "fcuk..your couch", fb14$to)
+fb14$to <- gsub("\"\"\"\"fcuk..your couch\"\"\"\"-rick james ", "fcuk..your couch", fb14$to)
+
+# maybe merge these 
+fb14$to <- gsub("all(.*)", "all", fb14$to)
+fb14$to <- gsub("all(.*)", "all", fb14$to)
+fb14$to <- gsub("^anywhere(.*)", "anywhere", fb14$to)
+fb14$to <- gsub("americana ", "USA", fb14$to)
+
+fb14$to <- gsub("any except Australiatralia ", "anywhere", fb14$to)
+
+fb14$to <- gsub("^australia", "Australia", fb14$to)
+fb14$to <- gsub("Australia only ", "Australia", fb14$to)
+fb14$to <- gsub("austaliaonly", "Australia", fb14$to)
+fb14$to <- gsub("aus", "Australia", fb14$to)
+fb14$to <- gsub("Australia ", "Australia", fb14$to)
+fb14$to <- gsub("Australians only ", "Australia", fb14$to)
+fb14$to <- gsub("Australiatalia only ", "Australia", fb14$to)
+
+fb14$to <- gsub("Australia,newzealand", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia/new zealand ", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia/nz", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia & newzealand", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia and nz ", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia, new zealand ", "Australia and New Zealand", fb14$to)
+fb14$to <- gsub("Australia/worldwide ", "Australia and New Zealand", fb14$to)
+                                                                                
+fb14$to <- gsub("^can(.*)", "Canada/USA", fb14$to)
+fb14$to <- gsub("^de(.*)", "Germany", fb14$to)
+
+fb14$to <- gsub("^de(.*)", "Germany", fb14$to)
+
+fb14$to <- gsub("^europe(.*)", "Europe", fb14$to)
+fb14$to <- gsub("^eu", "EU", fb14$to)
+fb14$to <- gsub("^EU(.*)", "EU", fb14$to)
+
+fb14$to <- gsub("^everywhere(.*)", "Everywhere", fb14$to)
+fb14$to <- gsub("^every where(.*)", "Everywhere", fb14$to)
+fb14$to <- gsub("^everyplace(.*)", "Everywhere", fb14$to)
+
+fb14$to <- gsub("^france(.*)", "France", fb14$to)
+fb14$to <- gsub("^fr", "France", fb14$to)
+fb14$to <- gsub("France\\s", "France", fb14$to)
+
+fb14$to <- gsub("gentle hearts and kind people ", "Kind Hearts and Gentle People", fb14$to)
+fb14$to <- gsub("kind and gentle people ", "Kind Hearts and Gentle People", fb14$to)
+
+fb14$to <- gsub("^worldwide except(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^worldwide\\s\\(except(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^worldwide\\s\\(e(.*)", "Worldwide, except...", fb14$to)
+
+fb14$to <- gsub("^worldwide,(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^worldwide-(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^worldwide\\s-\\s(.*)", "Worldwide, except...", fb14$to)
+
+fb14$to <- gsub("^worldwide\\s-(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^world\\s-(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^world\\sexcept(.*)", "Worldwide, except...", fb14$to)
+
+fb14$to <- gsub("^world\\swide\\sexcept(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^world\\sno(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^world\\sno(.*)", "Worldwide, except...", fb14$to)
+
+fb14$to <- gsub("^wordwide(.*)", "Worldwide, except...", fb14$to)
+fb14$to <- gsub("^ww except(.*)", "Worldwide, except...", fb14$to)
+
+
+fb14$to <- gsub("^worldwide\\s[:A-z:](.*)", "Worldwide", fb14$to)
+fb14$to <- gsub("worlwide\\s(.*)", "Worldwide", fb14$to)
+fb14$to <- gsub("world(.*)", "Worldwide", fb14$to)
+fb14$to <- gsub("^ww|wrld", "Worldwide", fb14$to)
+
+
+fb14$to <- gsub("^ger", "Germany", fb14$to)
+fb14$to <- gsub("^Germany(.*)", "Germany", fb14$to)
+
+fb14$to <- gsub("we do not ship to usa / new zealand / Australiatralia / scandinavia ", 
+                "we do not ship to usa / canada / new zealand / Australiatralia /scandinavia", fb14$to)
+fb14$to <- gsub("we do not ship to usa / new zealand / Australiatralia /scandinavia ", 
+                "we do not ship to usa / canada / new zealand / Australiatralia /scandinavia", fb14$to)
+
+fb14$to <- gsub("^usa(.*)", "USA", fb14$to)
+fb14$to <- gsub("^united\\sstates(.*)", "USA", fb14$to)
+
+fb14$to <- gsub("^scandin(.*)", "Scandinavia", fb14$to)
+fb14$to <- gsub("switzerland(.*)", "Switzerland", fb14$to)
+
+fb14$to <- gsub("^internat(.*)", "International", fb14$to)
+
+fb14$to <- gsub("^uk(.*)", "UK", fb14$to)
+
+levels(as.factor(fb14$to))
+# 899>624>505>468>464>461>460>458>456>430>428>367>363>360>358>335>327>308
+# 299>298>292>288>283>279>274>269>237>232>186>178>169>126
+
+# safety
+write.csv(fb14, file = "~/GitHub/agora-data/2014-AgFb2.csv")
+
+
+
 
 
