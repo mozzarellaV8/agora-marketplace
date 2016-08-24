@@ -4,12 +4,12 @@
 
 # load data -------------------------------------------------------------------
 
-pv <- read.csv("data/counts/crawl-distribution.csv")
-str(pv)
+p <- read.csv("data/counts/crawl-distribution.csv")
+str(p)
 
-pv$date <- as.Date(pv$date)
-pv$vendor <- as.integer(pv$vendor)
-summary(pv)
+p$date <- as.Date(p$date)
+p$vendor <- as.integer(p$vendor)
+summary(p)
 
 #         date                  p             vendor     
 # Min.   :2014-01-01   Min.   :    1   Min.   :  1.0  
@@ -19,10 +19,10 @@ summary(pv)
 # 3rd Qu.:2015-03-17   3rd Qu.:19030   3rd Qu.:140.5  
 # Max.   :2015-07-07   Max.   :27654   Max.   :184.0 
 
-sum(pv$p)
+sum(p$p)
 # [1] 2467200
 
-sum(pv$vendor)
+sum(p$vendor)
 # [1] 19245
 
 # these are raw counts that don't take into account bad crawls, pages
@@ -30,39 +30,53 @@ sum(pv$vendor)
 
 # exploratory -----------------------------------------------------------------
 
-par(mar = c(4, 4, 4, 4), mfrow = c(2, 2))
+par(mar = c(7, 7, 7, 7), mfrow = c(2, 2))
 
 # product page count histogram
-hist(pv$p, breaks = 75, xlim = c(0, 28000))
-hist(pv$vendor, breaks = 100, xlim = c(0, 200))
-plot(pv$p, main = "scatterplot: product page count")
-plot(pv$vendor, main = "scatterplot: vendor page count")
+hist(p$p, breaks = 75, xlim = c(0, 28000))
+hist(p$vendor, breaks = 50, xlim = c(0, 200))
+plot(p$p, main = "scatterplot: product page count")
+plot(p$vendor, main = "scatterplot: vendor page count")
 
 # product by date
 par(mar = c(6, 6, 6, 6), mfrow = c(1, 1))
-plot(pv$date, pv$p, main = "AgMarket - product page count by date", xlab = "date",
+plot(p$date, p$p, main = "AgMarket - product page count by date", xlab = "date",
      ylab = "product page count")
 
 # tempting to fit a linear model but it likely wouldnt be accurate.
 # needs to be converted to a time series.
 
 # vendor pages by date
-plot(pv$date, pv$vendor, main = "AgMarket - vendor page count by date", 
+plot(p$date, p$vendor, main = "AgMarket - vendor page count by date", 
      xlab = "date", ylab = "no. of vendor pages")
 
-# area - number of products by date -------------------------------------------
-library(ggplot2)
+# Poisson model ---------------------------------------------------------------
 
-products <- ggplot(pv, aes(date, p)) + theme_minimal() +
-  geom_area(fill = "gray50", alpha = 0.25) +
-  geom_line() 
-  
-products + stat_smooth(method = lm, level = 0.95, se = FALSE, color = "#CD2626")
+pp <- glm(p ~ date, family = poisson, data = p)
+pp
+
+# Call:  glm(formula = p ~ date, family = poisson, data = p)
+
+# Coefficients:
+#  (Intercept)         date  
+# -33.188389     0.002593  
+
+# Degrees of Freedom: 202 Total (i.e. Null);  201 Residual
+# Null Deviance:	    1215000 
+# Residual Deviance: 932900 	AIC: 935100
+
+summary(pp)
+#                    Estimate Std. Error z value Pr(>|z|)    
+#  (Intercept) -3.319e+01  8.372e-02  -396.4   <2e-16 ***
+#  date         2.593e-03  5.090e-06   509.5   <2e-16 ***
+
+plot(pp)
+
 
 # linear models ---------------------------------------------------------------
 
 # number of product listings by date ----------------------
-pd.lm <- lm(p ~ date, data = pv)
+pd.lm <- lm(p ~ date, data = p)
 summary(pd.lm)
 #                  Estimate Std. Error t value Pr(>|t|)    
 #   (Intercept) -4.542e+05  5.579e+04  -8.142 4.04e-14 ***
@@ -77,7 +91,7 @@ plot(pd.lm$fitted.values)
 
 plot(pd.lm)
 
-pd.lm01 <- ggplot(pv, aes(date, p)) + 
+pd.lm01 <- ggplot(p, aes(date, p)) + 
   theme_minimal() +
   geom_point(aes(color = p), size = 4.75, shape = 17) +
   ggtitle("Agora Marketplace: Number of Product Listings ~ Date") +
@@ -96,7 +110,7 @@ pd.lm01 + stat_smooth(method = lm, level = 0.95, se = FALSE, colour = "#CD2626",
 
 # number of vendors by date -------------------------------
 
-vd.lm <- lm(vendor ~ date, data = pv)
+vd.lm <- lm(vendor ~ date, data = p)
 summary(vd.lm)
 # Coefficients:
 #                  Estimate Std. Error t value Pr(>|t|)    
@@ -106,7 +120,7 @@ summary(vd.lm)
 
 # I've seen better values than these. Plot it quick and check out p ~ vendor.
 
-vd.lm01 <- ggplot(pv, aes(date, vendor)) + theme_minimal() +
+vd.lm01 <- ggplot(p, aes(date, vendor)) + theme_minimal() +
   geom_point(aes(color = vendor), size = 4.75, shape = 18) +
   ggtitle("AgMarket: Number of Vendors ~ Date") +
   theme(plot.title = element_text(family= "Times", face = "bold", size = 18)) +
@@ -128,7 +142,7 @@ plot(vd.lm01)
 
 # number of products by vendor ----------------------------
 
-product.v.lm <- lm(p ~ vendor, data = pv)
+product.v.lm <- lm(p ~ vendor, data = p)
 summary(product.v.lm)
 #               Estimate Std. Error t value Pr(>|t|)    
 #  (Intercept) 5248.481    976.419   5.375 2.11e-07 ***
@@ -136,6 +150,7 @@ summary(product.v.lm)
 # Multiple R-squared:  0.2468,	Adjusted R-squared:  0.2431
 
 # again, seen better. 
+
 
 # number of product listings by date 02 ---------------------------------------
 
@@ -201,32 +216,32 @@ summary(d15)
 
 # Determine what is an 'active' marketplace -----------------------------------
 # 10000 listings as one cutoff point for determining an active market.
-quantile(pv$p)
+quantile(p$p)
 #    0%   25%   50%   75%  100% 
 #     1  4453 12697 19030 27654 
-summary(pv$p)
+summary(p$p)
 #    Min.  1st Qu.  Median   Mean 3rd Qu.     Max. 
 #       1    4453   12700   12150   19030   27650 
-pvStd <- subset(pv, pv$p >= 10000)
-plot(pvStd$date, pvStd$p)
+pStd <- subset(p, p$p >= 10000)
+plot(pStd$date, pStd$p)
 
-pv10k.lm <- lm(p ~ date, data = pvStd)
-summary(pv10k.lm)
+p10k.lm <- lm(p ~ date, data = pStd)
+summary(p10k.lm)
 #                 Estimate Std. Error t value Pr(>|t|)    
 #   (Intercept) -2.417e+05  6.761e+04  -3.575 0.000517 ***
 #   date         1.579e+01  4.109e+00   3.843 0.000201 ***
 # Multiple R-squared:  0.1156,	Adjusted R-squared:  0.1078 
 
-RMSE_10k <- (sqrt(sum(pv10k.lm$residuals^2)))/(nrow(pv))
+RMSE_10k <- (sqrt(sum(p10k.lm$residuals^2)))/(nrow(p))
 RMSE_10k
 # 214.5388
 
 # 5000 listings as cutoff - quarter of listings in general.
-pv5000 <- subset(pv, pv$p >= 5000)
-plot(pv5000$date, pv5000$p)
+p5000 <- subset(p, p$p >= 5000)
+plot(p5000$date, p5000$p)
 
-pv5k.lm <- lm(p ~ date, data = pv5000)
-summary(pv5k.lm)
+p5k.lm <- lm(p ~ date, data = p5000)
+summary(p5k.lm)
 #               Estimate Std. Error t value Pr(>|t|)   
 # (Intercept) -2.787e+05  6.565e+04  -4.245 3.84e-05 ***
 # date         1.791e+01  3.994e+00   4.484 1.46e-05 ***
@@ -234,17 +249,17 @@ summary(pv5k.lm)
 # given only 3 variables total in this data, they're bound to be significant.
 
 par(mfrow = c(2, 2), mar = c(4, 4, 4, 4))
-plot(pv5k.lm)
+plot(p5k.lm)
 
-SSE_5k <- sum(pv5k.lm$residuals^2)
+SSE_5k <- sum(p5k.lm$residuals^2)
 # [1] 4536483133
-RMSE_5k <- (sqrt(sum(pv5k.lm$residuals^2)))/(nrow(pv))
+RMSE_5k <- (sqrt(sum(p5k.lm$residuals^2)))/(nrow(p))
 RMSE_5k
 # 331.7902
 
 
 # number of products by vendor + date ---------------------
-product.vd.lm <- lm(p ~ vendor + date, data = pv)
+product.vd.lm <- lm(p ~ vendor + date, data = p)
 summary(product.vd.lm)
 #                 Estimate Std. Error t value Pr(>|t|)    
 #   (Intercept) -3.676e+05  5.173e+04  -7.106 2.06e-11 ***
@@ -271,7 +286,7 @@ summary(p.prediction)
 #  11800   14200   16590   16590   18990   21380 
 
 par(mar = c(6, 6, 6, 6), mfrow = c(1, 1))
-plot(pv$p, pch = 1)
+plot(p$p, pch = 1)
 points(p.prediction, pch = 17, col = "red")
 
 plot(p.prediction)
