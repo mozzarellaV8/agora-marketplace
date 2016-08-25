@@ -122,6 +122,7 @@ levels(p14$price)
 # [4] "[  63.4096931, 180.7799059)" "[ 180.7799059, 421.0974602)" "[ 421.0974602, 939.8462904)"
 # [7] "[ 939.8462904,2088.7955777)" "[2088.7955777,3199.0000000]"
 
+# First subset ----------------------------------------------------------------
 pRules01 <- subset(p14, select = c("list", "date", "vendor", "product", "price",
                                    "cat", "subcat", "subsubcat", "from"))
 pRules01$date <- as.factor(pRules01$date)
@@ -131,5 +132,28 @@ pRules01
 # transactions in sparse format with
 # 772356 transactions (rows) and
 # 112280 items (columns)
+
+head(itemLabels(pRules01))
+# let's prune before we even start.
+
+# Second subset ---------------------------------------------------------------
+
+p2 <- subset(p14, select = c("vendor", "product", "price",
+                             "cat", "subcat", "subsubcat", "from"))
+
+p2 <- as(p2, "transactions")
+p2
+# transactions in sparse format with
+# 772356 transactions (rows) and
+# 59496 items (columns)
+
+summary(p2)
+# most frequent items:
+# price=[   0.0000001,   4.2529326)                         cat=Drugs                      subsubcat=NA 
+# 716965                            544220                            411888 
+# from= USA                    subcat=Cannabis                           (Other) 
+# 157680                            136203                           3439536
+
+
 
 
