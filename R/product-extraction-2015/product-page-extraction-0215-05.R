@@ -16,7 +16,7 @@ rm(list = ls())
 pDir <- "~/GitHub/ag-Product/2015-02-05"
 setwd(pDir)
 
-# 22528 > 22518
+# 22518
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
 p0215.05 <- data.frame()
 
@@ -146,6 +146,9 @@ write.csv(p0215.05, file = "p-2015-02-05.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+library(data.table)
+p0215.05 <- fread("~/GitHub/ag-product-safety-2015/p-2015-02-05.csv")
+
 # subset subsubcategories
 levels(p0215.05$subcat)
 p0215.05$subcat <- as.character(p0215.05$subcat)
@@ -186,6 +189,7 @@ system.time(
 #  142.866   1.683 144.773 
 
 # bind sub-subcategories
+p0215.05 <- as.data.frame(p0215.05)
 bind0215_05b <- dplyr::left_join(p0215.05, subcat2, by = "list")
 is.na(bind0215_05b$pTab3)
 

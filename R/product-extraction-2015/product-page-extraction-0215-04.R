@@ -178,12 +178,12 @@ system.time(
   })
 
 #     user  system elapsed 
-#   45.329   0.404  45.817  
+#   48.092   0.800  51.324  
 
 # bind sub-subcategories
-p0215.04 <- as.data.frame(p0214.04)
+p0215.04 <- as.data.frame(p0215.04)
 bind0215_04b <- dplyr::left_join(p0215.04, subcat2, by = "list")
-is.na(bind0215_04b$pTab3)
+length(is.na(bind0215_04b$pTab3))
 
 bind0215_04b  <- bind0215_04b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind0215_04b) <- c("list", "date", "vendor", "product", "price", 
