@@ -88,5 +88,48 @@ summary(rules)
 rulesConf <- subset(rules, confidence == 1.000)
 inspect(head(rulesConf, n = 7, by = "lift"))
 
+# all 2014 data ---------------------------------------------------------------
+
+library(arules)
+library(arulesViz)
+library(tm)
+library(data.table)
+p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
+str(p14)
+summary(p14) # 772632
+
+p14$date <- as.Date(p14$date)
+
+p14$list <- as.character(p14$list)
+p14$list <- removeNumbers(p14$list)
+p14$list <- gsub("--__", "", p14$list)
+p14$list <- gsub(".html", "", p14$list)
+p14$list <- as.factor(p14$list)
+
+p14$subcat[is.na(p14$subcat)] <- p14$cat
+
+quantile(p14$price)
+
+# subset out the placeholder (high) prices
+p14 <- subset(p14, p14$price < 7000) # 772400
+p14 <- subset(p14, p14$price < 4500) # 772358
+p14 <- subset(p14, p14$price < 4400) # 772357
+p14 <- subset(p14, p14$price < 3500) # 772357
+
+p14$price <- discretize(p14$price, method = "cluster", categories = 8)
+levels(p14$price)
+# [1] "[   0.0000001,   4.2529326)" "[   4.2529326,  18.0214855)" "[  18.0214855,  63.4096931)"
+# [4] "[  63.4096931, 180.7799059)" "[ 180.7799059, 421.0974602)" "[ 421.0974602, 939.8462904)"
+# [7] "[ 939.8462904,2088.7955777)" "[2088.7955777,3199.0000000]"
+
+pRules01 <- subset(p14, select = c("list", "date", "vendor", "product", "price",
+                                   "cat", "subcat", "subsubcat", "from"))
+pRules01$date <- as.factor(pRules01$date)
+
+pRules01 <- as(pRules01, "transactions")
+pRules01
+# transactions in sparse format with
+# 772356 transactions (rows) and
+# 112280 items (columns)
 
 
