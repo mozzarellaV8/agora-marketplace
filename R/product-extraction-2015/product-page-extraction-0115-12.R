@@ -9,6 +9,7 @@ library(magrittr)
 library(tm)
 library(tidyr)
 library(dplyr)
+library(data.table)
 
 # Vendor and Date extraction --------------------------------------------------
 
@@ -136,11 +137,13 @@ write.csv(p0115.12, file = "p-2015-01-12.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+p0115.12 <- fread("~/GitHub/ag-product-safety-2015/p-2015-01-12.csv")
+
 # subset subsubcategories
-levels(p0115.12$subcat)
+levels(as.factor(p0115.12$subcat))
 p0115.12$subcat <- as.character(p0115.12$subcat)
 
-# 16532 > 15990 > 12980 > 7833
+# 16532 > 15990 > 12980 > 8884
 drugs0115.12 <- subset(p0115.12, p0115.12$cat == "Drugs")
 drugs0115.12 <- subset(drugs0115.12, drugs0115.12$subcat != "Other" & 
                          drugs0115.12$subcat != "Weight loss" &
@@ -149,7 +152,6 @@ drugs0115.12 <- subset(drugs0115.12, drugs0115.12$subcat != "Other" &
                          drugs0115.12$subcat != "RCs" &
                          drugs0115.12$subcat != "Steroids" &
                          drugs0115.12$subcat != "Methylone" &
-                         drugs0115.12$subcat != "Opioids" &
                          drugs0115.12$subcat != "Ecstasy-MDMA" &
                          drugs0115.12$subcat != "Barbiturates")
 
@@ -173,12 +175,12 @@ system.time(
     subcat2 <- rbind(subcat2, pTab3)
   })
 
-#     user  system elapsed 
-#   89.370   1.114  90.490  
+#      user  system elapsed 
+#   107.150   1.715 113.972  
 
 # bind sub-subcategories
+p0115.12 <- as.data.frame(p0115.12)
 bind0115_12b <- dplyr::left_join(p0115.12, subcat2, by = "list")
-is.na(bind0115_12b$pTab3)
 
 bind0115_12b  <- bind0115_12b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind0115_12b) <- c("list", "date", "vendor", "product", "price", 
@@ -188,4 +190,4 @@ p0115.12 <- bind0115_12b
 
 # final extracted data pre-arules/contigency table transformations
 write.csv(p0115.12, file = "products-2015-01-12.csv", row.names = F)
-test <- read.csv("products-2015-01-12.csv")
+test <- fread("products-2015-01-12.csv")

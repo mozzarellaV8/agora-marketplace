@@ -9,6 +9,7 @@ library(magrittr)
 library(tm)
 library(tidyr)
 library(dplyr)
+library(data.table)
 
 # Vendor and Date extraction --------------------------------------------------
 
@@ -138,11 +139,15 @@ write.csv(p0115.11, file = "p-2015-01-11.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+p0115.11 <- fread("~/GitHub/ag-product-safety-2015/p-2015-01-11.csv")
+levels(as.factor(p0115.11$from)) # 49
+levels(as.factor(p0115.11$to)) # 334 - bad.
+
 # subset subsubcategories
-levels(p0115.11$subcat)
+levels(as.factor(p0115.11$subcat)) #50
 p0115.11$subcat <- as.character(p0115.11$subcat)
 
-# 19988 > 19407 > 14452 > 10478
+# 19988 > 19407 > 14452 > 11568
 drugs0115.11 <- subset(p0115.11, p0115.11$cat == "Drugs")
 drugs0115.11 <- subset(drugs0115.11, drugs0115.11$subcat != "Other" & 
                          drugs0115.11$subcat != "Weight loss" &
@@ -151,7 +156,6 @@ drugs0115.11 <- subset(drugs0115.11, drugs0115.11$subcat != "Other" &
                          drugs0115.11$subcat != "RCs" &
                          drugs0115.11$subcat != "Steroids" &
                          drugs0115.11$subcat != "Methylone" &
-                         drugs0115.11$subcat != "Opioids" &
                          drugs0115.11$subcat != "Ecstasy-MDMA" &
                          drugs0115.11$subcat != "Barbiturates")
 
@@ -176,9 +180,11 @@ system.time(
   })
 
 #     user  system elapsed 
-#  112.901   2.648 115.530  
+#  164.639   2.430 174.167  
 
 # bind sub-subcategories
+class(p0115.11)
+p0115.11 <- as.data.frame(p0115.11)
 bind0115_11b <- dplyr::left_join(p0115.11, subcat2, by = "list")
 is.na(bind0115_11b$pTab3)
 

@@ -141,11 +141,14 @@ write.csv(p0115.13, file = "p-2015-01-13.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+library(data.table)
+p0115.13 <- fread("~/GitHub/ag-product-safety-2015/p-2015-01-13.csv")
+
 # subset subsubcategories
-levels(p0115.13$subcat)
+levels(as.factor(p0115.13$subcat))
 p0115.13$subcat <- as.character(p0115.13$subcat)
 
-# 22216 > 21574 > 16437 > 10761
+# 22216 > 21574 > 16437 > 12015
 drugs0115.13 <- subset(p0115.13, p0115.13$cat == "Drugs")
 drugs0115.13 <- subset(drugs0115.13, drugs0115.13$subcat != "Other" & 
                          drugs0115.13$subcat != "Weight loss" &
@@ -154,7 +157,6 @@ drugs0115.13 <- subset(drugs0115.13, drugs0115.13$subcat != "Other" &
                          drugs0115.13$subcat != "RCs" &
                          drugs0115.13$subcat != "Steroids" &
                          drugs0115.13$subcat != "Methylone" &
-                         drugs0115.13$subcat != "Opioids" &
                          drugs0115.13$subcat != "Ecstasy-MDMA" &
                          drugs0115.13$subcat != "Barbiturates")
 
@@ -179,11 +181,11 @@ system.time(
   })
 
 #     user  system elapsed 
-#  123.306   3.137 126.428  
+#  152.714   3.805 163.582  
 
 # bind sub-subcategories
+p0115.13 <- as.data.frame(p0115.13)
 bind0115_13b <- dplyr::left_join(p0115.13, subcat2, by = "list")
-is.na(bind0115_13b$pTab3)
 
 bind0115_13b  <- bind0115_13b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind0115_13b) <- c("list", "date", "vendor", "product", "price", 
@@ -193,4 +195,4 @@ p0115.13 <- bind0115_13b
 
 # final extracted data pre-arules/contigency table transformations
 write.csv(p0115.13, file = "products-2015-01-13.csv", row.names = F)
-test <- read.csv("products-2015-01-13.csv")
+test <- fread("products-2015-01-13.csv")

@@ -138,6 +138,9 @@ write.csv(p0215.04, file = "p-2015-02-04.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+library(data.table)
+p0215.04 <- fread("~/GitHub/ag-product-safety-2015/p-2015-02-04.csv")
+
 # subset subsubcategories
 levels(p0215.04$subcat)
 p0215.04$subcat <- as.character(p0215.04$subcat)
@@ -178,6 +181,7 @@ system.time(
 #   45.329   0.404  45.817  
 
 # bind sub-subcategories
+p0215.04 <- as.data.frame(p0214.04)
 bind0215_04b <- dplyr::left_join(p0215.04, subcat2, by = "list")
 is.na(bind0215_04b$pTab3)
 

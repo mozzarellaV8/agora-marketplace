@@ -139,6 +139,9 @@ write.csv(p0215.03, file = "p-2015-02-03.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+library(data.table)
+p0215.03 <- fread("~/GitHub/ag-product-safety-2015/p-2015-02-03.csv")
+
 # subset subsubcategories
 levels(p0215.03$subcat)
 p0215.03$subcat <- as.character(p0215.03$subcat)
@@ -156,7 +159,7 @@ drugs0215.03 <- subset(drugs0215.03, drugs0215.03$subcat != "Other" &
                          drugs0215.03$subcat != "Barbiturates")
 
 # extract subsubcategories
-levels(as.factor(drugs0215.03$subcat))
+# levels(as.factor(drugs0215.03$subcat))
 
 pList3 <- drugs0215.03$list
 subcat2 <- data.frame()
@@ -176,9 +179,10 @@ system.time(
   })
 
 #     user  system elapsed 
-#   82.772   1.117  84.202  
+#   80.762   2.040  86.451  
 
 # bind sub-subcategories
+p0215.03 <- as.data.frame(p0215.03)
 bind0215_03b <- dplyr::left_join(p0215.03, subcat2, by = "list")
 is.na(bind0215_03b$pTab3)
 

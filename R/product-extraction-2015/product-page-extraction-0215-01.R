@@ -137,8 +137,11 @@ write.csv(p0215.01, file = "p-2015-02-01.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
+library(data.table)
+p0215.01 <- fread("~/GitHub/ag-product-safety-2015/p-2015-02-01.csv")
+
 # subset subsubcategories
-levels(p0215.01$subcat)
+levels(as.factor(p0215.01$subcat))
 p0215.01$subcat <- as.character(p0215.01$subcat)
 
 # 21766 > 21160 > 16307 > 11772
@@ -174,13 +177,11 @@ system.time(
   })
 
 #     user  system elapsed 
-#  145.397   3.219 148.738  
+#  145.432   3.526 155.379  
 
 # bind sub-subcategories
-p0215.01 <- read.csv("p-2015-02-01.csv", stringsAsFactors = F)
-
+p0215.01 <- as.data.frame(p0215.01)
 bind0215_01b <- dplyr::left_join(p0215.01, subcat2, by = "list")
-is.na(bind0215_01b$pTab3)
 
 bind0215_01b  <- bind0215_01b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind0215_01b) <- c("list", "date", "vendor", "product", "price", 
