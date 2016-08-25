@@ -72,6 +72,7 @@ head(itemLabels(pRules01))
 # will have to examine feedbacks later to see about inferring transaction likelihood
 # based on reviews. 
 
+p14$feedback <- as.factor(p14$feedback)
 p14$vendor <- as.factor(p14$vendor) # 2178 levels
 ps <- subset(p14, select = c("vendor", "product", "price",
                              "cat", "subcat", "subsubcat", "from"))
@@ -98,6 +99,11 @@ summary(p1)
 
 # every transaction is of length 7. hmm. 
 
+#                    labels variables       levels
+#     1  vendor=_drugs.inc_    vendor  _drugs.inc_
+#     2 vendor=-BIGG-BALLs-    vendor -BIGG-BALLs-
+#     3     vendor=-Inanna-    vendor     -Inanna-
+
 dim(p1)
 # [1] 772356  59500
 
@@ -106,7 +112,7 @@ itemLabels(p1)
 
 # view head a matrix (data frome doesnt work)
 # def subset for just categories after.
-p1m <- as(p1[1:100, 1:100], "matrix")
+p1m <- as(p1[100:200, 100:200], "matrix")
 
 par(mar = c(16, 10, 6, 6), mfrow = c(1, 1), family = "FranklinGothicSSK")
 itemFrequencyPlot(p1, topN = 50, cex.names = 0.7,
@@ -116,7 +122,7 @@ itemFrequencyPlot(p1, topN = 25, cex.names = 0.7, type = "absolute",
                   mar = c(18, 18, 6, 6))
 
 # look at similarity between items
-d <- dissimilarity(sammple(p1, 50000), method = "phi", which = "items")
+d <- dissimilarity(sample(p1, 20000), method = "phi", which = "items")
 
 
 
