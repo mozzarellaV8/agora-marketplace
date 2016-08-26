@@ -122,7 +122,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#  271.130  10.882 283.107 
+#  150.305   3.505 154.136
 
 # bind subcategories
 bind0215_09 <- dplyr::left_join(p0215.09, subcat, by = "list")
@@ -143,7 +143,7 @@ write.csv(p0215.09, file = "p-2015-02-09.csv", row.names = F)
 levels(p0215.09$subcat)
 p0215.09$subcat <- as.character(p0215.09$subcat)
 
-# 22211 > 21512 > 18009 > 9000
+# 13161 > 12571 > 9006 > 5014
 drugs0215.09 <- subset(p0215.09, p0215.09$cat == "Drugs")
 drugs0215.09 <- subset(drugs0215.09, drugs0215.09$subcat != "Other" & 
                          drugs0215.09$subcat != "Weight loss" &
@@ -176,7 +176,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#   96.235   1.760  98.010  
+#   60.001   0.560  60.640 
 
 # bind sub-subcategories
 bind0215_09b <- dplyr::left_join(p0215.09, subcat2, by = "list")
