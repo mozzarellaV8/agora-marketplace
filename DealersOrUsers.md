@@ -1,5 +1,7 @@
 # Cannabis Analysis
 
+_unedited observations_
+
 The question of personal use vs. distribution: Are there product groupings that could indicate one of these two intentions? What's the profile of a large-scale dealer, and what might their product interests be? 
 
 Start off by taking a look at categorical levels. After identifying a wide range of potential variables, begin to subset from sub-subcategory back to top level category; and begin with products that are definitively marijuana and move out towards products that suggest possibilities.
@@ -113,7 +115,7 @@ Rules with two antecedents don't seem to say much - direct vendor to product rel
    cat=Drugs,                                                                      
    subcat=Cannabis,                                                                
    greatFB}                     => {subsubcat=Weed} 0.003104035  1.0000000 7.056383
-3 {vendor=the\_real_caliconnect,                                                    
+3 {vendor=the\_real\_caliconnect,                                                    
    cat=Drugs,                                                                      
    subcat=Cannabis,                                                                
    greatFB}                     => {subsubcat=Weed} 0.003115479  1.0000000 7.056383
