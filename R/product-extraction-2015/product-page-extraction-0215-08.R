@@ -65,6 +65,7 @@ pList[9767] # nEGW6fXtxJ - 50mg Fentanyl
 pList[11030] # qbf4e3gNET - Rhapsody premier account
 pList[11643] # RS2fFySRx3 - oxycodone 10x 15mg
 pList[14884] # XPMNU0wvrG - Bank transfer guidebook
+pList[14884] # xpNqLnNRb9 - 2ml RSO vial concentrated cannabis
 
 # safety
 write.csv(p0215.08, file = "p-0215-08-raw.csv", row.names = F)
