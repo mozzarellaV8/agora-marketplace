@@ -102,6 +102,7 @@ Distribution of quality measures seems to even out across the board - more than 
 
 Rules with two antecedents don't seem to say much - direct vendor to product relationship. It might be worth computing categories alone, without vendor.
 
+```{R}
 > arules::inspect(tail(mj))
   lhs                              rhs                  support confidence     lift
 1 {vendor=moramaru,                                                                
