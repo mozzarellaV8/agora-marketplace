@@ -136,7 +136,11 @@ p.lm <- (product ~ date, data = pv)
 # 	Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
 ```
 
-Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages( > 10,000) were removed from the crawl during the extraction process because too many requests had been made to the server. Gwern himself has made clear that it's best to consider his crawls a lower-bound for market activity. But maybe the best reason these plots are spurious is that linear regression isn't exactly suited for count data or time series modeling.
+Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. 
+
+It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server. Gwern himself has made clear that it's best to consider his crawls a lower-bound for market activity. 
+
+But maybe the best reason these plots are spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling.
 
 ![](plots/pgDist-lm-vendor-01.png)
 
@@ -148,7 +152,7 @@ Given the limited number of variables, these models probably shouldn't be consid
 # 	Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
 ```
 
-Since the market could go offline for periods ranging from hours to days, listings could disappear and then reappear somewhat randomly as well. The anonymous nature of the marketplace did not contribute to traiditional efficiency in this respect. What follows is a partial plot of market downtimes - ranging from the dates 2014-04-23 until 2015-04-04. 
+Since the market could go offline for periods ranging from hours to days, listings could disappear and then reappear somewhat randomly as well. The anonymous nature of the marketplace did not contribute to traditional efficiency in this respect. What follows is a partial plot of market downtimes - ranging from the dates 2014-04-23 until 2015-04-04. 
 
 What if we assume there was no downtime for security issues? Can we project a reasonable market size if growth were to stabilize? 	
 
