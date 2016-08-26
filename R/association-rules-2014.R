@@ -369,16 +369,8 @@ hash <- subset(v2rules, rhs %in% "subsubcat=Hash")
 hash # set of 8 rules
 summary(hash)
 
-arules::inspect(head(hash, n = 3, by = "confidence"))
-arules::inspect(tail(hash, n = 3, by = "confidence"))
+arules::inspect(hash)
 
-arules::inspect(head(hash, n = 3, by = "confidence"))
-arules::inspect(tail(hash, n = 3, by = "confidence"))
-
-arules::inspect(head(hash, n = 5, by = "support"))
-arules::inspect(tail(hash, n = 5, by = "support"))
-arules::inspect(tail(hash, n = 5, by = "lift"))
-arules::inspect(tail(hash, n = 5, by = "lift"))
 
 # "Edibles" -----------------------------------------------
 
@@ -453,5 +445,6 @@ arules::inspect(concentrates)
 # 2383 {vendor=chipzahoy,subcat=Cannabis,greatFB}           => {subsubcat=Concentrates} 0.002323020 1          42.35882
 # 2386 {vendor=chipzahoy,cat=Drugs,greatFB}                 => {subsubcat=Concentrates} 0.002323020 1          42.35882
 # 3271 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Concentrates} 0.002323020 1          42.35882
+
 
 
