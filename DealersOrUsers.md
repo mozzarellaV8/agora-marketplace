@@ -149,16 +149,15 @@ Perhaps it remains in slang, but can be assumed to be universally understood.
 We start out with a set of 8 rules here - lower number than expected, but with promising confidence and lift values.
 
 ``` {r}
-summary(hash)
-set of 8 rules
-```
+> summary(hash)
+# set of 8 rules
 
-rule length distribution (lhs + rhs):sizes
-2 3 4 5 
-1 3 3 1 
+# rule length distribution (lhs + rhs):sizes
+# 2 3 4 5 
+# 1 3 3 1 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    2.0     3.0     3.5     3.5     4.0     5.0 
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#     2.0     3.0     3.5     3.5     4.0     5.0 
 
 summary of quality measures:
     support           confidence          lift      
