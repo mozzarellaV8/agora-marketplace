@@ -130,8 +130,53 @@ Rules with two antecedents don't seem to say much - direct vendor to product rel
    greatFB}                     => {subsubcat=Weed} 0.004806248  0.7547170 5.32557
 ```
 
-'Weed' as slang for MJ has been a lingua franca term for some time. 
+'Weed' as slang for MJ has been a lingua franca term for some time - although slang terms cycle through phases and intervals. An [article on Slate](http://www.slate.com/blogs/lexicon_valley/2014/03/05/the_etymology_of_marijuana_and_the_rise_of_weed_as_the_preferred_slang_term.html) takes a look at the google n-gram viewer and compares terms. Quote on current usage and boundaries:
 
+	The New York Times is a bit more proper and allows weed in its news columns only in direct quotations, as in the Ronan Farrow case. Otherwise it sticks to marijuana, even in the face of extreme word repetition. A front-page article published last week, "Pivotal Point Is Seen on Legalizing Marijuana," uses marijuana 27 times (not including the headline) with the only variations being "the drug" and (once) "cannabis."
+
+Perhaps it remains in slang, but can be assumed to be universally understood.
+
+
+## Hash
+
+We start out with a set of 8 rules here - lower number than expected, but with promising confidence and lift values.
+
+``` {R}
+> summary(hash)
+set of 8 rules
+
+rule length distribution (lhs + rhs):sizes
+2 3 4 5 
+1 3 3 1 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    2.0     3.0     3.5     3.5     4.0     5.0 
+
+summary of quality measures:
+    support           confidence          lift      
+ Min.   :0.001542   Min.   :0.9309   Min.   :31.45  
+ 1st Qu.:0.001542   1st Qu.:0.9310   1st Qu.:31.46  
+ Median :0.001543   Median :0.9655   Median :32.62  
+ Mean   :0.001543   Mean   :0.9655   Mean   :32.62  
+ 3rd Qu.:0.001545   3rd Qu.:1.0000   3rd Qu.:33.79  
+ Max.   :0.001545   Max.   :1.0000   Max.   :33.79  
+
+mining info:
+ data ntransactions support confidence
+   v2        349545  0.0014        0.6
+```
+
+Confidence drops no lower than 0.93 - and lift is in the 30s. But the quality measures are quite strong, likely because the associations aren't particularly surprising:
+
+```{R}
+arules::inspect(head(hash, n = 3, by = "confidence"))
+     lhs                                              rhs              support     confidence lift    
+760  {vendor=theblossom,subcat=Cannabis}           => {subsubcat=Hash} 0.001544865 1          33.78879
+2162 {vendor=theblossom,cat=Drugs,subcat=Cannabis} => {subsubcat=Hash} 0.001544865 1          33.78879
+2165 {vendor=theblossom,subcat=Cannabis,greatFB}   => {subsubcat=Hash} 0.001542005 1          33.78879
+```
+
+Further examination by each quality measure, and looking at head and tail yield the same rules. 
 
 # Zero Rule Club - Sub Sub Cat
 
@@ -212,6 +257,81 @@ Which makes `BenzoAU` stand out. Appears this vendor offers `50+ CANNABIS SATIVA
 		Feedbacks: 0/5 Scam artist. Here to take your bitcoin...
 
 AU in this case does not refer to gold but rather Australia.
+
+## Prescription
+
+Turns out this does not refer to medical marijuana.
+
+``` {R}
+scrip <- subset(v2rules, rhs %in% "subsubcat=Prescription")
+scrip # set of 0 rules
+
+scripCheck <- subset(fb, fb$subsubcat == "Prescription")
+# 4932 observations - all stimulants
+unique(scripCheck$product)
+```
+
+A look at the levels of `Prescription` shows 473 versions of Adderall, Dexedrine, Vyvanse, Ritalin, Modafanil, Provigil, and their generic counterparts. Excepting an occasional listing for Viagra/Cialis, a misplaced Codeine, and a single Lorazepam/Ativan - `Prescription` can more or less be synonymous with `Stimulants`. 
+
+This is small ecosystem of substances that can be examined more closely in terms of quantities (e.g. milligrams, number of pills) using regex.
+
+# Edibles
+
+This starts out strongly resembling `Hash` - 8 rules, high confidence and lift. And after inspecting the rules I can see why now: both `hash` and `edibles` seem to each be sold by only one vendor. 'theblossom' for hash and 'Lion' for edibles.
+
+``` {R}
+> summary(ed)
+set of 8 rules
+
+rule length distribution (lhs + rhs):sizes
+2 3 4 5 
+1 3 3 1 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    2.0     3.0     3.5     3.5     4.0     5.0 
+
+summary of quality measures:
+    support           confidence          lift      
+ Min.   :0.002558   Min.   :0.6622   Min.   :47.04  
+ 1st Qu.:0.002558   1st Qu.:0.6683   1st Qu.:47.47  
+ Median :0.002683   Median :0.6900   Median :49.01  
+ Mean   :0.002683   Mean   :0.6899   Mean   :49.01  
+ 3rd Qu.:0.002809   3rd Qu.:0.7102   3rd Qu.:50.45  
+ Max.   :0.002809   Max.   :0.7173   Max.   :50.95  
+
+mining info:
+ data ntransactions support confidence
+   v2        349545  0.0014        0.6
+
+arules::inspect(ed)
+     lhs                                                rhs                 support     confidence lift    
+412  {vendor=Lion}                                   => {subsubcat=Edibles} 0.002809366 0.6657627  47.28999
+1502 {vendor=Lion,subcat=Cannabis}                   => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
+1504 {vendor=Lion,cat=Drugs}                         => {subsubcat=Edibles} 0.002809366 0.6721424  47.74314
+1506 {vendor=Lion,greatFB}                           => {subsubcat=Edibles} 0.002557611 0.6622222  47.03850
+2709 {vendor=Lion,cat=Drugs,subcat=Cannabis}         => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
+2712 {vendor=Lion,subcat=Cannabis,greatFB}           => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
+2715 {vendor=Lion,cat=Drugs,greatFB}                 => {subsubcat=Edibles} 0.002557611 0.6691617  47.53142
+3361 {vendor=Lion,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
+```
+
+## Concentrates, Edibles, and Hash
+
+I'm surprised each generates 8 rules, and has one dedicated vendor associated per specific class of Cannabis.
+
+``` {R}
+> arules::inspect(concentrates)
+     lhs                                                     rhs                      support     confidence lift    
+246  {vendor=chipzahoy}                                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1093 {vendor=chipzahoy,subcat=Cannabis}                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1095 {vendor=chipzahoy,cat=Drugs}                         => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1097 {vendor=chipzahoy,greatFB}                           => {subsubcat=Concentrates} 0.002323020 1          42.35882
+2380 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis}         => {subsubcat=Concentrates} 0.002348768 1          42.35882
+2383 {vendor=chipzahoy,subcat=Cannabis,greatFB}           => {subsubcat=Concentrates} 0.002323020 1          42.35882
+2386 {vendor=chipzahoy,cat=Drugs,greatFB}                 => {subsubcat=Concentrates} 0.002323020 1          42.35882
+3271 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Concentrates} 0.002323020 1          42.35882
+```
+
 
 
 
