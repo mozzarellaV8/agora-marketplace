@@ -50,90 +50,6 @@ levels(p14$price)
 #  [5] "[  19.9506919,  35.5722542)" "[  35.5722542,  63.6548653)" "[  63.6548653, 118.9146899)" "[ 118.9146899, 222.2199907)"
 #  [9] "[ 222.2199907, 441.8217437)" "[ 441.8217437, 947.7948146)" "[ 947.7948146,2088.7955777)" "[2088.7955777,3199.0000000]"
 
-# Second subset ---------------------------------------------------------------
-
-# seven features chosen for extraction - let's do less next time. 
-# maybe unite cat, subcat, and subsubcat - but watch out with the NA's.
-
-# oh, and we're assuming every listing is a transaction - for the time being. 
-# will have to examine feedbacks later to see about inferring transaction likelihood
-# based on reviews. 
-
-p14$feedback <- as.factor(p14$feedback)
-p14$vendor <- as.factor(p14$vendor) # 2178 levels
-
-ps <- subset(p14, select = c("product", "price", "cat", "subcat", "subsubcat", "from"))
-
-p1 <- as(ps, "transactions")
-p1
-# transactions in sparse format with
-# 772356 transactions (rows) and
-# 59500 items (columns)
-
-summary(p1)
-#   transactions as itemMatrix in sparse format with
-#   772356 rows (elements/itemsets/transactions) and
-#   57322 columns (items) and a density of 0.0001046719 
-
-#     most frequent items:
-#   price=[1.00e-07,1.49e+00)                 cat=Drugs              subsubcat=NA 
-#                     642766                    544220                    411888 
-#                  from= USA            subcat=Cannabis                   (Other) 
-#                      157680                    136203                   2741379 
-  
-
-dim(p1)
-# [1] 772356  57322
-
-itemLabels(p1)
-# lotta products. 59500 doesnt fit on console.
-
-# view head a matrix (data frome doesnt work)
-# def subset for just categories after.
-p1m <- as(p1[100:200, 100:200], "matrix")
-
-par(mar = c(16, 10, 6, 6), mfrow = c(1, 1), family = "FranklinGothicSSK")
-itemFrequencyPlot(p1, topN = 50, cex.names = 0.7,
-                  mar = c(18, 10, 6, 6))
-
-itemFrequencyPlot(p1, topN = 25, cex.names = 0.7, type = "absolute",
-                  mar = c(18, 18, 6, 6))
-
-
-# Mine Frequent Itemsets ------------------------------------------------------
-nrow(p1)
-500/nrow(p1) # 0.0006473699
-# 'find an interesting support (have at least 500 observations)'
-
-itemsets <- apriori(p1, parameter = list(target = "frequent",
-                                        supp = 0.0001, minlen = 2, maxlen = 4))
-
-# Apriori
-
-# Parameter specification:
-#   confidence minval smax arem  aval originalSupport support minlen maxlen            target   ext
-# NA    0.1    1 none FALSE            TRUE   1e-04      2      4 frequent itemsets FALSE
-# 
-# Algorithmic control:
-#   filter tree heap memopt load sort verbose
-# 0.1 TRUE TRUE  FALSE TRUE    2    TRUE
-
-# Absolute minimum support count: 77 
-# 
-# set item appearances ...[0 item(s)] done [0.00s].
-# set transactions ...[57315 item(s), 772356 transaction(s)] done [0.47s].
-# # sorting and recoding items ... [548 item(s)] done [0.03s].
-# creating transaction tree ... done [0.53s].
-# checking subsets of size 1 2 3 4 done [0.01s].
-# writing ... [13177 set(s)] done [0.00s].
-# creating S4 object  ... done [0.16s].
-
-
-inspect(head(sort(itemsets), n = 10))
-head(itemsets)
-arules::inspect(head(itemsets))
-
-
 
 # feedback table ------------------------------------------------------------
 
@@ -173,8 +89,8 @@ length(fb$worstFB[fb$worstFB == TRUE]) # 6911
 length(fb$worstFB[fb$worstFB == FALSE]) # 342634
 6911/349545 # 0.01977142
 
-fb.table <- data.frame(vendor = fb$vendor, great = fb$greatFB, good = fb$goodFB, ok = fb$okFB,
-                       bad = fb$badFB, poor = fb$poorFB, worst = fb$worstFB)
+fb.table <- data.frame(vendor = fb$vendor, great = fb$greatFB, good = fb$goodFB, 
+                       ok = fb$okFB, bad = fb$badFB, poor = fb$poorFB, worst = fb$worstFB)
 
 write.csv(fb.table, file = "~/GitHub/agora-data/vfb-table-2014.csv",
           row.names = F)
@@ -182,33 +98,8 @@ write.csv(fb.table, file = "~/GitHub/agora-data/vfb-table-2014.csv",
 fb.table$vendor <- gsub("%7E", "", as.character(fb.table$vendor))
 fb.table$vendor <- as.factor(fb.table$vendor)
 
-library(vcd)
-library(cba)
-library(lattice)
+# Vendor-Category-Feedback subset ---------------------------------------------
 
-fb2 <- fb.table
-fb2$vendor <- NULL
-fb2b <- fb2[1:1000, ]
-
-# figure these out:
-clmplot(as.matrix(fb2b))
-lmplot(as.matrix(fb2b))
-
-
-
-# vendor product affinities ---------------------------------------------------
-
-# vendor-feedback table
-v1 <- as(fb.table, "transactions")
-v1
-# transactions in sparse format with
-# 349545772356 transactions (rows) and
-# 1874 items (columns)
-summary(v1)
-
-# write.csv(fb, file = "~/GitHub/agora-data/feedback-2014.csv", row.names = F)
-
-# vendor-category-feedback
 fb <- fread("~/GitHub/agora-data/feedback-2014.csv", stringsAsFactors = T)
 v2 <- subset(fb, select = c("vendor", "cat", "subcat", "subsubcat", "greatFB", "worstFB"))
 
@@ -282,7 +173,6 @@ itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8,
 # Perhaps can break up the `Drug` Category after establishing
 # some ground truths on the population. 
 
-
 # VCF - Mine Association Rules ------------------------------------------------
 
 # Going to start out here with the same measure value from the 
@@ -306,7 +196,4 @@ arules::inspect(head(cannabis))
 arules::inspect(head(synthetics))
 arules::inspect(tail(synthetics))
 arules::inspect(tail(cannabis))
-
-
-
 
