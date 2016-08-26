@@ -133,9 +133,13 @@ Rules with two antecedents don't seem to say much - direct vendor to product rel
    greatFB}                     => {subsubcat=Weed} 0.004806248  0.7547170 5.32557
 ```
 
-'Weed' as slang for MJ has been a lingua franca term for some time - although slang terms cycle through phases and intervals. An [article on Slate](http://www.slate.com/blogs/lexicon_valley/2014/03/05/the_etymology_of_marijuana_and_the_rise_of_weed_as_the_preferred_slang_term.html) takes a look at the google n-gram viewer and compares terms. Quote on current usage and boundaries:
+'Weed' as slang for MJ has been a lingua franca term for some time - although slang terms cycle through phases and intervals. An [article on Slate](http://www.slate.com/blogs/lexicon_valley/2014/03/05/the_etymology_of_marijuana_and_the_rise_of_weed_as_the_preferred_slang_term.html) takes a look at the google n-gram viewer and compares terms by their usage over time - e.g. 'weed', 'grass', 'pot', 'dope', 'reefer'. All terms were searched with the verb 'smoke'. Reefer and Tea(?) never approach significant usage, perhaps being of a early 1900s. 'Grass' has a rally starting in the mid 1960s and peaking in the early 70s - followed by a long steady decline towards the irrelevance of 'Reefer'. 
 
-	The New York Times is a bit more proper and allows weed in its news columns only in direct quotations, as in the Ronan Farrow case. Otherwise it sticks to marijuana, even in the face of extreme word repetition. A front-page article published last week, "Pivotal Point Is Seen on Legalizing Marijuana," uses marijuana 27 times (not including the headline) with the only variations being "the drug" and (once) "cannabis."
+'Pot' and 'Weed' both trend upward in usage from the 1990s-onward, with 'pot' cooling off at 2008.
+
+Observation made by Slate regarding the New York Times approach to 'Weed':
+
+'The New York Times is a bit more proper and allows weed in its news columns only in direct quotations, as in the Ronan Farrow case. Otherwise it sticks to marijuana, even in the face of extreme word repetition. A front-page article published last week, "Pivotal Point Is Seen on Legalizing Marijuana," uses marijuana 27 times (not including the headline) with the only variations being "the drug" and (once) "cannabis."'
 
 Perhaps it remains in slang, but can be assumed to be universally understood.
 
@@ -152,7 +156,7 @@ rule length distribution (lhs + rhs):sizes
 2 3 4 5 
 1 3 3 1 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   Min\. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     2.0     3.0     3.5     3.5     4.0     5.0 
 
 summary of quality measures:
