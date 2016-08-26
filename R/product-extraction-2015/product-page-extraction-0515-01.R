@@ -120,14 +120,14 @@ system.time(
 #  271.130  10.882 283.107 
 
 # bind subcategories
-bind0215_01 <- dplyr::left_join(p0515.01, subcat, by = "list")
-is.na(bind0215_01$pTab2)
+bind0512_01 <- dplyr::left_join(p0515.01, subcat, by = "list")
+is.na(bind0512_01$pTab2)
 
-bind0215_01 <- bind0215_01[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
-colnames(bind0215_01) <- c("list", "date", "vendor", "product", "price", 
+bind0512_01 <- bind0512_01[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
+colnames(bind0512_01) <- c("list", "date", "vendor", "product", "price", 
                            "cat", "subcat", "feedback", "from", "to")
 
-p0515.01 <- bind0215_01
+p0515.01 <- bind0512_01
 
 # safety
 write.csv(p0515.01, file = "p-2015-05-01.csv", row.names = F)

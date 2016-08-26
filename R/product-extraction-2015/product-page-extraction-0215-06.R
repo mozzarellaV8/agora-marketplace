@@ -53,53 +53,50 @@ system.time(
       html_text()
     
     pTab$list <- pList[i]
-    p01215.06 <- rbind(p0215.06, pTab)
+    p0215.06 <- rbind(p0215.06, pTab)
   }
 )
 
 #     user  system elapsed 
-#  809.833   5.325 826.026
-
-pList[7107] # imputed - same vendor
-pList[9904] # NLTEX7X3vg - xanax blotters 6bar
+#  863.492   6.692 871.404
 
 # safety
-write.csv(p01215.06, file = "p-0215-06-raw.csv", row.names = F)
+write.csv(p0215.06, file = "p-0215-06-raw.csv", row.names = F)
 
 # clean extracted data
-p01215.06 <- p01215.06[c(8, 2, 1, 3, 4, 5, 6, 7)]
-colnames(p01215.06) <- c("list", "date", "vendor", "product", 
+p0215.06 <- p0215.06[c(8, 2, 1, 3, 4, 5, 6, 7)]
+colnames(p0215.06) <- c("list", "date", "vendor", "product", 
                         "price", "cat", "feedback", "shipping")
 
-p01215.06$vendor <- gsub("/vendor/", "", p01215.06$vendor)
-p01215.06$vendor <- gsub("/user/", "", p01215.06$vendor)
-p01215.06$vendor <- gsub("#", "", p01215.06$vendor)
-p01215.06$vendor <- gsub("%7E", "", p01215.06$vendor)
+p0215.06$vendor <- gsub("/vendor/", "", p0215.06$vendor)
+p0215.06$vendor <- gsub("/user/", "", p0215.06$vendor)
+p0215.06$vendor <- gsub("#", "", p0215.06$vendor)
+p0215.06$vendor <- gsub("%7E", "", p0215.06$vendor)
 
-p01215.06$shipping <- as.character(p01215.06$shipping)
-p01215.06$shipping <- stripWhitespace(p01215.06$shipping)
-p01215.06$shipping[p01215.06$shipping == " "] <- NA
-is.na(p01215.06$shipping)
+p0215.06$shipping <- as.character(p0215.06$shipping)
+p0215.06$shipping <- stripWhitespace(p0215.06$shipping)
+p0215.06$shipping[p0215.06$shipping == " "] <- NA
+is.na(p0215.06$shipping)
 
-p01215.06 <- separate(p01215.06, shipping, c("from", "to"), sep = "To: ")
-p01215.06$from <- gsub("From: ", "", p01215.06$from)
+p0215.06 <- separate(p0215.06, shipping, c("from", "to"), sep = "To: ")
+p0215.06$from <- gsub("From: ", "", p0215.06$from)
 
-levels(as.factor(p01215.06$from)) # 53
-levels(as.factor(p01215.06$to)) # 274
+levels(as.factor(p0215.06$from)) # 53
+levels(as.factor(p0215.06$to)) # 274
 
-p01215.06$price <- gsub(" BTC", "", p01215.06$price)
-p01215.06$price <- as.double(p01215.06$price)
+p0215.06$price <- gsub(" BTC", "", p0215.06$price)
+p0215.06$price <- as.double(p0215.06$price)
 
-write.csv(p01215.06, file = "p0215.06-c1.csv", row.names = F)
+write.csv(p0215.06, file = "p0215.06-c1.csv", row.names = F)
 
 # extract subcategories -------------------------------------------------------
 
 # subset out variables w/o a subcategory
-levels(as.factor(p01215.06$cat))
+levels(as.factor(p0215.06$cat))
 
-p01215.06$cat <- as.character(p01215.06$cat)
-p0215 <- subset(p01215.06,  p01215.06$cat != "Listings" & p01215.06$cat != "Jewelry"
-                & p01215.06$cat != "Electronics" & p01215.06$cat != "Other")
+p0215.06$cat <- as.character(p0215.06$cat)
+p0215 <- subset(p0215.06,  p0215.06$cat != "Listings" & p0215.06$cat != "Jewelry"
+                & p0215.06$cat != "Electronics" & p0215.06$cat != "Other")
 
 # 16767 > 16189
 pList2 <- as.character(p0215$list)
@@ -120,29 +117,29 @@ system.time(
   })
 
 #     user  system elapsed 
-#  200.294   3.740 204.296 
+#  209.846   4.115 214.284 
 
 # bind subcategories
-bind0215_06 <- dplyr::left_join(p01215.06, subcat, by = "list")
+bind0215_06 <- dplyr::left_join(p0215.06, subcat, by = "list")
 is.na(bind0215_06$pTab2)
 
 bind0215_06 <- bind0215_06[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
 colnames(bind0215_06) <- c("list", "date", "vendor", "product", "price", 
                            "cat", "subcat", "feedback", "from", "to")
 
-p01215.06 <- bind0215_06
+p0215.06 <- bind0215_06
 
 # safety
-write.csv(p01215.06, file = "p-2015-02-06.csv", row.names = F)
+write.csv(p0215.06, file = "p-2015-02-06.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
 
 # subset subsubcategories
-levels(p01215.06$subcat)
-p01215.06$subcat <- as.character(p01215.06$subcat)
+levels(p0215.06$subcat)
+p0215.06$subcat <- as.character(p0215.06$subcat)
 
 # 16767 > 16189 > 12706 > 8421
-drugs0215.06 <- subset(p01215.06, p01215.06$cat == "Drugs")
+drugs0215.06 <- subset(p0215.06, p0215.06$cat == "Drugs")
 drugs0215.06 <- subset(drugs0215.06, drugs0215.06$subcat != "Other" & 
                          drugs0215.06$subcat != "Weight loss" &
                          drugs0215.06$subcat != "Benzos" &
@@ -174,10 +171,10 @@ system.time(
   })
 
 #     user  system elapsed 
-#   97.615   0.882  98.680  
+#  104.314   1.160 105.617  
 
 # bind sub-subcategories
-bind0215_06b <- dplyr::left_join(p01215.06, subcat2, by = "list")
+bind0215_06b <- dplyr::left_join(p0215.06, subcat2, by = "list")
 is.na(bind0215_06b$pTab3)
 
 bind0215_06b  <- bind0215_06b [c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]

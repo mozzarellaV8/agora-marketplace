@@ -16,7 +16,7 @@ rm(list = ls())
 pDir <- "~/GitHub/ag-Product/2015-02-09"
 setwd(pDir)
 
-# 14846
+# 13165
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
 p0215.09 <- data.frame()
 
@@ -59,6 +59,9 @@ system.time(
 
 #        user  system elapsed 
 #  1121.786   21.314 1185.201
+
+pList[1330] # gV4EtbPw8K - phenazopam 20mg rc benzo
+pList[6765] # FFlpdYv5At - CO2 sap - cannabis
 
 # safety
 write.csv(p0215.09, file = "p-0215-09-raw.csv", row.names = F)

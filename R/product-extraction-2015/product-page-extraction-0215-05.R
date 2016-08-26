@@ -171,10 +171,9 @@ system.time(
   })
 
 #     user  system elapsed 
-#  142.866   1.683 144.773 
+#  144.424   2.854 147.578 
 
 # bind sub-subcategories
-p0215.05 <- as.data.frame(p0215.05)
 bind0215_05b <- dplyr::left_join(p0215.05, subcat2, by = "list")
 is.na(bind0215_05b$pTab3)
 
