@@ -16,7 +16,7 @@ rm(list = ls())
 pDir <- "~/GitHub/ag-Product/2015-02-11"
 setwd(pDir)
 
-# 14846
+# 12696
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
 p0215.11 <- data.frame()
 
@@ -58,7 +58,9 @@ system.time(
 )
 
 #        user  system elapsed 
-#  1121.786   21.314 1185.201
+#     591.843   4.609 602.584 
+
+pList[8043] # LRJTZ4iyPY - 28G mexican fireball ice.
 
 # safety
 write.csv(p0215.11, file = "p-0215-11-raw.csv", row.names = F)
@@ -71,6 +73,7 @@ colnames(p0215.11) <- c("list", "date", "vendor", "product",
 p0215.11$vendor <- gsub("/vendor/", "", p0215.11$vendor)
 p0215.11$vendor <- gsub("/user/", "", p0215.11$vendor)
 p0215.11$vendor <- gsub("#", "", p0215.11$vendor)
+p0215.11$vendor <- gsub("%7E", "", p0215.11$vendor)
 
 p0215.11$shipping <- as.character(p0215.11$shipping)
 p0215.11$shipping <- stripWhitespace(p0215.11$shipping)
@@ -80,8 +83,21 @@ is.na(p0215.11$shipping)
 p0215.11 <- separate(p0215.11, shipping, c("from", "to"), sep = "To: ")
 p0215.11$from <- gsub("From: ", "", p0215.11$from)
 
-levels(as.factor(p0215.11$from)) # 49
+levels(as.factor(p0215.11$from)) # 50 > 46
 levels(as.factor(p0215.11$to)) # 300
+
+p0215.11$from <- gsub("\\suk(.*)", "UK", p0215.11$from)
+p0215.11$from <- gsub("\\sUK\\s", "UK", p0215.11$from)
+p0215.11$from <- gsub("\\sUK, Asia\\s", "UK, Asia(.*)", p0215.11$from)
+p0215.11$from <- gsub("\\sUntied Kingdom(.*)", "UK", p0215.11$from)
+p0215.11$from <- gsub("\\sUnited Kingdom\\s", "UK", p0215.11$from)
+
+p0215.11$from <- gsub("\\sWorldwide(*.)", "Worldwide", p0215.11$from)
+p0215.11$from <- gsub("\\sworldwide(*.)", "Worldwide", p0215.11$from)
+p0215.11$from <- gsub("\\sWORLDWIDE(*.)", "Worldwide", p0215.11$from)
+
+p0215.11$from <- gsub("\\storland\\s", "Torland", p0215.11$from)
+p0215.11$from <- gsub("\\sTorland\\s", "Torland", p0215.11$from)
 
 p0215.11$price <- gsub(" BTC", "", p0215.11$price)
 p0215.11$price <- as.double(p0215.11$price)
@@ -97,7 +113,7 @@ p0215.11$cat <- as.character(p0215.11$cat)
 p0115 <- subset(p0215.11,  p0215.11$cat != "Listings" & p0215.11$cat != "Jewelry"
                 & p0215.11$cat != "Electronics" & p0215.11$cat != "Other")
 
-# 22211 > 21512
+# 12695 > 12296
 pList2 <- as.character(p0115$list)
 subcat <- data.frame(stringsAsFactors = F)
 
@@ -137,7 +153,7 @@ write.csv(p0215.11, file = "p-2015-02-11.csv", row.names = F)
 levels(p0215.11$subcat)
 p0215.11$subcat <- as.character(p0215.11$subcat)
 
-# 22211 > 21512 > 18009 > 9000
+# 12695 > 5856
 drugs0215.11 <- subset(p0215.11, p0215.11$cat == "Drugs")
 drugs0215.11 <- subset(drugs0215.11, drugs0215.11$subcat != "Other" & 
                          drugs0215.11$subcat != "Weight loss" &
@@ -170,7 +186,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#   96.235   1.760  98.010  
+#   62.503   0.695  63.296 
 
 # bind sub-subcategories
 bind0215_11b <- dplyr::left_join(p0215.11, subcat2, by = "list")

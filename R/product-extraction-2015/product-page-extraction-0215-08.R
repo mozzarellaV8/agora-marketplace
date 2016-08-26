@@ -58,7 +58,7 @@ system.time(
 )
 
 #        user  system elapsed 
-#  1121.786   21.314 1185.201
+#  1155.378   14.421 1176.096
 
 pList[2296] # tivijdlvsP - blank
 pList[9767] # nEGW6fXtxJ - 50mg Fentanyl
@@ -66,11 +66,16 @@ pList[11030] # qbf4e3gNET - Rhapsody premier account
 pList[11643] # RS2fFySRx3 - oxycodone 10x 15mg
 pList[14884] # XPMNU0wvrG - Bank transfer guidebook
 pList[14884] # xpNqLnNRb9 - 2ml RSO vial concentrated cannabis
+pList[16400] # bTt4q3CE1p - 28g uncut fishscale 7.4 BTC
+pList[19078] # u2yvan0FXE - kush seeds (feminized)
 
 # safety
 write.csv(p0215.08, file = "p-0215-08-raw.csv", row.names = F)
 
-# clean extracted data
+# clean extracted data --------------------------------------------------------
+
+p0215.08 <- read.csv("p-0215-08-raw.csv", stringsAsFactors = F)
+
 p0215.08 <- p0215.08[c(8, 2, 1, 3, 4, 5, 6, 7)]
 colnames(p0215.08) <- c("list", "date", "vendor", "product", 
                         "price", "cat", "feedback", "shipping")
@@ -78,6 +83,7 @@ colnames(p0215.08) <- c("list", "date", "vendor", "product",
 p0215.08$vendor <- gsub("/vendor/", "", p0215.08$vendor)
 p0215.08$vendor <- gsub("/user/", "", p0215.08$vendor)
 p0215.08$vendor <- gsub("#", "", p0215.08$vendor)
+p0215.08$vendor <- gsub("%7E", "", p0215.08$vendor)
 
 p0215.08$shipping <- as.character(p0215.08$shipping)
 p0215.08$shipping <- stripWhitespace(p0215.08$shipping)
@@ -87,8 +93,21 @@ is.na(p0215.08$shipping)
 p0215.08 <- separate(p0215.08, shipping, c("from", "to"), sep = "To: ")
 p0215.08$from <- gsub("From: ", "", p0215.08$from)
 
-levels(as.factor(p0215.08$from)) # 49
+levels(as.factor(p0215.08$from)) # 58>56>54
 levels(as.factor(p0215.08$to)) # 300
+
+p0215.08$from <- gsub("\\suk(.*)", "UK", p0215.08$from)
+p0215.08$from <- gsub("\\sUK\\s", "UK", p0215.08$from)
+p0215.08$from <- gsub("\\sUK, Asia\\s", "UK, Asia(.*)", p0215.08$from)
+p0215.08$from <- gsub("\\sUntied Kingdom(.*)", "UK", p0215.08$from)
+p0215.08$from <- gsub("\\sUnited Kingdom\\s", "UK", p0215.08$from)
+
+p0215.08$from <- gsub("\\sWorldwide(*.)", "Worldwide", p0215.08$from)
+p0215.08$from <- gsub("\\sworldwide(*.)", "Worldwide", p0215.08$from)
+p0215.08$from <- gsub("\\sWORLDWIDE(*.)", "Worldwide", p0215.08$from)
+
+p0215.08$from <- gsub("\\storland\\s", "Torland", p0215.08$from)
+p0215.08$from <- gsub("\\sTorland\\s", "Torland", p0215.08$from)
 
 p0215.08$price <- gsub(" BTC", "", p0215.08$price)
 p0215.08$price <- as.double(p0215.08$price)
@@ -104,7 +123,7 @@ p0215.08$cat <- as.character(p0215.08$cat)
 p0115 <- subset(p0215.08,  p0215.08$cat != "Listings" & p0215.08$cat != "Jewelry"
                 & p0215.08$cat != "Electronics" & p0215.08$cat != "Other")
 
-# 22211 > 21512
+# 21416 > 20729
 pList2 <- as.character(p0115$list)
 subcat <- data.frame(stringsAsFactors = F)
 
@@ -123,7 +142,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#  271.130  10.882 283.107 
+#  252.374   6.133 258.585 
 
 # bind subcategories
 bind0215_08 <- dplyr::left_join(p0215.08, subcat, by = "list")
@@ -144,7 +163,7 @@ write.csv(p0215.08, file = "p-2015-02-08.csv", row.names = F)
 levels(p0215.08$subcat)
 p0215.08$subcat <- as.character(p0215.08$subcat)
 
-# 22211 > 21512 > 18009 > 9000
+# 21416 > 20729 > 10770
 drugs0215.08 <- subset(p0215.08, p0215.08$cat == "Drugs")
 drugs0215.08 <- subset(drugs0215.08, drugs0215.08$subcat != "Other" & 
                          drugs0215.08$subcat != "Weight loss" &
@@ -177,7 +196,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#   96.235   1.760  98.010  
+#  119.826   1.360 121.275  
 
 # bind sub-subcategories
 bind0215_08b <- dplyr::left_join(p0215.08, subcat2, by = "list")
