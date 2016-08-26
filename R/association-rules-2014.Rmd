@@ -1,0 +1,374 @@
+# Agora Marketplace Analysis
+# Association Rules - 2014 Product data
+
+Previously, I'd extracted and bound all the 2014 product listing data from Agora Marketplace. Load it up:
+
+``` {r}
+# load data -------------------------------------------------------------------
+
+library(arules)
+library(arulesViz)
+library(data.table)
+library(tm)
+
+p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
+str(p14)
+
+summary(p14) # 772632
+```
+
+A quick bit of cleansing after glancing the summary. In the `list` variables, there's the url path to the listing, but it's preceded by the date the file was created. With `date` as it's own variable already, that extra info is superflous and could interfere with factorization.
+
+``` {r}
+p14$list <- as.character(p14$list)
+p14$list <- removeNumbers(p14$list)
+p14$list <- gsub("--__", "", p14$list)
+p14$list <- gsub(".html", "", p14$list)
+p14$list <- as.factor(p14$list)
+
+p14$vendor <- gsub("%7E", "", p14$vendor)
+
+p14$feedback <- as.character(p14$feedback)
+p14$feedback <- stripWhitespace(p14$feedback)
+```
+
+``` {r}
+quantile(p14$price)
+
+# subset out the placeholder (high) prices
+p14 <- subset(p14, p14$price < 3500) # 772357
+```
+I chopped that subset down pretty quick. A lot of vendors keep placeholder listings when they're out of stock - with outrageously high prices. Not sure who is going to pay for over $1M USD for 0.1 grams of speed paste, but I feel OK to make a judgement call subsetting that out.  
+
+Switched from 8 to 12 clusters - curious how the prices distribute.
+During the time period covered in the data, the BTC-USD exchange rate might have just dipped below $200 at it's lowest point. But it also soared above $600 too. 
+There's a WSS plot in the plot directory that might back the decision for 12 in the plots folder.
+
+``` {r, echo = T}
+p14$price <- discretize(p14$price, method = "cluster", categories = 12)
+levels(p14$price)
+#  12 clusters:
+#  [1] "[   0.0000001,   1.4851368)" "[   1.4851368,   4.8476172)" "[   4.8476172,  10.6721562)" "[  10.6721562,  19.9506919)"
+#  [5] "[  19.9506919,  35.5722542)" "[  35.5722542,  63.6548653)" "[  63.6548653, 118.9146899)" "[ 118.9146899, 222.2199907)"
+#  [9] "[ 222.2199907, 441.8217437)" "[ 441.8217437, 947.7948146)" "[ 947.7948146,2088.7955777)" "[2088.7955777,3199.0000000]"
+```
+
+``` {r}
+# Second subset ---------------------------------------------------------------
+
+# seven features chosen for extraction - let's do less next time. 
+# maybe unite cat, subcat, and subsubcat - but watch out with the NA's.
+
+# oh, and we're assuming every listing is a transaction - for the time being. 
+# will have to examine feedbacks later to see about inferring transaction likelihood
+# based on reviews. 
+
+p14$feedback <- as.factor(p14$feedback)
+p14$vendor <- as.factor(p14$vendor) # 2178 levels
+
+ps <- subset(p14, select = c("product", "price", "cat", "subcat", "subsubcat", "from"))
+
+p1 <- as(ps, "transactions")
+p1
+# transactions in sparse format with
+# 772356 transactions (rows) and
+# 59500 items (columns)
+
+summary(p1)
+#   transactions as itemMatrix in sparse format with
+#   772356 rows (elements/itemsets/transactions) and
+#   57322 columns (items) and a density of 0.0001046719 
+
+#     most frequent items:
+#   price=[1.00e-07,1.49e+00)                 cat=Drugs              subsubcat=NA 
+#                     642766                    544220                    411888 
+#                  from= USA            subcat=Cannabis                   (Other) 
+#                      157680                    136203                   2741379 
+```
+
+
+``` {r}
+dim(p1)
+# [1] 772356  57322
+
+itemLabels(p1)
+# lotta products. 59500 doesnt fit on console.
+
+# view head a matrix (data frome doesnt work)
+# def subset for just categories after.
+p1m <- as(p1[100:200, 100:200], "matrix")
+```
+
+``` {r, echo = T}
+
+par(mar = c(16, 10, 6, 6), mfrow = c(1, 1), family = "FranklinGothicSSK")
+itemFrequencyPlot(p1, topN = 50, cex.names = 0.7,
+                  mar = c(18, 10, 6, 6))
+
+itemFrequencyPlot(p1, topN = 25, cex.names = 0.7, type = "absolute",
+                  mar = c(18, 18, 6, 6))
+                  
+```                  
+
+``` {r}
+# Mine Frequent Itemsets ------------------------------------------------------
+nrow(p1)
+500/nrow(p1) # 0.0006473699
+# 'find an interesting support (have at least 500 observations)'
+
+itemsets <- apriori(p1, parameter = list(target = "frequent",
+                                         supp = 0.0001, minlen = 2, maxlen = 4))
+
+# Apriori
+
+# Parameter specification:
+#   confidence minval smax arem  aval originalSupport support minlen maxlen            target   ext
+# NA    0.1    1 none FALSE            TRUE   1e-04      2      4 frequent itemsets FALSE
+# 
+# Algorithmic control:
+#   filter tree heap memopt load sort verbose
+# 0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+
+# Absolute minimum support count: 77 
+# 
+# set item appearances ...[0 item(s)] done [0.00s].
+# set transactions ...[57315 item(s), 772356 transaction(s)] done [0.47s].
+# # sorting and recoding items ... [548 item(s)] done [0.03s].
+# creating transaction tree ... done [0.53s].
+# checking subsets of size 1 2 3 4 done [0.01s].
+# writing ... [13177 set(s)] done [0.00s].
+# creating S4 object  ... done [0.16s].
+
+arules::inspect(head(itemsets))
+```
+
+``` {r}
+# feedback table ------------------------------------------------------------
+
+fb.table <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
+
+p14$feedback <- as.character(p14$feedback)
+fb <- subset(p14, p14$feedback != " Feedbacks: No feedbacks found. ")
+# 349545
+fb$greatFB <- grepl("^\\sFeedbacks: 5/5(.*)", fb$feedback)
+fb$goodFB <- grepl("^\\sFeedbacks: 4/5(.*)", fb$feedback)
+fb$okFB <- grepl("^\\sFeedbacks: 3/5(.*)", fb$feedback)
+fb$badFB <- grepl("^\\sFeedbacks: 2/5(.*)", fb$feedback)
+fb$poorFB <- grepl("^\\sFeedbacks: 1/5(.*)", fb$feedback)
+fb$worstFB <- grepl("^\\sFeedbacks: 0/5(.*)", fb$feedback)
+
+length(fb$greatFB[fb$greatFB == TRUE]) # 332500
+length(fb$greatFB[fb$greatFB == FALSE]) # 17045
+332500/349545 #  0.9512366
+
+length(fb$goodFB[fb$goodFB == TRUE]) # 4703
+length(fb$goodFB[fb$goodFB == FALSE]) # 344842
+4703/349545 #  0.01345463
+
+length(fb$okFB[fb$okFB == TRUE]) # 2834
+length(fb$okFB[fb$okFB == FALSE]) # 346711
+2843/349545 # 0.008133431
+
+length(fb$badFB[fb$badFB == TRUE]) # 1169
+length(fb$badFB[fb$badFB == FALSE]) # 348376
+1169/349545 # 0.003344348
+
+length(fb$poorFB[fb$poorFB == TRUE]) # 1422
+length(fb$poorFB[fb$poorFB == FALSE]) # 348123
+1422/349545 # 0.004068146
+
+length(fb$worstFB[fb$worstFB == TRUE]) # 6911
+length(fb$worstFB[fb$worstFB == FALSE]) # 342634
+6911/349545 # 0.01977142
+
+fb.table <- data.frame(vendor = fb$vendor, great = fb$greatFB, good = fb$goodFB, ok = fb$okFB,
+                       bad = fb$badFB, poor = fb$poorFB, worst = fb$worstFB)
+
+fb.table$vendor <- gsub("%7E", "", as.character(fb.table$vendor))
+fb.table$vendor <- as.factor(fb.table$vendor)
+```
+
+
+# Vendor-Feedback Subset ---------------------------------------------------
+
+``` {r, echo = FALSE}
+# vendor-feedback table
+v1 <- as(fb.table, "transactions")
+v1
+# transactions in sparse format with
+# 349545772356 transactions (rows) and
+# 1874 items (columns)
+summary(v1)
+
+# write.csv(fb, file = "~/GitHub/agora-data/feedback-2014.csv", row.names = F)
+```
+
+Without categories, the skew towards `greatFB` (5/5 positive feedback) was too high to imagine finding meaningful rules. So, back to the original data frame to construct a better subset.
+
+Import subsetted feedback data, that has logical values for feedback classes (e.g. great feedback, ok feedback) as assigned from rankings out of 5.
+
+And now a subset of vendor, categories, and feedback. 
+
+``` {r, echo = FALSE}
+# vendor-category-feedback
+fb <- fread("~/GitHub/agora-data/feedback-2014.csv", stringsAsFactors = T)
+v2 <- subset(fb, select = c("vendor", "cat", "subcat", "subsubcat", "greatFB", "worstFB"))
+
+v2 <- as(v2, "transactions")
+v2
+# transactions in sparse format with
+# 349545 transactions (rows) and
+# 1968 items (columns)
+
+summary(v2)
+# density of 0.002525919
+
+# most frequent items:
+# greatFB       cat=Drugs    subsubcat=NA subcat=Cannabis  subsubcat=Weed         (Other) 
+# 332500          259558          164720           75952           49536          855325 
+
+# element (itemset/transaction) length distribution:
+# sizes
+# 4      5 
+# 10134 339411
+```
+
+Itemset lengths all have length of 4 or 5. This will need to change as quality measures are tweaked. 
+
+# VCF - Mine Frequent Itemsets ------------------------------------------------
+
+Let's use the subset to mine frequent itemsets. 
+
+``` {r}
+nrow(v2)
+500/nrow(v2) # 0.001430431
+# 'find an interesting support (have at least 500 observations)'
+
+v2items <- apriori(v2, parameter = list(target = "frequent", 
+                                        supp = 0.0014, minlen = 2, maxlen = 4))
+
+summary(v2items)
+# set of 1889 itemsets
+
+# greatFB  983
+# Drugs    686
+# sscat    516
+# Cannabis 217
+# Weed     124
+# other    2839
+
+# element (itemset/transaction) length distribution:sizes
+# 2   3   4 
+# 699 793 397
+
+# mean: 2.84
+
+# summary of quality measures:
+# support        
+# Min.   :0.001402  
+# 1st Qu.:0.001759  
+# Median :0.002526  
+# Mean   :0.008199  
+# 3rd Qu.:0.005321  
+# Max.   :0.707331 
+
+# mining info:
+# data ntransactions support confidence
+#   v2        349545  0.0014          1
+
+```
+
+Feedback skews pretty hard towards 'Great'. Got excited about the 
+max value for support in the quality measures, but that value 
+drops so dramatically in the 3rd quantile that it seems like an outlier
+or that the more frequent itemsets are just very heavily skewing the whole thing.
+
+``` {r}
+par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
+itemFrequencyPlot(v2, support = 0.005, cex.names = 0.75)
+itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8)
+
+par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
+itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8,
+                  main = "Agora 2014: Frequent Items (support = 0.0095)")
+```
+
+to do:
+- Need to cleanse or format the NA subsubcategory. 
+
+- Perhaps can break up the `Drug` Category after establishing some ground truths 
+  from the population. 
+  
+- Basically find a good way to merge 3 categorical observations into two.  
+
+
+# VCF - Mine Association Rules ------------------------------------------------
+
+Going to start out here with the same measure value from the frequent itemset 
+mining (0.0014), and a confidence of 0.60.
+
+Confidence close to one is ideal, so 0.6 hopefully pushes towards that 
+with generous flexibility to start.
+
+``` {r}
+v2rules <- apriori(v2, parameter = list(support = 0.0014, confidence = 0.6))
+v2rules
+# set of 3492 rules 
+summary(v2rules)
+
+```
+
+Not bad, the output of apriori:
+
+- set of 3492 rules
+
+rule length distribution (lhs + rhs):sizes
+   1    2    3    4    5 
+   2  634 1454 1112  290 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   3.000   3.000   3.302   4.000   5.000 
+
+summary of quality measures:
+    support           confidence          lift         
+ Min.   :0.001402   Min.   :0.6025   Min.   :  0.8317  
+ 1st Qu.:0.001787   1st Qu.:0.9576   1st Qu.:  1.0480  
+ Median :0.002483   Median :1.0000   Median :  1.3467  
+ Mean   :0.008133   Mean   :0.9590   Mean   : 12.6569  
+ 3rd Qu.:0.005107   3rd Qu.:1.0000   3rd Qu.:  6.7242  
+ Max.   :0.951237   Max.   :1.0000   Max.   :290.0191  
+
+mining info:
+ data ntransactions support confidence
+   v2        349545  0.0014        0.6
+   
+Pleased to see confidence near one throughout - thought support leaves 
+something to be desired. It is skewed pretty damn hard comparing the max
+value to the rest. But maybe I'm not after a normal distribution.
+Maybe pruning out all the rules in the first quantile will be worthwhile.
+Similar issue with lift - amazing max value, but the drop from that to the 
+3rd quantile is basically falling off a cliff. 
+
+Let's look at the weed:
+
+``` {r}
+cannabis <- subset(v2rules, subset = rhs %in% "cat=Drugs" & lift > 1.2) # 709 rules
+synthetics <- subset(v2rules, subset = rhs %in% "subcat=Cannabis" & lift > 1.2)
+# 230 rules
+
+summary(cannabis)
+summary(synthetics)
+```
+
+This is chill. Distributions of quality measure values even out nicely
+compared to the population. Support may still be very low overall - 14% max. 
+Confidence remains high at the boundary of the 1st quantile through the 3rd and max value. Nice enough for now. 
+
+A closer look:
+
+```{r, echo=TRUE}
+arules::inspect(head(cannabis))
+```
+   
+   
+
