@@ -270,12 +270,42 @@ summary(v2items)
 # data ntransactions support confidence
 #   v2        349545  0.0014          1
 
-par(mar = c(20, 6, 2, 2), family = "FranklinGothicSSK")
+par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
 itemFrequencyPlot(v2, support = 0.005, cex.names = 0.75)
 itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8)
 
+par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
+itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8,
+                  main = "Agora 2014: Frequent Items (support = 0.0095)")
+
+# Need to cleanse or format the NA subsubcategory. 
+# Perhaps can break up the `Drug` Category after establishing
+# some ground truths on the population. 
 
 
+# VCF - Mine Association Rules ------------------------------------------------
+
+# Going to start out here with the same measure value from the 
+# frequent itemset mining (0.0014), and a confidence of 0.60.
+# Confidence close to one is ideal, so 0.6 hopefully pushes 
+# towards that with generous flexibility to start.
+
+v2rules <- apriori(v2, parameter = list(support = 0.0014, confidence = 0.6))
+v2rules
+# set of 3492 rules 
+summary(v2rules)
+
+cannabis <- subset(v2rules, subset = rhs %in% "cat=Drugs" & lift > 1.2) # 709 rules
+synthetics <- subset(v2rules, subset = rhs %in% "subcat=Cannabis" & lift > 1.2)
+# 230 rules
+
+summary(cannabis)
+summary(synthetics)
+
+arules::inspect(head(cannabis))
+arules::inspect(head(synthetics))
+arules::inspect(tail(synthetics))
+arules::inspect(tail(cannabis))
 
 
 
