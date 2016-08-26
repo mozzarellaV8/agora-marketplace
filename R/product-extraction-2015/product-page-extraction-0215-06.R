@@ -58,7 +58,7 @@ system.time(
 )
 
 #     user  system elapsed 
-#  837.176   9.966 857.955
+#  809.833   5.325 826.026
 
 pList[7107] # imputed - same vendor
 pList[9904] # NLTEX7X3vg - xanax blotters 6bar

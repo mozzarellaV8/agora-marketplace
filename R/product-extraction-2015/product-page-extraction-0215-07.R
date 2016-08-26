@@ -117,7 +117,7 @@ system.time(
   })
 
 #     user  system elapsed 
-#  271.130  10.882 283.107 
+#  286.899  11.133 298.468 
 
 # bind subcategories
 bind0215_07 <- dplyr::left_join(p0215.07, subcat, by = "list")

@@ -60,18 +60,6 @@ system.time(
 #        user  system elapsed 
 #  1156.929   14.252 1175.376 
 
-pList[326] # E5D2SLg6m4 - generic ambien
-pList[1578] # uSbLs5fiGB - xanax/tranax 300 pills
-pList[3459] # cq9x00KCvn - how to make .2875 BTC every day
-pList[4807] # F3ryVz3Fdv - blank
-pList[7242] # KGuRx7nRnb - 25i-NBOMe
-pList[7606] # L4qNfz8512 - 5F-AB-Pinaca
-pList[11371] # sY2niRkrZl - handrolled organic cannabis cigar
-pList[18513] # qwXBShlCdz - blank
-pList[18978] # TBqy31K6l2 - biphentin / methylphnidate/ritalin
-pList[20226] # YWjugED0hX - nitrazepam - benzo
-
-
 # safety
 write.csv(p0215.05, file = "p-0215-05-raw.csv", row.names = F)
 
@@ -88,7 +76,7 @@ p0215.05$vendor <- gsub("#%7E", "", p0215.05$vendor)
 p0215.05$shipping <- as.character(p0215.05$shipping)
 p0215.05$shipping <- stripWhitespace(p0215.05$shipping)
 p0215.05$shipping[p0215.05$shipping == " "] <- NA
-is.na(p0215.05$shipping)
+length(is.na(p0215.05$shipping))
 
 p0215.05 <- separate(p0215.05, shipping, c("from", "to"), sep = "To: ")
 p0215.05$from <- gsub("From: ", "", p0215.05$from)
@@ -129,11 +117,11 @@ system.time(
   })
 
 #     user  system elapsed 
-#  278.509   8.771 287.671
+#  286.899  11.133 298.468
 
 # bind subcategories
 bind0215_05 <- dplyr::left_join(p0215.05, subcat, by = "list")
-is.na(bind0215_05$pTab2)
+length(is.na(bind0215_05$pTab2)) # 22518
 
 bind0215_05 <- bind0215_05[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
 colnames(bind0215_05) <- c("list", "date", "vendor", "product", "price", 
@@ -145,9 +133,6 @@ p0215.05 <- bind0215_05
 write.csv(p0215.05, file = "p-2015-02-05.csv", row.names = F)
 
 # extract subsubcategories ----------------------------------------------------
-
-library(data.table)
-p0215.05 <- fread("~/GitHub/ag-product-safety-2015/p-2015-02-05.csv")
 
 # subset subsubcategories
 levels(p0215.05$subcat)
