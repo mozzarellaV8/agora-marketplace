@@ -135,7 +135,9 @@ arules::inspect(head(itemsets))
 
 
 
-# try a new subset ------------------------------------------------------------
+# feedback table ------------------------------------------------------------
+
+fb.table <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
 
 p14$feedback <- as.character(p14$feedback)
 fb <- subset(p14, p14$feedback != " Feedbacks: No feedbacks found. ")
@@ -149,16 +151,132 @@ fb$worstFB <- grepl("^\\sFeedbacks: 0/5(.*)", fb$feedback)
 
 length(fb$greatFB[fb$greatFB == TRUE]) # 332500
 length(fb$greatFB[fb$greatFB == FALSE]) # 17045
+332500/349545 #  0.9512366
 
-vs <- subset(p14, select = c("vendor", "cat", "subcat", "subsubcat"))
+length(fb$goodFB[fb$goodFB == TRUE]) # 4703
+length(fb$goodFB[fb$goodFB == FALSE]) # 344842
+4703/349545 #  0.01345463
 
-v1 <- as(vs, "transactions")
+length(fb$okFB[fb$okFB == TRUE]) # 2834
+length(fb$okFB[fb$okFB == FALSE]) # 346711
+2843/349545 # 0.008133431
+
+length(fb$badFB[fb$badFB == TRUE]) # 1169
+length(fb$badFB[fb$badFB == FALSE]) # 348376
+1169/349545 # 0.003344348
+
+length(fb$poorFB[fb$poorFB == TRUE]) # 1422
+length(fb$poorFB[fb$poorFB == FALSE]) # 348123
+1422/349545 # 0.004068146
+
+length(fb$worstFB[fb$worstFB == TRUE]) # 6911
+length(fb$worstFB[fb$worstFB == FALSE]) # 342634
+6911/349545 # 0.01977142
+
+fb.table <- data.frame(vendor = fb$vendor, great = fb$greatFB, good = fb$goodFB, ok = fb$okFB,
+                       bad = fb$badFB, poor = fb$poorFB, worst = fb$worstFB)
+
+write.csv(fb.table, file = "~/GitHub/agora-data/vfb-table-2014.csv",
+          row.names = F)
+
+fb.table$vendor <- gsub("%7E", "", as.character(fb.table$vendor))
+fb.table$vendor <- as.factor(fb.table$vendor)
+
+library(vcd)
+library(cba)
+library(lattice)
+
+fb2 <- fb.table
+fb2$vendor <- NULL
+fb2b <- fb2[1:1000, ]
+
+# figure these out:
+clmplot(as.matrix(fb2b))
+lmplot(as.matrix(fb2b))
+
+
+
+# vendor product affinities ---------------------------------------------------
+
+# vendor-feedback table
+v1 <- as(fb.table, "transactions")
 v1
 # transactions in sparse format with
-# 772356 transactions (rows) and
-# 2280 items (columns)
+# 349545772356 transactions (rows) and
+# 1874 items (columns)
 summary(v1)
 
-write.csv(fb, file = "~/GitHub/agora-data/feedback-2014.csv", row.names = F)
+# write.csv(fb, file = "~/GitHub/agora-data/feedback-2014.csv", row.names = F)
+
+# vendor-category-feedback
+fb <- fread("~/GitHub/agora-data/feedback-2014.csv", stringsAsFactors = T)
+v2 <- subset(fb, select = c("vendor", "cat", "subcat", "subsubcat", "greatFB", "worstFB"))
+
+v2 <- as(v2, "transactions")
+v2
+# transactions in sparse format with
+# 349545 transactions (rows) and
+# 1968 items (columns)
+
+summary(v2)
+# density of 0.002525919
+
+# most frequent items:
+# greatFB       cat=Drugs    subsubcat=NA subcat=Cannabis  subsubcat=Weed         (Other) 
+# 332500          259558          164720           75952           49536          855325 
+
+# element (itemset/transaction) length distribution:
+# sizes
+# 4      5 
+# 10134 339411
+
+# LHS all have length of 4 or 5. this may need to change.
+
+# VCF - Mine Frequent Itemsets ------------------------------------------------
+
+nrow(v2)
+500/nrow(v2) # 0.001430431
+# 'find an interesting support (have at least 500 observations)'
+
+v2items <- apriori(v2, parameter = list(target = "frequent", 
+                                        supp = 0.0014, minlen = 2, maxlen = 4))
+
+summary(v2items)
+# set of 1889 itemsets
+
+# greatFB  983
+# Drugs    686
+# sscat    516
+# Cannabis 217
+# Weed     124
+# other    2839
+
+# element (itemset/transaction) length distribution:sizes
+# 2   3   4 
+# 699 793 397
+
+# mean: 2.84
+
+# summary of quality measures:
+# support        
+# Min.   :0.001402  
+# 1st Qu.:0.001759  
+# Median :0.002526  
+# Mean   :0.008199  
+# 3rd Qu.:0.005321  
+# Max.   :0.707331 
+
+# mining info:
+# data ntransactions support confidence
+#   v2        349545  0.0014          1
+
+par(mar = c(20, 6, 2, 2), family = "FranklinGothicSSK")
+itemFrequencyPlot(v2, support = 0.005, cex.names = 0.75)
+itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8)
+
+
+
+
+
 
 
