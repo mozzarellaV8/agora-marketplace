@@ -57,11 +57,13 @@ system.time(
   }
 )
 
-#        user  system elapsed 
-#  1121.786   21.314 1185.201
+#     user  system elapsed 
+#  655.190   6.204 667.336
 
 pList[1330] # gV4EtbPw8K - phenazopam 20mg rc benzo
 pList[6765] # FFlpdYv5At - CO2 sap - cannabis
+pList[7923] # jTpEb8N0CD - cigs
+pList[9301] # NX2SyYA6Bl - diy pepsi stash bottle
 
 # safety
 write.csv(p0215.09, file = "p-0215-09-raw.csv", row.names = F)
@@ -74,6 +76,7 @@ colnames(p0215.09) <- c("list", "date", "vendor", "product",
 p0215.09$vendor <- gsub("/vendor/", "", p0215.09$vendor)
 p0215.09$vendor <- gsub("/user/", "", p0215.09$vendor)
 p0215.09$vendor <- gsub("#", "", p0215.09$vendor)
+p0215.09$vendor <- gsub("%7E", "", p0215.09$vendor)
 
 p0215.09$shipping <- as.character(p0215.09$shipping)
 p0215.09$shipping <- stripWhitespace(p0215.09$shipping)
@@ -83,8 +86,8 @@ is.na(p0215.09$shipping)
 p0215.09 <- separate(p0215.09, shipping, c("from", "to"), sep = "To: ")
 p0215.09$from <- gsub("From: ", "", p0215.09$from)
 
-levels(as.factor(p0215.09$from)) # 49
-levels(as.factor(p0215.09$to)) # 300
+levels(as.factor(p0215.09$from)) # 51
+levels(as.factor(p0215.09$to)) # 199
 
 p0215.09$price <- gsub(" BTC", "", p0215.09$price)
 p0215.09$price <- as.double(p0215.09$price)
@@ -100,7 +103,7 @@ p0215.09$cat <- as.character(p0215.09$cat)
 p0115 <- subset(p0215.09,  p0215.09$cat != "Listings" & p0215.09$cat != "Jewelry"
                 & p0215.09$cat != "Electronics" & p0215.09$cat != "Other")
 
-# 22211 > 21512
+# 13161 > 12571
 pList2 <- as.character(p0115$list)
 subcat <- data.frame(stringsAsFactors = F)
 
