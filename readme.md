@@ -128,13 +128,15 @@ Time Period: January 1st, 2014 through July 7th, 2015
 ![](plots/pgDist-lm-product-01.png)
 
 ``` r
+p.lm <- (product ~ date, data = pv)
+
 #                 Estimate  Std.Error  t value 		Pr(>|t|)    
 #   (Intercept) -4.542e+05  5.579e+04  	-8.142 	4.04e-14 ***
 #   date         2.843e+01  3.401e+00    8.360 	1.03e-14 ***
 # 	Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
 ```
 
-Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. 
+Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages( > 10,000) were removed from the crawl during the extraction process because too many requests had been made to the server. Gwern himself has made clear that it's best to consider his crawls a lower-bound for market activity. But maybe the best reason these plots are spurious is that linear regression isn't exactly suited for count data or time series modeling.
 
 ![](plots/pgDist-lm-vendor-01.png)
 
