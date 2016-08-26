@@ -6,6 +6,7 @@ The question of personal use vs. distribution: Are there product groupings that 
 
 Start off by taking a look at categorical levels. After identifying a wide range of potential variables, begin to subset from sub-subcategory back to top level category; and begin with products that are definitively marijuana and move out towards products that suggest possibilities.
 
+
 # Features of Interest
 
 ``` {R}
@@ -60,7 +61,7 @@ levels(fb$subsubcat)
 
 # Sub Sub Category Subsets
 
-## Weed
+# Weed
 The first call is to 'Weed' in 'subsubcat': 
 
 ``` {R}
@@ -143,6 +144,7 @@ Observation made by Slate regarding the New York Times approach to 'Weed':
 
 Perhaps it remains in slang, but can be assumed to be universally understood.
 
+# 8 Rules Each
 
 ## Hash
 
@@ -176,16 +178,83 @@ mining info:
 Confidence drops no lower than 0.93 - and lift is in the 30s. But the quality measures are quite strong, likely because the associations aren't particularly surprising:
 
 ```{R}
-arules::inspect(head(hash, n = 3, by = "confidence"))
-     lhs                                              rhs              support     confidence lift    
-760  {vendor=theblossom,subcat=Cannabis}           => {subsubcat=Hash} 0.001544865 1          33.78879
-2162 {vendor=theblossom,cat=Drugs,subcat=Cannabis} => {subsubcat=Hash} 0.001544865 1          33.78879
-2165 {vendor=theblossom,subcat=Cannabis,greatFB}   => {subsubcat=Hash} 0.001542005 1          33.78879
+> arules::inspect(hash)
+     lhs                                                      rhs              support     confidence lift    
+80   {vendor=theblossom}                                   => {subsubcat=Hash} 0.001544865 0.9310345  31.45853
+760  {vendor=theblossom,subcat=Cannabis}                   => {subsubcat=Hash} 0.001544865 1.0000000  33.78879
+762  {vendor=theblossom,cat=Drugs}                         => {subsubcat=Hash} 0.001544865 0.9310345  31.45853
+764  {vendor=theblossom,greatFB}                           => {subsubcat=Hash} 0.001542005 0.9309154  31.45450
+2162 {vendor=theblossom,cat=Drugs,subcat=Cannabis}         => {subsubcat=Hash} 0.001544865 1.0000000  33.78879
+2165 {vendor=theblossom,subcat=Cannabis,greatFB}           => {subsubcat=Hash} 0.001542005 1.0000000  33.78879
+2168 {vendor=theblossom,cat=Drugs,greatFB}                 => {subsubcat=Hash} 0.001542005 0.9309154  31.45450
+3218 {vendor=theblossom,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Hash} 0.001542005 1.0000000  33.78879
 ```
 
-Further examination by each quality measure, and looking at head and tail yield the same rules. 
+Maybe the most surprising thing is that only _one_ vendor - over an entire year of listings - has hash.
 
-# Zero Rule Club - Sub Sub Cat
+## Edibles
+
+This starts out strongly resembling `Hash` - 8 rules, high confidence and lift, exact same file size. And after inspecting the rules I can see why now: both `hash` and `edibles` appear to be sold by only one vendor. 'theblossom' covering hash and 'Lion' for edibles.
+
+``` {R}
+> summary(ed)
+set of 8 rules
+
+rule length distribution (lhs + rhs):sizes
+2 3 4 5 
+1 3 3 1 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    2.0     3.0     3.5     3.5     4.0     5.0 
+
+summary of quality measures:
+    support           confidence          lift      
+ Min.   :0.002558   Min.   :0.6622   Min.   :47.04  
+ 1st Qu.:0.002558   1st Qu.:0.6683   1st Qu.:47.47  
+ Median :0.002683   Median :0.6900   Median :49.01  
+ Mean   :0.002683   Mean   :0.6899   Mean   :49.01  
+ 3rd Qu.:0.002809   3rd Qu.:0.7102   3rd Qu.:50.45  
+ Max.   :0.002809   Max.   :0.7173   Max.   :50.95  
+
+mining info:
+ data ntransactions support confidence
+   v2        349545  0.0014        0.6
+
+arules::inspect(ed)
+     lhs                                                rhs                 support     confidence lift    
+412  {vendor=Lion}                                   => {subsubcat=Edibles} 0.002809366 0.6657627  47.28999
+1502 {vendor=Lion,subcat=Cannabis}                   => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
+1504 {vendor=Lion,cat=Drugs}                         => {subsubcat=Edibles} 0.002809366 0.6721424  47.74314
+1506 {vendor=Lion,greatFB}                           => {subsubcat=Edibles} 0.002557611 0.6622222  47.03850
+2709 {vendor=Lion,cat=Drugs,subcat=Cannabis}         => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
+2712 {vendor=Lion,subcat=Cannabis,greatFB}           => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
+2715 {vendor=Lion,cat=Drugs,greatFB}                 => {subsubcat=Edibles} 0.002557611 0.6691617  47.53142
+3361 {vendor=Lion,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
+```
+
+## Concentrates, Edibles, and Hash
+
+I'm surprised each generates 8 rules, and has one dedicated vendor associated per specific class of Cannabis. Further inspection of the rules and the data cleansing are in order.
+
+``` {R}
+> arules::inspect(concentrates)
+     lhs                                                     rhs                      support     confidence lift    
+246  {vendor=chipzahoy}                                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1093 {vendor=chipzahoy,subcat=Cannabis}                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1095 {vendor=chipzahoy,cat=Drugs}                         => {subsubcat=Concentrates} 0.002348768 1          42.35882
+1097 {vendor=chipzahoy,greatFB}                           => {subsubcat=Concentrates} 0.002323020 1          42.35882
+2380 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis}         => {subsubcat=Concentrates} 0.002348768 1          42.35882
+2383 {vendor=chipzahoy,subcat=Cannabis,greatFB}           => {subsubcat=Concentrates} 0.002323020 1          42.35882
+2386 {vendor=chipzahoy,cat=Drugs,greatFB}                 => {subsubcat=Concentrates} 0.002323020 1          42.35882
+3271 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Concentrates} 0.002323020 1          42.35882
+```
+
+# Zero Rule Club 
+
+- [Synthetics](#synthetics)
+- [Shake/trim](#shake-trim)
+- [Seeds](#seeds)
+- [Prescription](prescription)
 
 ## Synthetics
 
@@ -281,63 +350,6 @@ unique(scripCheck$product)
 A look at the levels of `Prescription` shows 473 versions of Adderall, Dexedrine, Vyvanse, Ritalin, Modafanil, Provigil, and their generic counterparts. Excepting an occasional listing for Viagra/Cialis, a misplaced Codeine, and a single Lorazepam/Ativan - `Prescription` can more or less be synonymous with `Stimulants`. 
 
 This is small ecosystem of substances that can be examined more closely in terms of quantities (e.g. milligrams, number of pills) using regex.
-
-# Edibles
-
-This starts out strongly resembling `Hash` - 8 rules, high confidence and lift. And after inspecting the rules I can see why now: both `hash` and `edibles` seem to each be sold by only one vendor. 'theblossom' for hash and 'Lion' for edibles.
-
-``` {R}
-> summary(ed)
-set of 8 rules
-
-rule length distribution (lhs + rhs):sizes
-2 3 4 5 
-1 3 3 1 
-
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    2.0     3.0     3.5     3.5     4.0     5.0 
-
-summary of quality measures:
-    support           confidence          lift      
- Min.   :0.002558   Min.   :0.6622   Min.   :47.04  
- 1st Qu.:0.002558   1st Qu.:0.6683   1st Qu.:47.47  
- Median :0.002683   Median :0.6900   Median :49.01  
- Mean   :0.002683   Mean   :0.6899   Mean   :49.01  
- 3rd Qu.:0.002809   3rd Qu.:0.7102   3rd Qu.:50.45  
- Max.   :0.002809   Max.   :0.7173   Max.   :50.95  
-
-mining info:
- data ntransactions support confidence
-   v2        349545  0.0014        0.6
-
-arules::inspect(ed)
-     lhs                                                rhs                 support     confidence lift    
-412  {vendor=Lion}                                   => {subsubcat=Edibles} 0.002809366 0.6657627  47.28999
-1502 {vendor=Lion,subcat=Cannabis}                   => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
-1504 {vendor=Lion,cat=Drugs}                         => {subsubcat=Edibles} 0.002809366 0.6721424  47.74314
-1506 {vendor=Lion,greatFB}                           => {subsubcat=Edibles} 0.002557611 0.6622222  47.03850
-2709 {vendor=Lion,cat=Drugs,subcat=Cannabis}         => {subsubcat=Edibles} 0.002809366 0.7173119  50.95159
-2712 {vendor=Lion,subcat=Cannabis,greatFB}           => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
-2715 {vendor=Lion,cat=Drugs,greatFB}                 => {subsubcat=Edibles} 0.002557611 0.6691617  47.53142
-3361 {vendor=Lion,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
-```
-
-## Concentrates, Edibles, and Hash
-
-I'm surprised each generates 8 rules, and has one dedicated vendor associated per specific class of Cannabis.
-
-``` {R}
-> arules::inspect(concentrates)
-     lhs                                                     rhs                      support     confidence lift    
-246  {vendor=chipzahoy}                                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
-1093 {vendor=chipzahoy,subcat=Cannabis}                   => {subsubcat=Concentrates} 0.002348768 1          42.35882
-1095 {vendor=chipzahoy,cat=Drugs}                         => {subsubcat=Concentrates} 0.002348768 1          42.35882
-1097 {vendor=chipzahoy,greatFB}                           => {subsubcat=Concentrates} 0.002323020 1          42.35882
-2380 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis}         => {subsubcat=Concentrates} 0.002348768 1          42.35882
-2383 {vendor=chipzahoy,subcat=Cannabis,greatFB}           => {subsubcat=Concentrates} 0.002323020 1          42.35882
-2386 {vendor=chipzahoy,cat=Drugs,greatFB}                 => {subsubcat=Concentrates} 0.002323020 1          42.35882
-3271 {vendor=chipzahoy,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Concentrates} 0.002323020 1          42.35882
-```
 
 
 
