@@ -1,6 +1,6 @@
 # Exploratory Cannabis Analysis
 
-_unedited observations_
+_unedited observations - some R outputs are left raw for syntax highlighting/readability_
 
 The question of personal use vs. distribution: Are there product groupings that could indicate one of these two intentions? What's the profile of a large-scale dealer, and what might their product interests be? 
 
@@ -296,7 +296,7 @@ Following the larger population, prices fall into the first and second factors m
 
 ## Shake/trim
 
-Also no rules. Only 8 vendors out of 1868 even sell shake, and 4 countries(the largest ones) will ship it. 
+Also no rules. Only 8 vendors out of 1868 even sell shake, and 4 countries(the largest ones) will ship it. This answers the question, "Where can I buy shitty weed on the internet from?". Just kidding. Keif can be extracted or edibles/butter can be produced...
 
 ``` {R}
 shake <- subset(v2rules, rhs %in% "subsubcat=Shake/trim")
