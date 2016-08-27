@@ -12,8 +12,6 @@ library(tm)
 p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
 str(p14)
 
-summary(p14) # 772632
-
 p14$list <- as.character(p14$list)
 p14$list <- removeNumbers(p14$list)
 p14$list <- gsub("--__", "", p14$list)
@@ -25,12 +23,17 @@ p14$vendor <- gsub("%7E", "", p14$vendor)
 p14$feedback <- as.character(p14$feedback)
 p14$feedback <- stripWhitespace(p14$feedback)
 
+levels(p14$from)
+
+
+
+
 quantile(p14$price)
 
 # subset out the placeholder (high) prices
 p14 <- subset(p14, p14$price < 3500) # 772357
 # I chopped that subset down pretty quick. A lot of vendors keep placeholder listings when they're
-# out of stock - with outrageously high prices. Not sure who is going to pay for over $1M USD 
+# out of stock - with outrageously high prices. (citation: Economist) Not sure who is going to pay for over $1M USD 
 # for 0.1 grams of speed paste, but I feel OK to make a judgement call subsetting that out.  
 
 # switched from 8 to 12 clusters - curious how the prices distribute.
