@@ -1,0 +1,99 @@
+# Agora Marketplace Analysis
+# arules - 2014 data
+
+# load data -------------------------------------------------------------------
+
+library(data.table)
+
+# all 2014 Agora market data
+p14 <- fread("~/GitHub/agora-data/Agora2014.csv", stringsAsFactors = F)
+p14$date <- as.Date(p14$date)
+
+# subset for listings with feedback
+fb <- subset(p14, p14$feedback != "\n    Feedbacks:\n    No feedbacks found.\n")
+levels(as.factor(fb$from)) #64
+levels(as.factor(fb$to))   #99
+
+# bitcoin price data
+bpi <- read.csv("data/bpi/bpi-Coindesk.csv")
+bpin$Date <- as.Date(bpi$Date)
+summary(bpi)
+
+bpi <- na.omit(bpi)
+colnames(bpi) <- c("Date", "Price")
+
+# explore prices --------------------------------------------------------------
+
+library(ggplot2)
+library(scales)
+library(RColorBrewer)
+
+datebreaks <- seq(as.Date(bpi$Date)[1], as.Date(bpi$Date)[2208],
+                  by = "2 month")
+
+p1 <- ggplot(bpi, aes(Date, Close.Price, colour = Close.Price)) +
+  geom_point(size = 2, shape = 1, alpha = 1) +
+  scale_colour_gradient2(low = "steelblue4", mid = "white", high = "firebrick3") +
+  theme_bw(base_size = 12, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 08)) +
+  theme(axis.text.y = element_text(size = 10)) +
+  theme(axis.title.y = element_text(face = "italic")) +
+  theme(plot.margin = unit(c(1.5, 1.5, 1.5, 1.5), "cm")) +
+  theme(plot.title = element_text(size = 18, face = "bold", vjust = 3)) +
+  labs(title = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02", 
+       x = "", y = "price in USD")
+
+p1 + scale_x_date(breaks = datebreaks)
+
+# Bitcoin Lifetime with trends ------------------------------------------------
+
+# plot entire Bitcoin lifetime
+par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+plot(bpi$Date, bpi$Price, col = "#00000075",
+     main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+abline(a = 526.9241, b = 0, lty = 2, col = "#FF000075")
+rug(bpi$Date, ticksize = 0.025, lwd = 0.1, col = "#000000")
+
+# Subset Agora data date range
+bpiAg <- bpi[bpi$Date >= "2014-01-01" & bpi$Date <= "2014-12-31", ]
+plot(bpiAg, main = "Bitcoin Price Index 2014 (USD)")
+abline(a = 526.9241, b = 0, lty = 2, col = "#FF000075")
+
+summary(bpiAg)
+bpiAg[bpiAg$Price == min(bpiAg$Price), ]
+# 1627 2014-12-30 309.87
+
+bpiAg[bpiAg$Price == max(bpiAg$Price), ]
+# 1269 2014-01-06 951.39
+
+bpiAg[bpiAg$Price == mean(bpiAg$Price), ]
+mean(bpiAg$Price)
+# [1] 526.9241
+
+# plot entire Bitcoin lifetime with Agora -------------------------------------
+summary(bpi$Price)
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.05    5.90  119.10  213.50  386.20 1147.00
+quantile(bpi$Price)
+# distribution of price values
+# 0%      25%      50%      75%     100% 
+# 0.050    5.900  119.125  386.210 1147.250
+
+# colors:
+# rally = #7AC5CD
+# downturn =  
+# Agora = #CD0000
+# Bitcoing = #00000075
+par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+plot(bpi$Date, bpi$Price, col = "#00000075",
+     main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+abline(a = 213.50, b = 0, lty = 2, col = "#FF000075")
+points(bpiAg$Date, bpiAg$Price, col = "#CD0000", pch = 19, cex = 0.8)
+points(bpiAg$Date, bpiAg$Price, col = "#00000050", pch = 1, cex = 1.1)
+
+
+
+
+
+
+
