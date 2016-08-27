@@ -149,6 +149,10 @@ Perhaps it remains in slang, but can be assumed to be universally understood.
 
 # 8 Rules Each
 
+- [Hash](#hash)
+- [Edibles](#edibles)
+- [Concentrates](#concentrates)
+
 ## Hash
 
 We start out with a set of 8 rules here - lower number than expected, but with promising confidence and lift values.
@@ -235,7 +239,7 @@ arules::inspect(ed)
 3361 {vendor=Lion,cat=Drugs,subcat=Cannabis,greatFB} => {subsubcat=Edibles} 0.002557611 0.7078385  50.27868
 ```
 
-## Concentrates, Edibles, and Hash
+## Concentrates
 
 I'm surprised each generates 8 rules, and has one dedicated vendor associated per specific class of Cannabis. Further inspection of the rules and the data cleansing are in order.
 
