@@ -106,7 +106,7 @@ Distribution of quality measures seems to even out across the board - more than 
 313 {vendor=Amsint}               => {subsubcat=Weed} 0.002294411 0.7544685  5.323819
 ```
 
-Rules with two antecedents don't seem to say much - direct vendor to product relationship. It might be worth computing categories alone, without vendor.
+Rules with two antecedents don't seem to say much - direct vendor to product relationship. It might be worth computing categories alone, without vendor. Although, depending on a vendor's diversity of inventory - this can tell us a vendor is likely to sell weed.
 
 ```{R}
 > arules::inspect(tail(mj))
@@ -119,7 +119,7 @@ Rules with two antecedents don't seem to say much - direct vendor to product rel
    cat=Drugs,                                                                      
    subcat=Cannabis,                                                                
    greatFB}                     => {subsubcat=Weed} 0.003104035  1.0000000 7.056383
-3 {vendor=the\_real\_caliconnect,                                                    
+3 {vendor=the_real_caliconnect,                                                    
    cat=Drugs,                                                                      
    subcat=Cannabis,                                                                
    greatFB}                     => {subsubcat=Weed} 0.003115479  1.0000000 7.056383
