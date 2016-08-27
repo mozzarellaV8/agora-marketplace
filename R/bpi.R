@@ -30,11 +30,13 @@ for (i in 1:length(bpi)) {
 bpi <- bpi_coin
 summary(bpi)
 
-par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
-plot(bpi$Date, bpi$Close.Price, 
-  main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
-
 bpi <- na.omit(bpi)
+
+par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+plot(bpi$Date, bpi$Close.Price, col = "#00000075",
+  main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+rug(bpi$Date, ticksize = 0.025, lwd = 0.1, col = "#000000")
+
 
 quantile(bpi$Close.Price, na.rm = T)
 #       0%      25%      50%      75%     100% 
