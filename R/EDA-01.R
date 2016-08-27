@@ -4,38 +4,20 @@
 # load data -------------------------------------------------------------------
 
 library(data.table)
-
-# clear workspace and set directory
-getwd()
-setwd("~/GitHub/agora-marketplace")
-
-p2014 <- fread("~/GitHub/agora-data/agora-2014.csv", verbose = T, 
-               stringsAsFactors = F)
-
-fb <- fread("~/GitHub/agora-data/2014-AgFb2.csv")
-fb$V1 <- NULL
-
-# cleanse further -------------------------------------------------------------
-
-# What do I want? clean url paths, no duplicates in locations, 
-# possibly impute categorical data (replace NAs, for transactions)
-# Sooner or Later: subset for positive feedbacks (inferring transaction)
-# Later: url paths, BTC-dollar ratio.
-
-library(tm)
-library(dplyr)
-library(tidyr)
-
-p2014$date <- as.Date(p2014$date)
+p14 <- fread("~/GitHub/agora-data/Agora2014.csv", stringsAsFactors = F)
+p14$date <- as.Date(p14$date)
 
 
 # explore ---------------------------------------------------------------------
 
-length(unique(p2014$date)) # 112
+length(unique(p14$date)) # 112
 772632/112 # 6898.5 - avg. number of listings per day
 
 # This average is a loose approximation, contingent on crawl frequency
 # and accuracy. Cross-reference these counts with the grams dataset.
+
+p14$feedback[1]
+fb <- subset(p14, p14$feedback != "\n    Feedbacks:\n    No feedbacks found.\n")
 
 summary(fb$price)
 plot(fb$price)
@@ -56,7 +38,7 @@ quantile(fb$price)
 par(mar = c(6, 6, 6, 6), mfrow = c(1, 1), family = "FranklinGothicSSK")
 plot(fb$date, fb$price)
 plot(fb$date, fb$price, ylim = c(0, 400))
-plot(fb$date, fb$price, ylim = c(0, 50),
+plot(fb$date, fb$price, ylim = c(0, 1000),
      main = "Agora Marketplace 2014: List Prices under 50 BTC")
 
 # density of listings (likely based on more frequent crawls) goes up
@@ -65,7 +47,6 @@ plot(fb$date, fb$price, ylim = c(0, 50),
 # as November 8th, 2014.
 
 # explore prices --------------------------------------------------------------
-
 
 library(ggplot2)
 library(hexbin)
