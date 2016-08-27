@@ -343,7 +343,7 @@ AU in this case does not refer to gold but rather Australia.
 
 ## Prescription
 
-Turns out this does not refer to medical marijuana.
+Turns out `Prescription` is this sense does not refer to medical marijuana.
 
 ``` {R}
 scrip <- subset(v2rules, rhs %in% "subsubcat=Prescription")
