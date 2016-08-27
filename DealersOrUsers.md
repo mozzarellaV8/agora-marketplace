@@ -1,4 +1,4 @@
-# Cannabis Analysis
+# Exploratory Cannabis Analysis
 
 _unedited observations_
 
