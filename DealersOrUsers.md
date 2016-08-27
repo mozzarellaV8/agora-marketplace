@@ -296,7 +296,7 @@ Following the larger population, prices fall into the first and second factors m
 
 ## Shake/trim
 
-Also no rules. Only 8 vendors out of 1868 even sell shake, and 4 countries(the largest ones) will ship it. This answers the question, "Where can I buy shitty weed on the internet from?". Just kidding. Keif can be extracted or edibles/butter can be produced...
+Also no rules. Only 8 vendors out of 1868 even sell shake, and 4 countries(the largest ones) will ship it. This answers the question, "Where can I buy shitty weed on the internet from?". Just kidding. Joints could be easier to roll with shake. Keif(concentrate) can be harvested, or edibles/butter can be produced...all within niche realms of cannabis culture.
 
 ``` {R}
 shake <- subset(v2rules, rhs %in% "subsubcat=Shake/trim")
@@ -327,13 +327,13 @@ unique(seedCheck$vendor)
 # [1]  simonlabond          Cannaseed            budbrother           toysoldiers         
 # [5]  PeterLustig          FreshTouch           HappyHippy2.0        superstrains        
 # [9]  silverapples         Gobotal              Seeds_Co             Spacelab            
-# [13] Renegade             Quantum.Black.Widow  My\_Private\_Garden  Charlie_Bartlett    
+# [13] Renegade             Quantum.Black.Widow  My_Private_Garden    Charlie_Bartlett    
 # [17] derriese5            StrainHunters        Warbeast             CaliforniaGreenCross
 # [21] HangAbout            AngelEyes            klosterbier          danman              
 # [25] Alexandrus           OzGrow               BenzoAU
 ```
 
-27 vendors out of 1868 provide seeds - most names suggest an affinity with cannibus. Not hard to imagine what 'CaliforniaGreenCross', 'StrainHunters', 'Quantum.Black.Widow', 'budbrother', 'superstrains', 'Seeds_Co', &c. cater to. 
+27 vendors out of 1868 provide seeds - most names suggest an affinity with cannabis. Not hard to imagine what 'CaliforniaGreenCross', 'StrainHunters', 'Quantum.Black.Widow', 'budbrother', 'superstrains', 'Seeds_Co', &c. cater to. 
 
 Which makes `BenzoAU` stand out. Appears this vendor offers `50+ CANNABIS SATIVA SEEDS` - one single listing. The most recent feedback begins:
 
