@@ -6,6 +6,9 @@ The question of personal use vs. distribution: Are there product groupings that 
 
 Start off by taking a look at categorical levels. After identifying a wide range of potential variables, begin to subset from sub-subcategory back to top level category; and begin with products that are definitively marijuana and move out towards products that suggest possibilities.
 
+- [Features of Interest](#features-of-interest)
+- [Sub Sub Category Subsets](#sub-sub-category-subsets)
+- [Sub Category Subsets](#sub-category-subsets)
 
 # Features of Interest
 
@@ -349,7 +352,15 @@ unique(scripCheck$product)
 
 A look at the levels of `Prescription` shows 473 versions of Adderall, Dexedrine, Vyvanse, Ritalin, Modafanil, Provigil, and their generic counterparts. Excepting an occasional listing for Viagra/Cialis, a misplaced Codeine, and a single Lorazepam/Ativan - `Prescription` can more or less be synonymous with `Stimulants`. 
 
-This is small ecosystem of substances that can be examined more closely in terms of quantities (e.g. milligrams, number of pills) using regex.
+##### This is small ecosystem of substances that can be examined more closely in terms of quantities (e.g. milligrams, number of pills) using regex.
+
+
+# Sub Categories - a level up
+
+
+
+
+
 
 
 
