@@ -8,6 +8,8 @@ To put exchange rate trends in context - Agora lives in a subset of Bitcoin's li
 
 ![ghostplot.png](plots/BTC/ghostplot.png)
 
+![](plots/BTC/btc-all.png)
+
 The Bitcoin price index from its birth through August 2016.
 
 _full disclosure: I'm not an economist_
@@ -172,7 +174,7 @@ bpi[bpi$Date == "2014-12-31", ]
 
 There's two distinct valleys before the next sustained upward trend - more frequent price fluctuations over the the course of the month of October. Decicion to be made when the upward rally actually begins--
 
-# Plots
+# Plots w/ Intervals
 
 ``` {r}
 # plot entire Bitcoin lifetime with Agora -------------------------------------
@@ -193,17 +195,20 @@ quantile(bpi$Price)
 # dt01 = 2014-01-01 - 2014-04-10
 # rally01 = 2014-04-11 - 2014-06-03
 # dt02.1 = 2014-06-04 - 2014-10-5
+```
 
-par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
 
+``` {r}
 # all dates in Agora data range -----------------------------------------------
 plot(bpi$Date, bpi$Price, col = "#00000075",
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
 points(bpiAg$Date, bpiAg$Price, col = "#CD0000", pch = 19, cex = 0.8)
 points(bpiAg$Date, bpiAg$Price, col = "#00000050", pch = 1, cex = 1.1)
+```
+![](plots/BTC/btc-all-Ag.png)
 
 
-
+``` {r}
 # upward/downward price trends ------------------------------------------------
 plot(bpi$Date, bpi$Price, col = "#00000075",
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
@@ -219,16 +224,23 @@ points(rally01$Date, rally01$Price, col = "#00000075", pch = 1, cex = 1)
 
 points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 0.5)
 points(dt02.1$Date, dt02.1$Price, col = "#00000075", pch = 1, cex = 1)
+```
+
+![](plots/BTC/bpi-dt-rally-points.png)
 
 
+``` {r}
 # line plot - btc lifetime with Agora +/- intervals ---------------------------
 plot(bpi$Date, bpi$Price, col = "#00000075", type = "l", lwd = 1.4,
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
-
 points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 0.5)
 points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 0.5)
 points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 0.5)
+```
 
+![](plots/BTC/bpi-dt-rally-line.png)
+
+``` {r}
 # line plot - agora lifetime with +/- intervals -------------------------------
 plot(bpiAg, type = "l", lwd = 1.4, main = "Bitcoin Price Index 2014 (USD)")
 points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 1)
@@ -236,3 +248,4 @@ points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 1)
 points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 1)
 ```
 
+![](plots/BTC/bpiAg.png)
