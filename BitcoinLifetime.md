@@ -1,4 +1,6 @@
-# {Agora Operational Lifetime} ∈ {Bitcoin Price History}
+# Bitoin Price History ∪ Agora's Lifetime
+
+_{Agora Operational Lifetime} ∈ {Bitcoin Price History}_
 
 To put exchange rate trends in context - Agora lives in a subset of Bitcoin's lifetime. Bitcoin list prices will change (fact-check) as the Bitcoin-USD exchange rate changes. Does this have an effect on vendor or client behaviour on anonymous marketplaces? Would a client forego their order in the midst of a strong rally? 
 
