@@ -70,6 +70,39 @@ bpiAg[bpiAg$Price == mean(bpiAg$Price), ]
 mean(bpiAg$Price)
 # [1] 526.9241
 
+# subset Agora up/down trend intervals
+bpiAg04 <- bpiAg[bpiAg$Date >= "2014-04-01" & bpiAg$Date <= "2014-04-30", ]
+summary(bpiAg04$Price)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  360.8   441.2   456.9   460.2   486.3   529.2
+
+bpiAg04[bpiAg04$Price == 360.84, ]
+#            Date  Price
+# 1363 2014-04-10 360.84
+
+dt01 <- bpiAg[bpiAg$Date >="2014-01-01" & bpiAg$Date <= "2014-04-10", ]
+dim(dt01)
+# 100   2
+# 100 day downward trend in pricing.
+
+dt01[1, ]
+#            Date  Price
+# 1264 2014-01-01 770.44
+dt01[100, ]
+#            Date  Price
+# 1363 2014-04-10 360.84
+
+
+summary(dt01)
+#       Date                Price      
+# Min.   :2014-01-01   Min.   :360.8  
+# 1st Qu.:2014-01-25   1st Qu.:575.2  
+# Median :2014-02-19   Median :635.9  
+# Mean   :2014-02-19   Mean   :678.8  
+# 3rd Qu.:2014-03-16   3rd Qu.:842.4  
+# Max.   :2014-04-10   Max.   :951.4
+
+
 # plot entire Bitcoin lifetime with Agora -------------------------------------
 summary(bpi$Price)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -84,12 +117,16 @@ quantile(bpi$Price)
 # downturn =  
 # Agora = #CD0000
 # Bitcoing = #00000075
+
 par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+
 plot(bpi$Date, bpi$Price, col = "#00000075",
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
 abline(a = 213.50, b = 0, lty = 2, col = "#FF000075")
 points(bpiAg$Date, bpiAg$Price, col = "#CD0000", pch = 19, cex = 0.8)
 points(bpiAg$Date, bpiAg$Price, col = "#00000050", pch = 1, cex = 1.1)
+
+
 
 
 
