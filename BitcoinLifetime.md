@@ -130,7 +130,6 @@ This sustained downturn first bottoms out on October 5th, 2014 - and then procee
 Regardless, for now we'll define this third interval as the dates from June 4th, 2014 through October 5th, 2014. 
 
 ``` {r}
-
 dt02 <- bpiAg[bpiAg$Date >="2014-06-04" & bpiAg$Date <= "2014-12-01", ] 
 summary(dt02)
 # Date                Price      
@@ -142,8 +141,13 @@ summary(dt02)
 # Max.   :2014-12-01   Max.   :656.1 
 ```
 
-
-
+Year end vs. October 5th:
+``` {r}
+bpi[bpi$Date == "2014-10-05", ]
+# 2014-10-05 319.64
+bpi[bpi$Date == "2014-12-31", ]
+# 2014-12-31 319.7
+```
 
 ## 4rd event - rally
 
