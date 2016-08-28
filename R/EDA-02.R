@@ -139,9 +139,17 @@ summary(dt02)
 # 3rd Qu.:2014-10-17   3rd Qu.:591.0  
 # Max.   :2014-12-01   Max.   :656.1 
 
-dt02[dt02$Price == 309.]
+agOct <- dt02[dt02$Date >= "2014-10-01" & dt02$Date <= "2014-11-30", ]
+plot(agOct$Date, agOct$Price, type = "l")
 
+dt02[dt02$Price == 319.64, ]
+#            Date  Price
+# 1541 2014-10-05 319.64
 
+bpi[bpi$Date == "2014-10-05", ]
+# 2014-10-05 319.64
+bpi[bpi$Date == "2014-12-31", ]
+# 2014-12-31 319.7
 
 # plot entire Bitcoin lifetime with Agora -------------------------------------
 summary(bpi$Price)
