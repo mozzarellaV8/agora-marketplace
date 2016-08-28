@@ -1,4 +1,4 @@
-# Bitoin Price History ∪ Agora's Lifetime
+# Bitcoin Price History ∪ Agora's Lifetime
 
 _(unedited observations)_
 
