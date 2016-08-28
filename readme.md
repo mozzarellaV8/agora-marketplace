@@ -142,7 +142,7 @@ It can't be assumed that every crawl represents a complete day's listings; the m
 
 But maybe the best reason these plots are spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling.
 
-![](plots/pgDist-lm-vendor-01.png)
+![](plots/RDraft/pgDist-lm-vendor-01.png)
 
 ``` r
 # Coefficients:
@@ -158,7 +158,7 @@ What if we assume there was no downtime for security issues? Can we project a re
 
 Actual Market downtimes - an influence on number of listings and vendors:
 
-![](plots/DowntimesByDate.png)
+![](plots/RDraft/DowntimesByDate.png)
 
 
 
