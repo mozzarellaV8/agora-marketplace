@@ -6,7 +6,7 @@ _{Agora Operational Lifetime} ∈ {Bitcoin Price History}_
 
 To put exchange rate trends in context - Agora lives in a subset of Bitcoin's lifetime. Bitcoin list prices will change (fact-check) as the Bitcoin-USD exchange rate changes. Does this have an effect on vendor or client behaviour on anonymous marketplaces? Would a client forego their order in the midst of a strong rally? 
 
-![annotated plot image]()
+![ghostplot.png](plots/BTC/ghostplot.png)
 
 The Bitcoin price index from its birth through August 2016.
 
@@ -51,9 +51,12 @@ mean(bpiAg$Price)
 # [1] 526.9241
 ```
 
-## 1st Event - Downward Trend
+## 1st interval - Downward Trend
 
 Identifying start and endpoints of upward and downpard price trends. The year starts as Bitcoin begins is descent from all time peak at $1147.00 on Dec 4th, 2013. Before the next upward rally there's a sustained drop in value that bottoms out at $360.80 on April 30th, 2014 - 100 day downturn.
+
+- 1st event / 1st downturn interval: 2014-01-01 - 2014-04-10
+- Price Range during interval: $770.44 - $360.80
 
 ``` {r}
 # subset Agora up/down trend intervals
@@ -98,16 +101,19 @@ summary(dt01)
 # Max.   :2014-04-10   Max.   :951.4
 ```
 
-## 2nd Event - upward rally
+## 2nd interval - upward rally
 
 From the original plot we say a relatively short (41 days), but sustained rally in price. BTC price climbs from $360.84 to $665.73 in this interval.
+
+- 2nd event/1st rally interval: 2014-04-11 through 2014-06-03
+- Price rang: $420.0-6 - $665.73
 
 Identifying the date range:
 
 ``` {r}
 # identity peak value from range
-bpiAgSummer <- bpiAg[bpiAg$Date >= "2014-05-01" & bpiAg$Price >= 600, ]
-summary(bpiAgSummer)
+rally01 <- bpiAg[bpiAg$Date >= "2014-04-11" & bpiAg$Price >= 600, ]
+summary(rally01)
 #          Date                Price      
 # Min.   :2014-05-30   Min.   :600.0  
 # 1st Qu.:2014-06-09   1st Qu.:618.8  
@@ -116,14 +122,27 @@ summary(bpiAgSummer)
 # 3rd Qu.:2014-07-14   3rd Qu.:639.4  
 # Max.   :2014-07-24   Max.   :665.7
 
-bpiAgSummer[bpiAgSummer$Price == 665.73, ]
+rally01[rally01$Price == 665.73, ]
 #            Date  Price
 # 1417 2014-06-03 665.73
 ```
 
-2nd event interval: 2014-04-11 through 2014-06-03
+For plotting, revising the dates for downturn interval:
 
-## 3rd Event - downturn
+``` {r}
+# revise downturn interval dates
+dt02.1 <- bpiAg[bpiAg$Date >="2014-06-04" & bpiAg$Date <= "2014-10-05", ] 
+summary(dt02.1)
+#       Date                Price      
+# Min.   :2014-06-04   Min.   :319.6  
+# 1st Qu.:2014-07-04   1st Qu.:477.4  
+# Median :2014-08-04   Median :581.6  
+# Mean   :2014-08-04   Mean   :541.4  
+# 3rd Qu.:2014-09-04   3rd Qu.:615.1  
+# Max.   :2014-10-05   Max.   :656.1
+```
+
+## 3rd interval - downturn
 
 This sustained downturn first bottoms out on October 5th, 2014 - and then proceeds to fluctuate for the through the end of the year into the next rally in 2015. The year end close-price is actually only 6 cents higher than the price observed on October 5th. 
 
@@ -151,8 +170,69 @@ bpi[bpi$Date == "2014-12-31", ]
 
 ## 4rd event - rally
 
+There's two distinct valleys before the next sustained upward trend - more frequent price fluctuations over the the course of the month of October. Decicion to be made when the upward rally actually begins--
 
-There's two distinct valleys before the next sustained upward trend - more frequent price fluctuations over the the course of the month of October. Decicion to be made when the upward rally actually beings--
+# Plots
+
+``` {r}
+# plot entire Bitcoin lifetime with Agora -------------------------------------
+summary(bpi$Price)
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.05    5.90  119.10  213.50  386.20 1147.00
+quantile(bpi$Price)
+# distribution of price values
+# 0%      25%      50%      75%     100% 
+# 0.050    5.900  119.125  386.210 1147.250
+
+# colors:
+# rally = #0000FF
+# downturn =  #CD0000
+# Agora = #CD0000
+
+# intervals:
+# dt01 = 2014-01-01 - 2014-04-10
+# rally01 = 2014-04-11 - 2014-06-03
+# dt02.1 = 2014-06-04 - 2014-10-5
+
+par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+
+# all dates in Agora data range -----------------------------------------------
+plot(bpi$Date, bpi$Price, col = "#00000075",
+     main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+points(bpiAg$Date, bpiAg$Price, col = "#CD0000", pch = 19, cex = 0.8)
+points(bpiAg$Date, bpiAg$Price, col = "#00000050", pch = 1, cex = 1.1)
 
 
+
+# upward/downward price trends ------------------------------------------------
+plot(bpi$Date, bpi$Price, col = "#00000075",
+     main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+# abline(a = 1147.00, b = 0, lty = 2, col = "#CD0000")
+# abline(a = 360.84, b = 0, lty = 2, col = "#CD0000")
+points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 0.5)
+points(dt01$Date, dt01$Price, col = "#00000075", pch = 1, cex = 1)
+
+# abline(a = 420.06, b = 0, lty = 3, col = "#0000FF")
+# abline(a = 665.73, b = 0, lty = 3, col = "#0000FF")
+points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 0.5)
+points(rally01$Date, rally01$Price, col = "#00000075", pch = 1, cex = 1)
+
+points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 0.5)
+points(dt02.1$Date, dt02.1$Price, col = "#00000075", pch = 1, cex = 1)
+
+
+# line plot - btc lifetime with Agora +/- intervals ---------------------------
+plot(bpi$Date, bpi$Price, col = "#00000075", type = "l", lwd = 1.4,
+     main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
+
+points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 0.5)
+points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 0.5)
+points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 0.5)
+
+# line plot - agora lifetime with +/- intervals -------------------------------
+plot(bpiAg, type = "l", lwd = 1.4, main = "Bitcoin Price Index 2014 (USD)")
+points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 1)
+points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 1)
+points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 1)
+```
 
