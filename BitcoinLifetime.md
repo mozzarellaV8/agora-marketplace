@@ -249,3 +249,10 @@ points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 1)
 ```
 
 ![](plots/BTC/bpiAg.png)
+
+# Notes 
+
+Why look at these intervals? What led to thinking so? Drawing on plots. 
+![](vis/bpi-lifetime-notes.jpg)
+
+![](vis/bpi-grams-product-overlay.jpg)
