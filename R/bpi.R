@@ -12,13 +12,17 @@ write.table(bpiAg, file = "data/bpi-Agora.csv", sep = ",", row.names = F)
 
 # via investing.com -----------------------------------------------------------
 
-bpi <- read.delim("data/bpi/bpi-investing.tsv")
+bpi.inv <- read.csv("data/bpi/bpi-investing.csv")
+bpi.inv$Date <- as.Date(bpi.inv$Date)
 
-bpi_DD <- data.frame()
-for (i in 1:length(bpi)) {
-  dd[i] <- bpii$High[i] - bpi$Low[i]
-  bpi_DD <- cbind(bpi, dd)
-}
+
+
+# compute daily high-low difference:
+# bpi_DD <- data.frame()
+# for (i in 1:length(bpi)) {
+#   dd[i] <- bpii$High[i] - bpi$Low[i]
+#  bpi_DD <- cbind(bpi, dd)
+# }
 
 # via blockchain.info ---------------------------------------------------------
 # bpi_block <- read.csv("data/bpi/bpi-blockchain.csv")
