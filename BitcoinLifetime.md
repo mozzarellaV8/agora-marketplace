@@ -123,10 +123,11 @@ bpiAgSummer[bpiAgSummer$Price == 665.73, ]
 
 2nd event interval: 2014-04-11 through 2014-06-03
 
-## 3rd event - downturn
+## 3rd Event - downturn
 
-There's two distinct valleys before the next sustained upward trend - more frequent price fluctuations over the the course of the month of October. Decicion to be made when the upward rally actually beings--
+This sustained downturn first bottoms out on October 5th, 2014 - and then proceeds to fluctuate for the through the end of the year into the next rally in 2015. The year end close-price is actually only 6 cents higher than the price observed on October 5th. 
 
+Regardless, for now we'll define this third interval as the dates from June 4th, 2014 through October 5th, 2014. 
 
 ``` {r}
 
@@ -141,7 +142,13 @@ summary(dt02)
 # Max.   :2014-12-01   Max.   :656.1 
 ```
 
-Taking a look at the month of October for any significance to these fluctuations:
+
+
+
+## 4rd event - rally
+
+
+There's two distinct valleys before the next sustained upward trend - more frequent price fluctuations over the the course of the month of October. Decicion to be made when the upward rally actually beings--
 
 
 
