@@ -9,17 +9,21 @@ library(arulesViz)
 library(data.table)
 library(tm)
 
-p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
+# p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
 str(p14)
 
 summary(p14) # 772632
 
+# cleanse -------------------------------------------------
+
+# remove data from url path variable
 p14$list <- as.character(p14$list)
 p14$list <- removeNumbers(p14$list)
 p14$list <- gsub("--__", "", p14$list)
 p14$list <- gsub(".html", "", p14$list)
 p14$list <- as.factor(p14$list)
 
+# missed tilde removal in extraction
 p14$vendor <- gsub("%7E", "", p14$vendor)
 
 p14$feedback <- as.character(p14$feedback)
