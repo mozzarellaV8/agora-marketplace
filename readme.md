@@ -125,7 +125,7 @@ total days | product listings | vendor pages  |
 Time Period: January 1st, 2014 through July 7th, 2015
 
 
-![](plots//RDraftpgDist-lm-product-01.png)
+![](plots/RDraft/pgDist-lm-product-01.png)
 
 ``` r
 p.lm <- (product ~ date, data = pv)
