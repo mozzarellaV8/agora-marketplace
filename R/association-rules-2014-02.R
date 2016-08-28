@@ -1,6 +1,6 @@
 # Agora Marketplace Analysis
 # Association Rules - 2014 Product Data
-# Cannabis Analysis - SubSubCategories
+# Cannabis Analysis - SubCategories
 
 # load data -------------------------------------------------------------------
 
@@ -8,39 +8,42 @@ library(arules)
 library(arulesViz)
 library(data.table)
 library(tm)
+library(dplyr)
 
-p14 <- fread("~/GitHub/agora-data/agora-2014.csv", stringsAsFactors = T)
+p14 <- fread("~/GitHub/agora-data/Agora2014a.csv", stringsAsFactors = T)
+p14$date <- as.Date(p14$date)
 str(p14)
 
-p14$list <- as.character(p14$list)
-p14$list <- removeNumbers(p14$list)
-p14$list <- gsub("--__", "", p14$list)
-p14$list <- gsub(".html", "", p14$list)
-p14$list <- as.factor(p14$list)
 
-p14$vendor <- gsub("%7E", "", p14$vendor)
+# quick looks ---------------------------------------------
 
-p14$feedback <- as.character(p14$feedback)
-p14$feedback <- stripWhitespace(p14$feedback)
-
-levels(p14$from)
-
-
-
+length(unique(p14$product)) # 56746
+summary(p14$price)
+#     Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#       0       0       0      41       1 3521000
 
 quantile(p14$price)
 
-# subset out the placeholder (high) prices
-p14 <- subset(p14, p14$price < 3500) # 772357
-# I chopped that subset down pretty quick. A lot of vendors keep placeholder listings when they're
-# out of stock - with outrageously high prices. (citation: Economist) Not sure who is going to pay for over $1M USD 
-# for 0.1 grams of speed paste, but I feel OK to make a judgement call subsetting that out.  
+# look at high price / placeholder listings
+waitlist <- subset(p14, p14$price >= 3500)
+waitlist <- waitlist[order(waitlist$price, decreasing = T)]
 
-# switched from 8 to 12 clusters - curious how the prices distribute.
-# during the time period covered in the data, the lowest BTC-USD exchange rate
-# might have just dipped below $200.
-# But it also soared above $600 too. 
-# There's a WSS plot in the plot directory that might back the decision for 12. 
+waitTable <- as.data.frame(table(waitlist$subcat))
+waitTable <- waitTable[order(waitTable$Freq, decreasing = T), ]
+colnames(waitTable) <- c("subCategory", "Freq")
+table(waitlist$cat)
+
+waitT2 <- as.data.frame(table(waitlist$subsubcat))
+
+opioids <- subset(p14, p14$subcat == "Opioids")
+unique(opioids$date)
+opioids$list[opioids$date == "2014-07-29"]
+is.na(opioids$subsubcat)
+levels(opioids$subsubcat)
+
+# subset out the placeholder (high) prices ------------------------------------
+p14 <- subset(p14, p14$price < 3500) # 772357
+
 
 p14$price <- discretize(p14$price, method = "cluster", categories = 12)
 levels(p14$price)
@@ -57,7 +60,7 @@ levels(p14$price)
 
 # feedback table ------------------------------------------------------------
 
-fb.table <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
+# fb.table <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
 
 p14$feedback <- as.character(p14$feedback)
 fb <- subset(p14, p14$feedback != " Feedbacks: No feedbacks found. ")
