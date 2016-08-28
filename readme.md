@@ -7,18 +7,19 @@ data:
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
 
-domain: 
-- [some images](#images)
-- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
-
 exploratory:
 - [product and vendor counts](#exploratory-data-analysis)
 
-programming:
+domain: 
+- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
+
+wrangling:
 - [product page extraction](R/product-page-extraction.R)
 - [vendor page extractions](R/extract-vendor-all-01B.R)
 - [individual html page extractions](R)
 - [scrape cleanse / html parsing](parse-html/readme.md)
+
+archive:
 - [grams](grams) - archive of exploratory analysis on the 'Grams' dataset.
 
 ## the Problem
@@ -60,29 +61,22 @@ The scale of gwern's harvest prevents it from being posted here. Here is a glimp
 
 _*to download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download and tar.gz extraction time._
 
-## current strategy
-
-The ultimate goal will be to conduct a Market Basket Analysis; to mine associate rules given the products and services available in the data. While some transaction data is available, in much more abundace is vendor data. Given this, it will likely be that associate rules will be created from vendor listings - i.e. "vendors who sell this, also sell that". 
-
-There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
-
 ## images
 
 Agora Marketplace index page on July 7th, 2015:
 
 ![2015-07-07-index](vis/index-2015-07-07.jpg)
 
-Agora Marketplace index page on January 1st, 2014 (printout with notes)
+Agora Marketplace index page on January 1st, 2014 (printout with notes for extracting data from html)
 
 ![](vis/index-2014-01-01.jpg)
 
-## Agora and anonymous marketplaces
+## current strategy
 
-Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally and subjectively, the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
+The ultimate goal will be to conduct a Market Basket Analysis; to mine associate rules given the products and services available in the data. While some transaction data is available, in much more abundace is vendor data. Given this, it will likely be that associate rules will be created from vendor listings - i.e. "vendors who sell this, also sell that". 
 
-This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
+There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
 
-It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
 
 ## Exploratory Data Analysis
 
@@ -160,8 +154,11 @@ Actual Market downtimes - an influence on number of listings and vendors:
 
 ![](plots/RDraft/DowntimesByDate.png)
 
+## Agora and anonymous marketplaces
 
+Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally and subjectively, the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
 
+This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
 
-
+It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
 
