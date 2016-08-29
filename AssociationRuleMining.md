@@ -9,18 +9,21 @@ Sometimes you go to the store just to get _the one thing_ missing for dinner tha
 So the store pays it's taxes and keeps records of all these transactions - daily, weekly, monthtly, seasonally, annually. Of course the store also needs these transaction records to balance it's budget, do payroll, and so on so forth. Another thing the store could do is study these transactions to learn about novel combinations - sets of items - that customers prefer might prefer, or not even be aware of. They could even study these transactions over different intervals of interest - say, before a national eating holiday or impending natural disaster. This is, in essense, a simple way to think about the motivations and process behind Market Basket Analysis and Association Rule Mining.
 
 
-# List of Items; List of Itemsets; Frequent Itemsets; Association Rule Mining
+# Itemset Example
+
+List of Items; List of Itemsets; Frequent Itemsets; Association Rule Mining.
+
+- TID   -Items
+---- | -------:------:-------:------:-------:------:
+- 1  |  {Bread, Milk}
+- 2  |  {Bread, Diapers, Beer, arules paper, Eggs}
+- 3  |  {Thing for Dinner, Diapers, Beer, arules paper}
+- 4  |  {Butter, Catnip, Beer, arules paper}
+- 5  |  {Diapers, Beer, arules paper, Milk}
+- 6  |  {Bread, Milk, Semicolon, Gluten Starch}
+- 7  |  {Nail Polish, Diapers, Beer, arules paper}
 
 
-TID Items
---| -------:------:-------:------:-------:------:
-1 | {Bread, Milk}
-2 | {Bread, Diapers, Beer, arules paper, Eggs}
-3 | {Thing for Dinner, Diapers, Beer, arules paper}
-4 | {Butter, Catnip, Beer, arules paper}
-5 | {Diapers, Beer, arules paper, Milk}
-6 | {Bread, Milk, Semicolon, Gluten Starch}
-7 | {Nail Polish, Diapers, Beer, arules paper}
 
 
 
