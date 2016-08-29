@@ -12,16 +12,17 @@ So the store pays it's taxes and keeps records of all these transactions - daily
 # List of Items; List of Itemsets; Frequent Itemsets; Association Rule Mining
 
 
-Transaction ID |  Bread | Milk | Diapers | Butter | Beer | arules paper | Thing for Dinner | Banana
--------------- | -------:------:---------:--------:------:--------------:------------------:--------
-	1	   	   |	1		0		0		 1 		 1			1				0				0
-	2	       |	0		0		1		 0 		 1			1				0  				1	
-	3	       |	0		0		1		 0		 1			1				0				1
-	4	       |	0		0		1		 0		 1			1				0				0
-	5	       |	0		0		1		 0		 1			1				0				0
-	6	       |	1		1		1		 0		 0			0				1				1
-	7	       |	0		0		1		 0		 1			1				0				0
-	8	       |	0		0		1		 0		 1			1				0				0
+TID Items
+--| -------:------:-------:------:-------:------:
+1 | {Bread, Milk}
+2 | {Bread, Diapers, Beer, arules paper, Eggs}
+3 | {Thing for Dinner, Diapers, Beer, arules paper}
+4 | {Butter, Catnip, Beer, arules paper}
+5 | {Diapers, Beer, arules paper, Milk}
+6 | {Bread, Milk, Semicolon, Gluten Starch}
+7 | {Nail Polish, Diapers, Beer, arules paper}
+
+
 
 
 
