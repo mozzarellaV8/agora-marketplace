@@ -6,10 +6,10 @@ library(tidyr)
 library(dplyr)
 library(data.table)
 
-pDir <- "~/GitHub/ag-Product/2014/2014-12-01"
+pDir <- "~/GitHub/ag-Product/2014/2014-11-08"
 setwd(pDir)
 
-p <- fread("~/GitHub/ag-product-safety/p-2014-12-01.csv", stringsAsFactors = F)
+p <- fread("~/GitHub/ag-product-safety/p-2014-11-08.csv", stringsAsFactors = F)
 levels(as.factor(p$subcat))
 
 # subset --------------------------------------------------
@@ -50,6 +50,6 @@ p$vendor <- gsub("%7E", "", p$vendor)
 p$vendor <- gsub("/user/", "", p$vendor)
 p$feedback <- stripWhitespace(p$feedback)
 
-write.csv(p, file = "products-2014-12-01.csv", row.names = F)
-test <- read.csv("products-2014-12-01.csv")
+write.csv(p, file = "products-2014-11-08.csv", row.names = F)
+test <- read.csv("products-2014-11-08.csv")
 levels(test$subsubcat)
