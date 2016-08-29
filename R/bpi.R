@@ -52,14 +52,10 @@ summary(bpi$Close.Price)
 # Bind BPI to Agora Extraction ------------------------------------------------
 
 library(data.table)
-p14 <- fread("~/GitHub/agora-data/Agora2014.csv", stringsAsFactors = T)
+p14 <- fread("~/GitHub/agora-data/ag02-2014.csv", stringsAsFactors = T)
 str(p14)
 
 p14$date <- as.Date(p14$date)
-
-p14$V1 <- NULL
-p14$feedback <- as.character(p14$feedback)
-p14$feedback <- stripWhitespace(p14$feedback)
 
 bpi <- read.csv("data/BPI/bpi-Agora.csv")
 colnames(bpi) <- c("date", "rate", "age")
@@ -72,4 +68,4 @@ p14a$usd <- p14a$price * p14a$rate
 
 p14a <- as.data.frame(p14a)
 p14a <- p14a[c(2, 1, 3, 4, 5, 13, 12, 6, 7, 8, 9, 10, 11)]
-write.csv(p14a, file = "~/GitHub/agora-data/Agora2014a.csv", row.names = F)
+write.csv(p14a, file = "~/GitHub/agora-data/ag03-2014.csv", row.names = F)
