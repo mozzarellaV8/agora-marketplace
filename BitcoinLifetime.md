@@ -1,22 +1,20 @@
 # Bitcoin Price History ∪ Agora's Lifetime
 
-_(unedited observations)_
+_(unedited observations on Agora's Operational Lifetime and Bitcoin Exchange History_
 
-_{Agora Operational Lifetime} ∈ {Bitcoin Price History}_
 
-To put exchange rate trends in context - Agora lives in a subset of Bitcoin's lifetime. Bitcoin list prices will change (fact-check) as the Bitcoin-USD exchange rate changes. Does this have an effect on vendor or client behaviour on anonymous marketplaces? Would a client forego their order in the midst of a strong rally? 
+# _{Agora Operational Lifetime} ∈ {Bitcoin Price History}_
+
+The union of Agora's operational span and Bitcoin's price history provides a uniquely volatile financial, political, and legal climate. While I am not an econmomist, nor politcally active, and likely not on the right side of the law from time to time - I can still see there's something interesting about this slice of time here.
 
 ![ghostplot.png](plots/BTC/ghostplot.png)
 
+To put exchange rate trends in context - Agora lives in a subset of Bitcoin's lifetime. Bitcoin list prices will change (fact-check) as the Bitcoin-USD exchange rate changes. Does this have an effect on vendor or client behaviour on anonymous marketplaces? Would a client forego their order in the midst of a strong rally? 
+
+
+Bitcoin from birth, with Agora bracketed.
+
 ![](plots/BTC/btc-all.png)
-
-The Bitcoin price index from its birth through August 2016.
-
-_full disclosure: I'm not an economist_
-
-The union of Agora's operational lifetime and it's place in Bitcoin's history provides a uniquely volatile overlap. 
-
-
 ``` {r}
 # Bitcoin Lifetime with trends ------------------------------------------------
 
