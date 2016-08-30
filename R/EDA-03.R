@@ -23,13 +23,17 @@ length(unique(p14$product)) # 62873
 summary(p14$usd)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 # 0         29         95      15890        332 2215000000
-
+summary(p14$cat)
+summary(p14$subcat)
+summary(p14$subsubcat)
+709176/10118109 
+# 0.07008978 - percentage of market listed as "Drugs"
 
 # subset over $1000 -----------------------------------------------------------
 
 # Placeholders and Outliers
 waitlist <- subset(p14, p14$price >= 3500)
-waitlist <- waitlist[order(waitlist$price, decreasing = T)]
+waitlist <- waitlist[order(waitlist$price, decreasing = T), ]
 
 waitTable <- as.data.frame(table(waitlist$subcat))
 waitTable <- waitTable[order(waitTable$Freq, decreasing = T), ]
