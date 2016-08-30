@@ -6,14 +6,36 @@ The question of personal use vs. distribution: Are there product groupings that 
 
 Start off by taking a look at categorical levels. After identifying a wide range of potential variables, begin to subset from sub-subcategory back to top level category; and begin with products that are definitively marijuana and move out towards products that suggest possibilities.
 
+- [The Problem with Market Basket Analysis](#the-problem-with-market-basket-analysis)
 - [Features of Interest](#features-of-interest)
 - [Sub Sub Category Subsets](#sub-sub-category-subsets)
 - [Sub Category Subsets](#sub-category-subsets)
 
+# The Problem with Market Basket Analysis
+
+...on this particular dataset.
+
+``` {R}
+arules::inspect(head(cannabis))
+   lhs                          rhs         support     confidence lift    
+7  {subsubcat=MDA}           => {cat=Drugs} 0.003042155 1          1.344823
+9  {subsubcat=Buprenorphine} => {cat=Drugs} 0.003052882 1          1.344823
+12 {subsubcat=GHB}           => {cat=Drugs} 0.003183750 1          1.344823
+21 {subsubcat=MXE}           => {cat=Drugs} 0.003303892 1          1.344823
+24 {subsubcat=Seeds}         => {cat=Drugs} 0.003481958 1          1.344823
+27 {subsubcat=Synthetics}    => {cat=Drugs} 0.003584937 1          1.344823
+```
+
+One of the problems with Market Basket Analysis on this dataset is the limited range of products available. This makes it difficult to uncover novel cominations of items, and thus draw interesting conclusions. Most rules generated fall into expected categories. 
+
+While removing categories altogether may be a strategy - the overall distribution of products falls overwhelming into drugs and small subclasses of drugs. The potential for a novel discovery becomes limited when compared to similar arules studies done on transaction databases of, for example, Amazon.com or Wal-Mart. These companies offer such a diverse range of products that unexpected itemsets of quality can be found. Resembling more of a niche market, Agora offers very few products by comparison. Working with a limited range of products tends to only reinforce existing perceptions of them.
+
+Conclusion: no surprises here, really.
+
 # Features of Interest
 
 ``` {R}
-# highlight features of interest - wide range
+# highlight features of interest
 levels(fb$cat)
 # "Counterfeits" - identities
 # "Drug paraphernalia"
