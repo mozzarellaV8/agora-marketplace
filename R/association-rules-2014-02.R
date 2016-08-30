@@ -7,65 +7,51 @@
 library(arules)
 library(arulesViz)
 library(data.table)
-library(tm)
+library(lattice)
 
-p14 <- fread("~/GitHub/agora-data/ag03-2014.csv", stringsAsFactors = F)
+pop <- fread("~/GitHub/agora-data/ag03-2014.csv", stringsAsFactors = T)
+pop$date <- as.Date(pop14$date)
+# 1018109 obs of 13 variables
+
+p14 <- fread("~/GitHub/agora-data/ag04-2014.csv", stringsAsFactors = T)
 p14$date <- as.Date(p14$date)
-str(p14)
+# 442716 obs of 13 variables
 
-p14$to <- gsub("wideutschland", "", p14$to)
-p14$to <- gsub("deutschlandstination", "", p14$to)
-p14$to <- (as.factor(p14$to))
 
 # quick looks ---------------------------------------------
-
-length(unique(p14$product)) # 62873
+length(unique(p14$product)) # 28996
 summary(p14$usd)
-#           Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#         0         29         95      15890        332 2215000000
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#   0.00   19.60   57.92  130.20  150.70 1000.00
 
 quantile(p14$usd)
-#          0%                  25%                  50%                  75%                 100% 
-# 0.000031244         29.339983719         95.382603045        331.517211912 2214586310.860000134
+#          0%            25%            50%            75%           100% 
+# 0.000031244   19.599668421   57.920911226  150.675301049  999.999998675 
 
+# subset for prices under 40000
+ppu <- subset(pop14, pop14$usd > 10000)
+pp <- subset(pop14, pop14$usd <= 10000)
+summary(pp$usd)
 
+par(mar = c(6, 6, 6, 6), bty = "l", family = "HersheySans")
+hist(pp$usd, breaks = 100)
+hist(pp$usd, breaks = 400, xlim = c(0, 1000), ylim = c(0, 100000),
+     main = "hist(pp$usd, breaks = 400)")
 
-# subset out the placeholder (high) prices ------------------------------------
-
-p2014 <- p14
-p14 <- subset(p14, p14$price < 1200) # 1017556
-
-summary(p14$usd)
-#     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#      0.0     29.3     95.3    663.8    330.6 748000.0
-
-# even with the hard subset - the right skew remains.
-# plot to see what's going on with outliers
-
-library(ggplot2)
-library(vcd)
-
-
-p14$price <- discretize(p14$price, method = "cluster", categories = 12)
-levels(p14$price)
-#  8 clusters:
-# [1] "[   0.0000001,   4.2529326)" "[   4.2529326,  18.0214855)" "[  18.0214855,  63.4096931)"
-# [4] "[  63.4096931, 180.7799059)" "[ 180.7799059, 421.0974602)" "[ 421.0974602, 939.8462904)"
-# [7] "[ 939.8462904,2088.7955777)" "[2088.7955777,3199.0000000]"
-
-#  12 clusters:
-#  [1] "[   0.0000001,   1.4851368)" "[   1.4851368,   4.8476172)" "[   4.8476172,  10.6721562)" "[  10.6721562,  19.9506919)"
-#  [5] "[  19.9506919,  35.5722542)" "[  35.5722542,  63.6548653)" "[  63.6548653, 118.9146899)" "[ 118.9146899, 222.2199907)"
-#  [9] "[ 222.2199907, 441.8217437)" "[ 441.8217437, 947.7948146)" "[ 947.7948146,2088.7955777)" "[2088.7955777,3199.0000000]"
+pp$usd <- discretize(pp$usd, method = "cluster", categories = 6)
+levels(pp$usd)
+# "[   0.0000312, 383.9333795)" "[ 383.9333795,1171.9742818)"
+# "[1171.9742818,2347.0886060)" "[2347.0886060,4084.2702417)"
+# "[4084.2702417,6604.6751585)" "[6604.6751585,9998.6596936]"
 
 
 # feedback table ------------------------------------------------------------
 
-# fb.table <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
+# fbt <- fread("~/GitHub/agora-data/vfb-table-2014.csv")
 
-p14$feedback <- as.character(p14$feedback)
-fb <- subset(p14, p14$feedback != " Feedbacks: No feedbacks found. ")
-# 349545
+pp$feedback <- as.character(pp$feedback)
+fb <- subset(pp, pp$feedback != " Feedbacks: No feedbacks found. ")
+# 466117
 fb$greatFB <- grepl("^\\sFeedbacks: 5/5(.*)", fb$feedback)
 fb$goodFB <- grepl("^\\sFeedbacks: 4/5(.*)", fb$feedback)
 fb$okFB <- grepl("^\\sFeedbacks: 3/5(.*)", fb$feedback)
@@ -75,15 +61,15 @@ fb$worstFB <- grepl("^\\sFeedbacks: 0/5(.*)", fb$feedback)
 
 length(fb$greatFB[fb$greatFB == TRUE]) # 332500
 length(fb$greatFB[fb$greatFB == FALSE]) # 17045
-332500/349545 #  0.9512366
+444378/466117 # 0.9533615
 
 length(fb$goodFB[fb$goodFB == TRUE]) # 4703
 length(fb$goodFB[fb$goodFB == FALSE]) # 344842
-4703/349545 #  0.01345463
+6157/466117 #  0.01320913
 
 length(fb$okFB[fb$okFB == TRUE]) # 2834
 length(fb$okFB[fb$okFB == FALSE]) # 346711
-2843/349545 # 0.008133431
+3720/466117 # 0.007980829
 
 length(fb$badFB[fb$badFB == TRUE]) # 1169
 length(fb$badFB[fb$badFB == FALSE]) # 348376
@@ -97,50 +83,39 @@ length(fb$worstFB[fb$worstFB == TRUE]) # 6911
 length(fb$worstFB[fb$worstFB == FALSE]) # 342634
 6911/349545 # 0.01977142
 
-fb.table <- data.frame(vendor = fb$vendor, great = fb$greatFB, good = fb$goodFB, 
+fbt <- data.frame(great = fb$greatFB, good = fb$goodFB, 
                        ok = fb$okFB, bad = fb$badFB, poor = fb$poorFB, worst = fb$worstFB)
 
-write.csv(fb.table, file = "~/GitHub/agora-data/vfb-table-2014.csv",
-          row.names = F)
-
-fb.table$vendor <- gsub("%7E", "", as.character(fb.table$vendor))
-fb.table$vendor <- as.factor(fb.table$vendor)
+write.csv(fbt, file = "~/GitHub/agora-data/fbt02-2014.csv", row.names = F)
+summary(fbt)
 
 # Vendor-Category-Feedback subset ---------------------------------------------
 
-fb <- fread("~/GitHub/agora-data/feedback-2014.csv", stringsAsFactors = T)
-v2 <- subset(fb, select = c("vendor", "cat", "subcat", "subsubcat", "greatFB", "worstFB"))
-
-v2 <- as(v2, "transactions")
-v2
+pm <- subset(fb, select = c("product"))
+pm <- as(pm, "transactions")
+pm
 # transactions in sparse format with
 # 349545 transactions (rows) and
 # 1968 items (columns)
 
-summary(v2)
+summary(pm)
 # density of 0.002525919
 
 # most frequent items:
 # greatFB       cat=Drugs    subsubcat=NA subcat=Cannabis  subsubcat=Weed         (Other) 
 # 332500          259558          164720           75952           49536          855325 
 
-# element (itemset/transaction) length distribution:
-# sizes
-# 4      5 
-# 10134 339411
-
-# LHS all have length of 4 or 5. this may need to change.
 
 # VCF - Mine Frequent Itemsets ------------------------------------------------
 
-nrow(v2)
-500/nrow(v2) # 0.001430431
+nrow(pm)
+1000/nrow(pm) #   0.002145384
 # 'find an interesting support (have at least 500 observations)'
 
-v2items <- apriori(v2, parameter = list(target = "frequent", 
-                                        supp = 0.0014, minlen = 2, maxlen = 4))
+pmi <- apriori(pm, parameter = list(target = "frequent", supp = 0.0021, 
+                                    confidence = 0.6, minlen = 2, maxlen = 5))
 
-summary(v2items)
+summary(pmi)
 # set of 1889 itemsets
 
 # greatFB  983
@@ -167,14 +142,14 @@ summary(v2items)
 
 # mining info:
 # data ntransactions support confidence
-#   v2        349545  0.0014          1
+#   pm        349545  0.0014          1
 
 par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
-itemFrequencyPlot(v2, support = 0.005, cex.names = 0.75)
-itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8)
+itemFrequencyPlot(pm, support = 0.005, cex.names = 0.75)
+itemFrequencyPlot(pm, support = 0.0095, cex.names = 0.8)
 
 par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
-itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8,
+itemFrequencyPlot(pm, support = 0.0095, cex.names = 0.8,
                   main = "Agora 2014: Frequent Items (support = 0.0095)")
 
 # Need to cleanse or format the NA subsubcategory. 
@@ -182,20 +157,14 @@ itemFrequencyPlot(v2, support = 0.0095, cex.names = 0.8,
 # some ground truths on the population. 
 
 # VCF - Mine Association Rules ------------------------------------------------
-
-# Going to start out here with the same measure value from the 
-# frequent itemset mining (0.0014), and a confidence of 0.60.
-# Confidence close to one is ideal, so 0.6 hopefully pushes 
-# towards that with generous flexibility to start.
-
-v2rules <- apriori(v2, parameter = list(support = 0.0014, confidence = 0.6))
-v2rules
-# set of 3492 rules 
-summary(v2rules)
+pmrules <- apriori(pm, parameter = list(support = 0.00275, confidence = 0.7))
+pmrules
+# set of 2071 rules 
+summary(pmrules)
 
 # try out various subsets
-cannabis <- subset(v2rules, subset = rhs %in% "cat=Drugs" & lift > 1.2) # 709 rules
-synthetics <- subset(v2rules, subset = rhs %in% "subcat=Cannabis" & lift > 1.2)
+cannabis <- subset(pmrules, subset = rhs %in% "cat=Drugs" & lift > 1.2) # 552 rules
+synthetics <- subset(pmrules, subset = rhs %in% "subcat=Cannabis" & lift > 1.2)
 # 230 rules
 
 summary(cannabis)
@@ -263,7 +232,7 @@ levels(fb$subsubcat)
 # marijuana-related Rule Subsets ----------------------------------------------
 
 # Weed ----------------------------------------------------
-mj <- subset(v2rules, subset = rhs %in% "subsubcat=Weed" & lift > 1.2) # 98 rules
+mj <- subset(pmrules, subset = rhs %in% "cat=Information" & lift > 1.2) # 36 rules
 summary(mj)
 # set of 98 rules
 
@@ -285,13 +254,13 @@ summary(mj)
 
 # mining info:
 #   data ntransactions support confidence
-#     v2        349545  0.0014        0.6
+#     pm        349545  0.0014        0.6
 
 arules::inspect(head(mj))
 arules::inspect(tail(mj))
 
 # Synthetics ----------------------------------------------
-synth <- subset(v2rules, subset = rhs %in% "subsubcat=Synthetics")
+synth <- subset(pmrules, subset = rhs %in% "subsubcat=Synthetics")
 synth
 # set of 0 rules
 
@@ -327,7 +296,7 @@ unique(synthCheck$product)
 
 # Shake/trim ----------------------------------------------
 
-shake <- subset(v2rules, rhs %in% "subsubcat=Shake/trim")
+shake <- subset(pmrules, rhs %in% "subsubcat=Shake/trim")
 shake
 # set of 0 rules
 
@@ -343,7 +312,7 @@ unique(shakeCheck$from)
 
 # Seeds ---------------------------------------------------
 
-seeds <- subset(v2rules, rhs %in% "subsubcat=Seeds")
+seeds <- subset(pmrules, rhs %in% "subsubcat=Seeds")
 seeds
 # set of 0 rules
 
@@ -360,7 +329,7 @@ unique(seedCheck$vendor)
 
 # Prescription --------------------------------------------
 
-scrip <- subset(v2rules, rhs %in% "subsubcat=Prescription")
+scrip <- subset(pmrules, rhs %in% "subsubcat=Prescription")
 scrip # set of 0 rules
 
 scripCheck <- subset(fb, fb$subsubcat == "Prescription")
@@ -373,7 +342,7 @@ unique(scripCheck$product)
 
 # "Hash" --------------------------------------------------
 
-hash <- subset(v2rules, rhs %in% "subsubcat=Hash")
+hash <- subset(pmrules, rhs %in% "subsubcat=Hash")
 hash # set of 8 rules
 summary(hash)
 
@@ -382,7 +351,7 @@ arules::inspect(hash)
 
 # "Edibles" -----------------------------------------------
 
-ed <- subset(v2rules, rhs %in% "subsubcat=Edibles")
+ed <- subset(pmrules, rhs %in% "subsubcat=Edibles")
 summary(ed)
 # set of 8 rules
 
@@ -404,7 +373,7 @@ summary(ed)
 
 # mining info:
 #   data ntransactions support confidence
-# v2        349545  0.0014        0.6
+# pm        349545  0.0014        0.6
 
 arules::inspect(ed)
 #      lhs                                                rhs                 support     confidence lift    
@@ -419,7 +388,7 @@ arules::inspect(ed)
 
 # "Concentrates" ------------------------------------------
 
-concentrates <- subset(v2rules, rhs %in% "subsubcat=Concentrates")
+concentrates <- subset(pmrules, rhs %in% "subsubcat=Concentrates")
 summary(concentrates)
 # set of 8 rules
 
@@ -441,7 +410,7 @@ summary(concentrates)
 
 # mining info:
 #   data ntransactions support confidence
-#     v2        349545  0.0014        0.6
+#     pm        349545  0.0014        0.6
 
 arules::inspect(concentrates)
 #      lhs                                                     rhs                      support     confidence lift    
