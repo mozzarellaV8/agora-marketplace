@@ -152,9 +152,6 @@ par(mar = c(20, 6, 4, 2), family = "FranklinGothicSSK")
 itemFrequencyPlot(pm, support = 0.0095, cex.names = 0.8,
                   main = "Agora 2014: Frequent Items (support = 0.0095)")
 
-# Need to cleanse or format the NA subsubcategory. 
-# Perhaps can break up the `Drug` Category after establishing
-# some ground truths on the population. 
 
 # VCF - Mine Association Rules ------------------------------------------------
 pmrules <- apriori(pm, parameter = list(support = 0.00275, confidence = 0.7))
@@ -176,10 +173,7 @@ arules::inspect(tail(synthetics))
 arules::inspect(tail(cannabis))
 
 # the Question of Distribution ------------------------------------------------
-
-# this is somewhat like building a profile - subsetting for presumed 
-# attributes of someone with intent to distribute rather than 
-# consume personally.
+.
 
 # highlight features of interest - wide range
 levels(fb$cat)
