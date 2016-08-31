@@ -9,6 +9,12 @@ library(data.table)
 p14 <- fread("~/GitHub/agora-data/Agora2014.csv", stringsAsFactors = F)
 p14$date <- as.Date(p14$date)
 
+# check
+# grep("wideutschland", p14$to)
+# grep("deutschlandstination", p14$to)
+# grep("swedeutschlandn", p14$to)
+# grep("outsideutschland", p14$to)
+
 # subset for listings with feedback
 fb <- subset(p14, p14$feedback != "\n    Feedbacks:\n    No feedbacks found.\n")
 levels(as.factor(fb$from)) #64
