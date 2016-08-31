@@ -33,15 +33,66 @@
 
 # subset over $1000 -----------------------------------------------------------
 
+# the highest bound on price
+waitForever <- subset(p14, p14$price >= 99999.000)
+write.csv(waitForever, file = "~/GitHub/agora-data/waitForever.csv", row.names = F)
 
-# Placeholders and Outliers
-waitlist <- subset(p14, p14$price >= 3500)
+# this zone is mostly populated with listings saying explicitly
+# DONT ORDER. some have feedback and could be considered placeholders; 
+# but most are annoying.
+
+# remove optiman? he uses high prices to solicit collaborators;
+# the listing is 'have something to sell? got an idea?' 
+optiman <- waitlist[waitlist$vendor == "optiman", ]
+
+
+# Placeholders and Outliers ---------------------------------------------------
+waitlist <- subset(p14, p14$usd > 1200) # 96458
 waitlist <- waitlist[order(waitlist$price, decreasing = T), ]
 
-waitTable <- as.data.frame(table(waitlist$subcat))
-waitTable <- waitTable[order(waitTable$Freq, decreasing = T), ]
-colnames(waitTable) <- c("subCategory", "Freq")
-table(waitlist$cat)
 
-# snapshotp of what's out of stock
-waitT2 <- as.data.frame(table(waitlist$subsubcat))
+# General counts of categories ----------------------------
+
+library(ggplot2)
+# waitlist subcategory
+wt <- as.data.frame(table(waitlist$subcat))
+wt <- wt[order(wt$Freq, decreasing = T), ]
+colnames(wt) <- c("subCategory", "Freq")
+rownames(wt) <- NULL
+
+wt <- wt[-c(36:46), ]
+wt <- na.omit(wt)
+
+# there's 34 obs - very likely with real and false listings.
+# but now we have of narrowing this down a bit. 
+
+wt2 <- as.data.frame(table(waitlist$subsubcat))
+wt2 <- wt2[order(wt2$Freq, decreasing = T), ]
+wt2 <- na.omit(wt2)
+colnames(wt2) <- c("subSubCategory", "Freq")
+rownames(wt2) <- NULL
+# remove 0 frequencies
+wt2 <- wt2[-c(41:42), ]
+
+# plot a few to see
+wtP1 <- ggplot(wt, aes(subCategory, Freq, fill = Freq)) + 
+  geom_point() + 
+  labs(title = "Agora 2014: Category / Subcategory", 
+       y = "", x = expression(subcat %subset% cat)) +
+  theme(plot.title = element_text(family= "FranklinGothicSSK", 
+                                  face = "bold", size = 14,
+                                  margin = margin(-20, 0, 0, 0))) + 
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                   angle = 45, hjust = 1)) +
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
+
+wtP1
+
+stem(wt$Freq)
+stem(wt2$Freq, scale = 2)
+
+plot(ppois(0:10000,4))
+
+
+
