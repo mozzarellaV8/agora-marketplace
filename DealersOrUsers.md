@@ -4,8 +4,6 @@ _unedited observations - some R outputs are left raw for syntax highlighting/rea
 
 The question of personal use vs. distribution: Are there product groupings that could indicate one of these two intentions? What's the profile of a large-scale dealer, and what might their product interests be? 
 
-Start off by taking a look at categorical levels. After identifying a wide range of potential variables, begin to subset from sub-subcategory back to top level category; and begin with products that are definitively marijuana and move out towards products that suggest possibilities.
-
 - [The Problem with Market Basket Analysis](#the-problem-with-market-basket-analysis)
 - [Features of Interest](#features-of-interest)
 - [Sub Sub Category Subsets](#sub-sub-category-subsets)

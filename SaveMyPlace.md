@@ -1,10 +1,10 @@
-Placeholder Listings
+futher notes on Placeholder Listings
 
 # the Waitlist
 
 Often on Agora there will be products listed at exoribitant prices.
 
-While on the surface they may resemble scams, it's been observed (cit. Econ, other paper) that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished.  
+While on the surface they may resemble scams, it's been observed (cit. Econ, other paper) that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. 
 
 In some ways, this can be seen as a 'waitlist' for certain products. As opposed to buying a rare or one-of-a-kind item, to maintain a placeholder listing suggests at the very least a perceived demand for the product listed and renewable supply. 
 
