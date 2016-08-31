@@ -15,6 +15,8 @@ Start off by taking a look at categorical levels. After identifying a wide range
 
 ...on this particular dataset.
 
+
+
 ``` {R}
 arules::inspect(head(cannabis))
    lhs                          rhs         support     confidence lift    
@@ -28,14 +30,33 @@ arules::inspect(head(cannabis))
 
 One of the problems with Market Basket Analysis on this dataset is the limited range of products available. This makes it difficult to uncover novel cominations of items, and thus draw interesting conclusions. Most rules generated fall into expected categories. 
 
-While removing categories altogether may be a strategy - the overall distribution of products falls overwhelming into drugs and small subclasses of drugs. The potential for a novel discovery becomes limited when compared to similar arules studies done on transaction databases of, for example, Amazon.com or Wal-Mart. These companies offer such a diverse range of products that unexpected itemsets of quality can be found. Resembling more of a niche market, Agora offers very few products by comparison. Working with a limited range of products tends to only reinforce existing perceptions of them.
+While removing categories altogether may be a strategy - the overall distribution of products falls overwhelming into drugs and small subclasses of drugs. The potential for a novel discovery becomes limited compared to similar association rule studies done on transaction databases of, for example, Amazon.com or Wal-Mart. These companies offer such a diverse range of products that unexpected itemsets of quality can be found. Resembling more of a niche market, Agora offers very few products by comparison. Working with a limited range of products tends to only reinforce existing perceptions of them.
 
-Conclusion: no surprises here, really.
+**Conclusion:** no surprises here, really.
+
+**Alternative:** build new features based on the data; revise question.
+
+Having used Market Basket Analysis as an exploratory tool, we've discovered an actual problem with the data - which is the question of how to deal with high priced outlier listings. 
+
+At the upper bound (listings over $1 billion USD), it's reasonable to dismiss the listings as false. Futher investigation has shown though, that there is nuance to these overpriced listings. While some are false/scams, many are 'placeholder' listings for vendors to maintain a market presence while they are temporarily out of stock. The prices are deliberately set high so no one will order, until supply is replenished. 
+
+Further complicating this, is the 'placeholer' listings will mingle with 'legitimate' listings within the same price ranges. For example, a 'placeholder' for 10 pills of MDMA will fall within the same price range as a 'legitimate' listing for 1 kilogram of cocaine. It'd be unrealistic to pay $45,000 for 10 pills of MDMA, but actally quite reasonable to pay the same amount for 1 kilogram of cocaine. 
+
+At the user level these differences would be simple to spot, but for an overall analysis the outliers skew results. A new question could be, **Is this listing real?**
+
+
+**Alternative:** build a model predicting cannabis quality on anonymous markets.
+
+Given the large amount of categorical and qualitative data available, it might be reasonable to build a logistic regression model to determine quality of cannabis. 
+
+**Problems:** dichotomizing a dependent variable to 1(good quality) and 0(bad quality) can lead to spurious results. 
+
+
+
 
 # Features of Interest
 
 ``` {R}
-# highlight features of interest
 levels(fb$cat)
 # "Counterfeits" - identities
 # "Drug paraphernalia"
@@ -379,38 +400,5 @@ unique(scripCheck$product)
 A look at the levels of `Prescription` shows 473 versions of Adderall, Dexedrine, Vyvanse, Ritalin, Modafanil, Provigil, and their generic counterparts. Excepting an occasional listing for Viagra/Cialis, a misplaced Codeine, and a single Lorazepam/Ativan - `Prescription` can more or less be synonymous with `Stimulants`. 
 
 ##### This is small ecosystem of substances that can be examined more closely in terms of quantities (e.g. milligrams, number of pills) using regex.
-
-
-# Sub Categories - a level up
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
