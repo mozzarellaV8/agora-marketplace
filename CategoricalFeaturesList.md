@@ -50,11 +50,12 @@ levels(fb$subsubcat)
 ## "Synthetics"
 ## "Weed"
 ```
-
+```{r}
 > summary(p14$usd)
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
          0         29         95      15890        332 2215000000 
-
+```
+``` {r}
 > summary(p14$cat)
 
       Counterfeits               Data Drug paraphernalia              Drugs 
@@ -65,7 +66,8 @@ levels(fb$subsubcat)
               1532              18080              37077              13503 
            Weapons 
               8935 
-
+```
+``` {r}
 > summary(p14$subcat)
                <NA>         Accessories            Accounts         Advertising 
               39236                4370               14996                 632 
@@ -109,3 +111,4 @@ Injecting equipment     Lethal firearms               Melee           Methylone
            553           6043            597          19472           1307          12875 
           Weed 
         105678
+```
