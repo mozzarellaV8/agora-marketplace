@@ -14,7 +14,7 @@ To put exchange rate trends in context - Agora lives in a subset of Bitcoin's li
 
 Bitcoin from birth, with Agora bracketed.
 
-![](plots/BTC/btc-all.png)
+![](plots/BTC/btc-all.jpeg)
 ``` {r}
 # Bitcoin Lifetime with trends ------------------------------------------------
 
