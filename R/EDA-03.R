@@ -1,6 +1,5 @@
 # Agora Marketplace Analysis
-# Association Rules - 2014 Product Data
-# Cannabis Analysis - SubCategories
+# Exploratory Cannabis Analysis - SubCategories
 
 # load data -------------------------------------------------------------------
 
@@ -15,7 +14,11 @@ str(p14)
 
 p14$to <- gsub("wideutschland", "", p14$to)
 p14$to <- gsub("deutschlandstination", "", p14$to)
+swedeutschlandn
+outsideutschland
 p14$to <- (as.factor(p14$to))
+
+write.csv(p14, file = "~/GitHub/agora-data/ag03-2014.csv", row.names = F)
 
 # quick looks ---------------------------------------------
 
@@ -63,6 +66,14 @@ p14 <- fread("~/GitHub/agora-data/ag04-2014.csv", stringsAsFactors = T)
 
 p14$from <- gsub("the united snakes of captivity", "usa", p14$from)
 p14$from <- as.factor(p14$from)
+
+# imputing subcats ------------------------------------------------------------
+
+library(mice)
+
+cats <- data.frame(cat = p14$cat, subcat = p14$subcat, subsubcat = p14$subsubcat)
+
+
 
 # Densities: Price, Categories, Locations, Products ---------------------------
 
