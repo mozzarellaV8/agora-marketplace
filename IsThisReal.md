@@ -38,7 +38,7 @@ Predicting the quality of cannabis on anonymous marketplaces using logistic regr
 
 4. issues
 	* dichotomizing a dependent variable has numerous issues.
-	* real/placeholer/scam listings
+	* [real/placeholer/scam listings](SaveMyPlace.md)
 
 
 
