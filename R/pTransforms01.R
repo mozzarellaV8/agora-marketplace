@@ -12,13 +12,7 @@ library(ggplot2)
 p14 <- fread("~/GitHub/agora-data/ag05-2014.csv", stringsAsFactors = F)
 str(p14)
 
-# check
-# grep("wideutschland", p14$to)
-# grep("deutschlandstination", p14$to)
-# grep("swedeutschlandn", p14$to)
-# grep("outsideutschland", p14$to)
-
-write.csv(p14, file = "~/GitHub/agora-data/ag05-2014.csv", row.names = F)
+# write.csv(p14, file = "~/GitHub/agora-data/ag05-2014.csv", row.names = F)
 
 # Subset by Time Interval -----------------------------------------------------
 
@@ -44,6 +38,10 @@ plot(dDist$day, dDist$numListings,
 
 # append with feedback variable -----------------------------------------------
 
+# p14$fb <- factor(p14$feedback) # 450084 levels
+# length(unique(p14$feedback))   # 450084
+
+# manually:
 p14$great <- grepl("^\\sFeedbacks: 5/5(.*)", p14$feedback)
 p14$good <- grepl("^\\sFeedbacks: 4/5(.*)", p14$feedback)
 p14$ok <- grepl("^\\sFeedbacks: 3/5(.*)", p14$feedback)
@@ -60,16 +58,61 @@ length(unique(feedback$vendor)) # 2284
 fbUnique <- subset(feedback, select = c(list, unique(feedback$vendor), great, good,
                                         ok, poor, horrible, worst, none))
 
-# random sample and plot
-fSample <- sample(feedback$vendor, size = 10000, replace = F)
+length(p14$great[p14$great == TRUE]) 
+length(p14$great[p14$great == FALSE]) 
+445550/1018109  # 0.437625
+572559/1018109  # 0.562375
+
+length(p14$good[p14$good == TRUE]) 
+length(p14$good[p14$good == FALSE]) 
+6170/1018109    # 0.01320913
+1011939/1018109 # 0.9939397
+
+length(p14$ok[p14$ok == TRUE]) 
+length(p14$ok[p14$ok == FALSE]) 
+3720/1018109    # 0.003653833
+1014389/1018109 # 0.9963462
+
+length(p14$poor[p14$poor == TRUE]) 
+length(p14$poor[p14$poor == FALSE]) 
+1456/1018109    # 0.001430102
+1016653/1018109 # 0.9985699
+
+length(p14$horrible[p14$horrible == TRUE])
+length(p14$horrible[p14$horrible == FALSE])
+1799/1018109    # 0.001767001
+1016310/1018109 # 0.998233
+
+length(p14$worst[p14$worst == TRUE])
+length(p14$worst[p14$worst == FALSE])
+8605/1018109    # 0.008451944
+1009504/1018109 # 0.9915481
+
+length(p14$none[p14$none == TRUE])
+length(p14$none[p14$none == FALSE])
+550802/1018109  # 0.5410049
+467307/1018109  # 0.4589951
+
+
+fDist <- data.frame(fb = c("great", "good", "ok", "poor", "horrible", "worst", "none"), 
+                    true = c(445550, 6170, 3720, 1456, 1799, 8605, 550802), 
+                    false = c(572559, 1011939, 1014389, 1016653, 1016310, 1009504, 467307))
+
+par(mfrow = c(1, 1))
+plot(fDist$fb, fDist$true)
+
+totalListings <- 1018109
+# fDist$pctT <- lapply(fDist$true, function(x) {fDist$true[[x]]/totalListings})
+fDist <- transform(fDist, pct.T = true/totalListings)
+fDist <- transform(fDist, pct.F = false/totalListings)
 
 # write.csv(feedback, file = "~/GitHub/agora-data/feedback-matrix.csv", row.names = F)
+# write.csv(fDist, file = "~/GitHub/agora-data/feedback-table.csv", row.names = F)
 
 # subset by list word/quantity ------------------------------------------------
 
 # to double check on quanities:
 prQ <- fread("~/GitHub/agora-data/02-lexical/qdapProductWF.csv")
-
 
 cust <- grepl("custom", p14$product, ignore.case = T)
 customs <- subset(p14, cust == T, ignore.case = T) # 29545
@@ -88,14 +131,19 @@ oneK <- grepl("\\b1kg\\b", p14$product, ignore.case = T)
 kg1 <- subset(p14, oneK == T, ignore.case = T) # 3741
 
 # product weights by id
-milligrams <- grepl("kg", p14$product, ignore.case = T)
-mg <- subset(p14, milligrams = T, ignore.case = T)
+m <- grepl("\\bmg\\b", p14$product, ignore.case = T)
+mg <- subset(p14, m == T, ignore.case = T)
+
+k <- grepl("\\bkg\\b", p14$product, ignore.case = T)
+kg <- subset(p14, k == T, ignore.case = T)
 
 # multipliers
 oneX <- grepl("100x", p14$product, ignore.case = T)
 x100 <- subset(p14, oneX == T, ignore.case = T) # 5551
 oneT <- grepl("\\b1000x\\b", p14$product, ignore.case = T)
 x1000 <- subset(p14, oneT == T, ignore.case = T) # 2064
+
+
 
 
 
