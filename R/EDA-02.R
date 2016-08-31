@@ -6,7 +6,7 @@
 library(data.table)
 
 # all 2014 Agora market data
-p14 <- fread("~/GitHub/agora-data/Agora2014.csv", stringsAsFactors = F)
+p14 <- fread("~/GitHub/agora-data/ag05-2014.csv", stringsAsFactors = F)
 p14$date <- as.Date(p14$date)
 
 # check
@@ -54,11 +54,12 @@ p1 + scale_x_date(breaks = datebreaks)
 # Bitcoin Lifetime with trends ------------------------------------------------
 
 # plot entire Bitcoin lifetime
-par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
-plot(bpi$Date, bpi$Price, col = "#00000075",
+par(mar = c(6, 6, 6, 6), bty = "l", family = "FranklinGothicSSK")
+plot(bpi$Date, bpi$Price, col = "#00000075", type = "l",
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
-abline(a = 526.9241, b = 0, lty = 2, col = "#FF000075")
 rug(bpi$Date, ticksize = 0.025, lwd = 0.1, col = "#000000")
+points(bpiAg, col = "#CD0000")
+
 
 # Subset Agora data date range ------------------------------------------------
 bpiAg <- bpi[bpi$Date >= "2014-01-01" & bpi$Date <= "2014-12-31", ]
@@ -180,6 +181,9 @@ summary(dt02.1)
 # 3rd Qu.:2014-09-04   3rd Qu.:615.1  
 # Max.   :2014-10-05   Max.   :656.1
 
+# rest of year
+ud <- bpiAg[bpiAg$Date >= "2014-10-06", ]
+
 
 # plot entire Bitcoin lifetime with Agora -------------------------------------
 summary(bpi$Price)
@@ -200,9 +204,8 @@ quantile(bpi$Price)
 # rally01 = 2014-04-11 - 2014-06-03
 # dt02.1 = 2014-06-04 - 2014-10-5
 
-par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
-
 # all dates in Agora data range -----------------------------------------------
+par(mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
 plot(bpi$Date, bpi$Price, col = "#00000075",
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
 points(bpiAg$Date, bpiAg$Price, col = "#CD0000", pch = 19, cex = 0.8)
@@ -226,18 +229,23 @@ points(dt02.1$Date, dt02.1$Price, col = "#00000075", pch = 1, cex = 1)
 
 
 # line plot - btc lifetime with Agora +/- intervals ---------------------------
+par(mar = c(6, 6, 6, 6), family = "HersheySans")
 plot(bpi$Date, bpi$Price, col = "#00000075", type = "l", lwd = 1.4,
      main = "Bitcoin Price Index (USD) 2010-07-18 :: 2016-08-02")
 
-points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 0.5)
-points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 0.5)
-points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 0.5)
+points(dt01$Date, dt01$Price, col = "#CD2626", pch = 25, cex = 0.9)
+points(rally01$Date, rally01$Price, col = "#FFD700", pch = 17, cex = 1)
+points(rally01$Date, rally01$Price, col = "#00000035", pch = 2, cex = 1)
+points(dt02.1$Date, dt02.1$Price, col = "#CD2626", pch = 25, cex = 0.9)
+points(ud$Date, ud$Price, col = "#CD2626", pch = 19, cex = 0.5)
+rug(bpiAg$Date, ticksize = 0.025, lwd = 0.1, col = "#00688B")
 
 # line plot - agora lifetime with +/- intervals -------------------------------
 plot(bpiAg, type = "l", lwd = 1.4, main = "Bitcoin Price Index 2014 (USD)")
 points(dt01$Date, dt01$Price, col = "#CD000090", pch = 19, cex = 1)
 points(rally01$Date, rally01$Price, col = "#0000FF85", pch = 19, cex = 1)
 points(dt02.1$Date, dt02.1$Price, col = "#CD000090", pch = 19, cex = 1)
+rug(bpiAg$Date, ticksize = 0.025, lwd = 0.1, col = "#000000")
 
 
 
