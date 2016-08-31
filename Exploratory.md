@@ -22,12 +22,12 @@ Exploratory Plots of Categories, going from high level to fine grain. As the lis
 
 ![](plots/tile/p14-p3b-ssc-c-location.jpg)
 
-![](tile/p14-p4-DrugLocationPrice.jpg)
+![](plots/tile/p14-p4-DrugLocationPrice.jpg)
 
-![](tile/p14-p5-DrugLocationPrice.jpg)
+![](plots/tile/p14-p5-DrugLocationPrice.jpg)
 
-![](tile/p14-p6-DrugLocationPrice.jpg)
+![](plots/tile/p14-p6-DrugLocationPrice.jpg)
 
-![](tile/p14-p7-DrugLocationPrice.jpg)
+![](plots/tile/p14-p7-DrugLocationPrice.jpg)
 
-![](tile/p14-p8-DrugLocationPrice.jpg)
+![](plots/tile/p14-p8-DrugLocationPrice.jpg)
