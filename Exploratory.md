@@ -20,7 +20,7 @@ $1000 can generally be thought of as an upper bound for the amount a person is w
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
-![](~/plots/tile/p14-p3b-ssc-c-location.jpg)
+![](plots/tile/p14-p3b-ssc-c-location.jpg)
 
 ![](tile/p14-p4-DrugLocationPrice.jpg)
 
