@@ -21,29 +21,9 @@ From this simple table of transactions - resembling a market basket - we can see
 -   6  |  {Bread, Milk, Semicolon, Gluten Starch}
 -   7  |  {Nail Polish, Diapers, Beer, arules paper}
 
-We can form a rule with an _antecedent_ (left-hand side (lhs)) and _consequent_ (right-hand side (rhs)), expressed as:
+We can form a rule with an _antecedent_ (left-hand side) and _consequent_ (right-hand side), expressed as:
 
 		{Diapers, Beer} ⟹ {arules paper}
 
 The rule suggests a strong relationship between the pairing of Diapers and Beer and papers on Association Rules. By taking measures of quality, we can test the strength of this rule - or dismiss it as spurious. 
-
-outline:
-List of Items; List of Itemsets; Frequent Itemsets; Association Rule Mining.
-
-# Measures of Quality and Interest
-
-There are many enlightening, confusing, and oversimpflified ways of explaining the three popular measures of quality for deciding to keep an association rule. 
-
-Support
-
-Confidence
-
-Lift
-
-
-
-
-
-
-
 
