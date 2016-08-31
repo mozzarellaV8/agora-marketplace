@@ -119,6 +119,30 @@ p3b + scale_fill_manual(values = c("red3",
                                   "darkorange4",
                                   "firebrick4"))
 
+# remove listings too
+p14c <- subset(p14, p14$cat != "Electronics" & p14$cat != "Jewelry"
+               & p14$cat != "Listings" & p14$cat != "Other") #980979
+
+p3c <- ggplot(p14c, aes(subcat, from, fill = cat)) + geom_tile() + 
+  labs(title = "Agora 2014: Category / Subcategory ~ Location", 
+       y = "", x = "", fill = "category") +
+  theme(plot.title = element_text(family= "FranklinGothicSSK", 
+                                  face = "bold", size = 14,
+                                  margin = margin(0, 0, 0, 0))) + 
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                   angle = 45, hjust = 1)) +
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
+
+p3c + scale_fill_manual(values = c("red3", 
+                                   "gold1", 
+                                   "#00688B", 
+                                   "lightblue3", 
+                                   "red1", 
+                                   "bisque1",
+                                   "bisque4", 
+                                   "darkorange4",
+                                   "firebrick4"))
 
 # subset under 1k -------------------------------------------------------------
 
