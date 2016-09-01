@@ -1,10 +1,19 @@
 # Exploratory
 
+
+### dj's questions:
 _What do you want me to take away?_ Anonymous marketplaces are places of business.
 
 _What do you want me to do?_ Be able to order from black markets with confidence.
 
 _How do you want me to feel?_ Safe.
+
+### sample of data
+
+
+
+
+### what's in the data?
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
@@ -20,18 +29,15 @@ p4 <- subset(p14, p14$usd <= 1000) # 905805
 p4p <- ggplot(p4, aes(subsubcat, from, fill = usd)) + geom_tile() +
   labs(title = "Agora 2014: Drug ~ Location / Price (USD < 1,000), n = 905805", 
        y = "", x = "", fill = "Price (USD)") +
-  theme(plot.title = element_text(family= "FranklinGothicSSK", 
-                                  face = "bold", size = 14,
+  theme(plot.title = element_text(family= "FranklinGothicSSK", face = "bold", size = 14,
                                   margin = margin(0, 0, 20, 0))) + 
   theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 12.5,
                                    angle = 45, hjust = 1)) +
   theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 11)) +
   theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
-p4p + scale_fill_gradient2(low = "deepskyblue4", 
-                           mid = "bisque1",
-                           high = "firebrick3",
-                           midpoint = 500)
+p4p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1",
+                           high = "firebrick3", midpoint = 500)
 ```                           
 
 ![](plots/tile/p4p.jpeg)
