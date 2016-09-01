@@ -15,10 +15,10 @@
 
 2. **vendor**: vendor's username - as pulled from html.
 
-3. **product**: product listing - 
-	* usually a name (_Master Kush_, _Tramadol_, _Chanel Watch_)
-	* quantity (_100mg_, _1/4 oz_), and some 
-	* 'selling points' e.g. _'REAGENT TESTED'_, _'MOST POTENT'_, '_free shipping_'
+3. **product**: product listing - usually containing:
+	* name (_Master Kush_, _Tramadol_, _Chanel Watch_)
+	* quantity (_100mg_, _1/4 oz_)
+	* 'selling points' e.g. _'Reagent tested'_, _'MOST POTENT'_, '_free shipping_'
 
 4. **price**: price in Bitcoin
 
