@@ -14,6 +14,11 @@ str(p14)
 
 # write.csv(p14, file = "~/GitHub/agora-data/ag05-2014.csv", row.names = F)
 
+s <- sample(1:1018109, 100, replace = FALSE, prob = NULL)
+sAg <- p14[s, ]
+
+write.csv(sAg, file = "data/random-sample100.csv", row.names = F)
+
 # Subset by Time Interval -----------------------------------------------------
 
 length(unique(p14$date)) # 139
