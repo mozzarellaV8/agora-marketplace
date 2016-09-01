@@ -11,29 +11,29 @@
 
 ## variables of interest
 
-- date: date the page was created - as found in metadata.
+- **date**: date the page was created - as found in metadata.
 
-- vendor: vendor's username - as pulled from html.
+- **vendor**: vendor's username - as pulled from html.
 
-- product: product listing - usually a name (_Master Kush_, _Tramadol_, _Chanel Watch_), quantity (_100mg_, _1/4 oz_, and some 'selling points' e.g. _'REAGENT TESTED'_, _'MOST POTENT'_, '_free shipping_'
+- **product**: product listing - usually a name (_Master Kush_, _Tramadol_, _Chanel Watch_), quantity (_100mg_, _1/4 oz_, and some 'selling points' e.g. _'REAGENT TESTED'_, _'MOST POTENT'_, '_free shipping_'
 
-- price: price in Bitcoin
+- **price**: price in Bitcoin
 
-- usd: price in US dollars
+- **usd**: price in US dollars
 
-- rate: exhange rate of BTC-USD, for that date
+- **rate**: exhange rate of BTC-USD, for that date
 
-- cat: product category, as extracted from html
+- **cat**: product category, as extracted from html
 
-- subcat: product subcategory, as extracted from html
+- **subcat**: product subcategory, as extracted from html
 
-- subsubcat: product sub-subcategory, as extracted from html
+- **subsubcat**: product sub-subcategory, as extracted from html
 
-- feedback: client feedback left for vendor (e.g. "_5/5 5/5, A+++ Vendor 2 days ago anon_"); scale of 0-5 possible, as well as no feedback at all; as extracted from html
+- **feedback** client feedback left for vendor (e.g. "_5/5 5/5, A+++ Vendor 2 days ago anon_"); scale of 0-5 possible, as well as no feedback at all; as extracted from html
 
-- from: location product ships from
+- **from**: location product ships from
 
-- to: location product ships to
+- **to**: location product ships to
 
 Taking a random sample of 100 listings to include here:
 
