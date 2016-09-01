@@ -44,6 +44,8 @@ sAg <- p14[s, ]
 write.csv(sAg, file = "data/random-sample100.csv", row.names = F)
 ```
 
+![](vis/randomsample.png)
+
 
 ## what's in the data?
 
