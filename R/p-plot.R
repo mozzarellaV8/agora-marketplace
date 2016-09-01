@@ -76,6 +76,7 @@ p14$subcat[p14$subcat == "Ecstasy-NoSub"] <- "Ecstasy"
 
 write.csv(p14, file = "~/GitHub/agora-data/ag06-2014.csv", row.names = F)
 
+# plots -----------------------------------------------------------------------
 # flawed - complete plot
 p3 <- ggplot(p14, aes(subcat, from, fill = cat)) + geom_tile() + 
   labs(title = "Agora 2014: Category / Subcategory :: Location", 
@@ -119,20 +120,21 @@ p3b + scale_fill_manual(values = c("red3",
                                   "darkorange4",
                                   "firebrick4"))
 
+# plot that works -------------------------------------------------------------
 # remove listings too
 p14c <- subset(p14, p14$cat != "Electronics" & p14$cat != "Jewelry"
                & p14$cat != "Listings" & p14$cat != "Other") #980979
 
 p3c <- ggplot(p14c, aes(subcat, from, fill = cat)) + geom_tile() + 
-  labs(title = "Agora 2014: Category / Subcategory ~ Location", 
+  labs(title = "Agora 2014: Category / Subcategory ~ Location, n = 980979", 
        y = "", x = "", fill = "category") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
                                   face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                  margin = margin(0, 0, 20, 0))) + 
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 12,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 11)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
 p3c + scale_fill_manual(values = c("red3", 
                                    "gold1", 
@@ -149,36 +151,38 @@ p3c + scale_fill_manual(values = c("red3",
 p4 <- subset(p14, p14$usd <= 1000) # 905805
 
 p4p <- ggplot(p4, aes(subsubcat, from, fill = usd)) + geom_tile() +
-  labs(title = "Agora 2014: Drug ~ Location / Price (USD < 1,000)", 
+  labs(title = "Agora 2014: Drug ~ Location / Price (USD < 1,000), n = 905805", 
        y = "", x = "", fill = "Price (USD)") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
                                   face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                  margin = margin(0, 0, 20, 0))) + 
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 12.5,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 11)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
-p4p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebrick3",
+p4p + scale_fill_gradient2(low = "deepskyblue4", 
+                           mid = "bisque1",
+                           high = "firebrick3",
                            midpoint = 500)
 
 # subset over 1k  -------------------------------------------------------------
 
-p5 <- subset(p14, p14$usd > 1000 & p14$usd < 10000.000) # 11069
+p5 <- subset(p14, p14$usd > 1000 & p14$usd < 10000.000) # 105774
 
 p5p <- ggplot(p5, aes(subsubcat, from, fill = usd)) + geom_tile() +
-  labs(title = "Agora 2014: Drug ~ Location / Price (10,000 > USD > 1,000)", 
+  labs(title = "Agora 2014: Drug ~ Location / Price (10,000 > USD > 1,000), n = 105774", 
        y = "", x = "", fill = "Price (USD)") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
                                   face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
+                                  margin = margin(0, 0, 20, 0))) + 
   theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 13,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 12))
 
 p5p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebrick3",
-                           midpoint = 5000)
+                           midpoint = 5500)
 
 
 # subset over 10-40k  -------------------------------------------------------------
@@ -186,15 +190,15 @@ p5p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebr
 p6 <- subset(p14, p14$usd > 10000 & p14$usd < 40000.000) # 4722
 
 p6p <- ggplot(p6, aes(subsubcat, from, fill = usd)) + geom_tile() +
-  labs(title = "Agora 2014: Drug ~ Location / Price (40,000 > USD > 10,000)", 
+  labs(title = "Agora 2014: Drug ~ Location / Price (10,000 < USD < 40,000), n = 4722", 
        y = "", x = "", fill = "Price (USD)") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
                                   face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                  margin = margin(0, 0, 20, 0))) + 
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 13,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 10.5))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 13)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
 p6p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebrick3",
                            midpoint = 25000)
@@ -204,15 +208,15 @@ p6p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebr
 p7 <- subset(p14, p14$usd > 40000 & p14$usd < 1000000) # 1416
 
 p7p <- ggplot(p7, aes(subsubcat, from, fill = usd)) + geom_tile() +
-  labs(title = "Agora 2014: Drug ~ Location / Price (1,000,000 > USD > 40,000)", 
+  labs(title = "Agora 2014: Drug ~ Location / Price (40,000 < USD < 1,000,000), n = 1416", 
        y = "", x = "", fill = "Price (USD)") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
                                   face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                  margin = margin(0, 0, 20, 0))) +
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 13,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 10.5))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 13)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
 p7p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebrick3",
                            midpoint = 520000)
@@ -226,15 +230,15 @@ summary(p8$usd)
 range(p8$usd)
 
 p8p <- ggplot(p8, aes(subsubcat, from, fill = usd)) + geom_tile() +
-  labs(title = "Agora 2014: Drug ~ Location / Price (USD > 1,000,000)", 
+  labs(title = "Agora 2014: Drug ~ Location / Price (USD > 1,000,000), n = 187", 
        y = "", x = "", fill = "Price (USD)") +
   theme(plot.title = element_text(family= "FranklinGothicSSK", 
-                                  face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
+                                  face = "bold", size = 18,
+                                  margin = margin(0, 0, 20, 0))) + 
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 15,
                                    angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 10.5))
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 15)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
 
 p8p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1", high = "firebrick3",
                            midpoint = 4960000)
