@@ -26,10 +26,10 @@ Exploratory Plots of Categories, going from high level to fine grain. As the lis
 
 Densities of feedback values:
 
-![](fb2-dist-violin-02.jpeg)
+![](plots/tile/fb2-dist-violin-02.jpeg)
 
-![](fb2-dist-violin-01.jpeg)
+![](plots/tile/fb2-dist-violin-01.jpeg)
 
-![](fb-density-01.jpeg)
+![](plots/tile/fb-density-01.jpeg)
 
-![](fb2-density-01.jpeg)
+![](plots/tile/fb2-density-01.jpeg)
