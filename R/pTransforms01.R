@@ -123,7 +123,7 @@ fbsp <- ggplot(fbs, aes(values)) + xlim(0.5, 1) +
   scale_colour_discrete(limits = c("great", "good", "ok", "poor", "horrible",
                                  "worst", "none")) +
   theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
-  theme(axis.text.x = element_text(size = 18)) +
+  theme(axis.text.x = element_text(size = 16)) +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
   labs(title = "Agora 2014: Distributions of Feedback Values", x = "", y = "")
 
@@ -154,9 +154,9 @@ feedback$positive <- ifelse(feedback$great == T | feedback$good == T, 1, 0)
 feedback$neutral <- ifelse(feedback$ok == T | feedback$poor == T, 1, 0)
 feedback$negative <- ifelse(feedback$horrible == T | feedback$worst == T, 1, 0)
 
-
 fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
 fb$none <- ifelse(fb$none == T, 1, 0)
+
 fb2 <- stack(fb)
 colnames(fb2) <- c("value", "feedback")
 

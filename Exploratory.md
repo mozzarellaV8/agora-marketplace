@@ -14,6 +14,26 @@ Exploratory Plots of Categories, going from high level to fine grain. As the lis
 
 ![](plots/tile/p3p.jpeg)
 
+``` {r}
+p4 <- subset(p14, p14$usd <= 1000) # 905805
+
+p4p <- ggplot(p4, aes(subsubcat, from, fill = usd)) + geom_tile() +
+  labs(title = "Agora 2014: Drug ~ Location / Price (USD < 1,000), n = 905805", 
+       y = "", x = "", fill = "Price (USD)") +
+  theme(plot.title = element_text(family= "FranklinGothicSSK", 
+                                  face = "bold", size = 14,
+                                  margin = margin(0, 0, 20, 0))) + 
+  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 12.5,
+                                   angle = 45, hjust = 1)) +
+  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 11)) +
+  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm"))
+
+p4p + scale_fill_gradient2(low = "deepskyblue4", 
+                           mid = "bisque1",
+                           high = "firebrick3",
+                           midpoint = 500)
+```                           
+
 ![](plots/tile/p4p.jpeg)
 
 ![](plots/tile/p5p.jpeg)
@@ -29,6 +49,15 @@ Densities of feedback values:
 ![](plots/tile/fb2-dist-violin-02.jpeg)
 
 ![](plots/tile/fb2-dist-violin-01.jpeg)
+
+``` {r}
+feedback$positive <- ifelse(feedback$great == T | feedback$good == T, 1, 0)
+feedback$neutral <- ifelse(feedback$ok == T | feedback$poor == T, 1, 0)
+feedback$negative <- ifelse(feedback$horrible == T | feedback$worst == T, 1, 0)
+
+fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
+fb$none <- ifelse(fb$none == T, 1, 0)
+```
 
 ![](plots/tile/fb-density-01.jpeg)
 
