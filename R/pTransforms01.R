@@ -122,9 +122,10 @@ fbsp <- ggplot(fbs, aes(values)) + xlim(0.5, 1) +
   geom_density(aes(colour = feedback), alpha = 0.35) +
   scale_colour_discrete(limits = c("great", "good", "ok", "poor", "horrible",
                                  "worst", "none")) +
-  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(size = 18)) +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
-  labs(title = "Agora 2014: Distributions of Feedback Values")
+  labs(title = "Agora 2014: Distributions of Feedback Values", x = "", y = "")
 
 fbsp
 
@@ -140,7 +141,8 @@ fbsp2
 
 fbv <-  ggplot(fbs, aes(feedback, values)) +
   geom_violin() + 
-  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(size = 20)) +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
   labs(title = "Agora 2014: Distributions of Feedback Values", x = "", y = "")
 
@@ -158,29 +160,34 @@ fb$none <- ifelse(fb$none == T, 1, 0)
 fb2 <- stack(fb)
 colnames(fb2) <- c("value", "feedback")
 
+# violin
 fbv2 <- ggplot(fb2, aes(feedback, value)) +
   geom_violin() + 
-  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(size = 20)) +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
   labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)", 
        x = "", y = "")
 
 fbv2
 
+# lines
 fbd <- fbsp <- ggplot(fb2, aes(value)) + xlim(0.5, 1) + 
   geom_density(aes(colour = feedback)) +
   scale_colour_discrete(limits = c("positive", "neutral", "negative", "none")) +
-  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
+  theme(axis.text.x = element_text(size = 20)) +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
-  labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)")
+  labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)",
+       x = "", y = "")
 
 fbd
 
-
+# filled
 fbd2 <- fbsp <- ggplot(fb2, aes(value)) + xlim(0.5, 1) + 
   geom_density(aes(fill = feedback), alpha = 0.35) +
   scale_fill_discrete(limits = c("positive", "neutral", "negative", "none")) +
-  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme_minimal(base_size = 18, base_family = "FranklinGothicSSK") +
   theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
   labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)")
 
