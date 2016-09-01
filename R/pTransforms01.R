@@ -109,6 +109,84 @@ fDist <- transform(fDist, pct.F = false/totalListings)
 # write.csv(feedback, file = "~/GitHub/agora-data/feedback-matrix.csv", row.names = F)
 # write.csv(fDist, file = "~/GitHub/agora-data/feedback-table.csv", row.names = F)
 
+# plot feedback densities -----------------------------------------------------
+feedback$list <- NULL
+feedback$vendor <- NULL
+
+fbs <- stack(feedback)
+fbs$values[fbs$values == FALSE] <- 0
+fbs$values[fbs$values == TRUE] <- 1
+colnames(fbs) <- c("values", "feedback")
+
+fbsp <- ggplot(fbs, aes(values)) + xlim(0.5, 1) + 
+  geom_density(aes(colour = feedback), alpha = 0.35) +
+  scale_colour_discrete(limits = c("great", "good", "ok", "poor", "horrible",
+                                 "worst", "none")) +
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback Values")
+
+fbsp
+
+fbsp2 <- ggplot(fbs, aes(values)) + xlim(0.5, 1) + 
+  geom_density(aes(fill = feedback), alpha = 0.15) +
+  scale_fill_discrete(limits = c("great", "good", "ok", "poor", "horrible",
+                                   "worst", "none")) +
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback")
+
+fbsp2
+
+fbv <-  ggplot(fbs, aes(feedback, values)) +
+  geom_violin() + 
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback Values", x = "", y = "")
+
+fbv
+
+# aggregate feedbacks into tighter groups -------------------------------------
+
+feedback$positive <- ifelse(feedback$great == T | feedback$good == T, 1, 0)
+feedback$neutral <- ifelse(feedback$ok == T | feedback$poor == T, 1, 0)
+feedback$negative <- ifelse(feedback$horrible == T | feedback$worst == T, 1, 0)
+
+
+fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
+fb$none <- ifelse(fb$none == T, 1, 0)
+fb2 <- stack(fb)
+colnames(fb2) <- c("value", "feedback")
+
+fbv2 <- ggplot(fb2, aes(feedback, value)) +
+  geom_violin() + 
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)", 
+       x = "", y = "")
+
+fbv2
+
+fbd <- fbsp <- ggplot(fb2, aes(value)) + xlim(0.5, 1) + 
+  geom_density(aes(colour = feedback)) +
+  scale_colour_discrete(limits = c("positive", "neutral", "negative", "none")) +
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)")
+
+fbd
+
+
+fbd2 <- fbsp <- ggplot(fb2, aes(value)) + xlim(0.5, 1) + 
+  geom_density(aes(fill = feedback), alpha = 0.35) +
+  scale_fill_discrete(limits = c("positive", "neutral", "negative", "none")) +
+  theme_minimal(base_family = "FranklinGothicSSK") +
+  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  labs(title = "Agora 2014: Distributions of Feedback Values (aggregated)")
+
+fbd2
+
+
 # subset by list word/quantity ------------------------------------------------
 
 # to double check on quanities:

@@ -12,14 +12,24 @@ $1000 can generally be thought of as an upper bound for the amount a person is w
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
-![](plots/tile/p3p.jpg)
+![](plots/tile/p3p.jpeg)
 
-![](plots/tile/p14-p4-DrugLocationPrice.jpg)
+![](plots/tile/p4p.jpeg)
 
-![](plots/tile/p14-p5-DrugLocationPrice.jpg)
+![](plots/tile/p5p.jpeg)
 
-![](plots/tile/p14-p6-DrugLocationPrice.jpg)
+![](plots/tile/p6p.jpeg)
 
-![](plots/tile/p14-p7-DrugLocationPrice.jpg)
+![](plots/tile/p7p.jpeg)
 
-![](plots/tile/p14-p8-DrugLocationPrice.jpg)
+![](plots/tile/p8p.jpeg)
+
+Densities of feedback values:
+
+![](fb2-dist-violin-02.jpeg)
+
+![](fb2-dist-violin-01.jpeg)
+
+![](fb-density-01.jpeg)
+
+![](fb2-density-01.jpeg)
