@@ -1,7 +1,7 @@
 # Exploratory
 
 
-### dj's questions:
+## dj's questions:
 
 **_What do you want me to take away?_** Anonymous marketplaces are places of business.
 
@@ -9,14 +9,34 @@
 
 **_How do you want me to feel?_** Safe, assured, maybe _relaxed_. 
 
-### variables of interest
+## variables of interest
+
+- date: date the page was created - as found in metadata.
+
+- vendor: vendor's username - as pulled from html.
+
+- product: product listing - usually a name (_Master Kush_, _Tramadol_, _Chanel Watch_), quantity (_100mg_, _1/4 oz_, and some 'selling points' e.g. _'REAGENT TESTED'_, _'MOST POTENT'_, '_free shipping_'
+
+- price: price in Bitcoin
+
+- usd: price in US dollars
+
+- rate: exhange rate of BTC-USD, for that date
+
+- cat: product category, as extracted from html
+
+- subcat: product subcategory, as extracted from html
+
+- subsubcat: product sub-subcategory, as extracted from html
+
+- feedback: client feedback left for vendor (e.g. "_5/5 5/5, A+++ Vendor 2 days ago anon_"); scale of 0-5 possible, as well as no feedback at all; as extracted from html
+
+- from: location product ships from
+
+- to: location product ships to
 
 
-
-
-
-
-### what's in the data?
+## what's in the data?
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
