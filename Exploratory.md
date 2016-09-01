@@ -2,13 +2,16 @@
 
 
 ### dj's questions:
-_What do you want me to take away?_ Anonymous marketplaces are places of business.
 
-_What do you want me to do?_ Be able to order from black markets with confidence.
+**_What do you want me to take away?_** Anonymous marketplaces are places of business.
 
-_How do you want me to feel?_ Safe.
+**_What do you want me to do?_** Be able to order from black markets with confidence.
 
-### sample of data
+**_How do you want me to feel?_** Safe, assured, maybe _relaxed_. 
+
+### variables of interest
+
+
 
 
 
