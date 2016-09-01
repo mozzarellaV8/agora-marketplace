@@ -16,6 +16,9 @@ str(p14)
 
 s <- sample(1:1018109, 100, replace = FALSE, prob = NULL)
 sAg <- p14[s, ]
+sAg2 <- p14[s, ]
+sAg2 <- subset(sAg2, select = c(from, to, great, good, ok, poor, horrible, worst,
+                                none, year, month, day, gold.oz))
 
 write.csv(sAg, file = "data/random-sample100.csv", row.names = F)
 
