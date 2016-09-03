@@ -61,7 +61,7 @@ Exploratory Plots of Categories, going from high level to fine grain. As the lis
 
 _Why set a price cutoff at $1000?_
 
-$1000 can generally be thought of as an upper bound for the amount a person is willing to spend on drugs for personal and social use (cite: Demant, Muksgaard, and Houbourg 2016). Much of the price listings from the market data fall within this range.
+$1000 can generally be thought of as an upper bound for the amount a person is willing to spend on drugs for personal and social use (Demant, Muksgaard, and Houbourg 2016). Much of the price listings from the market data fall within this range.
 
 ``` {r}
 p4 <- subset(p14, p14$usd <= 1000) # 905805

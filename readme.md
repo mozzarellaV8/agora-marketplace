@@ -1,5 +1,13 @@
 # Agora Marketplace Analysis
 
+Agora Marketplace index page on July 7th, 2015:
+
+![2015-07-07-index](vis/index-2015-07-07.jpg)
+
+Agora Marketplace index page on January 1st, 2014 (printout with notes for extracting data from html)
+
+![](vis/index-2014-01-01.jpg)
+
 _student work in R_
 
 data:
@@ -7,20 +15,17 @@ data:
 - [the Data](#the-data)
 - [current strategy](#current-strategy)
 
-exploratory:
-- [product and vendor counts](#exploratory-data-analysis)
+- [extraction notes](extraction/readme.md)
+- [extraction scripts](R/extraction)
 
-domain: 
-- [Agora and anonymous marketplaces](#agora-and-anonymous-marketplaces)
+## Agora and anonymous marketplaces
 
-wrangling:
-- [product page extraction](R/product-page-extraction.R)
-- [vendor page extractions](R/extract-vendor-all-01B.R)
-- [individual html page extractions](R)
-- [scrape cleanse / html parsing](parse-html/readme.md)
+Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally (and subjectively), the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
 
-archive:
-- [grams](grams) - archive of exploratory analysis on the 'Grams' dataset.
+This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
+
+It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
+
 
 ## the Problem
 
@@ -36,9 +41,6 @@ By conducting a market basket analysis of vendor listings on the anonymous marke
 
 _This client scenario is fictional._
 
-_**Deliverables**_ 
-
-It'd probably be nice to have a network map written in d3, wouldn't it? Maybe a [force-directed tree](https://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37) or [radial tidy tree](https://bl.ocks.org/mbostock/2e12b0bd732e7fe4000e2d11ecab0268). But only after the information is dense and the analysis is sturdy. 
 
 ## the Data
 
@@ -46,39 +48,21 @@ Agora was a referral-based darknet market that rose to prominence after the demi
 
 The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Comprising this archive are weekly crawls of multiple anonymous marketplaces on the darknet - well-trafficked and documented sites such as Silk Road and Evolution in addition to smaller, more ephemeral markets.
 
-For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, occurring weekly and occassionally more frequently.
+For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, generally occurring weekly and occassionally more frequently.
 
-From these daily crawls, I found the most relevant directories to be: 
+Relevant directories from the crawls:
 
-- [cat]() - pages of listings by category e.g. "Books", "Drugs", "Counterfeits"
-- [p](parse-html/ag-RelevantTags-p.md) - individual product listing pages
-- [vendor](parse-html/ag-RelevantTags-vendor.md) - vendor pages with bio, pgp key, and vendor's listings.
+- [p](extraction/ag-RelevantTags-p.md) - individual product listing pages
+- [vendor](extraction/ag-RelevantTags-vendor.md) - vendor pages with bio, listings, and feedback.
 
 The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html, subsetted for listings that contained client feedback - potential indicator of a transaction.
 
 ![](vis/extractedSample.png)
 ![](vis/extractedSample02.png)
 
-_*to download the data for yourself, please refer to gwern's black market archives link above. For me it took about 8-10 hours to download; Agora is roughly 127 GB total, but each daily crawl contains many subfolders which adds to the download and tar.gz extraction time._
+_*to download the data, please refer to gwern's black market archives link above. For me it took about about 1-2 hours to download; Agora is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the tar.gz extraction time - which I just left unarchiving overnight._
 
-## images
-
-Agora Marketplace index page on July 7th, 2015:
-
-![2015-07-07-index](vis/index-2015-07-07.jpg)
-
-Agora Marketplace index page on January 1st, 2014 (printout with notes for extracting data from html)
-
-![](vis/index-2014-01-01.jpg)
-
-## current strategy
-
-The ultimate goal will be to conduct a Market Basket Analysis; to mine associate rules given the products and services available in the data. While some transaction data is available, in much more abundace is vendor data. Given this, it will likely be that associate rules will be created from vendor listings - i.e. "vendors who sell this, also sell that". 
-
-There are many ways to categorize illegal substances - [DEA Scheduling](https://www.dea.gov/druginfo/ds.shtml) comes to mind. With this particular data, we can possibly derive another classification scheme using association rules on vendor listings - a look at what products (drugs) tend to cluster together from a supply-side perspective. 
-
-
-## Exploratory Data Analysis
+## Exploratory Looks
 
 Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
 
@@ -150,15 +134,5 @@ Since the market could go offline for periods ranging from hours to days, listin
 
 What if we assume there was no downtime for security issues? Can we project a reasonable market size if growth were to stabilize? 	
 
-Actual Market downtimes - an influence on number of listings and vendors:
-
-![](plots/RDraft/DowntimesByDate.png)
-
-## Agora and anonymous marketplaces
-
-Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally and subjectively, the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
-
-This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
-
-It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
+_Be back after the Poisson chapter~_
 
