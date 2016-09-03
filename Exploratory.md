@@ -88,8 +88,6 @@ _If that's the case, then why set a price cutoff above $1000?_
 
 Above $1000, there's a mix of 'placeholder' listings vendors will put up while they are out of stock - to maintain a presence on the market. The prices are deliberately set higher than is reasonable to discourage someone actually buying. But in addition, above $1000 there are 'legitimate' listings for products in higher ('intent-to-distribute') quantities.
 
-![](plots/tile/p6p.jpeg)
-
 ![](plots/tile/p7p.jpeg)
 
 ![](plots/tile/p8p.jpeg)
@@ -98,7 +96,9 @@ Above $1000, there's a mix of 'placeholder' listings vendors will put up while t
 
 ![](plots/tile/fb2-dist-violin-02.jpeg)
 
-![](plots/tile/fb2-dist-violin-01.jpeg)
+![](plots/tile/fb-density-01.jpeg)
+
+aggregate some of these responses to see:
 
 ``` {r}
 feedback$positive <- ifelse(feedback$great == T | feedback$good == T, 1, 0)
@@ -109,6 +109,6 @@ fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
 fb$none <- ifelse(fb$none == T, 1, 0)
 ```
 
-![](plots/tile/fb-density-01.jpeg)
+![](plots/tile/fb2-dist-violin-01.jpeg)
 
 ![](plots/tile/fb2-density-01.jpeg)
