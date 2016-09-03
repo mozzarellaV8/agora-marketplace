@@ -41,17 +41,6 @@
 
 12. **to**: location product ships to
 
-Taking a random sample of 100 listings to include here:
-
-``` {r}
-s <- sample(1:1018109, 100, replace = FALSE, prob = NULL)
-sAg <- p14[s, ]
-
-write.csv(sAg, file = "data/random-sample100.csv", row.names = F)
-```
-
-![](vis/randomsample.png)
-
 
 ## what's in the data?
 
