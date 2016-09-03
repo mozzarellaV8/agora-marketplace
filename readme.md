@@ -69,6 +69,10 @@ While not definitive in it's conclusion, the purpose of this exploration was to 
 
 We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
 
+total days | product listings | vendor pages  | start date |  end date
+-----------| :--------------: | :------------:| :--------: | :--------:
+533		   |	2,467,200     |	   19,245     | 2014-01-01 | 2015-07-07
+
 Til I finish up with Poisson - just gonna violate some critical assumptions of linear regression:
 
 ``` r
@@ -94,13 +98,6 @@ sum(pv$vendor)
 # [1] 19245
 
 ```
-
-total days | product listings | vendor pages  |
------------| :--------------: | :------------:|
-533		   |	2,467,200     |	   19,245     |
-
-Time Period: January 1st, 2014 through July 7th, 2015
-
 
 ![](plots/RDraft/pgDist-lm-product-01.png)
 
