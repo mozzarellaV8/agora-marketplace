@@ -8,13 +8,11 @@ Agora Marketplace index page on January 1st, 2014 (printout with notes for extra
 
 ![](vis/index-2014-01-01.jpg)
 
-_student work in R_
+_student work in R_ for [Foundations of Data Science](https://www.springboard.com/workshops/data-science)
 
-data:
+
 - [the Problem](#the-problem)
 - [the Data](#the-data)
-- [current strategy](#current-strategy)
-
 - [extraction notes](extraction/readme.md)
 - [extraction scripts](R/extraction)
 
@@ -57,7 +55,6 @@ Relevant directories from the crawls:
 
 The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html, subsetted for listings that contained client feedback - potential indicator of a transaction.
 
-![](vis/extractedSample.png)
 ![](vis/extractedSample02.png)
 
 _*to download the data, please refer to gwern's black market archives link above. For me it took about about 1-2 hours to download; Agora is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the tar.gz extraction time - which I just left unarchiving overnight._
@@ -71,6 +68,8 @@ While not definitive in it's conclusion, the purpose of this exploration was to 
 		"What if Agora never shut down? What would the trend be?"
 
 We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
+
+Til I finish up with Poisson - just gonna violate some critical assumptions of linear regression:
 
 ``` r
 pv <- read.csv("data/counts/crawl-distribution.csv")
@@ -118,7 +117,7 @@ Given the limited number of variables, these models probably shouldn't be consid
 
 It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server. Gwern himself has made clear that it's best to consider his crawls a lower-bound for market activity. 
 
-But maybe the best reason these plots are spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling.
+But maybe the best reason these plots are spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Violating a few assumptions here. 
 
 ![](plots/RDraft/pgDist-lm-vendor-01.png)
 
@@ -129,10 +128,6 @@ But maybe the best reason these plots are spurious is that ordinary least square
 #   date         9.752e-02   2.604e-02   3.745 	0.000235 ***
 # 	Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
 ```
-
-Since the market could go offline for periods ranging from hours to days, listings could disappear and then reappear somewhat randomly as well. The anonymous nature of the marketplace did not contribute to traditional efficiency in this respect. What follows is a partial plot of market downtimes - ranging from the dates 2014-04-23 until 2015-04-04. 
-
-What if we assume there was no downtime for security issues? Can we project a reasonable market size if growth were to stabilize? 	
-
-_Be back after the Poisson chapter~_
+	
+**_be back after the Poisson chapter ~_**
 
