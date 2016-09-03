@@ -94,7 +94,7 @@ Above $1000, there's a mix of 'placeholder' listings vendors will put up while t
 
 ### Densities of feedback values
 
-![](plots/tile/fb2-dist-violin-02.jpeg)
+![](plots/tile/fb2-dist-violin-01.jpeg)
 
 ![](plots/tile/fb-density-01.jpeg)
 
@@ -109,6 +109,6 @@ fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
 fb$none <- ifelse(fb$none == T, 1, 0)
 ```
 
-![](plots/tile/fb2-dist-violin-01.jpeg)
+![](plots/tile/fb2-dist-violin-02.jpeg)
 
 ![](plots/tile/fb2-density-01.jpeg)
