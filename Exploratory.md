@@ -92,7 +92,7 @@ Above $1000, there's a mix of 'placeholder' listings vendors will put up while t
 
 ![](plots/tile/p8p.jpeg)
 
-### Densities of feedback values
+### Feedback Densities
 
 ![](plots/tile/fb2-dist-violin-01.jpeg)
 
