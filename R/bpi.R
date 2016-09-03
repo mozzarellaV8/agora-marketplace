@@ -69,3 +69,15 @@ p14a$usd <- p14a$price * p14a$rate
 p14a <- as.data.frame(p14a)
 p14a <- p14a[c(2, 1, 3, 4, 5, 13, 12, 6, 7, 8, 9, 10, 11)]
 write.csv(p14a, file = "~/GitHub/agora-data/ag03-2014.csv", row.names = F)
+
+# merge with vendor frame
+
+v14 <- fread("~/GitHub/agora-data/v14-00c.csv")
+v14$date <- as.Date(v14$date)
+
+v14a <- base::merge(v14, bpi, by = "date")
+v14a$usd <- v14a$price * v14a$rate
+v14a <- as.data.frame(v14a)
+v14a <- v14a[c(2, 1, 3, 4, 5, 12, 11, 6, 7, 8, 9, 10)]
+
+write.csv(v14a, file = "~/GitHub/agora-data/v14-00d.csv", row.names = F)
