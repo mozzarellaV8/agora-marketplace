@@ -1,11 +1,10 @@
 # Agora Marketplace Analysis
 # Poisson Regression Prep
-# "How much is there? --> How much could there be?"
+# "How much is there?" --> "How much could there be?"
 
 # load data -------------------------------------------------------------------
 
 library(data.table)
-
 p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
 
 # Dr_Mephistopheles is doing some cross posting across categories
@@ -70,10 +69,11 @@ mo <- data.frame(month = seq(as.Date("2014-01-01"), by = "month", length.out = 1
 mo$month <- as.Date(mo$month)
 
 write.csv(mo, "data/MonthlyCounts.csv", row.names = F)
+mo <- read.csv("data/MonthlyCounts.csv")
 
 par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), family = "HersheySans")
 plot(mo$month, mo$count, pch = 19, cex = 3.0, ylab = "", xlab = "",
-     main = "Listing Count by Month")
+     main = "Listing Count by Month", type = "h")
 
 # poisson model - monthly counts ----------------------------------------------
 
@@ -117,6 +117,10 @@ summary(lm01)
 sqrt(0.6982) # 0.8355836
 cor(mo$count, as.numeric(mo$month)) # 0.8355671
 
+# add fitted values to dataframe
+mo$pm01.fitted <- pm01$fitted.values
+mo$lm.fitted <- lm01$fitted.values
+
 # plot comparison -------------------------------------------------------------
 
 par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), las = 1, bty = "n", family = "HersheySans")
@@ -148,10 +152,6 @@ pm01$df.residual
 # plot comparison gg ----------------------------------------------------------
 
 library(ggplot2)
-
-# add fitted values to dataframe
-mo$pm01.fitted <- pm01$fitted.values
-mo$lm.fitted <- lm01$fitted.values
 
 pm01p <- ggplot(mo, aes(month, count)) + 
   stat_smooth(colour = "gold3", se = F, size = 0.65, linetype = "dotdash") +
