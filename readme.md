@@ -10,7 +10,6 @@ Agora Marketplace index page on January 1st, 2014 (printout with notes for extra
 
 _student work in R_ for [Foundations of Data Science](https://www.springboard.com/workshops/data-science)
 
-
 - [the Problem](#the-problem)
 - [the Data](#the-data)
 - [extraction notes](extraction/readme.md)
@@ -59,7 +58,7 @@ The scale of gwern's harvest prevents it from being posted here. Here is a glimp
 
 _*to download the data, please refer to gwern's black market archives link above. For me it took about about 1-2 hours to download; Agora is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the tar.gz extraction time - which I just left unarchiving overnight._
 
-## Exploratory Looks
+## Exploratory Regression
 
 Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
 
