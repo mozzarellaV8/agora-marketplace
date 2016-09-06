@@ -9,7 +9,7 @@ What follows are basic attempts at models to answer these questions.
 
 ## Poisson Distrubution
 
-It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
+It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate the Normal. A quick look at this:
 
 ``` {r}
 par(mfrow = c(2, 2), mar = c(8, 8, 8, 8), bty = "l", las = 1)
@@ -32,6 +32,7 @@ p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
 
 There are 1018109 observations of 17 variables. After subsetting all the data by month, we can create a dataframe with listing counts to use for a simple Poisson regression.
 
+```
 # (...)
 dec <- subset(p14, p14$month == "12")
 
@@ -85,9 +86,7 @@ The residual deviance is far greater than the degrees of freedom, which implies 
 log(100674) #  11.51964
 ```
 
-When taking the log of the residual deviance, we come away with 11.52 - a value much closer to the 10 degrees of freedom. 
-
-How does a linear model look? 
+When taking the log of the residual deviance, we come away with 11.52 - a value much closer to the 10 degrees of freedom. How does a linear model look? 
 
 ``` {r}
 lm01 <- lm(count ~ month, data = mo)
