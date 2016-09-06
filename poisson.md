@@ -1,6 +1,9 @@
 # Poisson Regressions
 
-"How much is there?" --> "How much could there be?"
+One of issues with darknet markets is that they're in the dark. Answering some basic questions might shed some light. How large are these markets? How large could they be? What follows are basic attempts at models to answer these questions.
+
+- ["How much is there?"](#how-much-is-there)
+- ["How much could there be?"](#how-much-could-there-be)
 
 ``` {r}
 library(data.table)
