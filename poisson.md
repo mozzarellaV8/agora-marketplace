@@ -7,7 +7,7 @@ library(data.table)
 p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
 ```
 
-There are 1018109 observations of 17 variables. How can counts of these observations work with the Poisson distribution? It's been noted that as lambda gets larger, the Poisson distribute begins to approximate to normal. A quick look at this:
+There are 1018109 observations of 17 variables. How can counts of these observations work with the Poisson distribution? It's been noted that as lambda gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
 
 ``` {r}
 par(mfrow = c(2, 2), mar = c(8, 8, 8, 8), bty = "l", las = 1)
@@ -18,6 +18,8 @@ plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
 ```
 
 ![](plots/poisson/poisson-distributions-01.jpeg)
+
+It does appear that as lambda grows larger, the distribution approaches normal with mean at lambda.
 
 # How much is there?
 
@@ -55,7 +57,7 @@ A quick look shows that the count increases as the year goes on - more than doub
 
 # How much could there be?
 
-Now to take a look at a simple Poisson model, and compare to linear.
+Now to take a look at a simple Poisson model, and compare it to a linear model with the idea that the Poisson distribution approximates to normal for large lambda values. As it stands, the mean for the listing counts over the 12 month period is 84842.42, although this value may certainly be skewed due to explosive growth towards the end of the year.
 
 ``` {r}
 pm01 <- glm(count ~ month, family = "poisson", data = mo)
@@ -99,11 +101,31 @@ cor(mo$count, as.numeric(mo$month)) # 0.8355671
 
 How does Poisson look against the linear model and observed values? A quasipoisson model was also fit, yielding identical values to the `pm01` original poisson model. Adding the poisson and linear fitted values to the dataframe, we can plot and see. 
 
+
+
 ``` {r}
 # add fitted values to dataframe
 mo$pm01.fitted <- pm01$fitted.values
 mo$lm.fitted <- lm01$fitted.values
 
+        month  count pm01.fitted  lm.fitted
+1  2014-01-01   7986    7876.885 -38998.460
+2  2014-02-01  27300   11011.516 -15940.999
+3  2014-03-01  18807   14902.523   4885.094
+4  2014-04-01  20000   20833.028  27942.555
+5  2014-05-01  42535   28810.560  50256.226
+6  2014-06-01  25422   40275.812  73313.686
+7  2014-07-01  39989   55698.512  95627.358
+8  2014-08-01  40465   77863.908 118684.818
+9  2014-09-01  72666  108850.093 141742.279
+10 2014-10-01 187091  150531.745 164055.950
+11 2014-11-01 276028  210436.321 187113.411
+12 2014-12-01 259820  291018.096 209427.082
+```
+
+Of course one of the issues with a linear model on this data is the negative fitted values returned. We can see that the fitted values on the poisson regression line up well in the first and fourth months' observed values. How does it look plotted? 
+
+``` {r}
 par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), las = 1, bty = "n", family = "HersheySans")
 plot(mo$month, pm01$fitted.values, cex = 3.0, col = "deepskyblue4", pch = 17,
      main = "listing count ~ month: Poisson, quasipoisson, & linear fitted values w/ observed", xlab = "", ylab = "", xaxt = "n")
@@ -145,12 +167,5 @@ pm01p <- ggplot(mo, aes(month, count)) +
 From looking at the plots, the Poisson certainly looks to be a better fit than the Linear model. And when compared to the observed values, not a bad fit at all. But how would this model perform with more granular (daily) data? And once trained on  2014 daily data, would it do well on a test set of 2015 values? 
 
 Once an adequate model is in place on overall listing counts, can models be developed for specific subcategories (e.g. Cannabis, MDMA?). How do Poisson models differ and relate to time-series (e.g. ARIMA) models?
-
-
-
-
-
-
-
 
 
