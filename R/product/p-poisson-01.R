@@ -66,8 +66,10 @@ mo <- data.frame(month = seq(as.Date("2014-01-01"), by = "month", length.out = 1
                            nrow(may), nrow(jun), nrow(jul), nrow(aug),
                            nrow(sep), nrow(oct), nrow(nov), nrow(dec)))
 
-mo$month <- gsub("\\b-01\\b", "", mo$month)
+# mo$month <- gsub("\\b-01\\b", "", mo$month)
 mo$month <- as.Date(mo$month)
+
+write.csv(mo, "data/MonthlyCounts.csv", row.names = F)
 
 par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), family = "HersheySans")
 plot(mo$month, mo$count, pch = 19, cex = 3.0, ylab = "", xlab = "",
@@ -142,7 +144,6 @@ log(100674) #  11.51964
 
 pm01$residuals
 pm01$df.residual
-
 
 # plot comparison gg ----------------------------------------------------------
 
