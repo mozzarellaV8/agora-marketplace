@@ -1,6 +1,6 @@
 # Poisson Regressions
 
-One of issues with darknet markets is that they're in the dark. Answering some basic questions might shed some light. **How large are these markets? How large could they be?**
+One of issues with darknet markets is that they're in the dark. Answering some basic questions might shed some light. **How large are these markets?** and, if left unchecked, **How large could they be?**
 
 What follows are basic attempts at models to answer these questions.
 
@@ -12,7 +12,7 @@ library(data.table)
 p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
 ```
 
-There are 1018109 observations of 17 variables. How can counts of these observations work with the Poisson distribution? It's been noted that as lambda gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
+There are 1018109 observations of 17 variables. How can counts of these observations work with the Poisson distribution? It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
 
 ``` {r}
 par(mfrow = c(2, 2), mar = c(8, 8, 8, 8), bty = "l", las = 1)
@@ -24,7 +24,7 @@ plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
 
 ![](plots/poisson/poisson-distributions-01.jpeg)
 
-It does appear that as lambda grows larger, the distribution approaches normal with mean at lambda.
+It does appear that as `lambda` grows larger, the distribution approaches normal with mean at `lambda`.
 
 # How much is there?
 
@@ -62,7 +62,7 @@ A quick look shows that the count increases as the year goes on - more than doub
 
 # How much could there be?
 
-Now to take a look at a simple Poisson model, and compare it to a linear model with the idea that the Poisson distribution approximates to normal for large lambda values. As it stands, the mean for the listing counts over the 12 month period is 84842.42, although this value may certainly be skewed due to explosive growth towards the end of the year.
+Now to take a look at a simple Poisson model, and compare it to a linear model with the idea that the Poisson distribution approximates to normal for large `lambda` values. As it stands, the mean for the listing counts over the 12 month period is 84842.42, although this value may certainly be skewed due to explosive growth towards the end of the year.
 
 ``` {r}
 pm01 <- glm(count ~ month, family = "poisson", data = mo)
