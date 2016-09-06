@@ -16,7 +16,7 @@ par(mfrow = c(2, 2), mar = c(8, 8, 8, 8), bty = "l", las = 1)
 plot(0:10, dpois(0:10, lambda = 2), type = "h")
 plot(0:20, dpois(0:20, lambda = 10), type = "h")
 plot(0:200, dpois(0:200, lambda = 100), type = "h")
-plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
+plot(0:1000, dpois(0:1000, lambda = 500), type = "h")
 ```
 
 ![](plots/poisson/poisson-distributions-01.jpeg)
