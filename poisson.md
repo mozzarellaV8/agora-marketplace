@@ -80,13 +80,13 @@ summary(pm01)
 # Residual deviance:  100674  on 10  degrees of freedom
 ```
 
-The residual deviance is far greater than the degrees of freedom, which implies the mean != variance in this case. Is the data overdispersed? Currently, the difference between residucal deviance and degrees of freedom is on the order of 10^4....something that does come to mind (which may be inaccurate), is the log of residual deviance.
+The residual deviance is far greater than the degrees of freedom, which implies the mean != variance in this case. Is the data overdispersed? Currently, the difference between residual deviance and degrees of freedom is on the order of 10^4....something that does come to mind (which may be inaccurate), is the log of residual deviance.
 
 ``` {r}
 log(100674) #  11.51964
 ```
 
-When taking the log of the residual deviance, we come away with 11.52 - a value much closer to the 10 degrees of freedom. How does a linear model look? 
+When taking the log of the residual deviance, we come away with 11.52 - a value much closer to the 10 degrees of freedom. However, taking this measure feels a bit like magical thinking. Moving on, how does a linear model look? 
 
 ``` {r}
 lm01 <- lm(count ~ month, data = mo)
@@ -105,8 +105,6 @@ cor(mo$count, as.numeric(mo$month)) # 0.8355671
 ```
 
 How does Poisson look against the linear model and observed values? A quasipoisson model was also fit, yielding identical values to the `pm01` original poisson model. Adding the poisson and linear fitted values to the dataframe, we can plot and see. 
-
-
 
 ``` {r}
 # add fitted values to dataframe
@@ -145,9 +143,7 @@ text(seq(mo$month[1], mo$month[12], length.out = 12), 0,
 
 ![](plots/poisson/CountByMonth-01.jpg)
 
-Side question - does `ggplot2` make this look any better? It does add a loess regression line by default with `stat-smooth()`. 
-
-
+And one more plot using `ggplot2`, with additional `loess` regression line by default with `stat-smooth()`. 
 
 ``` {r}
 pm01p <- ggplot(mo, aes(month, count)) + 
@@ -172,5 +168,4 @@ pm01p <- ggplot(mo, aes(month, count)) +
 From looking at the plots, the Poisson certainly looks to be a better fit than the Linear model. And when compared to the observed values, not a bad fit at all. But how would this model perform with more granular (daily) data? And once trained on  2014 daily data, would it do well on a test set of 2015 values? 
 
 Once an adequate model is in place on overall listing counts, can models be developed for specific subcategories (e.g. Cannabis, MDMA?). How do Poisson models differ and relate to time-series (e.g. ARIMA) models?
-
 
