@@ -7,12 +7,9 @@ What follows are basic attempts at models to answer these questions.
 - ["How much is there?"](#how-much-is-there)
 - ["How much could there be?"](#how-much-could-there-be)
 
-``` {r}
-library(data.table)
-p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
-```
+## Poisson Distrubution
 
-There are 1018109 observations of 17 variables. How can counts of these observations work with the Poisson distribution? It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
+It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate to normal. A quick look at this:
 
 ``` {r}
 par(mfrow = c(2, 2), mar = c(8, 8, 8, 8), bty = "l", las = 1)
@@ -28,9 +25,13 @@ It does appear that as `lambda` grows larger, the distribution approaches normal
 
 # How much is there?
 
-After subsetting all the data by month, we can create a dataframe with listing counts to use for a simple Poisson regression.
+``` {r}
+library(data.table)
+p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
+```
 
-```{r}
+There are 1018109 observations of 17 variables. After subsetting all the data by month, we can create a dataframe with listing counts to use for a simple Poisson regression.
+
 # (...)
 dec <- subset(p14, p14$month == "12")
 
