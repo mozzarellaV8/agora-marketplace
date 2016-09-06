@@ -50,9 +50,9 @@ summary(pd.glm01)
 # Residual deviance:  932944  on 201  degrees of freedom
 # AIC: 935136
 
-# That Z-Value is through the roof. 
+# deviance/df are pretty far off from one another, even after log10().
 
-options(scipen = 4)
+
 pd.glm02 <- glm(p ~ date + vendor, family = "poisson", data = p)
 summary(pd.glm02)
 # Deviance Residuals: 
