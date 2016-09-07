@@ -29,8 +29,8 @@ _broadly speaking:_ Darknet markets are _in the dark_, anonymous marketplaces ar
 
 - What's there? What could be there?
 - Where is it? Where from? Where will it be from?
-- How much is there? How much could be there?
-- How much does it cost? How much could it cost?
+- How much is there? _How much could be there?_
+- How much does it cost? _How much could it cost?_
 
 
 ## the Data
