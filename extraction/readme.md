@@ -7,7 +7,7 @@ To view the pages locally, I used `simpleHTTPServer` in Python.
 Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
 
 - [relevant tags](#relevant-tags)
-- [directory structure](#directory-structure-notes)
+- [directory structure](#directory-structure)
 - [crawl counts](#crawl-counts) - tables of page counts by crawl date.
 
 # Relevant Tags
@@ -56,7 +56,7 @@ _children of div id Product List:_
 - Vendor - **"a.gen-user-link"**
 - Vendor Rating - **".gen-user-ratings"**
 
-## directory structure notes
+## Directory Structure
 
 Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
@@ -195,7 +195,6 @@ date | p directory | vendor directory
 2014-11-25 | 7890 | 474
 2014-11-27 | 2459 | 63
 2014-11-28 | 2359 | 65
-
 2014-12-01 | 17767 | 747
 2014-12-03 | 21769 | 930
 2014-12-04 | 1710 | 92
