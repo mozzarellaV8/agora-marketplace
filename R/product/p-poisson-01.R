@@ -5,11 +5,11 @@
 # load data -------------------------------------------------------------------
 
 library(data.table)
+library(sandwich)
+library(ggplot2)
 p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
+mo <- read.csv("data/MonthlyCounts.csv")
 
-# Dr_Mephistopheles is doing some cross posting across categories
-# "! How to get a fresh US Identity" in 5 categories:
-# Counterfeits, Data, Forgeries, Information, Services
 
 # poisson distributions ------------------------------------------------------
 # remember as lambda get large, poisson approximates to normal
@@ -151,8 +151,6 @@ pm01$df.residual
 
 # plot comparison gg ----------------------------------------------------------
 
-library(ggplot2)
-
 pm01p <- ggplot(mo, aes(month, count)) + 
   stat_smooth(colour = "gold3", se = F, size = 0.65, linetype = "dotdash") +
   geom_point(size = 4.5, colour = "firebrick4", shape = 19) +
@@ -170,3 +168,51 @@ pm01p <- ggplot(mo, aes(month, count)) +
        x = "", y = "", fill = "")
 
 pm01p
+
+# Mean-Variance comparison ----------------------------------------------------
+
+# this doesn't make sense yet.
+plot(pm01$fitted, pm01$residuals, pch=19, col="black", ylab="Residuals", xlab="fitted")
+points(pm01$residuals, col = "red3", pch = 2)
+points(pm01$fitted, col = "blue", pch = 6)
+
+# confidence intervals --------------------------------------------------------
+
+# results in error: if (!nonA[i]) next : argument is of length zero
+exp(confint(pm01, "date"))
+
+# model agnostic via lecture/stack
+confint.agnostic <- function (object, parm, level = 0.95, ...)
+{
+    cf <- coef(object); pnames <- names(cf)
+    if (missing(parm))
+        parm <- pnames
+    else if (is.numeric(parm))
+        parm <- pnames[parm]
+    a <- (1 - level)/2; a <- c(a, 1 - a)
+    pct <- stats:::format.perc(a, 3)
+    fac <- qnorm(a)
+    ci <- array(NA, dim = c(length(parm), 2L), dimnames = list(parm,
+                                                               pct))
+    ses <- sqrt(diag(sandwich::vcovHC(object)))[parm]
+    ci[] <- cf[parm] + ses %o% fac
+    ci
+}
+
+confint(pm01)
+#                     2.5 %    97.5 %
+# (Intercept)     8.9634324 9.0072975
+# month2014-02-01 1.2043185 1.2541885 
+# month2014-03-01 0.8304071 0.8827636
+# month2014-04-01 0.8921460 0.9440350
+# month2014-05-01 1.6487995 1.6966055
+# month2014-06-01 1.1328374 1.1831226
+# month2014-07-01 1.5869557 1.6350016
+# month2014-08-01 1.5988124 1.6468113
+# month2014-09-01 2.1851487 2.2313614
+# month2014-10-01 3.1315862 3.1763778
+# month2014-11-01 3.5206427 3.5651378   356%?
+# month2014-12-01 3.4601098 3.5046440   350% increase?
+
+confint.agnostic(pm01, "date")
+
