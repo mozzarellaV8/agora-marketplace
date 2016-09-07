@@ -10,6 +10,8 @@ Handwritten notes and images were a way to deal with the unstructured nature and
 - [directory structure](#directory-structure)
 - [crawl counts](#crawl-counts) - tables of page counts by crawl date.
 
+Data was originally crawled and compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
+
 # Relevant Tags
 
 For extraction using `rvest`: 
@@ -57,8 +59,6 @@ _children of div id Product List:_
 - Vendor Rating - **".gen-user-ratings"**
 
 ## Directory Structure
-
-Data was originally compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
 ![AgDirectoryNotes.jpg](img/AgDirectoryNotes.jpg)
 
