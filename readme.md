@@ -23,20 +23,14 @@ This is in contrast to other markets of similar scale. The largest examples are 
 
 It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
 
-
 ## the Problem
 
-_**Who is your client and why do they care about this problem? What will your client DO or DECIDE based on your analysis that they wouldn’t have otherwise?**_
+_broadly speaking:_ Darknet markets are _in the dark_, anonymous marketplaces are _anonymous_. To shed light, basic questions:
 
-My client is Amazon.com. 
-
-Their currently-in-development Medical Marijuana, Research Chemical, and Counterfeit Outerwear departments are lacking in market values and product groupings due to the previously illegal nature of the goods to be offered. 
-
-They want to get a headstart tranining their recommender systems for a seamless transition when President ToBe Determined signs into law a bill broadening the definition of 'legal'.
-
-By conducting a market basket analysis of vendor listings on the anonymous marketplace Agora, Amazon will discover which vendors cluster into 'hit' products and which might reside in the 'long tail' of their e-commerce network.
-
-_This client scenario is fictional._
+- What's there? What could be there?
+- Where is it? Where from? Where will it be from?
+- How much is there? How much could be there?
+- How much does it cost? How much could it cost?
 
 
 ## the Data
