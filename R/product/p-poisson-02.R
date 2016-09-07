@@ -89,18 +89,17 @@ candate <- as.data.frame(table(can$date)) # 139 obs
 colnames(candate) <- c("date", "count")
 candate$date <- as.Date(candate$date)
 
-summary(canmo$count)
+summary(canmo$count) # lambda = 14790
 #    Min. 1st Qu.  Median   Mean  3rd Qu.    Max. 
 #   1500    5037    6422   14790   20510   44360
 
-summary(candate$count) 
+summary(candate$count) # lambda = 1277
 #   Min. 1st Qu.  Median    Mean  3rd Qu.    Max. 
 #      1     257     787    1277    2232    3963
 
 # poisson model by date -------------------------------------------------------
 pm03 <- glm(count ~ date, family = "poisson", data = candate)
 summary(pm03)
-log(150199) # 11.91972...139 degrees of freedom, not close.
 
 plot(candate$date, pm03$fitted.values)
 points(candate$date, candate$count, col = "red", pch = 19)
@@ -109,16 +108,33 @@ lines(candate$date, pm03$fitted.values, col = "deepskyblue4", lty = 2)
 # this looks overdispersed. 
 # check if the low counts correspond to bad crawl dates?
 
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6))
+plot(pm03)
+# 135, 70, 67 stand out in the Q-Q and residuals v. fitted plots
+# 135 is very low with 18 count
+# 67, 70 are very high - 3963, 3864 counts respectively
+
+which.max(candate[, "count"]) # 67 - count of 3963
+lambda.pm03 <- pm03$fitted.values[67] # 1360.862 predicted
+qpois(0.95, lambda.pm03) # 1422
+# 95% of the time, count of 1422 
+qpois(0.90, lambda.pm03) # 1408
+qpois(0.99, lambda.pm03) # 1447
+qpois(0.75, lambda.pm03) #1386
+
 # compare to linear model
 lm03 <- lm(count ~ date, data = candate)
 summary(lm03)
+# Coefficients:
+#                Estimate  Std. Error t value Pr(>|t|)   
+# (Intercept) -48002.7492  15502.8181  -3.096  0.00238 **
+# date             3.0194      0.9499   3.179  0.00183 **
 # Residual standard error: 1139 on 137 degrees of freedom
 # Multiple R-squared:  0.06869,	Adjusted R-squared:  0.06189 
 # ...not the lowest t-values either.
 
-sum(candate$count)
 # observed values first
-par(mar = c(8, 8, 8, 8), family = "HersheySans")
+par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), family = "HersheySans")
 plot(candate$date, candate$count, pch = 19, col = "red3", cex = 1.2,
      main = "Cannabis: listing count ~ date, family = Poisson",
      xlab = "dates (n = 139)", ylab = "listing count (n = 177447)")
@@ -136,6 +152,13 @@ lines(candate$date, lm03$fitted.values, col = "#EED5B7", lty = 3)
 points(candate$date, candate$count, col = "red3", pch = 19, cex = 1.6)
 lines(candate$date, pm03$fitted.values, col = "deepskyblue4", lty = 2)
 
+candate$pm.fitted <- pm03$fitted.values
+candate$lm.fitted <- lm03$fitted.values
+
+# There's a lot of overdispersion. I wonder if some of this can be 
+# attributed to bad crawls, or to downtimes in the market.
+# I can compare with certain dates that I have downtime data for,
+# or look at the counts from the grams dataset. 
 
 # poisson model by month -------------------------------------------------------
 pm04 <- glm(count ~ month, family = "poisson", data = canmo)
@@ -162,4 +185,12 @@ points(canmo$month, canmo$count, col = "red3", pch = 19, cex = 1.4)
 lines(canmo$month, pm04$fitted.values, col = "deepskyblue4", lty = 2)
 points(canmo$month, pm04$fitted.values, col = "#00688B90", pch = 17, cex = 1.8)
 
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "FranklinGothicSSK")
+plot(pm04)
 
+which.max(canmo[, "count"])
+qpois(0.975, lambda = pm04$fitted.values[12]) # 48298
+qpois(0.950, lambda = pm04$fitted.values[12]) # 48229
+
+canmo$pm.fitted <- pm04$fitted.values
+canmo$lm.fitted <- lm04$fitted.values
