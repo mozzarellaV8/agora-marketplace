@@ -47,11 +47,6 @@ The data was acquired via gwern's [black market archives](http://www.gwern.net/B
 
 For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, generally occurring weekly and occassionally more frequently.
 
-Relevant directories from the crawls:
-
-- [p](extraction/ag-RelevantTags-p.md) - individual product listing pages
-- [vendor](extraction/ag-RelevantTags-vendor.md) - vendor pages with bio, listings, and feedback.
-
 The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html, subsetted for listings that contained client feedback - potential indicator of a transaction.
 
 ![](vis/extractedSample02.png)
