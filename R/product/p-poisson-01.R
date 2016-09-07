@@ -20,7 +20,7 @@ plot(0:20, dpois(0:20, lambda = 10), type = "h")
 plot(0:200, dpois(0:200, lambda = 100), type = "h")
 plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
 
-
+mean(mo$count)
 # crawl counts ----------------------------------------------------------------
 # "How much is there?"
 

@@ -68,6 +68,7 @@ v$Var.1 <- NULL
 v <- v[c(5, 4, 6, 2, 7, 1, 8, 3)]
 colnames(v) <- c("list", "date", "vendor", "price", "product", "description", "feedback", "shipping")
 
+# be patient here
 v$description <- stripWhitespace(v$description)
 v$feedback <- stripWhitespace(v$feedback)
 
