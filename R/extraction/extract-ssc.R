@@ -6,10 +6,13 @@ library(tidyr)
 library(dplyr)
 library(data.table)
 
-pDir <- "~/GitHub/ag-Product/2014/2014-11-08"
+# CHECK DIRECTORY
+getwd()
+pDir <- "~/GitHub/ag-Product/2015-03-03"
 setwd(pDir)
-
-p <- fread("~/GitHub/ag-product-safety/p-2014-11-08.csv", stringsAsFactors = F)
+# CHECK FILE NAME
+p <- fread("~/GitHub/ag-product-safety-2015/p-2015-03-03.csv", stringsAsFactors = F)
+p <- as.data.frame(p)
 levels(as.factor(p$subcat))
 
 # subset --------------------------------------------------
@@ -24,6 +27,7 @@ d <- subset(d, d$subcat == "Cannabis" |
 # extract -------------------------------------------------
 pList3 <- d$list
 subcat2 <- data.frame()
+
 system.time(
   for (i in 1:length(pList3)) {
     pLog3 <- read_html(pList3[i])
@@ -39,17 +43,15 @@ system.time(
   })
 
 # bind ----------------------------------------------------
-p <- as.data.frame(p)
+
 bind <- dplyr::left_join(p, subcat2, by = "list")
 bind  <- bind[c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind) <- c("list", "date", "vendor", "product", "price", 
                     "cat", "subcat", "subsubcat", "feedback", "from", "to")
 
 p <- bind
-p$vendor <- gsub("%7E", "", p$vendor)
-p$vendor <- gsub("/user/", "", p$vendor)
-p$feedback <- stripWhitespace(p$feedback)
 
-write.csv(p, file = "products-2014-11-08.csv", row.names = F)
-test <- read.csv("products-2014-11-08.csv")
-levels(test$subsubcat)
+# CHECK FILE OUTPUT NAME #####################################
+write.csv(p, file = "products-2015-03-03.csv", row.names = F)
+test <- fread("products-2015-03-03.csv")
+levels(as.factor(test$subsubcat))
