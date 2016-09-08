@@ -1,7 +1,21 @@
 # Exploratory
 
+- [Agora and Anonymous Marketplaces](#agora-and-anonymous-marketplaces)
+- [dj's questions](#djs-questions)
+- [variables of interest](#variables-of-interest)
+- [what's in the data?](#whats-in-the-data)
+- [Feedback](#feedback-densities) - feedback field; convert to histograms(counts)
+- [Counterfeits](#counterfeits) - high level category
 
-## dj's questions:
+## Agora and Anonymous Marketplaces
+
+Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally (and subjectively), the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
+
+This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
+
+It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
+
+## dj's questions
 
 **_What do you want me to take away?_** Anonymous marketplaces are places of business.
 
@@ -46,7 +60,7 @@
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
-![](plots/tile/p3p.jpeg)
+![](plots/categorical/p3c-CategoryLocation-05.jpg)
 
 _Why set a price cutoff at $1000?_
 
@@ -69,23 +83,19 @@ p4p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1",
                            high = "firebrick3", midpoint = 500)
 ```                           
 
-![](plots/tile/p4p.jpeg)
-
-![](plots/tile/p5p.jpeg)
+![](plots/categorical/p4p-DrugLocation-02.jpg)
 
 _If that's the case, then why set a price cutoff above $1000?_
 
 Above $1000, there's a mix of 'placeholder' listings vendors will put up while they are out of stock - to maintain a presence on the market. The prices are deliberately set higher than is reasonable to discourage someone actually buying. But in addition, above $1000 there are 'legitimate' listings for products in higher ('intent-to-distribute') quantities.
 
-![](plots/tile/p7p.jpeg)
+![](plots/categorical/p5p-DrugLocation-01.jpg)
 
-![](plots/tile/p8p.jpeg)
+## Feedback
 
-### Feedback Densities
+![](plots/counts/fb2-dist-violin-01.jpeg)
 
-![](plots/tile/fb2-dist-violin-01.jpeg)
-
-![](plots/tile/fb-density-01.jpeg)
+![](plots/counts/fb-density-01.jpeg)
 
 aggregate some of these responses to see:
 
@@ -98,6 +108,17 @@ fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
 fb$none <- ifelse(fb$none == T, 1, 0)
 ```
 
-![](plots/tile/fb2-dist-violin-02.jpeg)
+![](plots/counts/fb2-dist-violin-02.jpeg)
 
-![](plots/tile/fb2-density-01.jpeg)
+![](plots/counts/fb2-density-01.jpeg)
+
+## Counterfeits
+
+Counterfeits on offer, by location by month for 2014. Subset of the top 6 most active locations.
+
+![](plots/category-counterfeits/cf3p-cf3-LocationMonth-04.jpg)
+
+Counterfeits by brand:
+
+![](plots/category-counterfeits/cfb1-Brands-02.jpeg)
+
