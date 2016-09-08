@@ -1,10 +1,14 @@
-# Exploratory
+# Exploratory...
+
+plots, domain writing, question refinement, & data analysis
 
 - [Agora and Anonymous Marketplaces](#agora-and-anonymous-marketplaces)
 - [dj's questions](#djs-questions)
-- [variables of interest](#variables-of-interest)
 - [what's in the data?](#whats-in-the-data)
-- [Feedback](#feedback-densities) - feedback field; convert to histograms(counts)
+
+Categories and Variables:
+- [variables of interest](#variables-of-interest)
+- [Feedback](#feedback) - feedback field; convert to histograms(counts)
 - [Counterfeits](#counterfeits) - high level category
 
 ## Agora and Anonymous Marketplaces
@@ -22,38 +26,6 @@ It's a stretch to say (and impossible to prove) that Agora's administrators were
 **_What do you want me to do?_** Be able to order from black markets with confidence.
 
 **_How do you want me to feel?_** Safe, assured, maybe _relaxed_. 
-
-## variables of interest
-
-1. **date**: date the page was created - as found in metadata.
-
-2. **vendor**: vendor's username - as pulled from html.
-
-3. **product**: product listing - usually containing:
-	* name (_Master Kush_, _Tramadol_, _Chanel Watch_)
-	* quantity (_100mg_, _1/4 oz_)
-	* 'selling points' e.g. _'Reagent tested'_, _'MOST POTENT'_, '_free shipping_'
-
-4. **price**: price in Bitcoin
-
-5. **usd**: price in US dollars
-
-6. **rate**: exhange rate of BTC-USD, for that date
-
-7. **cat**: product category, as extracted from html
-
-8. **subcat**: product subcategory, as extracted from html
-
-9. **subsubcat**: product sub-subcategory, as extracted from html
-
-10. **feedback** client feedback left for vendor 
-	* e.g. "_5/5, A+++ Vendor 2 days ago anon_"
-	* scale of 0-5 possible, as well as no feedback at all
-	* as extracted from html
-
-11. **from**: location product ships from
-
-12. **to**: location product ships to
 
 
 ## what's in the data?
@@ -90,6 +62,38 @@ _If that's the case, then why set a price cutoff above $1000?_
 Above $1000, there's a mix of 'placeholder' listings vendors will put up while they are out of stock - to maintain a presence on the market. The prices are deliberately set higher than is reasonable to discourage someone actually buying. But in addition, above $1000 there are 'legitimate' listings for products in higher ('intent-to-distribute') quantities.
 
 ![](plots/categorical/p5p-DrugLocation-01.jpg)
+
+## Variables of Interest
+
+1. **date**: date the page was created - as found in metadata.
+
+2. **vendor**: vendor's username - as pulled from html.
+
+3. **product**: product listing - usually containing:
+  * name (_Master Kush_, _Tramadol_, _Chanel Watch_)
+  * quantity (_100mg_, _1/4 oz_)
+  * 'selling points' e.g. _'Reagent tested'_, _'MOST POTENT'_, '_free shipping_'
+
+4. **price**: price in Bitcoin
+
+5. **usd**: price in US dollars
+
+6. **rate**: exhange rate of BTC-USD, for that date
+
+7. **cat**: product category, as extracted from html
+
+8. **subcat**: product subcategory, as extracted from html
+
+9. **subsubcat**: product sub-subcategory, as extracted from html
+
+10. **feedback** client feedback left for vendor 
+  * e.g. "_5/5, A+++ Vendor 2 days ago anon_"
+  * scale of 0-5 possible, as well as no feedback at all
+  * as extracted from html
+
+11. **from**: location product ships from
+
+12. **to**: location product ships to
 
 ## Feedback
 
