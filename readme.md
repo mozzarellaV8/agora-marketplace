@@ -14,6 +14,8 @@ _student work in R_ for [Foundations of Data Science](https://www.springboard.co
 - [the Data](#the-data)
 - [extraction notes](extraction/readme.md)
 - [extraction scripts](R/extraction)
+- [exploratory regression](#exploratory-regression) - *revise with Poisson models
+- [Works Cited](#works-cited)
 
 
 ## the Problem
@@ -28,13 +30,14 @@ _broadly speaking:_ Darknet markets are _in the dark_; anonymous marketplaces ar
 
 ## the Data
 
-Agora was a referral-based darknet market that rose to prominence after the demise of Silk Road 2 in 2013. 
+Agora was a referral-based darknet market, that rose to prominence after the demise of Silk Road 2 in 2014.
 
-The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Comprising this archive are weekly crawls of multiple anonymous marketplaces on the darknet - well-trafficked and documented sites such as Silk Road and Evolution in addition to smaller, more ephemeral markets.
+The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Comprising this archive are weekly crawls of multiple anonymous marketplaces on the darknet - well-trafficked and documented sites such as _Silk Road_ and _Evolution_ in addition to smaller, more ephemeral markets.
 
-For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, generally occurring weekly and occassionally more frequently.
+For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, generally occurring weekly, but sometimes more frequently.
 
 The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html, subsetted for listings that contained client feedback - potential indicator of a transaction.
+
 
 ![](vis/extractedSample02.png)
 
@@ -109,3 +112,12 @@ But maybe the best reason these plots are spurious is that ordinary least square
 	
 **_be back after the Poisson chapter ~_**
 
+## Works Cited
+
+- Gwern Branwen, Nicolas Christin, David Décary-Hétu, Rasmus Munksgaard Andersen, StExo, El Presidente, Anonymous, Daryl Lau, Sohhlz, Delyan Kratunov, Vince Cakic, Van Buskirk, & Whom. “Dark Net Market archives, 2011-2015”, 12 July 2015. Web. [May 2016](www.gwern.net/Black-market%20archives)
+
+- Demant, Munksgaard, & Houborg 2016, “Personal use, social supply or redistribution? cryptomarket demand on Silk Road 2 and Agora” [August 2016](http://www.gwern.net/docs/sr/2016-demant.pdf)
+
+- [“Darknet Market [Evolution] Basket Analysis”](http://ryancompton.net/2015/03/24/darknet-market-basket-analysis/), Ryan Compton
+
+- ["Sandy Pentland: Social Physics: How Good Ideas Spread"](https://youtu.be/HMBl0ttu-Ow) YouTube. Talks at Google, 2014. Web. 07 Sept. 2016.
