@@ -2,7 +2,7 @@ index.html, July 7th, 2015:
 
 ![2015-07-07-index](vis/index-2015-07-07.jpg)
 
-index.html, January 1st, 2014 (with notes)
+index.html, January 1st, 2014 (with notes for data extraction):
 
 ![](vis/index-2014-01-01.jpg)
 
@@ -18,12 +18,12 @@ _student work in R_ for [Foundations of Data Science](https://www.springboard.co
 
 ## the Problem
 
-_broadly speaking:_ Darknet markets are _in the dark_, anonymous marketplaces are _anonymous_. To shed light, basic questions:
+_broadly speaking:_ Darknet markets are _in the dark_; anonymous marketplaces are _anonymous_. To shed light, basic questions:
 
 - What's there? What could be there?
 - Where is it? Where from? Where will it be from?
-- How much is there? _How much could be there?_
-- How much does it cost? _How much could it cost?_
+- How much is there? **_How much could be there?_**
+- How much does it cost? **_How much could it cost?_**
 
 
 ## the Data
