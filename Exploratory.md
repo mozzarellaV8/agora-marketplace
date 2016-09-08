@@ -1,6 +1,6 @@
 # Exploratory...
 
-plots, domain writing, question refinement, & data analysis
+_...domain writing, question refinement, plots, & data analysis_
 
 - [Agora and Anonymous Marketplaces](#agora-and-anonymous-marketplaces)
 - [dj's questions](#djs-questions)
