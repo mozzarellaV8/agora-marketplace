@@ -80,13 +80,11 @@ summary(pm01)
 # Residual deviance:  100674  on 10  degrees of freedom
 ```
 
-The residual deviance is far greater than the degrees of freedom, which implies the mean != variance in this case. Is the data overdispersed? Currently, the difference between residual deviance and degrees of freedom is on the order of 10^4....something that does come to mind (which may be inaccurate), is the log of residual deviance.
+The residual deviance is far greater than the degrees of freedom, which implies the mean != variance in this case. Is the data overdispersed? Very likely. Currently, the difference between residual deviance and degrees of freedom is on the order of 10^4.
 
-``` {r}
-log(100674) #  11.51964
-```
-
-When taking the log of the residual deviance, we come away with 11.52 - a value much closer to the 10 degrees of freedom. However, taking this measure feels a bit like magical thinking. Moving on, how does a linear model look? 
+On an encouraging note - the null deviance is much greater than the residual deviance, so the model is having an effect.
+ 
+Moving on, how does a linear model look? 
 
 ``` {r}
 lm01 <- lm(count ~ month, data = mo)
