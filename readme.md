@@ -1,12 +1,12 @@
-# Agora Marketplace Analysis
-
-Agora Marketplace index page on July 7th, 2015:
+index.html, July 7th, 2015:
 
 ![2015-07-07-index](vis/index-2015-07-07.jpg)
 
-Agora Marketplace index page on January 1st, 2014 (printout with notes for extracting data from html)
+index.html, January 1st, 2014 (with notes)
 
 ![](vis/index-2014-01-01.jpg)
+
+# Agora Marketplace Analysis
 
 _student work in R_ for [Foundations of Data Science](https://www.springboard.com/workshops/data-science)
 
@@ -15,13 +15,6 @@ _student work in R_ for [Foundations of Data Science](https://www.springboard.co
 - [extraction notes](extraction/readme.md)
 - [extraction scripts](R/extraction)
 
-## Agora and anonymous marketplaces
-
-Agora was chosen as a market to analyze because of it's immense popularity and high usage. Additionally (and subjectively), the conditions of Agora's shutdown were unique to me in that the admins voluntarily shut it down after a [paper was published in August 2015](https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-kwon.pdf) that exposed vulnerabilities that could de-anonymize Tor users. 
-
-This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
-
-It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
 
 ## the Problem
 
