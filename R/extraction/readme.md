@@ -1,14 +1,27 @@
-# Agora - Directory/HTML structure
+# Agora Extraction
 
-What follows below are notes on the structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such).
+What follows below are notes on the directory and html page structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such). Quick look:
 
-To view the pages locally, I used `simpleHTTPServer` in Python. 
+![](img/agora-p-dir.png)
 
-Handwritten notes and images were a way to deal with the unstructured nature and scale of the data, and below are the directories from each day's harvest that would be relevant for analysis. 
+Data was originally crawled and compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
+To view the pages locally, I used `simpleHTTPServer` in Python.
+
+- [notes on scripts](#notes-on-scripts)
 - [relevant tags](#relevant-tags)
 - [directory structure](#directory-structure)
 - [crawl counts](#crawl-counts) - tables of page counts by crawl date.
+
+# Notes on Scripts
+
+Because of the large number of html files (~2.46 million product pages, ~20k vendor pages), it was difficult to aggregate them into a single or small group of folders. OS X/Finder was not generally happy moving things. Through trial-and-error, I found that having 10-20,000 files per folder was agreeable with Finder as well as R. 
+
+The scripts were written to extract by individual folder. Folders were initially divided by month. As the market grew, some months were broken up further into multiple folders. 
+
+While time-consuming, this process allowed for troubleshooting, picking out bad crawls, and noting broad trends and changes across the market (e.g. new categories being added, locations coming and going, vendor lifetimes).
+
+There is likely a better solution for this that requires less oversight; but given computational and time constraints it has worked so far. I need to explore control flow in R more.
 
 scripts:
 - [product page 01](extract-p.R)	- intial high-level extraction and cleansing
@@ -16,7 +29,6 @@ scripts:
 - [product page 03](extract-ssc.R)	- for adding sub-subcategories of products
 - [vendor page](extract-v.R)		- vendor pages, by month
 
-Data was originally crawled and compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
 # Relevant Tags
 
