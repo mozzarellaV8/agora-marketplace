@@ -7,25 +7,28 @@ library(tidyr)
 library(dplyr)
 library(data.table)
 
+# SET DIRECTORY -------------------------------------------
 getwd()
-pDir <- "~/GitHub/ag-Product/2015-03-03"
+pDir <- "~/GitHub/ag-Product/2015-04-02"
 setwd(pDir)
-p <- fread("/Users/pdpd/GitHub/ag-Product-Safety-2015/p0315.03-c1.csv", 
+
+# SET FILE NAME -------------------------------------------
+p <- fread("/Users/pdpd/GitHub/ag-Product-Safety-2015/p0415.02-c2.csv", 
            stringsAsFactors = F)
 p <- as.data.frame(p)
 
 # subset --------------------------------------------------
 levels(as.factor(p$cat))
-
 p$cat <- as.character(p$cat)
 p2 <- subset(p,  p$cat != "Listings" & p$cat != "Jewelry"
              & p$cat != "Electronics" & p$cat != "Other"
              & p$cat != "Chemicals")
 
-# extract -------------------------------------------------
+# initialize  ---------------------------------------------
 pList2 <- as.character(p2$list)
 subcat <- data.frame(stringsAsFactors = F)
 
+# extract -------------------------------------------------
 system.time(
   for (i in 1:length(pList2)) {
     pLog2 <- read_html(pList2[i])
@@ -40,8 +43,6 @@ system.time(
     subcat <- rbind(subcat, pTab2)
   })
 
-pList2[277] # AV4D9PmLX3 - 2015-03-03 - chemicals new category
-
 # bind ----------------------------------------------------
 bind <- dplyr::left_join(p, subcat, by = "list")
 is.na(bind$pTab2)
@@ -52,5 +53,7 @@ colnames(bind) <- c("list", "date", "vendor", "product", "price",
 
 p <- bind
 
-# CHECK FILE NAME ####################################################
-write.csv(p, file = "~/GitHub/ag-product-safety-2015/p-2015-03-03.csv", row.names = F)
+# SET FILE NAME ####################################################
+# SET FILE NAME ####################################################
+# SET FILE NAME ####################################################
+write.csv(p, file = "~/GitHub/ag-product-safety-2015/p-2015-04-02.csv", row.names = F)

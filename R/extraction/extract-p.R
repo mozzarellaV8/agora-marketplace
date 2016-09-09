@@ -13,13 +13,14 @@ library(dplyr)
 
 # CHECK THE DIRECTORY
 getwd()
-pDir <- "~/GitHub/ag-Product/2015-03-03"
+pDir <- "~/GitHub/ag-Product/2015-04-02"
 setwd(pDir)
 
-# 24811
+# intialize -------------------------------------------------------------------
 pList <- list.files(path = pDir, pattern = ".html", all.files = T, recursive = T)
 p <- data.frame()
 
+# extract ---------------------------------------------------------------------
 system.time(
   for (i in 1:length(pList)) {
     pLog <- read_html(pList[i])
@@ -57,19 +58,13 @@ system.time(
   }
 )
 
-# pList[8215]  # N6Rf86kh7z - 2015-02-14
-# pList[15831] # by3FNArKME - 2015-02-14
-# pList[17438] # kVPcCCi1F3 - 2015-02-14
-# pList[12971] # F5n4fc1XNr - 2015-03-02
-# pList[13877] # k32NPhzF1B - 2015-03-03
-# pList[19091] # UxxR1bU6xy - 2015-03-03
-# pList[20725] # XYvJbgrEnx - 2015-03-03
+# pList[4453]  # rWtdDAVCGK - 2015-04-01
 
-# CHECK THE FILENAME
-write.csv(p, file = "p-0315-03-raw.csv", row.names = F)
-p <- read.csv("p-0315-03-raw.csv")
+# SET THE FILENAME ####################################
+write.csv(p, file = "p-0415-02-raw.csv", row.names = F)
 
 # clean extracted data --------------------------------------------------------
+# p <- read.csv("p-0415-02-raw.csv")
 p <- p[c(8, 2, 1, 3, 4, 5, 6, 7)]
 colnames(p) <- c("list", "date", "vendor", "product", 
                         "price", "cat", "feedback", "shipping")
@@ -84,17 +79,18 @@ p$price <- as.double(p$price)
 
 # be patient
 p$feedback <- stripWhitespace(as.character(p$feedback))
-
-p$shipping <- as.character(p$shipping)
-p$shipping <- stripWhitespace(p$shipping)
-p$shipping[p$shipping == " "] <- "No Info"
-p$shipping[p$shipping == ""] <- "No Info"
+p$shipping <- stripWhitespace(as.character(p$shipping))
 
 # check separator before running
 p <- separate(p, shipping, c("from", "to"), sep = "To: ")
 p$from <- gsub("From:\\s", "", p$from)
 p$from <- gsub("^\\s", "", p$from)
 p$from <- gsub("\\s$", "", p$from)
+p$from[p$from == ""] <- "No Info"
+
+p$to[is.na(p$to) == T] <- "No Info"
+p$to <- gsub("\\s$", "", p$to)
+levels(as.factor(p$to))
 
 levels(as.factor(p$from))
 p$from <- gsub("^United\\sStates(.*)", "USA", p$from, ignore.case = T)
@@ -114,21 +110,18 @@ levels(as.factor(p$from))
 p$from <- gsub("^Untied(.*)", "UK", p$from, ignore.case = T)
 p$from <- gsub("^UK(.*)", "UK", p$from, ignore.case = T)
 p$from <- gsub("\\bUnited\\sKingdom\\b", "UK", p$from, ignore.case = T)
-
 p$from <- gsub("^China(.*)", "China", p$from, ignore.case = T)
 p$from <- gsub("^Germany(.*)", "Germany", p$from, ignore.case = T)
-
 p$from <- gsub("\\bWorld(.*)", "Worldwide", p$from, ignore.case = T)
 p$from <- gsub("\\bShipping\\b", "Worldwide", p$from, ignore.case = T)
-
 p$from <- gsub("^Unde(.*)", "Undeclared", p$from, ignore.case = T)
+p$from <- gsub("\\bEurope\\b", "EU", p$from, ignore.case = T)
 
 levels(as.factor(p$from))
 p$from <- gsub("^Agora(.*)", "Agora", p$from, ignore.case = T)
 p$from <- gsub("^my(.*)", "Internet", p$from, ignore.case = T)
 p$from <- gsub("^me(.*)", "Internet", p$from, ignore.case = T)
 p$from <- gsub("\\btorland\\b", "Torland", p$from, ignore.case = T)
-
 p$from <- gsub("\\bCheqdropz\\b", "Czech Republic", p$from, ignore.case = T)
 p$from <- gsub("Earth(.*)", "Earth", p$from, ignore.case = T)
 p$from <- gsub("\\bMother\\sEarth\\b", "Earth", p$from, ignore.case = T)
@@ -136,5 +129,7 @@ p$from <- gsub("\\bMother\\sEarth\\b", "Earth", p$from, ignore.case = T)
 levels(as.factor(p$from))
 levels(as.factor(p$to))
 
-# CHECK THE FILENAME
-write.csv(p, file = "p0315.03-c1.csv", row.names = F)
+# SET THE FILENAME ################################
+# SET THE FILENAME ################################
+# SET THE FILENAME ################################
+write.csv(p, file = "p0415.02-c1.csv", row.names = F)

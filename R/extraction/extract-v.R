@@ -12,18 +12,15 @@ library(magrittr)
 library(tm)
 library(tidyr)
 
-# extract vendor products via table, by month ---------------------------------
-
 ##########################
 # set vDir and write.csv for each separate folder, each extraction.
 ##########################
 
-##########################
-rm(list = ls())
-##########################
-
-vDir <- "~/GitHub/ag-Vendor/2014-08"
+getwd()
+vDir <- "~/GitHub/ag-Vendor/2014-12-d1"
 setwd(vDir)
+
+# extract vendor products via table, by month ---------------------------------
 
 vList <- list.files(path = vDir, pattern = ".html", all.files = T, recursive = T)
 v <- data.frame()
@@ -34,7 +31,7 @@ system.time(
     
     vTab <- log %>%
       html_nodes("table.products-list") %>%
-      html_table(header = T)
+      html_table(header = T, fill = T)
     
     vTab <- as.data.frame(vTab)
     vTab$date <- sub(" *\\__.*", "", vList[i])
@@ -57,13 +54,16 @@ system.time(
   }
 )
 
-# 2014-05 - vList[1815] 
-# 2014-06 - vList[834] # 2014-06-09__HellMaker 3.html
+nrow(v)/length(vList)
+
+# CHECK THE FILENAME ############################################################
+write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv", row.names = F)
+# v <- fread("~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv")
+# v <- as.data.frame(v)
+
+nrow(v)/length(vList) #  18.81415
 
 # clean extracted dataframe ---------------------------------------------------
-
-write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2014-08.csv", row.names = F)
-
 v$Var.1 <- NULL
 v <- v[c(5, 4, 6, 2, 7, 1, 8, 3)]
 colnames(v) <- c("list", "date", "vendor", "price", "product", "description", "feedback", "shipping")
@@ -75,20 +75,19 @@ v$feedback <- stripWhitespace(v$feedback)
 v$price <- gsub("\\sBTC", "", v$price)
 v$price <- as.double(v$price)
 
-v$shipping[v$shipping == ""] <- "NoInfo"
-v <- separate(v, shipping, into = c("from", "to"), sep = "\\r\\n")
+v <- separate(v, shipping, into = c("from", "to"), sep = "To:")
 levels(as.factor(v$from))
 levels(as.factor(v$to))
 
 v$to <- stripWhitespace(v$to)
-v$to[is.na(v$to)] <- "NoInfo"
-v$to <- gsub("\\bTo:\\s\\b", "", v$to)
+v$to[is.na(v$to)] <- "No Info"
 v$to <- gsub("^\\s", "", v$to)
 
 levels(as.factor(v$from))
-v$from <- gsub("^From:\\s\\s", "", v$from)
+v$from <- stripWhitespace(v$from)
+v$from <- gsub("\\s$", "", v$from)
 v$from <- gsub("^From:\\s", "", v$from)
-v$from <- gsub("^To:(.*)", "NoInfo", v$from)
+v$from[v$from == ""] <- "No Info"
 
 levels(as.factor(v$from))
 v$from <- gsub("^United\\sStates(.*)", "USA", v$from, ignore.case = T)
@@ -108,13 +107,11 @@ levels(as.factor(v$from))
 v$from <- gsub("^Untied(.*)", "UK", v$from, ignore.case = T)
 v$from <- gsub("^UK(.*)", "UK", v$from, ignore.case = T)
 v$from <- gsub("\\bUnited\\sKingdom\\b", "UK", v$from, ignore.case = T)
-
 v$from <- gsub("^China(.*)", "China", v$from, ignore.case = T)
 v$from <- gsub("^Germany(.*)", "Germany", v$from, ignore.case = T)
-
+v$from <- gsub("\\bMoldova,\\sRepublic\\sof", "Moldova", v$from, ignore.case = T)
 v$from <- gsub("\\bWorld(.*)", "Worldwide", v$from, ignore.case = T)
 v$from <- gsub("\\bShipping\\b", "Worldwide", v$from, ignore.case = T)
-
 v$from <- gsub("^Unde(.*)", "Undeclared", v$from, ignore.case = T)
 
 levels(as.factor(v$from))
@@ -122,16 +119,16 @@ v$from <- gsub("^Agora(.*)", "Agora", v$from, ignore.case = T)
 v$from <- gsub("^my(.*)", "Internet", v$from, ignore.case = T)
 v$from <- gsub("^me(.*)", "Internet", v$from, ignore.case = T)
 v$from <- gsub("\\btorland\\b", "Torland", v$from, ignore.case = T)
-
 v$from <- gsub("\\bCheqdropz\\b", "Czech Republic", v$from, ignore.case = T)
 v$from <- gsub("Earth(.*)", "Earth", v$from, ignore.case = T)
 v$from <- gsub("\\bMother\\sEarth\\b", "Earth", v$from, ignore.case = T)
 
 levels(as.factor(v$from))
 levels(as.factor(v$to))
-levels(as.factor(v$product))
 
 # v$from <- gsub("\\bTorland\\b", "Agora/Internet/Torland", v$from, ignore.case = T)
-write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2014-08.csv", row.names = F)
-test <- fread("~/GitHub/agora-data/03-vendor/v-2014-08.csv")
+
+# CHECK THE FILENAME ############################################################
+write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv", row.names = F)
+test <- fread("~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv")
 
