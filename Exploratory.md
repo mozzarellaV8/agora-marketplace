@@ -28,7 +28,7 @@ It's a stretch to say (and impossible to prove) that Agora's administrators were
 **_How do you want me to feel?_** Safe, assured, maybe _relaxed_. 
 
 
-## what's in the data?
+## What's in the data?
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
