@@ -1,6 +1,8 @@
 # Agora Extraction
 
-What follows below are notes on the directory and html page structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such). Quick look:
+What follows below are notes on the directory and html page structure of the harvest. For each day the market was crawled, there were all the elements of the webpage within that directory (e.g. `index.html`, `css` directory, `fonts` directory, and such). 
+
+A quick look at `2014-10-31/p`:
 
 ![](img/agora-p-dir.png)
 
