@@ -5,6 +5,10 @@
 # load and bind data ----------------------------------------------------------
 
 library(data.table)
+library(tm)
+library(qdap)
+library(dplyr)
+library(tidyr)
 
 vDir <- "~/GitHub/agora-data/03-vendor"
 setwd(vDir)
@@ -16,7 +20,7 @@ for(i in 1:length(vList)) {
   v14 <- rbind(v14, temp)
 }
 
-write.csv(v14, file = "~/GitHub/agora-data/v14-00.csv", row.names = F)
+write.csv(v14, file = "~/GitHub/agora-data/v14-01.csv", row.names = F)
 
 str(v14)
 # 'data.frame':	1134680 obs. of  7 variables:
@@ -29,32 +33,27 @@ str(v14)
 # $ to         : Factor w/ 1270 levels "Africa","Aus",..: 53 43 53 53 53 53 53 53 53 53 ...
 
 # cleanse some things ---------------------------------------------------------
+# v14 <- fread("~/GitHub/agora-data/v14-00.csv")
 
-library(tm)
-library(qdap)
-
-v14 <- fread("~/GitHub/agora-data/v14-00.csv")
-
-# locations - change NA to no info
-v14$from[is.na(v14$from) == T] <- "NoInfo"
-v14$to <- as.character(v14$to)
-v14$to[is.na(v14$to) == T] <- "NoInfo"
-
-which(is.na(v14$from) == T)
-which(is.na(v14$to) == T)
+# locations
+levels(as.factor(v14$to))
+levels(as.factor(v14$from))
 
 v14$from <- gsub("\\bBangkok\\b", "Thailand", v14$from)
-v14$from <- gsub("\\bMe\\b", "Internet", v14$from)
-levels(as.factor(v14$from)) # 58 clean levels
-levels(as.factor(v14$to)) # 696 messy levels
+v14$from <- gsub("\\bNoInfo\\b", "No Info", v14$from)
+v14$from <- gsub("\\bMoldova,\\sRepublic\\sof\\b", "Moldova", v14$from)
+v14$from <- gsub("\\bEuropean\\sUnion\\b", "EU", v14$from)
+v14$from <- gsub("\\bGerman\\b", "Germany", v14$from)
+v14$from <- gsub("^The\\sUnited\\sSnakes(.*)", "USA", v14$from)
 
-write.csv(v14, file = "~/GitHub/agora-data/v14-00b.csv", row.names = F)
+# v14$from <- gsub("\\bMe\\b", "Internet", v14$from)
+levels(as.factor(v14$from))   # 73 clean levels
+levels(as.factor(v14$to))     # 990 messy levels
+
+write.csv(v14, file = "~/GitHub/agora-data/v14-01b.csv", row.names = F)
 
 # add frequency of listings ---------------------------------------------------
-
-library(dplyr)
-
-v14 <- fread("~/GitHub/agora-data/v14-00b.csv")
+# v14 <- fread("~/GitHub/agora-data/v14-01b.csv")
 
 # get counts of vendor listings
 vendors <- as.data.frame(table(v14$vendor))
@@ -64,13 +63,16 @@ colnames(vendors) <-c("vendor", "NumListings")
 vendors <- vendors[order(vendors$NumListings, decreasing = T), ]
 rownames(vendors) <- NULL
 
+mean(vendors$NumListings) # 502.882
+
 # bind frequency to main frame
 v14 <- as.data.frame(v14)
 v14$vendor <- as.factor(v14$vendor)
 v14 <- dplyr::left_join(v14, vendors, by = "vendor")
 v14 <- v14[c(1, 2, 3, 10, 4, 5, 6, 8, 9, 7)]
 
-write.csv(v14, file = "~/GitHub/agora-data/v14-00c.csv", row.names = F)
+v14$fulldate <- v14$date
+v14 <- separate(v14, fulldate, into = c("year", "month", "day"), sepp  = "-")
+
+write.csv(v14, file = "~/GitHub/agora-data/v14-02.csv", row.names = F)
 # write.csv(vendors, file = "~/GitHub/agora-data/vendor-table-01.csv", row.names = F)
-
-
