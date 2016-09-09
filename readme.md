@@ -2,10 +2,6 @@ index.html, July 7th, 2015:
 
 ![2015-07-07-index](vis/index-2015-07-07.jpg)
 
-index.html, January 1st, 2014 (with notes for data extraction):
-
-![](vis/index-2014-01-01.jpg)
-
 # Agora Marketplace Analysis
 
 _student work in R_ for [Foundations of Data Science](https://www.springboard.com/workshops/data-science)
@@ -40,6 +36,10 @@ The scale of gwern's harvest prevents it from being posted here. Here is a glimp
 
 
 ![](vis/extractedSample02.png)
+
+index.html, January 1st, 2014 (with notes for data extraction):
+
+![](vis/index-2014-01-01.jpg)
 
 _*to download the data, please refer to gwern's black market archives link above. For me it took about about 1-2 hours to download; Agora is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the tar.gz extraction time - which I just left unarchiving overnight._
 
