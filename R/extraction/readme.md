@@ -10,6 +10,12 @@ Handwritten notes and images were a way to deal with the unstructured nature and
 - [directory structure](#directory-structure)
 - [crawl counts](#crawl-counts) - tables of page counts by crawl date.
 
+scripts:
+- [product page 01](extract-p.R)	- intial high-level extraction and cleansing
+- [product page 02](extract-sc.R) 	- for adding subcategories of products
+- [product page 03](extract-ssc.R)	- for adding sub-subcategories of products
+- [vendor page](extract-v.R)		- vendor pages, by month
+
 Data was originally crawled and compiled by indpendent researcher Gwern and is [available here](gwern.net/Black-market archives).
 
 # Relevant Tags
