@@ -50,11 +50,11 @@ total days | product listings | vendor pages  | start date |  end date
 
 Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
 
-While not definitive in it's conclusion, the purpose of this exploration was to explore the question
+While not definitive in it's conclusion, the idea was to explore the question
 
 - "What if Agora never shut down? What would the trend be?"
 
-We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
+We know Agora began operations sometime in 2013, and picked up steam in October 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. Later in late March 2015, another migration to Agora happened when competing market Evolution abruptly shut down in what turned out to be an [exit scam](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) with reported losses for vendors and users totalling $12M USD. 
 
 ``` r
 pv <- read.csv("data/counts/crawl-distribution.csv")
@@ -91,7 +91,7 @@ p.lm <- (product ~ date, data = pv)
 # 	Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
 ```
 
-For more than a few reasons, these models probably shouldn't be considered for drawing definitive conclusions. Many outside factors with the crawls and markets influence product and vendor listing counts - on top of whether or not I've extracted and compiled the data in a legitimate way (the code's all here of course, and I'm more than happy to receive suggestions for improvements).
+For more than a few reasons, these models probably shouldn't be considered for drawing definitive conclusions. Many outside factors with the crawls and markets influence product and vendor listing counts - on top of whether or not I've extracted and compiled the data in a legitimate way (the code's all here of course - I'm more than happy to receive suggestions for improvements).
 
 It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server, or pages would be incomplete. 
 
