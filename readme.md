@@ -28,12 +28,11 @@ _broadly speaking:_ Darknet markets are _in the dark_; anonymous marketplaces ar
 
 Agora was a referral-based darknet market, that rose to prominence after the demise of Silk Road 2 in 2014.
 
-The data was acquired via gwern's [black market archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Comprising this archive are weekly crawls of multiple anonymous marketplaces on the darknet - well-trafficked and documented sites such as _Silk Road_ and _Evolution_ in addition to smaller, more ephemeral markets.
+The data was acquired via the Gwern's [Black Market Archives](http://www.gwern.net/Black-market%20archives#grams); specifically from the torrent/magnet link. Comprising this archive are weekly crawls of multiple anonymous marketplaces on the darknet - well-trafficked and documented sites such as _Silk Road_ and _Evolution_ in addition to smaller, more ephemeral markets.
 
 For Agora specifically, the crawl dates begin on 2014-01-01 and end on 2015-07-07. There are 206 daily crawls total, generally occurring weekly, but sometimes more frequently.
 
-The scale of gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html, subsetted for listings that contained client feedback - potential indicator of a transaction.
-
+The scale of Gwern's harvest prevents it from being posted here. Here is a glimpse of the extraction from html. 
 
 ![](vis/extractedSample02.png)
 
@@ -41,23 +40,21 @@ index.html, January 1st, 2014 (with notes for data extraction):
 
 ![](vis/index-2014-01-01.jpg)
 
-_*to download the data, please refer to gwern's black market archives link above. For me it took about about 1-2 hours to download; Agora is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the tar.gz extraction time - which I just left unarchiving overnight._
+_*to download the data, please refer to the Black Market Archives link above. For me it took about about 1-2 hours to download - Agora alone is roughly 127 GB total. But each daily crawl contains many subfolders which adds to the extraction time. I ended up leaving the tarball to unarchive overnight; it was almost done when I woke up._
 
 ## Exploratory Regression
-
-Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
-
-While not definitive in it's conclusion, the purpose of this exploration was to explore the question
-	
-		"What if Agora never shut down? What would the trend be?"
-
-We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
 
 total days | product listings | vendor pages  | start date |  end date
 -----------| :--------------: | :------------:| :--------: | :--------:
 533		   |	2,467,200     |	   19,245     | 2014-01-01 | 2015-07-07
 
-Til I finish up with Poisson - just gonna violate some critical assumptions of linear regression:
+Before diving into extraction of the data, I took a look at counts of the crawls themselves to get a sense of the scale of the market. Each page in the `p` directory corresponds to a single product listing; each in the `vendor` directory corresponds to a vendor's 'storefront' page. 
+
+While not definitive in it's conclusion, the purpose of this exploration was to explore the question
+
+- "What if Agora never shut down? What would the trend be?"
+
+We know Agora began operations sometime in 2013, and picked up steam in 2014 after the downfall of Silk Road 2 - many buyers and vendors migrated over to Agora to continue business. 
 
 ``` r
 pv <- read.csv("data/counts/crawl-distribution.csv")
@@ -76,10 +73,10 @@ summary(pv)
 # Max.   :2015-07-07   Max.   :27654   Max.   :184.0 
 
 sum(pv$p)
-# [1] 2467200
+# 2467200
 
 sum(pv$vendor)
-# [1] 19245
+# 19245
 
 ```
 
@@ -94,25 +91,25 @@ p.lm <- (product ~ date, data = pv)
 # 	Multiple R-squared:  0.258,	Adjusted R-squared:  0.2543 
 ```
 
-Given the limited number of variables, these models probably shouldn't be considered for drawing definitive conclusions. In addition to that, there are many outside factors with the crawls and markets that can influence product and vendor listing counts. 
+For more than a few reasons, these models probably shouldn't be considered for drawing definitive conclusions. Many outside factors with the crawls and markets influence product and vendor listing counts - on top of whether or not I've extracted and compiled the data in a legitimate way (the code's all here of course, and I'm more than happy to receive suggestions for improvements).
 
-It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server. Gwern himself has made clear that it's best to consider his crawls a lower-bound for market activity. 
+It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server, or pages would be incomplete. 
 
-But maybe the best reason these plots are spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Violating a few assumptions here. 
+Beyond that, Gwern himself has made clear that it's best to consider his crawls a [lower-bound for market activity](http://www.gwern.net/Black-market%20archives#interpreting-analyzing). A count might be a simple-enough measure, but it's probably best to also keep in mind the amount of scam-listings and general deception that can occur on anonymous marketplaces. 
 
-![](plots/RDraft/pgDist-lm-vendor-01.png)
+But maybe one of the better reasons these plots are likely spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Maybe violating a few assumptions here. Just from looking at the plot, I can imagine a pretty large value on the residuals. 
 
-``` r
-# Coefficients:
-#                 Estimate   Std.Error  t value Pr(>|t|)    
-#   (Intercept) -1.505e+03   4.271e+02  -3.523 	0.000528 ***
-#   date         9.752e-02   2.604e-02   3.745 	0.000235 ***
-# 	Multiple R-squared:  0.06523,	Adjusted R-squared:  0.06058
-```
-	
+To do:
+
+- Poisson Regression
+- 3-point moving average for days without counts? 
+- Time Series decompostions
+
 **_be back after the Poisson chapter ~_**
 
 ## Works Cited
+
+_in progress_
 
 - Gwern Branwen, Nicolas Christin, David Décary-Hétu, Rasmus Munksgaard Andersen, StExo, El Presidente, Anonymous, Daryl Lau, Sohhlz, Delyan Kratunov, Vince Cakic, Van Buskirk, & Whom. “Dark Net Market archives, 2011-2015”, 12 July 2015. Web. [May 2016](www.gwern.net/Black-market%20archives)
 
@@ -120,4 +117,6 @@ But maybe the best reason these plots are spurious is that ordinary least square
 
 - [“Darknet Market [Evolution] Basket Analysis”](http://ryancompton.net/2015/03/24/darknet-market-basket-analysis/), Ryan Compton
 
-- ["Sandy Pentland: Social Physics: How Good Ideas Spread"](https://youtu.be/HMBl0ttu-Ow) YouTube. Talks at Google, 2014. Web. 07 Sept. 2016.
+- ["Social Physics: How Good Ideas Spread"](https://youtu.be/HMBl0ttu-Ow), Alex Pentland. YouTube. Talks at Google, 2014. Web. 07 Sept. 2016.
+
+- Buchanan, Mark. ["Wealth Happens"](https://hbr.org/2002/04/wealth-happens). hbr.org. Harvard Business Review, Apr. 2002. Web. May 2016.
