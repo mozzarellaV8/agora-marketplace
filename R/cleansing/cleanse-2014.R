@@ -54,7 +54,6 @@ summary(is.na(p14$subsubcat))
 518279/1018109 # 0.5090604 no sub-subcategory
 499830/1018109 # 0.4909396 have sub-subcategory
 
-
 # products ----------------------------
 # it's own script later~
 summary(as.factor(p14$product))
