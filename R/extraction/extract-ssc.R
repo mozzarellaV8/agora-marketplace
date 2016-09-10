@@ -9,11 +9,11 @@ library(data.table)
 
 # CHECK DIRECTORY
 getwd()
-pDir <- "~/GitHub/ag-Product/2015-04-02"
+pDir <- "~/GitHub/ag-Product/2015-04-03"
 setwd(pDir)
 
 # CHECK FILE NAME -----------------------------------------
-p <- fread("~/GitHub/ag-product-safety-2015/p-2015-04-02.csv", stringsAsFactors = F)
+p <- fread("~/GitHub/ag-product-safety-2015/p-2015-04-03.csv", stringsAsFactors = F)
 p <- as.data.frame(p)
 levels(as.factor(p$subcat))
 
@@ -48,7 +48,7 @@ system.time(
 
 # bind ----------------------------------------------------
 bind <- dplyr::left_join(p, subcat2, by = "list")
-bind  <- bind[c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
+bind <- bind[c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
 colnames(bind) <- c("list", "date", "vendor", "product", "price", 
                     "cat", "subcat", "subsubcat", "feedback", "from", "to")
 
@@ -57,7 +57,7 @@ p <- bind
 # SET FILE OUTPUT NAME #####################################
 # SET FILE OUTPUT NAME #####################################
 # SET FILE OUTPUT NAME #####################################
-write.csv(p, file = "products-2015-04-02.csv", row.names = F)
-test <- fread("products-2015-04-02.csv")
+write.csv(p, file = "products-2015-04-03.csv", row.names = F)
+test <- fread("products-2015-04-03.csv")
 levels(as.factor(test$subsubcat))
 

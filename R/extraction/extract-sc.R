@@ -9,11 +9,11 @@ library(data.table)
 
 # SET DIRECTORY -------------------------------------------
 getwd()
-pDir <- "~/GitHub/ag-Product/2015-04-02"
+pDir <- "~/GitHub/ag-Product/2015-04-03"
 setwd(pDir)
 
 # SET FILE NAME -------------------------------------------
-p <- fread("/Users/pdpd/GitHub/ag-Product-Safety-2015/p0415.02-c2.csv", 
+p <- fread("/Users/pdpd/GitHub/ag-Product-Safety-2015/p0415.03-c2.csv", 
            stringsAsFactors = F)
 p <- as.data.frame(p)
 
@@ -56,4 +56,4 @@ p <- bind
 # SET FILE NAME ####################################################
 # SET FILE NAME ####################################################
 # SET FILE NAME ####################################################
-write.csv(p, file = "~/GitHub/ag-product-safety-2015/p-2015-04-02.csv", row.names = F)
+write.csv(p, file = "~/GitHub/ag-product-safety-2015/p-2015-04-03.csv", row.names = F)

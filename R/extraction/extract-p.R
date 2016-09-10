@@ -13,7 +13,7 @@ library(dplyr)
 
 # CHECK THE DIRECTORY
 getwd()
-pDir <- "~/GitHub/ag-Product/2015-04-02"
+pDir <- "~/GitHub/ag-Product/2015-04-03"
 setwd(pDir)
 
 # intialize -------------------------------------------------------------------
@@ -58,13 +58,13 @@ system.time(
   }
 )
 
-# pList[4453]  # rWtdDAVCGK - 2015-04-01
+# pList[9216]  # ffWerhTyrt - 2015-04-03
 
 # SET THE FILENAME ####################################
-write.csv(p, file = "p-0415-02-raw.csv", row.names = F)
+write.csv(p, file = "p-0415-03-raw.csv", row.names = F)
 
 # clean extracted data --------------------------------------------------------
-# p <- read.csv("p-0415-02-raw.csv")
+# p <- read.csv("p-0415-03-raw.csv")
 p <- p[c(8, 2, 1, 3, 4, 5, 6, 7)]
 colnames(p) <- c("list", "date", "vendor", "product", 
                         "price", "cat", "feedback", "shipping")
@@ -116,6 +116,7 @@ p$from <- gsub("\\bWorld(.*)", "Worldwide", p$from, ignore.case = T)
 p$from <- gsub("\\bShipping\\b", "Worldwide", p$from, ignore.case = T)
 p$from <- gsub("^Unde(.*)", "Undeclared", p$from, ignore.case = T)
 p$from <- gsub("\\bEurope\\b", "EU", p$from, ignore.case = T)
+p$from <- gsub("\\bThe\\sNetherlands\\b", "Netherlands", p$from, ignore.case = T)
 
 levels(as.factor(p$from))
 p$from <- gsub("^Agora(.*)", "Agora", p$from, ignore.case = T)
@@ -132,4 +133,4 @@ levels(as.factor(p$to))
 # SET THE FILENAME ################################
 # SET THE FILENAME ################################
 # SET THE FILENAME ################################
-write.csv(p, file = "p0415.02-c1.csv", row.names = F)
+write.csv(p, file = "p0415.03-c1.csv", row.names = F)
