@@ -7,7 +7,7 @@ What follows are basic attempts at models to answer these questions.
 - ["How much is there?"](#how-much-is-there)
 - ["How much could there be?"](#how-much-could-there-be)
 
-## Poisson Distrubution
+## Poisson Distribution
 
 It's been noted that as `lambda` gets larger, the Poisson distribution begins to approximate the Normal. A quick look at this:
 
