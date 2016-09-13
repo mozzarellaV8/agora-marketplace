@@ -93,9 +93,9 @@ p.lm <- (product ~ date, data = pv)
 
 For more than a few reasons, these models probably shouldn't be considered for drawing definitive conclusions. Many outside factors with the crawls and markets influence product and vendor listing counts - on top of whether or not I've extracted and compiled the data in a legitimate way (the code's all here of course - I'm more than happy to receive suggestions for improvements).
 
-It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server, or pages would be incomplete. 
+It can't be assumed that every crawl represents a complete day's listings; the market itself would be down at seemingly random times to address server or security issues. Many pages (> 10,000) were removed during the extraction process because they were blank - too many requests had been made to the server, or pages would be incomplete.
 
-Beyond that, Gwern himself has made clear that it's best to consider his crawls a [lower-bound for market activity](http://www.gwern.net/Black-market%20archives#interpreting-analyzing). A count might be a simple-enough measure, but it's probably best to also keep in mind the amount of scam-listings and general deception that can occur on anonymous marketplaces. 
+Beyond that, Gwern himself has made clear that it's best to consider the crawls a [lower-bound for market activity](http://www.gwern.net/Black-market%20archives#interpreting-analyzing). A count might be a simple-enough measure, but it's probably best to also keep in mind the amount of scam-listings and general deception that can occur on anonymous marketplaces. 
 
 But maybe one of the better reasons these plots are likely spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Maybe violating a few assumptions here. Just from looking at the plot, I can imagine a pretty large value on the residuals; the intercept appears biased towards values near the origin.
 
