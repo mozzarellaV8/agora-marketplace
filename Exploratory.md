@@ -32,6 +32,7 @@ It's a stretch to say (and impossible to prove) that Agora's administrators were
 
 Exploratory Plots of Categories, going from high level to fine grain. As the list prices increase, there are less drugs on offer and less places they're coming from.
 
+![](http://pi.mozzarella.website/img/900x575-a1c2-01.svg)
 ![](plots/categorical/p3c-CategoryLocation-05.jpg)
 
 _Why set a price cutoff at $1000?_
