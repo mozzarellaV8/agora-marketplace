@@ -61,7 +61,7 @@ _If that's the case, then why set a price cutoff above $1000?_
 
 Above $1000, there's a mix of 'placeholder' listings vendors will put up while they are out of stock - to maintain a presence on the market. The prices are deliberately set higher than is reasonable to discourage someone actually buying. But in addition, above $1000 there are 'legitimate' listings for products in higher ('intent-to-distribute') quantities.
 
-![](plots/categorical/p5p-DrugLocation-01.jpg)
+![](http://pi.mozzarella.website/img/p5p-DrugLocation-01.jpg)
 
 ## Variables of Interest
 
