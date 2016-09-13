@@ -55,7 +55,7 @@ p4p + scale_fill_gradient2(low = "deepskyblue4", mid = "bisque1",
                            high = "firebrick3", midpoint = 500)
 ```                           
 
-![](http://pi.mozzarella.website/img/letter-a2p-08-V1.jpg)
+![](http://pi.mozzarella.website/img/p4p-DrugLocation-02.jpg)
 
 _If that's the case, then why set a price cutoff above $1000?_
 
