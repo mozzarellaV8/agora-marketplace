@@ -83,7 +83,7 @@ There is one drawback about the weekly count gathering - months were assumed to 
 
 Plot of observed weekly counts, with mean of counts and absolute differences bewtween mean and observed.
 
-![quasi/poissons](plots-01/1200px-ag-qpw-05.jpg)
+![quasi/poissons](plots-01/1200px-ag-qpw-06.jpg)
 
 Plot of observed values and values fitted from 3 different Poisson models. 
 

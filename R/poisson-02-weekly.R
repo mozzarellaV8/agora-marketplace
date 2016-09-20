@@ -124,13 +124,13 @@ sd(wk$count)                # 28824.39; 28824.39^2 = 830845394
 
 par(mfrow = c(1, 1), mar = c(6, 6, 6, 6), family = "GillSans", bty = "l", las = 1)
 
-plot(wk$week, wk$count, xlab = "", ylab = "", col = "#000000", pch = 19,
+plot(wk$week, wk$count, xlab = "", ylab = "", col = "#firebrick3", pch = 19,
      main  = "Agora • Weekly Observed Counts • Mean • Absolute Difference between Mean and Observed", 
      xlim = c(as.Date("2014-01-07"), as.Date("2015-06-28")),
      cex.main = 1.4, cex.axis = 1.2)
 
 points(wk$week, wk$count, col = "#000000", pch = 20, cex = 1.8)
-points(wk$week, wk.abs.dev, col = "firebrick3", pch = 8, cex = 1.8)
+points(wk$week, wk.abs.dev, col = "#000000", pch = 8, cex = 1.8)
 abline(a = wk.avg, b = 0, lty = 6, col = "gold2", lwd = 2)
 
 rug(wk$week, ticksize = 0.0085, side = 1, lwd = 1.5, 
@@ -294,25 +294,26 @@ qmf02$fitted.values <- exp(qmf02$.fitted)
 qmf02 <- qmf02[, c(1, 9, 6, 7, 2, 3, 4, 5)]
 
 # plot various fits and observed --------------------------
-par(mar = c(6, 6, 6, 6), bty = "n", las = 1, family = "GillSans")
+par(mar = c(6, 6, 6, 6), bty = "l", las = 1, family = "GillSans")
 
 plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
      main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values", 
-     xlim = c(as.Date("2014-01-07"), as.Date("2015-12-15")),
-     pch = 19, cex.main = 1.2, cex.axis = 1.1)
+     xlim = c(as.Date("2014-01-07"), as.Date("2015-08-01")),
+     pch = 19, cex.main = 1.1, cex.axis = 1.05)
 
 lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
-points(qmf03$week, qmf03$fitted.values, pch = 10, cex = 1.3,
-       col = "dodgerblue4")
+points(qmf03$week, qmf03$fitted.values, pch = 7, cex = 1.2,
+       col = "dodgerblue2")
 points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.3,
-       col = "cadetblue4")
+       col = "cadetblue2")
 points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.2,
        col = "cadetblue3")
 points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.1,
        col = "cadetblue2")
 points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1,
        col = "cadetblue1")
-lines(qmf02$week, qmf02$fitted.values, lty = 1, lwd = 3.6, col = "deepskyblue3")
+lines(qmf02$week, qmf02$fitted.values, lty = 1, lwd = 3.6, col = "deepskyblue4")
+
 rug(qmf02$week, ticksize = 0.01, side = 1, lwd = 2, col = "#000000")
 
 # So at what rate does the market grow (measured in listing counts)
