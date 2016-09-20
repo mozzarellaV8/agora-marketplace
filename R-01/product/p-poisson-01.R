@@ -7,6 +7,7 @@
 library(data.table)
 library(sandwich)
 library(ggplot2)
+agora <- fread("~/GitHub/agora-data/agora-01b.csv")
 p14 <- fread("~/GitHub/agora-data/ag14-01.csv", stringsAsFactors = T)
 mo <- read.csv("data/MonthlyCounts.csv")
 mo$month <- as.Date(mo$month)
