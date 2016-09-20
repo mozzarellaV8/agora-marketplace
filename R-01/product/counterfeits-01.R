@@ -127,7 +127,7 @@ levels(cf2$month)[levels(cf2$month) == "10"] <- "October"
 levels(cf2$month)[levels(cf2$month) == "11"] <- "November"
 levels(cf2$month)[levels(cf2$month) == "12"] <- "December"
 
-# facetted by month - growth
+# faceted by month - growth
 cp32 <- ggplot(cf2, aes(reorder_size(from), fill = reorder_size(subcat))) + 
   geom_bar(position = "dodge") +
   theme_minimal(base_size = 14, base_family = "FranklinGothicSSK") +

@@ -1,6 +1,6 @@
 # Agora Marketplace Analysis
-# Association Rules - 2014 Product Data
-# Cannabis Analysis - SubCategories
+# 2014 Product Data
+# Categories
 
 # load data -------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ summary(p14$usd)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 # 0         29         95      15890        332 2215000000
 
-# Densities: Price, Categories, Locations, Products ---------------------------
+# Price, Categories, Locations, Products --------------------------------------
 
 library(ggplot2)
 library(RColorBrewer)
@@ -26,50 +26,6 @@ library(extrafontdb)
 font_import()
 
 # plots -----------------------------------------------------------------------
-# flawed - original - complete plot
-p3 <- ggplot(p14, aes(subcat, from, fill = cat)) + geom_tile() + 
-  labs(title = "Agora 2014: Category / Subcategory :: Location", 
-       y = "", x = expression(subcat %subset% cat), fill = "category") +
-  theme(plot.title = element_text(family= "FranklinGothicSSK", 
-                                  face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
-                                   angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
-
-p3 + scale_fill_manual(values = c("red3", "#CDAD00", "#00688B", "#9AC0CD", 
-                                  "#FF7F00", "red2", "bisque3", "gray23",
-                                  "bisque2", "bisque1", "darkorange3", "darkorange4",
-                                  "firebrick4"))
-
-# remove eletronics and jewelry
-p14b <- subset(p14, p14$cat != "Electronics" & p14$cat != "Jewelry") # 10000591
-
-p3b <- ggplot(p14b, aes(subcat, from, fill = cat)) + geom_tile() + 
-  labs(title = "Agora 2014: Category / Subcategory :: Location", 
-       y = "", x = "", fill = "category") +
-  theme(plot.title = element_text(family= "FranklinGothicSSK", 
-                                  face = "bold", size = 14,
-                                  margin = margin(0, 0, 0, 0))) + 
-  theme(plot.margin = unit(c(2, 2, 1, 2.5), "cm")) +
-  theme(axis.text.x = element_text(family = "FranklinGothicSSK", size = 10.5,
-                                   angle = 45, hjust = 1)) +
-  theme(axis.text.y = element_text(family = "FranklinGothicSSK", size = 9))
-
-p3b + scale_fill_manual(values = c("red3", 
-                                  "bisque4", 
-                                  "#00688B", 
-                                  "#9AC0CD", 
-                                  "red1", 
-                                  "bisque1",
-                                  "black", 
-                                  "bisque3", 
-                                  "darkorange2", 
-                                  "darkorange4",
-                                  "firebrick4"))
-
-# plot that works -------------------------------------------------------------
 # clean some location levels: 'cheqdropz', 'earth planet'
 # remove listings too
 p14c <- subset(p14, p14$cat != "Electronics" & p14$cat != "Jewelry"

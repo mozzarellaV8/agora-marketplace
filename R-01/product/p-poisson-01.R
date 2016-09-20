@@ -7,9 +7,9 @@
 library(data.table)
 library(sandwich)
 library(ggplot2)
-p14 <- fread("~/GitHub/agora-data/ag07-2014.csv", stringsAsFactors = T)
+p14 <- fread("~/GitHub/agora-data/ag14-01.csv", stringsAsFactors = T)
 mo <- read.csv("data/MonthlyCounts.csv")
-
+mo$month <- as.Date(mo$month)
 
 # poisson distributions ------------------------------------------------------
 # remember as lambda get large, poisson approximates to normal
@@ -20,7 +20,6 @@ plot(0:20, dpois(0:20, lambda = 10), type = "h")
 plot(0:200, dpois(0:200, lambda = 100), type = "h")
 plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
 
-mean(mo$count)
 # crawl counts ----------------------------------------------------------------
 # "How much is there?"
 
@@ -74,6 +73,8 @@ mo <- read.csv("data/MonthlyCounts.csv")
 par(mfrow = c(1, 1), mar = c(8, 8, 8, 8), family = "HersheySans")
 plot(mo$month, mo$count, pch = 19, cex = 3.0, ylab = "", xlab = "",
      main = "Listing Count by Month", type = "h")
+
+mean(mo$count) # 84842.42
 
 # poisson model - monthly counts ----------------------------------------------
 
@@ -140,11 +141,9 @@ text(seq(mo$month[1], mo$month[12], length.out = 12), 0,
 # the plot looks reasonable - but what about the huge discrepancy
 # residual deviance and degrees of freedom? mean != variance, it would seem...
 # of by factor of 10,000 - 10^4...taking the log yields:
-
-log(100674) #  11.51964
-
+# log(100674) #  11.51964
 # now that is much closer to a mean = variance relationship.
-# but is this actually correct? 
+# but is this actually a correct measure? No. 
 
 pm01$residuals
 pm01$df.residual
@@ -178,10 +177,17 @@ points(pm01$fitted, col = "blue", pch = 6)
 
 # confidence intervals --------------------------------------------------------
 
-# results in error: if (!nonA[i]) next : argument is of length zero
-exp(confint(pm01, "date"))
+exp(confint(pm01, "month"))
+#    2.5 %   97.5 % 
+# 1.010840 1.010891
+# 1.1% and 1.1%
 
-# model agnostic via lecture/stack
+exp(confint(pm02, "month"))
+#    2.5 %   97.5 % 
+# 1.008347 1.013614
+# 0.8% and 1.36%
+
+# model agnostic via lecture/stack overflow
 confint.agnostic <- function (object, parm, level = 0.95, ...)
 {
     cf <- coef(object); pnames <- names(cf)
@@ -214,5 +220,13 @@ confint(pm01)
 # month2014-11-01 3.5206427 3.5651378   356%?
 # month2014-12-01 3.4601098 3.5046440   350% increase?
 
-confint.agnostic(pm01, "date")
+confint.agnostic(pm01, "month")
+#             2.5 %     97.5 %
+# month 0.008025378 0.01358811
+# result here is similar to CIs returned by quasipoisson model
+# 0.8% and 1.3%
 
+confint.agnostic(pm02, "month")
+#             2.5 %     97.5 %
+# month 0.008025378 0.01358811
+# 0.8% and 1.3%
