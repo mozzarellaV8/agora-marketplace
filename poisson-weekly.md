@@ -64,7 +64,7 @@ w14 <- w14[order(w14$mw, decreasing = F), ]
 rownames(w14) <- NULL
 ```
 
-I repeated this process for 2015 data, and then bound `w14` and `w15` together:
+I repeated this process for 2015 data, bound `w14` and `w15` together, and cleaned up the temp names from the loop for readability:
 
 ``` {R}
 weekly <- rbind(w14, w15)
@@ -72,6 +72,18 @@ weekly$mw <- gsub("\\bw1\\b", "07", weekly$mw)
 weekly$mw <- gsub("\\bw2\\b", "14", weekly$mw)
 weekly$mw <- gsub("\\bw3\\b", "21", weekly$mw)
 weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
+```
+```
+"week","count","wk,"month"
+"2014-01-07",1054,"w1","01"
+"2014-01-14",1495,"w2","01"
+"2014-01-21",2271,"w3","01"
+"2014-01-28",3166,"w4","01"
+"2014-02-07",7018,"w1","02"
+"2014-02-14",1012,"w2","02"
+"2014-02-21",717,"w3","02"
+"2014-02-28",18553,"w4","02"
+"2014-03-07",18519,"w1","03"
 ```
 
 # How much could there be?
