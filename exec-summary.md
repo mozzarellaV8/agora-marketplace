@@ -24,7 +24,9 @@ For exploratory purposes, **Association Rule Mining** can provide insight. This 
 
 To investigate questions of scale and make predictions, **Poisson Regression** and **ARIMA** models will be fit to count and time-series data, respectively. Poisson answers the question of scale. ARIMA satisfies a business-minded approach with price forecasting - to examine the most commonly listed items, and treat them as fictional commodities to see where they measure against those that are legally traded. 
 
-For example, a Cannabis index can be created, and measured against the price of Gold per ounce, barrel of crude oil, or gallon of milk. The question can then be asked: **_Which is the most sound investment?_**
+For example, a Cannabis index can be created, and measured against the price of Gold per ounce, barrel of crude oil, or gallon of milk. The question can then be asked: 
 
-For better or worse - if something can be expressed in business-terms, it seems that a bridge can be built to widespread acceptance; even legitimacy. Of course, this is conditional on the terms of business being **_profitable_**. 
+**_Which is the most sound investment?_**
+
+For better or worse - if something can be expressed in business-terms, it seems that a bridge can be built to widespread acceptance; even legitimacy. Of course, this is conditional on the terms of business being **_profitable_**. A negotiation of the tension between capitlist potential and societal policy...
 
