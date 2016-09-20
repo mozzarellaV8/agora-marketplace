@@ -10,7 +10,11 @@ Rather than treating Darknet Markets as problems that need to be solved - perhap
 
 ## Starting Points
 
-One of issues with darknet markets is that they're in the dark. Answering some basic questions might shed some light. **How large are these markets?** and, if left unchecked, **How large could they be?**
+One of issues with darknet markets is that they're in the dark. Answering some basic questions might shed some light.
+
+- **How large are these markets?** and, if left unchecked, 
+- **How large could they be?**
+- **What are the chances the market could double in size, and how long would that take?**
 
 While lying in the exploratory realm, many basic questions would still provide light:
 
@@ -20,9 +24,9 @@ While lying in the exploratory realm, many basic questions would still provide l
 
 ## A Solution
 
-For exploratory purposes, **Association Rule Mining** can provide insight. This technique is often used to discover novel combinations of products and is a vital compononent of collaborative filter and recommendation systems. This analysis seeks to treat Darknet Markets as a network, just as there are network components to ecommerce giants such as Amazon.com or eBay. 
+For exploratory purposes, **Association Rule Mining** can provide insight. This technique is often used to discover novel combinations of products and is a vital compononent of collaborative filter and recommendation systems. In this case association rules would be used to begin to visualize the network components of the data - with the mindset that e-commerce mainstays such as Amazon or eBay make extensive use of networked elements. 
 
-To investigate questions of scale and make predictions, **Poisson Regression** and **ARIMA** models will be fit to count and time-series data, respectively. Poisson answers the question of scale. ARIMA satisfies a business-minded approach with price forecasting - to examine the most commonly listed items, and treat them as fictional commodities to see where they measure against those that are legally traded. 
+To investigate questions of scale and make predictions, **Poisson Regression** and **ARIMA** models will be fit to count and time-series data, respectively. Poisson regression looks to answer the question of scale. ARIMA satisfies a business-minded approach with price forecasting - to examine the most commonly listed items, and treat them as fictional commodities to see where they measure against those that are legally traded. 
 
 For example, a Cannabis index can be created, and measured against the price of Gold per ounce, barrel of crude oil, or gallon of milk. The question can then be asked: 
 
