@@ -79,7 +79,7 @@ There is one drawback about the weekly count gathering - months were assumed to 
 
 # How much could there be?
 
-![observed](plots-01/ag-weekly-observed-02.jpeg)
+![observed](plots-01/1200px-ag-observed-01.jpeg)
 
 Plot of observed weekly counts, with mean of counts and absolute differences bewtween mean and observed.
 
