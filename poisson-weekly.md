@@ -32,21 +32,17 @@ This data represents the entirety of Agora raw data available. Altogether there 
 agora$day <- as.numeric(agora$day)
 agora$month <- as.numeric(agora$month)
 
-# loop over months and count rows - 2014 ------------------
-
-`lambda` <- data.frame()
+# loop over months and count rows - 2014 
+w14 <- data.frame()
 
 for (i in 1:12) {
   
   w1 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
                       agora$day <= 7))
-  
   w2 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
                       agora$day <= 14 & agora$day > 7))
-  
   w3 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
                       agora$day <= 21 & agora$day > 14))
-  
   w4 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
                       agora$day <= 31 & agora$day > 21))
   
