@@ -73,7 +73,7 @@ weekly$mw <- gsub("\\bw2\\b", "14", weekly$mw)
 weekly$mw <- gsub("\\bw3\\b", "21", weekly$mw)
 weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
 ```
-``` {csv}
+``` {weekly.csv}
 "week","count","wk,"month"
 "2014-01-07",1054,"w1","01"
 "2014-01-14",1495,"w2","01"
