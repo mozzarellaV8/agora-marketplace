@@ -6,7 +6,7 @@ _please excuse any mistakes_
 
 Anonymous Marketplaces exist as the result of many factors, perhaps none of which can be definitely pointed to as singular cause. Oppressive laws, attacks on freedom-of-speech, the Wars on Drugs, intellectual property in the digital era, privacy preservation, and distrust of prevailing financial models can all be feasible reasons why one might participate in darknet markets.
 
-Rather than treating Darknet Markets as problems that need to be solved - perhaps the nature of their existing beyond the law can be an opportunity to re-assess attitudes at a national and global scale. Given the rapidly evolving pace of technology and it's increasingly seamless integration with everyday life, Darknet Markets stand to provide unique insight into values and beliefs currently held in consensus. 
+Rather than treating Darknet Markets as problems that need to be solved - perhaps the nature of their existing beyond the law can be an opportunity to re-assess attitudes at a large scale. Given the rapidly evolving pace of technology and it's increasingly seamless integration with everyday life, Darknet Markets stand to provide unique insight into values and beliefs currently held in consensus. 
 
 ## Starting Points
 
@@ -22,7 +22,7 @@ While lying in the exploratory realm, many basic questions would still provide l
 - **How much** is for sale, and **for how much**?
 - How much **_could_** things cost, or be valued at?
 
-## A Solution
+## Solutions
 
 For exploratory purposes, **Association Rule Mining** can provide insight. This technique is often used to discover novel combinations of products and is a vital compononent of collaborative filter and recommendation systems. In this case association rules would be used to begin to visualize the network components of the data - with the mindset that e-commerce mainstays such as Amazon or eBay make extensive use of networked elements. 
 
