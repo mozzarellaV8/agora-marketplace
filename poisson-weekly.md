@@ -73,18 +73,9 @@ weekly$mw <- gsub("\\bw2\\b", "14", weekly$mw)
 weekly$mw <- gsub("\\bw3\\b", "21", weekly$mw)
 weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
 ```
-``` {weekly.csv}
-"week","count","wk,"month"
-"2014-01-07",1054,"w1","01"
-"2014-01-14",1495,"w2","01"
-"2014-01-21",2271,"w3","01"
-"2014-01-28",3166,"w4","01"
-"2014-02-07",7018,"w1","02"
-"2014-02-14",1012,"w2","02"
-"2014-02-21",717,"w3","02"
-"2014-02-28",18553,"w4","02"
-"2014-03-07",18519,"w1","03"
-```
+<script src="https://gist.github.com/mozzarellaV8/f9e4c568654826df4657bb3b0ff6c516.js"></script>
+
+There is one drawback about the weekly count gathering - months were assumed to have 4 weeks, which leads to only 48 weeks/year. 
 
 # How much could there be?
 
