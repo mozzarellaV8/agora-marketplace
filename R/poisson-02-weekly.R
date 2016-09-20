@@ -329,6 +329,16 @@ rug(qmf02$week, ticksize = 0.01, side = 1, lwd = 1, col = "deepskyblue4")
 # lines(qmf04$week, qmf04$fitted.values, lty = 1, lwd = 2, col = "deepskyblue3")
 # points(qmf02$week, qmf02$fitted.values, pch = 19, cex = 0.6, col = "deepskyblue3")
 
+# plot model ----------------------------------------------
+
+par(mfrow = c(2, 2))
+plot(qmf02)
+plot(qmf03)
+plot(qmf04)
+
+plot(qmw02)
+plot(qmw03)
+plot(qmw04)
 
 # Test NULL -----------------------------------------------
 
@@ -343,3 +353,9 @@ round(exp(confint.default(qmw02)), 5)
 # week        1.00526 1.00776
 
 # 0% change in mean, with 0.53% - 0.78% increase at 95% confidence interval.
+
+# write out models ----------------------------------------
+
+write.csv(qmf02, file = "data/poisson/qmf02.csv", row.names = F)
+write.csv(qmf03, file = "data/poisson/qmf03.csv", row.names = F)
+write.csv(qmf04, file = "data/poisson/qmf04.csv", row.names = F)
