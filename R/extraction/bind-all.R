@@ -31,5 +31,3 @@ agora$to <- stripWhitespace(as.character(agora$to))
 
 write.csv(agora, file = "~/GitHub/agora-data/agora-01.csv", row.names = F)
 agora <- fread("~/GitHub/agora-data/agora-01.csv", stringsAsFactors = T)
-
-
