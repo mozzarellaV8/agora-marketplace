@@ -11,6 +11,13 @@ I decided to try a Poisson Regression on weekly count data, after having a feeli
 
 A weekly interval seemed a good compromise. 
 
+- [Poisson Model 01](#poisson-model-01)
+- [Quasipoisson Model 02](#quasipoisson-model-02)
+- [Quasipoisson Model 03](#quasipoisson-model-03)
+- [Quasipoisson Model 04](#quasipoisson-model-04)
+- [Quasipoisson Model 05](#quasipoisson-model-05)
+
+
 # How much is there?
 
 ``` {r}
