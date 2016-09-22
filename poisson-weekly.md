@@ -16,6 +16,8 @@ A weekly interval seemed a good compromise.
 - [Quasipoisson Model 03](#quasipoisson-model-03)
 - [Quasipoisson Model 04](#quasipoisson-model-04)
 - [Quasipoisson Model 05](#quasipoisson-model-05)
+- [pre-SilkRoad2 shutdown](#pre-silkroad2-shut-down)
+- [post-SilkRoad2 shutdown](#post-silkroad2-shut-down)
 
 
 # How much is there?
@@ -279,6 +281,31 @@ As with (qmf04 - quasipoisson model 04), it appears the additional variable `mon
 Quasipoisson Model 02:
 
 ![qmf02 - fortified](plots-01/00-Poisson/1200px-qmf02-fortify.jpeg)
+
+# pre-SilkRoad2 shutdown
+
+Given the overdispersion issues in the quasi/poisson regression models on weekly count population, at the advice of my advisor I decided to investigate what appeared to be a divide in values from 2014 to 2015. Recalling that Silk Road 2 shut down in early October 2014, I started here.
+
+Why should this be significant? At any given time, several darknet markets may exist. But in practical terms, there generally have been only 2-4 major markets (high usage rate) at play simultaneously. Markets have a tendency to gain traction as usage goes up - trust is established, word of mouth and reliable feedback spread.
+
+It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports (cite: United States of America vs. Blake Benthall, deepdotweb media coverage).
+
+Imagining a global market - what if Amazon.com shut down within a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? What would Twitter or Instagram traffic look like if Facebook suddenly closed? 
+
+Not a perfect comparison with the SR2 shutdown scenario, but the point I'm trying to make is that if a major market suddenly disappeared, where would the commerce flow to and what effect would that have?
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
