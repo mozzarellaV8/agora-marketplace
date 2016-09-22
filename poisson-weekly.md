@@ -156,7 +156,7 @@ It appears that the data are just a touch underdispersed at 0.86. For now, I'll 
 
 In the third model, I tried adding `month` and `wk` as independent variables, while keeping the variance set to mu^2. The `wk` variable describes which week of a particular month a count was taken (e.g. 1st week of month, 3rd week of month). 
 
-Perhaps this points out of weakness in how I binned the counts to weeks. The total came out to 48 weeks per year rather than 52, because I assigned extracted counts based on an assumption of there being 4 weeks per month.
+Perhaps this points to a weakness in how I binned the counts to weeks. The total came out to 48 weeks per year rather than 52 - because I assigned extracted counts based on an assumption of there being 4 weeks per month.
 
 ``` {R}
 qmw03 <- glm(count ~ week + month + wk, data = wk,
@@ -187,6 +187,15 @@ summary(qmw03)
 # Residual deviance: 104.19  on 57  degrees of freedom
 # AIC: NA
 ```
+
+![qmw03](plots-01/00-Poisson/1200px-qmf03.jpeg)
+
+- red points: observed counts
+- blue points + line: quasipoisson fitted values
+- yellow line: linear regression fitted values (`lm(count~week)`)
+
+# Quasipoisson Model 04
+
 
 
 
