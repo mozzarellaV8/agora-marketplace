@@ -6,7 +6,9 @@
 
 library(data.table)
 library(sandwich)
-library(plsRglm)
+library(glmm)
+library(lme4)
+library(boot)
 library(caret)
 library(ggplot2)
 library(vcd)
@@ -14,8 +16,8 @@ library(vcd)
 agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 agora$date <- as.Date(agora$date)
 
-wk <- fread("data/WeeklyCountsPop.csv")
-wk$week <- as.Date(wk$week) 
+wk <- fread("data/WeeklyCountsFitted.csv")
+wk$week <- as.Date(wk$week)
 
 w14 <- fread("data/WeeklyCounts14.csv")
 w15 <- fread("data/WeeklyCounts15.csv")
@@ -110,6 +112,7 @@ summary(qmw02)
 #     Null deviance: 175.35  on 72  degrees of freedom
 # Residual deviance: 125.06  on 71  degrees of freedom
 # AIC: NA
+# Number of Fisher Scoring iterations: 13
 
 # witha mu^2 parameter added to the quasi poisson model, 
 # it appears the data are just a touch underdispersed at 0.86. 
@@ -161,6 +164,7 @@ summary(qmw04)
 #     Null deviance: 175.35  on 72  degrees of freedom
 # Residual deviance: 119.80  on 68  degrees of freedom
 # AIC: NA
+# Number of Fisher Scoring iterations: 17
 
 # Quasipoisson 05 -----------------------------------------
 qmw05 <- glm(count ~ week + month, data = wk,
@@ -188,7 +192,8 @@ summary(qmw05)
 # Residual deviance:  573847  on 60  degrees of freedom
 # AIC: NA
 
-# this goes back to overdispersion 
+# this goes back to overdispersion, but with much stronger effect
+# as observed in null vs. residual deviance
 
 # Linear Model comparison ---------------------------------
 
@@ -217,6 +222,85 @@ summary(lmw02)
 # Residual standard error: 21190 on 68 degrees of freedom
 # Multiple R-squared:  0.4897,	Adjusted R-squared:  0.4597 
 # F-statistic: 16.31 on 4 and 68 DF,  p-value: 0.000000002057
+
+
+# glmm01 ----------------------------------------------------------------------
+glmm.wk01 <- glmm(count ~ week, random = count ~ wk, varcomps.names = "wk", 
+                  data = wk, family.glmm = poisson.glmm, m = 1000)
+
+summary(glmm.wk01)
+# Fixed Effects:
+#                    Estimate    Std. Error z value            Pr(>|z|)    
+#   (Intercept) -57.575270848   0.076240612  -755.2 <0.0000000000000002 ***
+#   week          0.004144729   0.000004635   894.2 <0.0000000000000002 ***
+
+# Variance Components for Random Effects (P-values are one-tailed):
+#     Estimate Std. Error z value Pr(>|z|)/2  
+# wk  0.01800    0.01273   1.414     0.0787 .
+
+# glmm02 ----------------------------------------------------------------------
+glmm.wk02 <- glmm(count ~ wk, random = count ~ as.factor(week), varcomps.names = "week", 
+                  data = wk, family.glmm = poisson.glmm, m = 1000)
+
+summary(glmm.wk02)
+# Fixed Effects:
+#               Estimate  Std. Error z value           Pr(>|z|)    
+#   (Intercept) 7.010911   0.001289    5438 <0.0000000000000002 ***
+#   wkw2        1.208501   0.001891     639 <0.0000000000000002 ***
+#   wkw3        2.394269   0.001945    1231 <0.0000000000000002 ***
+#   wkw4        2.700672   0.001736    1555 <0.0000000000000002 ***
+
+# Variance Components for Random Effects (P-values are one-tailed):
+#       Estimate Std. Error z value Pr(>|z|)/2  
+# week    7.324      1.212   6.041 0.000000000765 ***
+
+# interesting.
+
+glmm.wk02$coefficients[-1, 3]
+
+
+glmm.wk02.est <- exp(glmm.wk02$beta)
+hist(glmm.wk02$x) # 0 or 1
+
+par(mfrow = c(1, 2), family = "GillSans")
+hist(glmm.wk02$y, breaks = 50) # looks like the counts.
+hist(wk$count, breaks = 50)
+
+
+# glmm03 ----------------------------------------------------------------------
+
+# set variance to be equal
+glmm.wk03 <- glmm(count ~ wk, random = count ~ as.factor(week), varcomps.names = "week", 
+                  varcomps.equal = 1, data = wk, family.glmm = poisson.glmm, m = 1000)
+
+summary(glmm.wk03)
+#   Fixed Effects:
+#                Estimate Std. Error z value            Pr(>|z|)    
+#   (Intercept) 7.006841   0.001389  5044.8 <0.0000000000000002 ***
+#   wkw2        1.210982   0.001927   628.5 <0.0000000000000002 ***
+#   wkw3        2.398926   0.002065  1162.0 <0.0000000000000002 ***
+#   wkw4        2.703032   0.001783  1516.3 <0.0000000000000002 ***
+
+# Variance Components for Random Effects (P-values are one-tailed):
+#      Estimate Std. Error z value    Pr(>|z|)/2    
+# week    7.401      1.225    6.04 0.00000000077 ***
+
+# glmm04 - lme4 ---------------------------------------------------------------
+
+glmm.wk04 <- glmer(count ~ wk + (1 | week), data = wk,
+                          family = poisson("log"))
+
+
+sjp.setTheme(theme = "forest")
+sjp.glmer(glmm.wk04, 
+          facet.grid = FALSE, 
+          sort = "sort.all")
+
+library(sjPlot)
+library(arm)
+sjp.glmer(glmm.wk04, type = "re.qq")
+sjp.glmer(glmm.wk04, type = "fe.cor")
+sjp.glmer(glmm.wk04, type = "re")
 
 # Fortify Model fits --------------------------------------
 
@@ -250,6 +334,58 @@ qmf05$fitted.values <- exp(qmf05$.fitted)
 qmf05 <- qmf05[, c(1, 10, 8, 9, 2, 3, 4, 5, 6, 7)]
 
 # plot various fits and observed --------------------------
+
+wk$lm.fitted <- lmf01$.fitted
+wk$qm02.fitted <- qmf02$fitted.values
+wk$qm03.fitted <- qmf03$fitted.values
+wk$qm04.fitted <- qmf04$fitted.values
+
+write.csv(wk, file = "data/WeeklyCountsFitted.csv", row.names = F)
+
+# gg
+qw01p <- ggplot(wk, aes(week, count)) + 
+  stat_smooth(colour = "gold3", se = F, size = 1, linetype = "dotdash", alpha = 1) +
+  geom_point(size = 3.5, colour = "firebrick3", shape = 19, alpha = 0.75) +  
+  geom_line(colour = "gold1", linetype = "dashed", size = 1,  aes(week, lm.fitted)) +  
+  geom_point(size = 2.75, colour = "deepskyblue3", shape = 2, aes(week, qm02.fitted)) +
+  geom_line(colour = "deepskyblue4", linetype = "solid", size = 1.25,  aes(week, qm02.fitted)) +
+  geom_point(size = 3.75, colour = "lightblue2", shape = 18, alpha = 0.75, aes(week, qm03.fitted)) +
+  geom_point(size = 1.75, colour = "deepskyblue1", shape = 15, aes(week, qm04.fitted)) +
+  geom_rug(aes(week), color = "firebrick3", sides = "l", size = 0.25, linetype = 1) +
+  scale_x_date(breaks = dates, labels = c("2014 - Jan", "Feb", "Mar", "Apr", "May", "June", 
+                                          "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+                                          "2015 - Jan", "Feb", "Mar", "Apr", 
+                                          "May", "June", "July"))
+
+qw01p + theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 11, angle = 45, hjust = 1, vjust=1)) +
+  theme(axis.text.y = element_text(size = 11)) +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
+  labs(title = substitute(
+    paste("QuasiPoisson (", sigma, "=", mu^2, "), Linear, and Loess Regressions on Listing Count ~ Date")), 
+    x = "", y = "", fill = "")
+
+# gg2 - plot different qp models individually
+qw02p <- ggplot(wk, aes(week, count)) + 
+  stat_smooth(colour = "gold3", se = F, size = 1, linetype = "dotdash", alpha = 1) +
+  geom_point(size = 3.5, colour = "firebrick3", shape = 19, alpha = 0.75) +  
+  geom_line(colour = "gold1", linetype = "dashed", size = 1,  aes(week, lm.fitted)) +  
+  geom_point(size = 2.75, colour = "deepskyblue4", shape = 15, aes(week, qm04.fitted)) +
+  geom_rug(aes(week), color = "firebrick3", sides = "l", size = 0.25, linetype = 1) +
+  scale_x_date(breaks = dates, labels = c("2014 - Jan", "Feb", "Mar", "Apr", "May", "June", 
+                                          "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+                                          "2015 - Jan", "Feb", "Mar", "Apr", 
+                                          "May", "June", "July"))
+
+qw02p + theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 11, angle = 45, hjust = 1, vjust=1)) +
+  theme(axis.text.y = element_text(size = 11)) +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
+  labs(title = substitute(
+    paste("QuasiPoisson (", sigma, "=", mu^2, "), Linear, and Loess Regressions on Listing Count ~ Date")), 
+    x = "", y = "", fill = "")
+
+# base:
 par(mar = c(6, 6, 6, 6), bty = "l", las = 1, family = "GillSans")
 
 # qmf02
@@ -300,6 +436,30 @@ points(qmf05$week, qmf05$fitted.values, pch = 18, cex = 0.8, col = "steelblue4")
 
 # So at what rate does the market grow (measured in listing counts)
 # if left unchecked?
+
+# ggplot fitted v. observed ---------------------------------------------------
+
+dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month")
+
+qw01p <- ggplot(wk, aes(date, count)) + 
+  stat_smooth(colour = "gold4", se = F, size = 1, linetype = "dotdash", alpha = 0.75) +
+  geom_point(size = 1.5, colour = "firebrick3", shape = 20) + 
+  geom_point(size = 1.5, colour = "firebrick3", shape = 1) +  
+  geom_line(colour = "gold2", linetype = "dashed", size = 1,  aes(date, lm.fitted)) +  
+  geom_point(size = 1.5, colour = "deepskyblue3", shape = 5, aes(date, qm01.fitted)) +
+  geom_line(colour = "deepskyblue3", linetype = "solid", size = 2,  aes(date, qm01.fitted)) +
+  scale_x_date(breaks = dates, labels = c("2014 - Jan", "Feb", "Mar", "Apr", "May", "June", 
+                                          "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+                                          "2015 - Jan", "Feb", "Mar", "Apr", 
+                                          "May", "June", "July"))
+
+qw01p + theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 11, angle = 35, hjust = 1)) +
+  theme(axis.text.y = element_text(size = 11)) +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
+  labs(title = substitute(
+    paste("QuasiPoisson (", sigma, "=", mu^2, "), Linear, and Loess Regressions on Listing Count ~ Date")), 
+    x = "", y = "", fill = "")
 
 # plot model ----------------------------------------------
 
@@ -391,19 +551,3 @@ r.est
 #             Estimate Robust SE Pr(>|z|)        LL       UL
 # (Intercept) -96.0232    9.9336        0 -115.4931 -76.5533
 # week          0.0065    0.0006        0    0.0053   0.0077
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

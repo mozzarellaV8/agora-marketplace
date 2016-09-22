@@ -34,7 +34,7 @@ plot(0:1000, dpois(0:01000, lambda = 500), type = "h")
 
 # Daily counts ----------------------------------------------------------------
 
-# daily counts of 
+# daily counts of product listings
 daily <- as.data.frame(table(agora$date))
 colnames(daily) <- c("date", "count")
 daily$date <- as.Date(daily$date)
@@ -64,17 +64,23 @@ summary(p365$count)
 dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month")
 
 p365.01 <- ggplot(p365, aes(date, count)) + 
-  geom_point(size = 3.75, shape = 17, aes(color = count)) +
-  scale_x_date(breaks = dates) +
-  theme_minimal(base_size = 14, base_family = "GillSans") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  geom_point(size = 3, shape = 20, aes(color = count)) +
+  theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1, vjust = 1)) +
+  theme(axis.text.y = element_text(size = 12)) +
   theme(axis.title.y = element_text(family = "Times", face = "italic", size = 14, 
                                     margin = margin(0, 20, 0, 0))) +
-  theme(plot.margin = unit(c(2, 2, 2, 2), "cm")) +
+  theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")) +
   labs(title = "Agora: Number of Products by Date (5 day moving average)", 
-       x = "", y = "number of product pages", color = "product\ncount")
+       x = "", y = "number of product pages", color = "page count")
 
-p365.01
+p365.01 + scale_x_date(breaks = dates, labels = c("Jan 2014", "Feb 2014", "Mar 2014",
+                                                  "Apr 2014", "May 2014", "June 2014",
+                                                  "July 2014", "Aug 2014", "Sept 2014",
+                                                  "Oct 2014", "Nov 2014", "Dec 2014",
+                                                  "Jan 2015", "Feb 2015", "Mar 2015",
+                                                  "Apr 2015", "May 2015", "June 2015",
+                                                  "July 2015"))
 
 # Poisson Model - Daily -------------------------------------------------------
 
@@ -93,73 +99,92 @@ summary(pm01)
 # effects have been observed in the past. Is the 5 day moving average
 # flattening things out too much? 
 
-pm01q <- glm(count ~ date, family = quasipoisson(link = "log"), data = p365)
-summary(pm01q) # same values as Poisson
+qm01 <- glm(count ~ date, family = quasi(link = "log", variance = "mu^2"), data = p365)
+summary(qm01) # same values as Poisson
+
+#                  Estimate  Std. Error t value             Pr(>|t|)    
+#   (Intercept) -22.2917276   3.5256951  -6.323       0.000000000532 ***
+#   date          0.0018952   0.0002157   8.788 < 0.0000000000000002 ***
+#
+# (Dispersion parameter for quasi family taken to be 0.6554879)
+#
+#     Null deviance: 621.99  on 552  degrees of freedom
+# Residual deviance: 581.21  on 551  degrees of freedom
+# AIC: NA
 
 # rolling mean ~ date
-pm02 <- glm(rmean ~ date, family = poisson(link = "log"), data = p365)
-summary(pm02)
+qm02 <- glm(rmean ~ date, family = quasi(link = "log", variance = "mu^2"), data = p365)
+summary(qm02)
+#                 Estimate Std. Error t value             Pr(>|t|)    
+#   (Intercept) -21.978405   2.811012  -7.819   0.0000000000000276 ***
+#   date          0.001876   0.000172  10.912 < 0.0000000000000002 ***
 
-pm02q <- glm(rmean ~ date, family = "quasipoisson", data = p365)
-summary(pm02q)
-#     Null deviance: 1423407  on 548  degrees of freedom
-# Residual deviance: 1228777  on 547  degrees of freedom
+# (Dispersion parameter for quasi family taken to be 0.4077019)
+
+#     Null deviance: 355.53  on 548  degrees of freedom
+# Residual deviance: 316.25  on 547  degrees of freedom
 # (4 observations deleted due to missingness)
-# AIC: 1234404
-
+# AIC: NA
 
 # linear model ------------------------
-lm01 <- lm(count ~ date, data = p365)
-summary(lm01)
+lm.daily01 <- lm(count ~ date, data = p365)
+summary(lm.daily01)
+# Adjusted R-squared:  0.09145 
+# whoooo pretty low.
 
+sqrt(0.09145 ) # 0.3051229
+# sse.lm.daily01 <- sqrt(sum(lm.daily01$residuals^2)) # 109448.5
+# mse.lm.daily01 <- mean(residuals(lm.daily01)^2)     # 
+# rmse.lm.daily01 <- sqrt(mse.lm.daily01)             # 
+# rss.lm.daily01 <- sum(residuals(lm.daily01)^2)      # 
+# rse.lm.daily01 <- sqrt(sum(residuals(lm.daily01)^2) / lm.daily01$df.residual) # 
 
-sqrt(0.0931) # 0.3051229
-sse.lm01 <- sqrt(sum(lm01$residuals^2)) # 109448.5
-mse.lm01 <- mean(residuals(lm01)^2)     # 
-rmse.lm01 <- sqrt(mse.lm01)             # 
-rss.lm01 <- sum(residuals(lm01)^2)      # 
-rse.lm01 <- sqrt(sum(residuals(lm01)^2) / lm01$df.residual) # 
+# fortify models --------------------------------------------------------------
+qm01f <- fortify(qm01)
+qm01f$fitted.values <- exp(qm01f$.fitted)
 
-# add fitted values to dataframe
-p365$pm01.fitted <- pm01$fitted.values
-p365$pm02.fitted <- pm02$fitted.values
-p365$lm.fitted <- lm01$fitted.values
+qm02f <- fortify(qm02)
+qm02f$fitted.values <- exp(qm02f$.fitted)
 
-# fortify on pm02
-head(fortify(pm01))
-pm01f <- fortify(pm01)
-pm02f <- fortify(pm02)
+lm.daily01.f <- fortify(lm.da)
 
+# for ggplot2
+p365$lm.fitted <- lm.daily01$fitted.values
+p365$qm01.fitted <- qm01$fitted.values
 
-
-pm01.p01 <- ggplot(pm01f, aes(date, .fitted)) + geom_point()
-pm01.p01
-# linear - interesting. .fitted values already exponentiated? 
-# add fortify into the existing model
-
-plot(p365$date, pm01$fitted.values, ylim = c(0, 25000))
+# first two missing values
+# p365$qm02.fitted <- qm02$fitted.values
 
 # plot fitted vs. observed ----------------------------------------------------
 
-pm01p <- ggplot(p365, aes(date, count)) + 
-  stat_smooth(colour = "gold3", se = F, size = 1, linetype = "dotdash") +
-  geom_point(size = 1.5, colour = "firebrick3", shape = 20) + 
-  geom_point(size = 0, colour = "firebrick4", shape = 1) +  
-  geom_line(colour = "gray23", linetype = "dashed", size = 1,
-            aes(date, lm.fitted)) +  
-  geom_point(size = 0, colour = "deepskyblue3", shape = 17, 
-             aes(date, pm01.fitted)) +
-  geom_line(colour = "deepskyblue4", linetype = "solid", size = 2,
-            aes(date, pm01.fitted)) +     # poisson
-  scale_x_date(breaks = dates, labels = c("2014 - Jan", "February", "March",
-                                          "April", "May", "June", "July", "August",
-                                          "September", "October", "November", "December",
-                                          "2015 - Jan", "February", "March", "April",
+# quick look: fitted
+qm01.p01 <- ggplot(qm01f, aes(date, fitted.values)) + 
+  geom_point(aes(date, count)) +
+  geom_line(aes(date, fitted.values))
+
+qm01.p01
+
+# quick look: base
+plot(p365$date, qm01$fitted.values, ylim = c(0, 22500))
+points(p365$date, p365$count, pch = 20, col = "firebrick3")
+
+
+qm01p <- ggplot(p365, aes(date, count)) + 
+  stat_smooth(colour = "gold4", se = F, size = 1, linetype = "dotdash", alpha = 0.75) +
+  geom_point(size = 2, colour = "firebrick3", shape = 19, alpha = 0.75) +  
+  geom_line(colour = "gold2", linetype = "dashed", size = 1,  aes(date, lm.fitted)) +  
+  geom_point(size = 2.75, colour = "deepskyblue3", shape = 2, aes(date, qm01.fitted)) +
+  geom_line(colour = "deepskyblue4", linetype = "solid", size = 1.25,  aes(date, qm01.fitted)) +
+  geom_rug(aes(date), sides = "bl", size = 0.15, linetype = 1) +
+  scale_x_date(breaks = dates, labels = c("2014 - Jan", "Feb", "Mar", "Apr", "May", "June", 
+                                          "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+                                          "2015 - Jan", "Feb", "Mar", "Apr", 
                                           "May", "June", "July"))
 
-pm01p + theme_minimal(base_size = 14, base_family = "GillSans") +
-  theme(axis.text.x = element_text(angle = 35, size = 12, hjust = 1)) +
-  theme(plot.margin = unit(c(1.25, 1.25, 0.10, 1.25), "cm")) +
-  labs(title = "Poisson, Linear, and Loess Regressions on Listing Count ~ Date", 
+qm01p + theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 11, angle = 45, hjust = 1, vjust=1)) +
+  theme(axis.text.y = element_text(size = 11)) +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
+  labs(title = substitute(
+    paste("QuasiPoisson (", sigma, "=", mu^2, "), Linear, and Loess Regressions on Listing Count ~ Date")), 
        x = "", y = "", fill = "")
-
