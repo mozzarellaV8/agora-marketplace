@@ -191,15 +191,40 @@ summary(qmw03)
 ![qmw03](plots-01/00-Poisson/1200px-qmf03.jpeg)
 
 - red points: observed counts
+- yellow line: linear regression fitted values 
 - blue points + line: quasipoisson fitted values
-- yellow line: linear regression fitted values (`lm(count~week)`)
+
 
 # Quasipoisson Model 04
 
+I found this model to also be potentially interesting - the main update being removing the `month` variable from (qmw03-model 03) and again maintaining `variance = "mu^2"`. 
 
+``` {R}
+qmw04 <- glm(count ~ week + wk, data = wk,
+             family = quasi(link = "log", variance = "mu^2"))
 
+summary(qmw04)
+#                   Estimate   Std. Error t value             Pr(>|t|) 
+#   (Intercept) -103.2768372   10.2482057 -10.078  0.00000000000000398 ***
+#   week           0.0069363    0.0006267  11.068 < 0.0000000000000002 ***
+#   wkw2          -0.5252828    0.2819037  -1.863               0.0667 .  
+#   wkw3          -0.2534276    0.2818581  -0.899               0.3718    
+#   wkw4           0.2231234    0.2818809   0.792               0.4314 
+#
+# (Dispersion parameter for quasi family taken to be 0.7343154)
+#
+#     Null deviance: 175.35  on 72  degrees of freedom
+# Residual deviance: 119.80  on 68  degrees of freedom
+# AIC: NA
+```
 
+Examining the plot, it appears that the `wk` variable exerts an influence - fitted values seem to take on noticeable intervals.
 
+![qmw04](plots-01/00-Poisson/1200px-qmf04.jpeg)
+
+- red points: observed counts
+- yellow line: linear regression fitted values 
+- blue points + line: quasipoisson fitted values
 
 
 
