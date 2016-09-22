@@ -220,7 +220,7 @@ summary(qmw04)
 
 Examining the plot, it appears that the `wk` variable exerts an influence - fitted values seem to take on noticeable intervals.
 
-![qmw04](plots-01/00-Poisson/1200px-qmf04.jpeg)
+![qmw04](plots-01/00-Poisson/1200px-qmw04.jpeg)
 
 - red points: observed counts
 - yellow line: linear regression fitted values 
