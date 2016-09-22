@@ -292,7 +292,7 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 Imagining a global market - what if Amazon.com shut down within a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? What would Twitter or Instagram traffic look like if Facebook suddenly closed? 
 
-Not a perfect comparison with the SR2 shutdown scenario, but the point I'm trying to make is that if a major market suddenly disappeared, where would the commerce flow to and what effect would that have?
+Not a perfect comparison with the SR2 shutdown scenario, but the point I'm trying to make is that if a major resource suddenly disappeared, where would the traffic flow to and what effect would that have?
 
 
 

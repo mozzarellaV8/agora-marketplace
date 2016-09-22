@@ -5,13 +5,16 @@
 # load data -------------------------------------------------------------------
 
 library(data.table)
+library(ggplot2)
+library(vcd)
+library(extrafont)
+library(extrafontdb)
+
 library(sandwich)
 library(glmm)
 library(lme4)
 library(boot)
 library(caret)
-library(ggplot2)
-library(vcd)
 
 agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 agora$date <- as.Date(agora$date)
@@ -19,17 +22,19 @@ agora$date <- as.Date(agora$date)
 wk <- fread("data/WeeklyCountsFitted.csv")
 wk$week <- as.Date(wk$week)
 
-w14 <- fread("data/WeeklyCounts14.csv")
-w15 <- fread("data/WeeklyCounts15.csv")
-
-mo <- fread("data/MonthlyAll.csv")
+# w14 <- fread("data/WeeklyCounts14.csv")
+# w15 <- fread("data/WeeklyCounts15.csv")
+# mo <- fread("data/MonthlyAll.csv")
 
 # split B/A -------------------------------------------------------------------
 
+# split is determined by Silk Road 2 (SR2) shut down date - 
+# an interval loosely defined between 2014-09-25 - 2014-10-10
 weekly01 <- wk[1:36, ]
 weekly02 <- wk[37:73, ]
 weekly03 <- wk[33:73, ]
 
+# date sequences for plot labels
 dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month")
 dates01 <- seq(as.Date("2014-01-01"), as.Date("2014-10-01"), by = "month")
 dates02 <- seq(as.Date("2014-10-01"), as.Date("2015-07-01"), by = "month")
