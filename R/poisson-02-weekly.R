@@ -164,7 +164,7 @@ summary(qmw04)
 
 # Quasipoisson 05 -----------------------------------------
 qmw05 <- glm(count ~ week + month, data = wk,
-             family = quasipoisson(link = "log"))
+             family = quasipoisson(link = "log", variance = "mu^2"))
 
 summary(qmw05)
 #                  Estimate  Std. Error t value        Pr(>|t|)    
@@ -275,10 +275,10 @@ plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
 
 lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
 lines(qmf04$week, qmf04$fitted.values, lty = 1, lwd = 2, col = "cadetblue4")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.3, col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.2, col = "cadetblue3")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.1, col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1, col = "cadetblue1")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.3, col = "cadetblue2")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.2, col = "cadetblue3")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.1, col = "cadetblue2")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1, col = "cadetblue1")
 
 
 # rug(qmf02$week, ticksize = -0.01, side = 1, lwd = 2, col = "#000000")
