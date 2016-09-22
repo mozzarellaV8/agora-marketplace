@@ -164,7 +164,7 @@ summary(qmw04)
 
 # Quasipoisson 05 -----------------------------------------
 qmw05 <- glm(count ~ week + month, data = wk,
-             family = quasipoisson(link = "log", variance = "mu^2"))
+             family = quasipoisson(link = "log"))
 
 summary(qmw05)
 #                  Estimate  Std. Error t value        Pr(>|t|)    
@@ -187,6 +187,7 @@ summary(qmw05)
 #     Null deviance: 2106049  on 72  degrees of freedom
 # Residual deviance:  573847  on 60  degrees of freedom
 # AIC: NA
+
 # this goes back to overdispersion 
 
 # Linear Model comparison ---------------------------------
@@ -243,6 +244,10 @@ qmf03 <- fortify(qmw03)
 qmf03$fitted.values <- exp(qmf03$.fitted)
 qmf03 <- qmf03[, c(1, 11, 8, 9, 2, 3, 4, 5, 6, 7, 10)]
 
+# qmf05
+qmf05 <- fortify(qmw05)
+qmf05$fitted.values <- exp(qmf05$.fitted)
+qmf05 <- qmf05[, c(1, 10, 8, 9, 2, 3, 4, 5, 6, 7)]
 
 # plot various fits and observed --------------------------
 par(mar = c(6, 6, 6, 6), bty = "l", las = 1, family = "GillSans")
@@ -274,11 +279,21 @@ plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
      pch = 19, cex.main = 1.1, cex.axis = 1)
 
 lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
-lines(qmf04$week, qmf04$fitted.values, lty = 1, lwd = 2, col = "cadetblue4")
-points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.3, col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.2, col = "cadetblue3")
-points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.1, col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1, col = "cadetblue1")
+lines(qmf04$week, qmf04$fitted.values, lty = 3, lwd = 1.4, col = "cadetblue4")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 1.4, col = "cadetblue3")
+points(qmf04$week, qmf04$fitted.values, pch = 18, cex = 0.8, col = "cadetblue4")
+
+
+# qmf05
+plot(qmf05$week, qmf05$count, xlab = "", ylab = "", col = "firebrick3",
+     main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values",
+     xlim = c(as.Date("2014-01-07"), as.Date("2015-08-01")),
+     pch = 19, cex.main = 1.1, cex.axis = 1)
+
+lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
+lines(qmf05$week, qmf05$fitted.values, lty = 3, lwd = 1.2, col = "steelblue2")
+points(qmf05$week, qmf05$fitted.values, pch = 18, cex = 1.4, col = "steelblue3")
+points(qmf05$week, qmf05$fitted.values, pch = 18, cex = 0.8, col = "steelblue4")
 
 
 # rug(qmf02$week, ticksize = -0.01, side = 1, lwd = 2, col = "#000000")

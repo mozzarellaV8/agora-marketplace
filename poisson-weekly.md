@@ -218,13 +218,65 @@ summary(qmw04)
 # AIC: NA
 ```
 
-Examining the plot, it appears that the `wk` variable exerts an influence - fitted values seem to take on noticeable intervals.
-
 ![qmw04](plots-01/00-Poisson/1200px-qmw04.jpeg)
 
 - red points: observed counts
 - yellow line: linear regression fitted values 
 - blue points + line: quasipoisson fitted values
+
+Examining the plot, it appears that the wk variable exerts an influence - fitted values seem to take on noticeable intervals.
+
+# Quasipoisson Model 05
+
+The final model looks at `count ~ week + month` - it wasn't possible to specify a multiplicative factor for the variance, so essentially this returned to the standard Poisson assumptions of mean = variance (and overdispersion). Attempts to fit `var = mu^2` led to
+
+``` {R}
+Error: inner loop 1; cannot correct step size
+In addition: Warning message:
+step size truncated due to divergence 
+```
+If anything might've been positive with this fit - it was a much more pronounced difference in the `null` and `residual` deviances (3.67 times less): 
+
+```{r}
+qmw05 <- glm(count ~ week + month, data = wk,
+             family = quasipoisson(link = "log"))
+
+summary(qmw05)
+#                  Estimate  Std. Error t value        Pr(>|t|)    
+#   (Intercept) -82.5262770  11.1654955  -7.391 0.0000000005373 ***
+#   week          0.0056840   0.0006802   8.356 0.0000000000121 ***
+#   month02      -0.1904705   0.2693681  -0.707        0.482241    
+#   month03      -0.4616820   0.2793409  -1.653        0.103605    
+#   month04      -0.6860241   0.2866559  -2.393        0.019848 *  
+#   month05      -1.1875311   0.3190765  -3.722        0.000438 ***
+#   month06      -0.9447352   0.2922034  -3.233        0.001991 ** 
+#   month07      -1.1850169   0.4121759  -2.875        0.005583 ** 
+#   month08      -0.8993667   0.5272357  -1.706        0.093215 .  
+#   month09      -0.4901348   0.4128782  -1.187        0.239860    
+#   month10       0.2850663   0.2968744   0.960        0.340795    
+#   month11       0.4977691   0.2657779   1.873        0.065960 .  
+#   month12       0.3306845   0.2652787   1.247        0.217405  
+#
+# (Dispersion parameter for quasipoisson family taken to be 9563.747)
+#
+#     Null deviance: 2106049  on 72  degrees of freedom
+# Residual deviance:  573847  on 60  degrees of freedom
+# AIC: NA
+```
+![qmf05](plots-01/00-Poisson/1200px-qmf05.jpeg)
+
+As with (qmf04 - quasipoisson model 04), it appears the additional variable `month` exerts influence as seen in the intervals in fitted values.
+
+# Plots of Fortified Models
+
+Quasipoisson Model 02:
+
+![qmf02 - fortified](plots-01/00-Poisson/1200px-qmf02-fortify.jpeg)
+
+
+
+
+
 
 
 
