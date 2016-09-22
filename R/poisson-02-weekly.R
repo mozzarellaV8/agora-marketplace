@@ -6,106 +6,34 @@
 
 library(data.table)
 library(sandwich)
+library(plsRglm)
+library(caret)
 library(ggplot2)
-library(dplyr)
 library(vcd)
-library(zoo)
 
 agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 agora$date <- as.Date(agora$date)
 
 wk <- fread("data/WeeklyCountsPop.csv")
-wk$mw <- as.Date(wk$mw) 
-
-mo <- fread("data/MonthlyAll.csv")
+wk$week <- as.Date(wk$week) 
 
 w14 <- fread("data/WeeklyCounts14.csv")
 w15 <- fread("data/WeeklyCounts15.csv")
 
-# get weekly counts -----------------------------------------------------------
+mo <- fread("data/MonthlyAll.csv")
 
-# convert to numeric
-agora$day <- as.numeric(agora$day)
-agora$month <- as.numeric(agora$month)
-
-# loop over months and count rows - 2014 ------------------
-
-w14 <- data.frame()
-
-for (i in 1:12) {
-  
-  w1 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
-                      agora$day <= 7))
-  w2 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
-                      agora$day <= 14 & agora$day > 7))
-  w3 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
-                      agora$day <= 21 & agora$day > 14))
-  w4 <- nrow(subset(agora, agora$month == i & agora$year == "2014" & 
-                      agora$day <= 31 & agora$day > 21))
-  
-  wLog <- cbind(w = i, w1 = w1, w2 = w2, w3 = w3, w4 = w4)
-  w14 <- rbind(w14, wLog)
-}
-
-write.csv(w14, file = "data/WeeklyCounts14.csv", row.names = F)
-colnames(w14)[1] <- "month"
-
-# stack counts + sort chronologically
-w14 <- stack(w14, select = c(w1, w2, w3, w4))
-w14$month <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-w14$m.w <- paste("2014", w14$month, w14$ind, sep = "-")
-colnames(w14) <- c("count", "week", "month", "mw")
-w14 <- w14[c(4, 1, 2, 3)]
-w14 <- w14[order(w2$mw, decreasing = F), ]
-rownames(w2) <- NULL
-
-# 2015 weekly counts --------------------------------------
-
-w15 <- data.frame()
-
-for (i in 1:7) {
-  
-  w1 <- nrow(subset(agora, agora$month == i & agora$year == "2015" & 
-                      agora$day <= 7))
-  w2 <- nrow(subset(agora, agora$month == i & agora$year == "2015" & 
-                      agora$day <= 14 & agora$day > 7))
-  w3 <- nrow(subset(agora, agora$month == i & agora$year == "2015" & 
-                      agora$day <= 21 & agora$day > 14))
-  w4 <- nrow(subset(agora, agora$month == i & agora$year == "2015" & 
-                      agora$day <= 31 & agora$day > 21))
-  
-  wLog <- cbind(w = i, w1 = w1, w2 = w2, w3 = w3, w4 = w4)
-  w15 <- rbind(w15, wLog)
-}
-
-write.csv(w15, file = "data/WeeklyCounts15.csv", row.names = F)
-
-# clean up 2015
-w15 <- stack(w15, select = c(w1, w2, w3, w4))
-w15$month <- c("01", "02", "03", "04", "05", "06", "07")
-w15$mw <- paste("2015", w15$month, w15$ind, sep = "-")
-colnames(w15) <- c("count", "week", "month", "mw")
-w15 <- w15[c(4, 1, 2, 3)]
-w15 <- w15[order(w3$mw, decreasing = F), ]
-rownames(w3) <- NULL
-
-# bind 2014-2015 weekly counts ----------------------------
-
-weekly <- rbind(w14, w15)
-weekly$mw <- gsub("\\bw1\\b", "07", weekly$mw)
-weekly$mw <- gsub("\\bw2\\b", "14", weekly$mw)
-weekly$mw <- gsub("\\bw3\\b", "21", weekly$mw)
-weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
-
-write.csv(weekly, file = "data/WeeklyCountsPop.csv", row.names = F)
-wk <- weekly
-
-# Pre Poisson Plots -----------------------------------------------------------
+# Pre-Poisson Plots -----------------------------------------------------------
 
 # remove last empty counts - end of crawl
 wk <- wk[-c(74:76), ]
-colnames(wk) <- c("week", "count", "wk", "month")
-wk$week <- as.Date(wk$week)
+
+slice(wk, 36:40)
+#          week count wk month
+# 1: 2014-09-28 38379 w4    09
+# 2: 2014-10-07 33618 w1    10
+# 3: 2014-10-14 29122 w2    10
+# 4: 2014-10-21 26111 w3    10
+# 5: 2014-10-28 98240 w4    10
 
 # observed mean and variance ------------------------------
 wk.avg <- mean(wk$count)    # 31821.38
@@ -129,7 +57,7 @@ plot(wk$week, wk$count, xlab = "", ylab = "", col = "firebrick3", pch = 19,
      xlim = c(as.Date("2014-01-07"), as.Date("2015-06-28")),
      cex.main = 1.2, cex.axis = 1)
 
-points(wk$week, wk$count, col = "#firebrick3", pch = 20, cex = 1.8)
+points(wk$week, wk$count, col = "firebrick3", pch = 20, cex = 1.8)
 points(wk$week, wk.abs.dev, col = "#000000", pch = 8, cex = 1)
 abline(a = wk.avg, b = 0, lty = 6, col = "gold2", lwd = 2)
 
@@ -169,7 +97,9 @@ summary(qmw01)
 # wk.var/wk.avg -- 26.1k times!
 
 # Quasipoisson 02 -----------------------------------------
-qmw02 <- glm(count ~ week, family = quasi(link = "log", variance = "mu^2"), data = wk)
+qmw02 <- glm(count ~ week, data = wk, 
+             family = quasi(link = "log", variance = "mu^2"))
+
 summary(qmw02)
 #                 Estimate  Std. Error  t value           Pr(>|t|)
 #  (Intercept) -96.0231972  10.3609211  -9.268 0.00000000000007527 ***
@@ -272,12 +202,37 @@ summary(lmw01)
 # Multiple R-squared:  0.4669,	Adjusted R-squared:  0.4594 
 # F-statistic: 62.17 on 1 and 71 DF,  p-value: 0.00000000002731
 
+lmw02 <- lm(count ~ week + wk, data = wk)
+summary(lmw02)
+
+# Coefficients:
+#   Estimate Std. Error t value        Pr(>|t|)    
+# (Intercept) -1953892.9   253395.6  -7.711 0.0000000000734 ***
+#   week             121.5       15.5   7.844 0.0000000000420 ***
+#   wkw2           -4062.7     6970.3  -0.583           0.562    
+#   wkw3           -6825.9     6969.2  -0.979           0.331    
+#   wkw4            4709.4     6969.7   0.676           0.502    
+
+# Residual standard error: 21190 on 68 degrees of freedom
+# Multiple R-squared:  0.4897,	Adjusted R-squared:  0.4597 
+# F-statistic: 16.31 on 4 and 68 DF,  p-value: 0.000000002057
+
 # Fortify Model fits --------------------------------------
 
-pwf01 <- fortify(pmw01)
-qmf01 <- fortify(qmw01)
-lmf01 <- fortify(lmw01)
+# pwf01 <- fortify(pmw01)   # poisson model 01
+# qmf01 <- fortify(qmw01)   # quasi   model 01
 
+# linear models
+lmf01 <- fortify(lmw01)
+lmf02 <- fortify(lmw02)   
+
+# qmw02 may be the most interesting model - simple with mu^2 variance.
+qmf02 <- fortify(qmw02)
+qmf02$fitted.values <- exp(qmf02$.fitted)
+qmf02 <- qmf02[, c(1, 9, 6, 7, 2, 3, 4, 5)]
+
+# qmw04 might be second most interesting - appears adding the weekly
+# index as an independent variable leads to interval'd predictions.
 qmf04 <- fortify(qmw04)
 qmf04$fitted.values <- exp(qmf04$.fitted)
 qmf04 <- qmf04[, c(1, 10, 7, 8, 2, 3, 4, 5, 6, 7, 9)]
@@ -288,41 +243,48 @@ qmf03 <- fortify(qmw03)
 qmf03$fitted.values <- exp(qmf03$.fitted)
 qmf03 <- qmf03[, c(1, 11, 8, 9, 2, 3, 4, 5, 6, 7, 10)]
 
-# qmw02 may be the most interesting model - simple with mu^2 variance.
-qmf02 <- fortify(qmw02)
-qmf02$fitted.values <- exp(qmf02$.fitted)
-qmf02 <- qmf02[, c(1, 9, 6, 7, 2, 3, 4, 5)]
 
 # plot various fits and observed --------------------------
 par(mar = c(6, 6, 6, 6), bty = "l", las = 1, family = "GillSans")
 
+# qmf02
 plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
-     main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values", 
+     main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values",
      xlim = c(as.Date("2014-01-07"), as.Date("2015-08-01")),
      pch = 19, cex.main = 1.1, cex.axis = 1)
 
 lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
-points(qmf03$week, qmf03$fitted.values, pch = 7, cex = 1.2,
-       col = "dodgerblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.3,
-       col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.2,
-       col = "cadetblue3")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.1,
-       col = "cadetblue2")
-points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1,
-       col = "cadetblue1")
 lines(qmf02$week, qmf02$fitted.values, lty = 1, lwd = 3.6, col = "deepskyblue4")
+# points(qmf02$week, qmf02$fitted.values, pch = 2, cex = 0.75, col = "deepskyblue3")
 
-rug(qmf02$week, ticksize = -0.01, side = 1, lwd = 2, col = "#000000")
+#qmf03
+plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
+     main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values",
+     xlim = c(as.Date("2014-01-07"), as.Date("2015-08-01")),
+     pch = 19, cex.main = 1.1, cex.axis = 1)
+
+lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
+lines(qmf03$week, qmf03$fitted.values, lty = 1, lwd = 2, col = "dodgerblue4")
+points(qmf03$week, qmf03$fitted.values, pch = 7, cex = 1.2, col = "dodgerblue2")
+
+# qmf04
+plot(qmf02$week, qmf02$count, xlab = "", ylab = "", col = "firebrick3",
+     main  = "Quasi/Poisson Model • Count ~ Week • Observed, Poisson, and Linear Fitted Values",
+     xlim = c(as.Date("2014-01-07"), as.Date("2015-08-01")),
+     pch = 19, cex.main = 1.1, cex.axis = 1)
+
+lines(lmf01$week, lmf01$.fitted, col = "gold2", lty = 2, lwd = 1.8)
+lines(qmf04$week, qmf04$fitted.values, lty = 1, lwd = 2, col = "cadetblue4")
+points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.3, col = "cadetblue2")
+points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.2, col = "cadetblue3")
+points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1.1, col = "cadetblue2")
+points(qmf04$week, qmf04$fitted.values, pch = 5, cex = 1, col = "cadetblue1")
+
+
+# rug(qmf02$week, ticksize = -0.01, side = 1, lwd = 2, col = "#000000")
 
 # So at what rate does the market grow (measured in listing counts)
 # if left unchecked?
-
-# points(qmf03$week, qmf03$fitted.values, pch = 10, cex = 1.5, col = "dodgerblue3")
-# points(lmf01$week, lmf01$.fitted, col = "gold3", pch = 1)
-# lines(qmf04$week, qmf04$fitted.values, lty = 1, lwd = 2, col = "deepskyblue3")
-# points(qmf02$week, qmf02$fitted.values, pch = 19, cex = 0.6, col = "deepskyblue3")
 
 # plot model ----------------------------------------------
 
@@ -354,3 +316,79 @@ round(exp(confint.default(qmw02)), 5)
 write.csv(qmf02, file = "data/poisson/qmf02.csv", row.names = F)
 write.csv(qmf03, file = "data/poisson/qmf03.csv", row.names = F)
 write.csv(qmf04, file = "data/poisson/qmf04.csv", row.names = F)
+
+# Bootstrap Validation --------------------------------------------------------
+
+# via caret  ----------------------------------------------
+
+# Caret may not have poisson GAM/GLM support yet?
+
+t.control <- caret::trainControl(method = "boot", number = 100)
+qmw02boot <- caret::train(count ~ week, data = wk, trControl=t.control, 
+                      method="")
+
+summary(qmw02boot)
+
+# via plsRglm ---------------------------------------------
+
+# qpw <- plsRglm(count ~ week, dataX)
+# qmw02boot <- bootplsglm(qmw02, typeboot = "plsmodel", R = 1000, sim = "ordinary")
+# rownames(qmw02boot3$t0)<-c("Intercept\n","peri\n","shape\n","perm\n","peri.\nshape",
+#                              "peri.\nperm","shape.\nperm")
+
+
+# Cross Validation ------------------------------------------------------------
+
+# via caret
+
+tmp <- createResample(counts,times = 10)
+myCtrl <- trainControl(method = "cv", index = tmp, timingSamps = 10)
+
+# Confidence Intervals --------------------------------------------------------
+
+cov.qmw02 <- vcovHC(qmw02, type = "HC0")
+summary(cov.qmw02)
+
+# two tailed t-test
+tt <- qt(c(0.025, 0.975), summary(qmw02)$df[2])
+
+# standard errors
+se <- sqrt(diag(cov.qmw02))
+
+# confidence intervals
+ci.qmw02 <- coef(qmw02) + se %o% tt
+ci.qmw02
+#                       [,1]          [,2]
+# (Intercept) -115.830321481 -76.216072832
+# week           0.005279001   0.007693837
+
+# ucla example - how is 1.96 derived? 100/(degrees of freedom)?
+r.est <- cbind(Estimate = round((coef(qmw02)), 4), "Robust SE" = round(se, 4),
+               "Pr(>|z|)" = round((2 * pnorm(abs(coef(qmw02)/se), lower.tail = F)), 4),
+               LL = round((coef(qmw02) - 1.96 * se), 4),
+               UL = round((coef(qmw02) + 1.96 * se), 4))
+
+r.est
+#                  Estimate    Robust SE                           Pr(>|z|)             LL            UL
+# (Intercept) -96.023197157 9.9336443771 0.00000000000000000000041859913356 -115.493140136 -76.553254177
+# week          0.006486419 0.0006055429 0.00000000000000000000000000896598    0.005299555   0.007673283
+
+#             Estimate Robust SE Pr(>|z|)        LL       UL
+# (Intercept) -96.0232    9.9336        0 -115.4931 -76.5533
+# week          0.0065    0.0006        0    0.0053   0.0077
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
