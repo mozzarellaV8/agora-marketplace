@@ -16,10 +16,10 @@ A weekly interval seemed a good compromise.
 ``` {r}
 library(data.table)
 library(sandwich)
+library(plsRglm)
+library(caret)
 library(ggplot2)
-library(dplyr)
 library(vcd)
-library(zoo)
 
 agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 agora$date <- as.Date(agora$date)
@@ -57,7 +57,7 @@ After getting weekly count data with `nrow()`, some quick stacking and cleansing
 # stack counts + sort chronologically
 w14 <- stack(w14, select = c(w1, w2, w3, w4))
 w14$month <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-w2$m.w <- paste("2014", w14$month, w14$ind, sep = "-")
+w2$mw <- paste("2014", w14$month, w14$ind, sep = "-")
 colnames(w14) <- c("count", "week", "month", "mw")
 w14 <- w14[c(4, 1, 2, 3)]
 w14 <- w14[order(w14$mw, decreasing = F), ]
@@ -77,13 +77,120 @@ weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
 
 There is one drawback about the weekly count gathering - months were assumed to have 4 weeks, which leads to only 48 weeks/year. 
 
-# How much could there be?
+# How much is there?
+
+Plot of observed weekly counts, with mean of counts and absolute differences bewtween mean and observed:
 
 ![observed](plots-01/1200px-ag-observed-01.jpeg)
 
-Plot of observed weekly counts, with mean of counts and absolute differences bewtween mean and observed.
+```{R}
+par(mfrow = c(1, 1), mar = c(6, 6, 6, 6), family = "GillSans", bty = "l", las = 1)
+
+plot(wk$week, wk$count, xlab = "", ylab = "", col = "firebrick3", pch = 19,
+     main  = "Agora • Weekly Observed Counts • Mean • Absolute Difference between Mean and Observed", 
+     xlim = c(as.Date("2014-01-07"), as.Date("2015-06-28")),
+     cex.main = 1.2, cex.axis = 1)
+
+points(wk$week, wk$count, col = "firebrick3", pch = 20, cex = 1.8)
+points(wk$week, wk.abs.dev, col = "#000000", pch = 8, cex = 1)
+abline(a = wk.avg, b = 0, lty = 6, col = "gold2", lwd = 2)
+
+rug(wk$week, ticksize = 0.0085, side = 1, lwd = 1.5, 
+    lty = 1, col = "#000000")
+```    
+# How much could there be?
+
+Plot of observed values and values fitted from 3 different Poisson models: 
 
 ![quasi/poissons](plots-01/1200px-ag-qpw-06.jpg)
 
-Plot of observed values and values fitted from 3 different Poisson models. 
+This is probably a bit much to take in - so onto the individual models. 
+
+# Poisson Model 01
+
+The parameters for this regression were simple enough - `count ~ week` - but the the difference between the `residual deviance` and `degrees of freedom` were so large as to indicate massive overdispersion. On a somewhat positive note, the model exhibited an effect over the null - deviance reduced by a factor of approximate 1.75.
+
+```{R}
+pmw01 <- glm(count ~ week, family = poisson, data = wk)
+summary(pmw01)
+#                    Estimate    Std. Error z value            Pr(>|z|)    
+#   (Intercept) -58.051732708   0.076378255  -760.1 <0.0000000000000002 ***
+#   week          0.004171856   0.000004644   898.4 <0.0000000000000002 ***
+# 
+# (Dispersion parameter for poisson family taken to be 1)
+#
+#     Null deviance: 2106049  on 72  degrees of freedom
+# Residual deviance: 1191952  on 71  degrees of freedom
+# AIC: 1192752
+```
+
+# Quasipoisson Model 02
+
+This model seemed to be the most interesting out of all the fits. Again the formula is simple enough with `count ~ week`, but this time we've got the variance set to mean squared.
+
+```{R}
+qmw02 <- glm(count ~ week, data = wk, 
+             family = quasi(link = "log", variance = "mu^2"))
+
+summary(qmw02)
+#                 Estimate  Std. Error  t value           Pr(>|t|)
+#  (Intercept) -96.0231972  10.3609211  -9.268 0.00000000000007527 ***
+#  week          0.0064864   0.0006337  10.236 0.00000000000000128 ***
+#
+# (Dispersion parameter for quasi family taken to be 0.8623852)
+#
+#     Null deviance: 175.35  on 72  degrees of freedom
+# Residual deviance: 125.06  on 71  degrees of freedom
+# AIC: NA
+```
+
+It appears that the data are just a touch underdispersed at 0.86. For now, I'll say that might not be bad given the rather large differencees observed before.
+
+![qmw02](plots-01/00-Poisson/1200px-qmf02.jpeg)
+
+- red points: observed counts
+- blue line: quasipoisson fitted values
+- yellow line: linear regression fitted values (`lm(count~week)`)
+
+# Quasipoisson Model 03
+
+In the third model, I tried adding `month` and `wk` as independent variables, while keeping the variance set to mu^2. The `wk` variable describes which week of a particular month a count was taken (e.g. 1st week of month, 3rd week of month). 
+
+Perhaps this points out of weakness in how I binned the counts to weeks. The total came out to 48 weeks per year rather than 52, because I assigned extracted counts based on an assumption of there being 4 weeks per month.
+
+``` {R}
+qmw03 <- glm(count ~ week + month + wk, data = wk,
+             family = quasi(link = "log", variance = "mu^2"))
+
+summary(qmw03)
+#                  Estimate  Std. Error t value           Pr(>|t|)    
+#   (Intercept) -97.2697515  10.8407891  -8.973 0.0000000000017118 ***
+#   week          0.0065719   0.0006659   9.869 0.0000000000000608 ***
+#   month02       0.1264772   0.4348387   0.291             0.7722    
+#   month03      -0.2241067   0.4361217  -0.514             0.6093    
+#   month04      -0.3801890   0.4384636  -0.867             0.3895    
+#   month05      -0.3906327   0.4416377  -0.885             0.3801    
+#   month06      -0.5909993   0.4458353  -1.326             0.1903    
+#   month07      -0.5377981   0.4985914  -1.079             0.2853    
+#   month08      -0.6126249   0.5323287  -1.151             0.2546    
+#   month09      -0.1076163   0.5334894  -0.202             0.8409    
+#   month10       0.5905783   0.5353687   1.103             0.2746    
+#   month11       0.9254168   0.5380835   1.720             0.0909 .  
+#   month12       0.6748475   0.5414475   1.246             0.2177    
+#   wkw2         -0.6642139   0.2864937  -2.318             0.0240 *  
+#   wkw3         -0.2085034   0.2864374  -0.728             0.4696    
+#   wkw4          0.1500150   0.2864569   0.524             0.6025    
+#
+# (Dispersion parameter for quasi family taken to be 0.7546344)
+#
+#     Null deviance: 175.35  on 72  degrees of freedom
+# Residual deviance: 104.19  on 57  degrees of freedom
+# AIC: NA
+```
+
+
+
+
+
+
 
