@@ -1,0 +1,208 @@
+# agora-associations.rmd output
+
+# As Transactions
+
+- price
+- location
+- category
+- date
+- year
+
+transactions as itemMatrix in sparse format with
+ 2317353 rows (elements/itemsets/transactions) and
+ 521 columns (items) and a density of 0.009596929 
+
+most frequent items:
+  p=$0-136     y=2015     y=2014      f=USA p=$136-381    (Other) 
+   1406459    1284985    1032368     497780     431681    6933492 
+
+element (itemset/transaction) length distribution:
+sizes
+      5 
+2317353 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      5       5       5       5       5       5 
+
+includes extended item information - examples:
+          labels variables       levels
+1       p=$0-136         p       $0-136
+2 p=$13131-20000         p $13131-20000
+3     p=$136-381         p     $136-381
+
+includes extended transaction information - examples:
+  transactionID
+1             1
+2             2
+3             3
+
+
+# Frequent Itemsets
+
+
+```{R}
+a2items <- apriori(a2, parameter = list(target = "frequent",
+                                         supp = 0.0070, minlen = 2, maxlen = 5))
+summary(a2items)
+set of 280 itemsets
+
+most frequent items:
+  p=$0-136     y=2015     y=2014 p=$136-381      f=USA    (Other) 
+       105         90         78         35         34        334 
+
+element (itemset/transaction) length distribution:sizes
+  2   3   4 
+177  90  13 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  2.000   2.000   2.000   2.414   3.000   4.000 
+
+summary of quality measures:
+    support        
+ Min.   :0.007008  
+ 1st Qu.:0.008731  
+ Median :0.011863  
+ Mean   :0.021331  
+ 3rd Qu.:0.020941  
+ Max.   :0.348316  
+
+includes transaction ID lists: FALSE 
+
+mining info:
+ data ntransactions support confidence
+   a2       2317353   0.007          1
+
+
+  
+inspect(tail(a2items, 10))
+    items                                                            support    
+271 {p=$0-136,f=Agora/Internet/Torland,c=Information, Guides,y=2014} 0.007007996
+272 {p=$0-136,f=No Info,c=Information, Guides,y=2014}                0.016120548
+273 {p=$0-136,f=Agora/Internet/Torland,c=Info/eBooks, Other,y=2015}  0.010682878
+274 {p=$0-136,f=No Info,c=Info/eBooks, Other,y=2015}                 0.019263358
+275 {p=$0-136,f=EU,c=Drugs, Steroids,y=2015}                         0.007066252
+276 {p=$0-136,f=No Info,c=Drugs, Prescription,y=2014}                0.007064957
+277 {p=$0-136,f=No Info,c=Drugs, Prescription,y=2015}                0.012452570
+278 {p=$136-381,f=USA,c=Drugs, Cannabis, Weed,y=2015}                0.007095164
+279 {p=$0-136,f=USA,c=Drugs, Cannabis, Weed,y=2014}                  0.007802437
+280 {p=$0-136,f=USA,c=Drugs, Cannabis, Weed,y=2015}                  0.009830613
+
+inspect(head(a2items, 20))
+11 {p=$0-136,c=Tobacco, Smoked}                 0.008631831
+12 {d=2015-04-13,y=2015}                        0.008793654
+13 {f=No Info,c=Info/eBooks, Making money}      0.007192689
+14 {c=Info/eBooks, Making money,y=2015}         0.009767178
+15 {p=$0-136,c=Info/eBooks, Making money}       0.009568676
+16 {f=USA,c=Drugs, Cannabis, Edibles}           0.009023226
+17 {p=$0-136,c=Drugs, Cannabis, Edibles}        0.008428582
+18 {f=Hong Kong,c=Counterfeits, Watches}        0.008845437
+19 {p=$0-136,c=Drugs, Stimulants, Prescription} 0.008280568
+20 {c=Services, Money,y=2014}                   0.008983526
+```
+
+# Apriori for Arules
+
+``` {R}
+a2rules <- apriori(a2, parameter = list(support = 0.0075, confidence = 0.6,
+                                         minlen = 3, maxlen = 5))
+a2rules
+# set of 79 rules 
+summary(a2rules)
+
+set of 79 rules
+
+rule length distribution (lhs + rhs):sizes
+ 3  4 
+65 14 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   3.000   3.000   3.177   3.000   4.000 
+
+summary of quality measures:
+    support           confidence          lift        
+ Min.   :0.007571   Min.   :0.6034   Min.   : 0.9942  
+ 1st Qu.:0.009385   1st Qu.:0.6436   1st Qu.: 1.1534  
+ Median :0.016121   Median :0.7278   Median : 1.4547  
+ Mean   :0.019124   Mean   :0.7887   Mean   : 1.9875  
+ 3rd Qu.:0.019811   3rd Qu.:0.9712   3rd Qu.: 1.8034  
+ Max.   :0.083446   Max.   :1.0000   Max.   :11.8242  
+
+mining info:
+ data ntransactions support confidence
+   a2       2317353  0.0075        0.6
+
+
+arules::inspect(head(a2rules, 20))
+   lhs                                                 rhs        support     confidence lift     
+1  {c=Info/eBooks, Making money,y=2015}             => {p=$0-136} 0.009568676 0.9796766   1.614165
+2  {p=$0-136,c=Info/eBooks, Making money}           => {y=2015}   0.009568676 1.0000000   1.803409
+3  {c=Data, Pirated,y=2015}                         => {p=$0-136} 0.008330626 0.9865093   1.625423
+4  {p=$0-136,f=Belgium}                             => {y=2014}   0.007570707 0.9229798   2.071810
+5  {c=Other, No Info/Other,y=2015}                  => {p=$0-136} 0.008452316 0.8073784   1.330277
+6  {p=$0-136,c=Other, No Info/Other}                => {y=2015}   0.008452316 0.6172050   1.113073
+7  {f=Agora/Internet/Torland,c=Information, eBooks} => {y=2014}   0.010278969 0.9658192   2.167971
+8  {f=Agora/Internet/Torland,c=Information, eBooks} => {p=$0-136} 0.010624622 0.9982970   1.644845
+9  {c=Information, eBooks,y=2014}                   => {p=$0-136} 0.018242797 0.9414529   1.551185
+10 {p=$0-136,c=Information, eBooks}                 => {y=2014}   0.018242797 0.9694989   2.176231
+11 {f=USA,c=Drugs, Cannabis, Concentrates}          => {y=2015}   0.009385277 0.6532212   1.178025
+12 {c=Drugs, Cannabis, Concentrates,y=2015}         => {f=USA}    0.009385277 0.7150278   3.328723
+13 {p=$0-136,c=Drugs, Cannabis, Concentrates}       => {f=USA}    0.007662622 0.7119031   3.314177
+14 {f=China,c=Counterfeits, Watches}                => {y=2015}   0.009317096 0.7643914   1.378510
+15 {c=Counterfeits, Watches,y=2015}                 => {f=China}  0.009317096 0.6741078   8.576292
+16 {f=China,c=Counterfeits, Watches}                => {p=$0-136} 0.010761416 0.8828861   1.454688
+17 {p=$0-136,c=Counterfeits, Watches}               => {f=China}  0.010761416 0.8747106  11.128447
+18 {c=Counterfeits, Watches,y=2015}                 => {p=$0-136} 0.008954182 0.6478504   1.067431
+19 {p=$0-136,c=Counterfeits, Watches}               => {y=2015}   0.008954182 0.7278148   1.312547
+20 {f=No Info,c=Information, Guides}                => {y=2014}   0.016539129 0.9739283   2.186174
+
+arules::inspect(tail(a2rules, 20))
+   lhs                                                          rhs         support     confidence lift     
+60 {f=Agora/Internet/Torland,y=2015}                         => {p=$0-136}  0.043554866 0.9281530   1.529272
+61 {f=No Info,y=2014}                                        => {p=$0-136}  0.045898920 0.6965508   1.147672
+62 {f=No Info,y=2015}                                        => {p=$0-136}  0.083446070 0.7600552   1.252305
+63 {p=$0-136,f=No Info}                                      => {y=2015}    0.083446070 0.6451434   1.163457
+64 {f=USA,y=2014}                                            => {p=$0-136}  0.059670667 0.6280083   1.034738
+65 {f=USA,y=2015}                                            => {p=$0-136}  0.073000963 0.6094094   1.004094
+66 {f=Agora/Internet/Torland,c=Information, eBooks,y=2014}   => {p=$0-136}  0.010260845 0.9982368   1.644745
+67 {p=$0-136,f=Agora/Internet/Torland,c=Information, eBooks} => {y=2014}    0.010260845 0.9657609   2.167840
+68 {f=China,c=Counterfeits, Watches,y=2015}                  => {p=$0-136}  0.008321995 0.8931962   1.471675
+69 {p=$0-136,f=China,c=Counterfeits, Watches}                => {y=2015}    0.008321995 0.7733178   1.394608
+70 {p=$0-136,c=Counterfeits, Watches,y=2015}                 => {f=China}   0.008321995 0.9293976  11.824199
+71 {f=No Info,c=Information, Guides,y=2014}                  => {p=$0-136}  0.016120548 0.9746915   1.605951
+72 {p=$0-136,f=No Info,c=Information, Guides}                => {y=2014}    0.016120548 0.9738784   2.186061
+73 {p=$0-136,c=Information, Guides,y=2014}                   => {f=No Info} 0.016120548 0.6447643   3.670022
+74 {f=Agora/Internet/Torland,c=Info/eBooks, Other,y=2015}    => {p=$0-136}  0.010682878 0.9953761   1.640032
+75 {p=$0-136,f=Agora/Internet/Torland,c=Info/eBooks, Other}  => {y=2015}    0.010682878 1.0000000   1.803409
+76 {f=No Info,c=Info/eBooks, Other,y=2015}                   => {p=$0-136}  0.019263358 0.9884197   1.628570
+77 {p=$0-136,f=No Info,c=Info/eBooks, Other}                 => {y=2015}    0.019263358 1.0000000   1.803409
+78 {p=$0-136,c=Info/eBooks, Other,y=2015}                    => {f=No Info} 0.019263358 0.6263593   3.565259
+79 {p=$0-136,f=No Info,c=Drugs, Prescription}                => {y=2015}    0.012452570 0.6380199   1.150610
+
+									  lhs            rhs     support confidence     lift
+30        {f=No Info,c=Info/eBooks, Other} =>  {p=$0-136} 0.019263358  0.9884197 1.628570
+31         {p=$0-136,c=Info/eBooks, Other} => {f=No Info} 0.019263358  0.6263593 3.565259
+32           {c=Info/eBooks, Other,y=2015} =>  {p=$0-136} 0.030754486  0.9896136 1.630537
+33         {p=$0-136,c=Info/eBooks, Other} =>    {y=2015} 0.030754486  1.0000000 1.803409
+34 {f=Netherlands,c=Drugs, Ecstasy, Pills} =>    {y=2014} 0.010111968  0.6182523 1.387789
+35                {f=EU,c=Drugs, Steroids} =>    {y=2015} 0.009108237  0.6035918 1.088523
+36                {f=EU,c=Drugs, Steroids} =>  {p=$0-136} 0.011428125  0.7573279 1.247812
+37              {c=Drugs, Steroids,y=2014} =>  {p=$0-136} 0.011753496  0.7590714 1.250684
+38              {c=Drugs, Steroids,y=2015} =>  {p=$0-136} 0.019810965  0.7277324 1.199049
+39            {p=$0-136,c=Drugs, Steroids} =>    {y=2015} 0.019810965  0.6276351 1.131883
+40                           {f=EU,y=2014} =>  {p=$0-136} 0.014519583  0.6587892 1.085454
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
