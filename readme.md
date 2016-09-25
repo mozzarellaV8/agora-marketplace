@@ -111,6 +111,8 @@ To do:
 
 _in progress_
 
+- "Shedding Light on the Dark Web." The Economist. The Economist Newspaper, 2016. Web. 23 Sept. 2016.
+
 - Gwern Branwen, Nicolas Christin, David Décary-Hétu, Rasmus Munksgaard Andersen, StExo, El Presidente, Anonymous, Daryl Lau, Sohhlz, Delyan Kratunov, Vince Cakic, Van Buskirk, & Whom. “Dark Net Market archives, 2011-2015”, 12 July 2015. Web. [May 2016](www.gwern.net/Black-market%20archives)
 
 - Demant, Munksgaard, & Houborg 2016, “Personal use, social supply or redistribution? cryptomarket demand on Silk Road 2 and Agora” [August 2016](http://www.gwern.net/docs/sr/2016-demant.pdf)
