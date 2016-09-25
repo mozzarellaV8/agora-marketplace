@@ -578,7 +578,10 @@ for (i in 1:80) {
 }
 ```
 
+![a3-r1-50 rulies](plots/arules/a3-r1-50.jpg)
+
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
+
 
 # Subset Locations
 
