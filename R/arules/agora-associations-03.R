@@ -263,19 +263,32 @@ grep("^layout_", ls("package:igraph"), value = T)[-1]
 pdpal <- colorRampPalette(c("#BFEFFF85", "#FFFFFF75", "#00688B85"), alpha = 0.85)
 pdpal(100)
 
-r1 <- head(sort(a2rules, by = c("support", "confidence", "lift")), 24)
+# plot by Support, Confidence, and Lift
+r1 <- head(sort(a2rules, by = c("support", "confidence", "lift")), 144)
 p1 <- plot(r1, method = "graph", 
-           main = "24 rules ~ support + confidence + lift (dh)", 
+           main = "144 rules ~ support + confidence + lift (dh)", 
            edge.color = "#00000025",
            vertex.frame.color = "#00688B85",
            vertex.color = pdpal(100),
            vertex.label.color = "grey8", 
-           vertex.label.cex = 0.74, layout = layout_with_dh,
+           vertex.label.cex = 0.68, layout = layout_with_dh,
            vertex.label.dist = 0)
 
-r2 <- head(sort(a2rules, by = "lift"), 64)
+# plot by Lift
+r2 <- head(sort(a2rules, by = "lift"), 144)
 p2 <- plot(r2, method = "graph", 
-           main = "64 rules ~  lift (dh)", 
+           main = "144 rules ~  lift (dh)", 
+           edge.color = "#00000025",
+           vertex.frame.color = "#00688B85",
+           vertex.label.color = "grey2", 
+           vertex.color = pdpal(100),
+           vertex.label.cex = 0.68, layout = layout_with_dh,
+           vertex.label.dist = 0)
+
+# plot by Support and confidence
+r3 <- head(sort(a2rules, by = c("support", "confidence")), 144)
+p3 <- plot(r2, method = "graph", 
+           main = "144 rules ~ support + confidence (dh)", 
            edge.color = "#00000025",
            vertex.frame.color = "#00688B85",
            vertex.label.color = "grey2", 
@@ -359,11 +372,11 @@ for (i in 1:80) {
 
 # Subset Rules ----------------------------------------------------------------
 
-weed <- subset(a2rules, lhs %in% "c=Drugs, Cannabis, Concentrates")
-inspect(head(weed))
-summary(weed)
+drugs <- subset(a2rules, rhs %in% "c=Drugs")
+inspect(head(drugs))
+summary(drugs)
 
-plot(usa, method = "graph")
+plot(drugs, method = "graph")
 
 # Extract Data Frame ----------------------------------------------------------
 
