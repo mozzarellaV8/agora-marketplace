@@ -579,12 +579,25 @@ for (i in 1:80) {
 
 # Subset Locations
 
+observations:
+
+- in both the USA and UK, Cannabis is the first drug to appear. It will run through all price classes before another drug appears in the graph.
+
+in order of appearance across the network:
+
+- US: 1. Cannabis, Weed 2. Benzos  3. Cocaine 4. MDMA 5. Cannabis, Concetrates 6. Prescription 7. Opiods 8. Stimulants-Prescription 9. OxyCodone 10. Meth 11. Heroin 12. LSD (@ 22 rules graphed)
+
+- UK: 1. Cannabis, Weed 2. Cocaine 3. MDMA 3. 4. Benzos 5. Cannabis, Hash 6. Ecstacy, Pills 7. Prescription 8. Ketamine 9. LSD 10. Opiods 11. Meth (@ 21 rules graphed)
+
+![f1-usa-22](plots/arules/f1-usa-22.png)
+
+The probability of the United States being involved was higher than anywhere else by quite a margin. 73 rules in either the lhs or rhs including USA. 
+
 ```{R}
 # Subset by Location ----------------------------------------------------------
 
 # define palette
 pdpal2 <- colorRampPalette(c("#FFE4C485", "#FFFFFF75", "#CD107685"), alpha = 0.85)
-pdpal2(100)
 
 # subset: USA
 f.usa <- subset(a2rules, rhs %in% "f=USA" | lhs %in% "f=USA")
@@ -610,7 +623,13 @@ for (i in 35:73) {
   
   dev.off()
 }
+```
 
+![](plots/arules/f2-uk-21.png)
+
+Total rules generated that had `UK` in either the lhs or rhs totalled 21. 
+
+```{R}
 # subset: UK
 f.uk <- subset(a2rules, rhs %in% "f=UK" | lhs %in% "f=UK")
 f2 <- plot(f.uk, method = "graph",
@@ -643,16 +662,6 @@ for (i in 1:21) {
   dev.off()
 }
 ```
-
-observations:
-
-- in both the USA and UK, Cannabis is the first drug to appear. It will run through all price classes before another drug appears in the graph.
-
-in order of appearance across the network:
-
-- US: 1. Cannabis, Weed 2. Benzos  3. Cocaine 4. MDMA 5. Cannabis, Concetrates 6. Prescription 7. Opiods 8. Stimulants-Prescription 9. OxyCodone 10. Meth 11. Heroin 12. LSD (@ 22 rules graphed)
-
-- UK: 1. Cannabis, Weed 2. Cocaine 3. MDMA 3. 4. Benzos 5. Cannabis, Hash 6. Ecstacy, Pills 7. Prescription 8. Ketamine 9. LSD 10. Opiods 11. Meth (@ 21 rules graphed)
 
 
 # References
