@@ -13,7 +13,7 @@ Contents:
 - [Mine Association Rules](#mine-association-rules)
 - [Grouped Matrix Plots](#grouped-matrix-plot)
 - [Network Graphs](#network-graphs)
-- [Works Cited](#works-cited)
+- [References](#references)
 
 ```{R}
 
@@ -30,7 +30,7 @@ a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 
 Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and to look at probabilities for different classes occurring as a means to advise in selecting features. 
 
-While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes<sup>[1](#works-cited)</sup> - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
+While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes<sup>[1](#references)</sup> - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
 
 That said, finding rules that traverse the network should still prove informative and interesting.
 
@@ -46,7 +46,7 @@ Why subset for prices under $20,000?
 
 Often on Agora there will be products listed at exorbitant prices.
 
-While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#works-cited)</sup><sup>,<sup>[3](#works-cited)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
+While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#references)</sup><sup>,<sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
 
 An example of this 'mingling': sorting by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. 
 
@@ -232,7 +232,7 @@ summary(ag$p)
 
 # Anonymize Vendors
 
-I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all nicknames, as seen in the case of one vendor<sup>[4]((#works-cited)</sup> even with just a handle a real identity could be found out. 
+I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all nicknames, as seen in the case of one vendor<sup>[4]((#references)</sup> even with just a handle a real identity could be found out. 
 
 ```{R}
 ag$v2 <- ag$vendor
@@ -523,7 +523,7 @@ for (i in 1:80) {
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
 
 
-# Works Cited
+# References
 
 _in progress_
 
