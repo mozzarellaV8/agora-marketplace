@@ -33,9 +33,7 @@ summary(qmw02)
 # Number of Fisher Scoring iterations: 13
 ```
 
-![quasipoisson original](plots/poisson/)
-
-
+![quasipoisson original](plots/poisson/pop00-annotated.jpg)
 
 
 With a piecewise regression, the goal will be to examine how shutdowns of other markets affects listing counts on Agora Market.
