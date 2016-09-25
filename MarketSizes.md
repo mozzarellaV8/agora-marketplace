@@ -2,9 +2,9 @@
 
 The initial questions had been asked, `How large is this market?` and if left unchecked, `How large could it be?`. Using Poisson regression, a simple answer was obtained. In working to validate the model, it was observed that listing counts clustered into "tiers" over time.
 
-Given domain information, it could be inferred these counts were affected by activity in other markets of similar scale - namely, their shutting down. 
+Given domain information, it could be inferred that count data were affected by activity in other markets of similar scale - namely, other markets shutting down. 
 
-At the start of 2014, Agora was one of 3 major darknet markets for vendors to choose from. The other markets were Silk Road 2 and Evolution. Within the timeframe the data covers, both SR2 and Evolution shut down. 
+At the start of 2014, Agora was one of 3 major darknet markets for vendors to choose from<sup>1</sup>. The other markets were Silk Road 2 and Evolution. Within the timeframe the data covers, both SR2 and Evolution shut down. 
 
 -[QuasiPoisson Regression](#quasipoisson-regression)
 -[External Market Influences](#external-market-influences)
@@ -28,7 +28,7 @@ In T1 we have 3 major markets in effect: Agora, Evolution, and Silk Road 2. T2 a
 
 Looking at Silk Road 2 and Evolution, and how their shutdowns affected the number of listings on Agora. 
 
-Imagine a global market or network suddenly shutting down. For example, what if Amazon.com suddenly ceased operations over the course of a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? Or, what would Twitter or Instagram traffic look like if Facebook suddenly shut down?<sup>1</sup>
+Imagine a global market or network suddenly shutting down. For example, what if Amazon.com suddenly ceased operations over the course of a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? Or, what would Twitter or Instagram traffic look like if Facebook suddenly shut down?<sup>2</sup>
 
 As an abstraction, this is essentially the sort of condition that darknet market Agora faced when rival markets Silk Road 2 and Evolution shut down. How did this affect the size of the market?
 
@@ -39,7 +39,7 @@ Given the overdispersion issues in the quasi/poisson regression models on weekly
 
 Why should this be significant? At any given time, several darknet markets may exist. But in practical terms, there generally have been only 2-4 major markets (high usage rate) at play simultaneously. Markets have a tendency to gain traction as usage goes up - trust is established, word of mouth and reliable feedback spread.
 
-It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>2</sup><sup>,</sup><sup>3</sup>.
+It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>3</sup><sup>,</sup><sup>4</sup>.
 
 ## after SR2
 
@@ -49,12 +49,13 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 # Endnotes
 
+<sup>1</sup> The case is actually that there were _many_ more than 3 darknet markets at any given time. But many were not large enough to warrant attention. For this analysis, consideration of 3 markets defined as major would suffice. This can also be confirmed by searching [deepdotweb](http://deepdotweb.com) or consulting the appropriate [reddit](http://reddit.com/r/darknetmarkets) forums.
 
-<sup>1</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
+<sup>2</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
 
-<sup>2</sup>United States of America vs. Blake Benthall a/k/a "Defcon", [justice.gov](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
+<sup>3</sup>United States of America vs. Blake Benthall a/k/a "Defcon", [justice.gov](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
 
-<sup>3</sup>deepdotweb search: [Agora](https://www.deepdotweb.com/?s=Agora)
+<sup>4</sup>deepdotweb search: [Agora](https://www.deepdotweb.com/?s=Agora)
 
 
 
