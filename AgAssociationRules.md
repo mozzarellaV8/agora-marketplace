@@ -549,6 +549,7 @@ Again, would sort through the graphs in Finder to, 'chronologically' to see what
 From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because it's the same code for the other groupings, with the `by` argument in the `sort` method changed. 
 
 
+```{R}
 # 80 graphs by Support, Confidence, and Lift 
 
 for (i in 1:80) {
