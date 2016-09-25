@@ -58,7 +58,7 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 ```
-![usd dist x4](plots/arules/usd-dist-01.jpeg)
+![usd dist x4](plots/arules/usd-dist-01.jpg)
 
 As suspected. One more curiousity - although the summary above shows a mean price of $426.40, the feeling is that outliers on high end are pulling that value up - a mean above the 3rd quartile seems to indicate something...
 
