@@ -51,12 +51,11 @@ Given a set of transactions where `N` is a number of transactions and `x` and `y
 - Confidence: **N<sub>xy</sub> / N<sub>x</sub>**
 - Lift:       **N<sub>xy</sub> * N / N<sub>x</sub> * N<sub>y</sub>**
 
-## Works Cited
+## References
 
 - Hahsler, Michael, Bettina Grün, and Kurt Hornik. "Arules - A Computational Environment for Mining Association Rules and Frequent Item Sets." Journal of Statistical Software J. Stat. Soft. 14.15 (2005): n. pag. [Web](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjG1oDFxqrPAhUE64MKHW0yA30QFggmMAA&url=https%3A%2F%2Fwww.jstatsoft.org%2Farticle%2Fview%2Fv014i15%2Fv14i15.pdf&usg=AFQjCNG3aCjcy7O3mvHx2byove-2DTLTRw&sig2=fhgTMeA9DKm16v575FdbWg).
 
 -  Tan, Pang-Ning; Michael, Steinbach; Kumar, Vipin (2005). "Chapter 6. Association Analysis: Basic Concepts and Algorithms" (PDF). Introduction to Data Mining. Addison-Wesley. ISBN 0-321-32136-7. [Sept 2016](https://www-users.cs.umn.edu/~kumar/dmbook/ch6.pdf)
 
-- Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction to Data Mining. Boston: Pearson Addison Wesley, 2005. Print. Chapter 6: Association Analysis: Basic Concepts and Algorithms
 
 - Borne, Dr. Kirk. "Association Rule Mining – Not Your Typical Data Science Algorithm | MapR." Association Rule Mining – Not Your Typical Data Science Algorithm | MapR. N.p., 2014. Web. 25 [Sept. 2016](https://www.mapr.com/blog/association-rule-mining-not-your-typical-data-science-algorithm).
