@@ -111,14 +111,19 @@ To do:
 
 _in progress_
 
-- "Shedding Light on the Dark Web." The Economist. The Economist Newspaper, 2016. Web. 23 Sept. 2016.
 
-- Gwern Branwen, Nicolas Christin, David Décary-Hétu, Rasmus Munksgaard Andersen, StExo, El Presidente, Anonymous, Daryl Lau, Sohhlz, Delyan Kratunov, Vince Cakic, Van Buskirk, & Whom. “Dark Net Market archives, 2011-2015”, 12 July 2015. Web. [May 2016](www.gwern.net/Black-market%20archives)
-
-- Demant, Munksgaard, & Houborg 2016, “Personal use, social supply or redistribution? cryptomarket demand on Silk Road 2 and Agora” [August 2016](http://www.gwern.net/docs/sr/2016-demant.pdf)
+- Buchanan, Mark. "Wealth Happens". hbr.org. Harvard Business Review, Apr. 2002. Web. [May 2016.](https://hbr.org/2002/04/wealth-happens)
 
 - [“Darknet Market [Evolution] Basket Analysis”](http://ryancompton.net/2015/03/24/darknet-market-basket-analysis/), Ryan Compton
 
+- Crawley, Michael J. _The R Book_. Chichester, England: Wiley, 2007. Print.
+
+- Demant, Munksgaard, & Houborg 2016, “Personal use, social supply or redistribution? cryptomarket demand on Silk Road 2 and Agora” [August 2016](http://www.gwern.net/docs/sr/2016-demant.pdf)
+
+- Harrell, Frank E. _Regression Modeling Strategies: With Applications to Linear Models, Logistic Regression, and Survival Analysis_. New York: Springer, 2001. Print.
+
+- "Shedding Light on the Dark Web." The Economist. The Economist Newspaper, 2016. Web. 23 [Sept. 2016.](http://www.economist.com/news/international/21702176-drug-trade-moving-street-online-cryptomarkets-forced-compete)
+
 - ["Social Physics: How Good Ideas Spread"](https://youtu.be/HMBl0ttu-Ow), Alex Pentland. YouTube. Talks at Google, 2014. Web. 07 Sept. 2016.
 
-- Buchanan, Mark. ["Wealth Happens"](https://hbr.org/2002/04/wealth-happens). hbr.org. Harvard Business Review, Apr. 2002. Web. May 2016.
+- UNITED STATES OF AMERICA -v.- BLAKE BENTHALL A/k/a "Defcon," Defendant. Southern District of New York. Benthall,%20Blake%20Complaint.pdf, justice.gov. 29 Oct. 2014. Web. [Sept. 2016](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
