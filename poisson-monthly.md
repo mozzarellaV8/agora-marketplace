@@ -19,7 +19,7 @@ plot(0:200, dpois(0:200, lambda = 100), type = "h")
 plot(0:1000, dpois(0:1000, lambda = 500), type = "h")
 ```
 
-![](plots/poisson/poisson-distributions-01.jpeg)
+![](plots/poisson/plots-00/poisson-distributions-01.jpeg)
 
 It does appear that as `lambda` grows larger, the distribution approaches normal with mean at `lambda`.
 
@@ -139,7 +139,7 @@ text(seq(mo$month[1], mo$month[12], length.out = 12), 0,
      labels = mo$month, srt = 0, cex = 0.85, font = 2)
 ```
 
-![](plots/poisson/CountByMonth-01.jpg)
+![](plots/poisson/plots-00/CountByMonth-01.jpg)
 
 And one more plot using `ggplot2`, with additional `loess` regression line by default with `stat-smooth()`. 
 
@@ -161,7 +161,7 @@ pm01p <- ggplot(mo, aes(month, count)) +
        x = "", y = "", fill = "")
 ```
 
-![](plots/poisson/CountByMonth-03-gg.jpeg)
+![](plots/poisson/plots-00/CountByMonth-03-gg.jpeg)
 
 From looking at the plots, the Poisson certainly looks to be a better fit than the Linear model. And when compared to the observed values, not a bad fit at all. But how would this model perform with more granular (daily) data? And once trained on  2014 daily data, would it do well on a test set of 2015 values? 
 
