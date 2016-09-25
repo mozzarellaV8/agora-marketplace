@@ -8,7 +8,7 @@ At the start of 2014, Agora was one of 3 major darknet markets for vendors to ch
 
 - [QuasiPoisson Regression](#quasipoisson-regression)
 - [External Market Influences](#external-market-influences)
-- [Endnotes](#endnotes)
+- [References](#references)
 
 # QuasiPoisson Regression
 
@@ -32,6 +32,8 @@ summary(qmw02)
 # AIC: NA
 # Number of Fisher Scoring iterations: 13
 ```
+
+![quasipoisson original](plots/poisson/)
 
 
 
@@ -71,7 +73,7 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 
 
-# Endnotes
+# References
 
 <sup>1</sup> The case is actually that there were _many_ more than 3 darknet markets at any given time. But most were not large enough to warrant attention. For this analysis, consideration of 3 markets defined as major would suffice. Support for this can be found by searching [deepdotweb](http://deepdotweb.com) or consulting the appropriate [reddit](http://reddit.com/r/darknetmarkets) forums.
 
