@@ -47,9 +47,9 @@ Another way to say it:
 
 Given a set of transactions where `N` is a number of transactions and `x` and `y` are particular itemsets - calulations for 3 common measures of rule quality:
 
-- Support:    **Nx / N**
-- Confidence: **Nxy / Nx**
-- Lift:       **Nxy * N / Nx * Ny**
+- Support:    **N<sub>x</sub> / N**
+- Confidence: **N<sub>xy</sub> / N<sub>x</sub>**
+- Lift:       **N<sub>xy</sub> * N / N<sub>x</sub> * N<sub>y</sub>**
 
 ## Works Cited
 
