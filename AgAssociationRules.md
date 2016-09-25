@@ -1,7 +1,7 @@
 # Agora Association Rules
 
 - _outputs from the file `agora-associations-03.R`_
-- basic info on [Association Rule Mining](AssocationBasics.md)
+- basic info on [Association Rule Mining](AssociationBasics.md)
 
 ```{R}
 
