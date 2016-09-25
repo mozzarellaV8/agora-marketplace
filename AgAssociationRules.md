@@ -303,6 +303,8 @@ Some quick new questions and thoughts:
 
 # Grouped Matrix Plot
 
+![a3-g1-2](plots/arules/a3-g1-2.jpg)
+
 Initially I was plotting these individually and changing the list parameter `k` each time. Eventually I wrote a loop, and then would inspect the outputs in Adobe Bridge or Finder.
 
 
@@ -336,9 +338,11 @@ Used 3 quality measure subsets for networks graphs:
 - Lift
 - Support and Confidence
 
-Given the vast possibilities for numbers of rules, I'd generally plot the first 1:80 in a loop. Again would sort through the graphs in Finder to, 'chronologically' to see what might be interesting. One unexpected benefit to this method was being able to see hierarchically which rules were strongest. The strongest rules would plot first by this sorting, and more rules of less strength would get added to graphs down the loop. 
+Given the vast possibilities for numbers of rules, I'd generally plot the first 1:80 in a loop. 
 
-From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships). In this document I'll just show graphing for _Support, Confidence, and Lift_ because its the same code for the other groupings, with the `by` argument in the `sort` method changed. 
+Again, would sort through the graphs in Finder to, 'chronologically' to see what might be interesting. One unexpected benefit to this method was being able to see hierarchically which rules were strongest. The strongest rules would plot first by this sorting, and more rules of less strength would get added to graphs down the loop. 
+
+From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because its the same code for the other groupings, with the `by` argument in the `sort` method changed. 
 
 
 ```{r}
