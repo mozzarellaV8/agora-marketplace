@@ -6,10 +6,13 @@ Given domain information, it could be inferred these counts were affected by act
 
 At the start of 2014, Agora was one of 3 major darknet markets for vendors to choose from. The other markets were Silk Road 2 and Evolution. Within the timeframe the data covers, both SR2 and Evolution shut down. 
 
+-[QuasiPoisson Regression](#quasipoisson-regression)
+-[External Market Influences](#external-market-influences)
+-[Endnotes](#endnotes)
 
-# Poisson Regression
+# QuasiPoisson Regression
 
-Given the choice between Generalized Boosted Modeling and Piecewise Regression, I've opted for Piecewise. While interested in learning `gbm`, given domain knowledge of the variable clusters I fear the model could be overfit using `gbm`. 
+Facing overdispersion issues in my initial Poisson model on the population of counts, I received a few suggestions from my mentor. Given the choice between Generalized Boosted Modeling and Piecewise Regression, I opted for Piecewise. While interested in learning `gbm`, given domain knowledge of the variable clusters I fear the model could be overfit using `gbm`. Additionally, I recalled that competing darknet market Silk Road 2 shut down in early October 2014. This domain information could correlate to the overdispersion, and observed clustering of count data.
 
 With a piecewise regression, the goal will be to examine how shutdowns of other markets affects listing counts on Agora Market.
 
@@ -21,7 +24,7 @@ Looking at the counts with domain information, 3 "tiers" were observed:
 
 In T1 we have 3 major markets in effect: Agora, Evolution, and Silk Road 2. T2 arises after SR2's shutdown, leaving just Agora and Evolution. T3 is a tier only observed recently after the shutdowns of SR2 and Evolution. It could be inferred that these spikes in listing counts were the result of vendors coming to Agora in the iterim of a shutdown. 
 
-# External Market Influence
+# External Market Influences
 
 Looking at Silk Road 2 and Evolution, and how their shutdowns affected the number of listings on Agora. 
 
@@ -30,13 +33,15 @@ Imagine a global market or network suddenly shutting down. For example, what if 
 As an abstraction, this is essentially the sort of condition that darknet market Agora faced when rival markets Silk Road 2 and Evolution shut down. How did this affect the size of the market?
 
 
-### before the Silk Road 2 shutdown
+## before the Silk Road 2 shutdown
 
-Given the overdispersion issues in the quasi/poisson regression models on weekly count population, at the advice of my advisor I decided to investigate what appeared to be a divide in values from 2014 to 2015. Recalling that Silk Road 2 shut down in early October 2014, I started here.
+Given the overdispersion issues in the quasi/poisson regression models on weekly count population, I decided to investigate what appeared to be a divide in values from 2014 to 2015. Recalling that Silk Road 2 shut down in early October 2014, I started here.
 
 Why should this be significant? At any given time, several darknet markets may exist. But in practical terms, there generally have been only 2-4 major markets (high usage rate) at play simultaneously. Markets have a tendency to gain traction as usage goes up - trust is established, word of mouth and reliable feedback spread.
 
 It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>2</sup><sup>,</sup><sup>3</sup>.
+
+## after SR2
 
 
 
