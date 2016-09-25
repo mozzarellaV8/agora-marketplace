@@ -12,8 +12,9 @@ Another thing the store could do is study these transactions to learn about nove
 
 ## Itemset Example
 
-From this simple table of transactions - resembling a market basket - we can see relationships between itemsets. These relationships are what form _frequent itemsets_ and **Association Rules**.
+From this simple table of transactions - resembling a market basket - we can see relationships between itemsets. These relationships are what form **_frequent itemsets_**and **_Association Rules-**.
 
+```
 -  TID    Items
 -   1  |  {Bread, Milk}
 -   2  |  {Bread, Diapers, Beer, arules paper, Eggs}
@@ -22,6 +23,7 @@ From this simple table of transactions - resembling a market basket - we can see
 -   5  |  {Diapers, ANOVA paper, Beer, Milk}
 -   6  |  {Bread, Diapers, Semicolon, Gluten Starch, Beer}
 -   7  |  {Nail Polish, Diapers, Beer, arules paper}
+```
 
 We can form a **rule** with an _antecedent_ (left-hand side) and _consequent_ (right-hand side) from observing which items appear frequently together. A rule for this example can be expressed as:
 
@@ -33,18 +35,28 @@ The rule suggests a relationship between the pairing of Diapers and Beer, and pa
 
 The nice thing about association rules is that three main measures of quality for the rules also express themselves as probabilities. One set of items implies another set of items.
 
-Support(_{Diapers, Beer} => {arules paper}_) would be a measure of the total number of times _{Diapers, Beer}_ and _{arules paper}_ appeared in transactions together, divided by the total number of transactions in the population. From the above list, this transactions occurs 3 times out of a total 7 possible - for a support of 3/7 = 0.43.
+**Support(_{Diapers, Beer} => {arules paper}_)** would be a measure of the total number of times **_{Diapers, Beer}_** and **_{arules paper}_** appeared in transactions together, divided by the total number of transactions in the population. From the above list, this transactions occurs 3 times out of a total 7 possible - for a support of 3/7 = 0.43.
 
-Confidence gives an estimate for the conditional probability of an _{arules paper}_  occuring in an itemset that also containes _{Diapers, Beer}_. It also expresses the strength of inference made by a rule - the higher the value (as close to 1 as possible), the most likely an _{arules paper}_ is to appear in transactions with _{Diapers, Beer}_. Above we can again see 3 instances of this, out of a total 5 transactions that contain at least {_Diapers, Beer_}.
+Confidence gives an estimate for the conditional probability of an **_{arules paper}_** occuring in an itemset that also containes **_{Diapers, Beer}_**. It also expresses the strength of inference made by a rule - the higher the value (as close to 1 as possible), the most likely an **_{arules paper}_** is to appear in transactions with **_{Diapers, Beer}_**. Above we can again see 3 instances of this, out of a total 5 transactions that contain at least **{_Diapers, Beer_}**.
 
-- support({Diapers, Beer} => {arules paper})          = 3/7 = 0.43
-- confidence({_Diapers, Beer_} => {_arules paper_})   = 3/5 = 0.60
-- lift({_Diapers, Beer_} => {_arules paper_})         = (3)(7)/(5)(5) = 21/25 = 0.84
+- **support({Diapers, Beer}** => **{arules paper})**         = 3/7 = **0.43**
+- **confidence({_Diapers, Beer_}** => **{_arules paper_})**  = 3/5 = **0.60**
+- **lift({_Diapers, Beer_}** => **{_arules paper_})**        = (3)(7)/(5)(5) = 21/25 = **0.84**
 
 Another way to say it:
 
 Given a set of transactions where `N` is a number of transactions and `x` and `y` are particular itemsets - calulations for 3 common measures of rule quality:
 
-- Support:    Nx / N
-- Confidence: Nxy / Nx
-- Lift:       Nxy * N / Nx * Ny
+- Support:    **Nx / N**
+- Confidence: **Nxy / Nx**
+- Lift:       **Nxy * N / Nx * Ny**
+
+## Works Cited
+
+- Hahsler, Michael, Bettina Grün, and Kurt Hornik. "Arules - A Computational Environment for Mining Association Rules and Frequent Item Sets." Journal of Statistical Software J. Stat. Soft. 14.15 (2005): n. pag. Web.
+
+-  Tan, Pang-Ning; Michael, Steinbach; Kumar, Vipin (2005). "Chapter 6. Association Analysis: Basic Concepts and Algorithms" (PDF). Introduction to Data Mining. Addison-Wesley. ISBN 0-321-32136-7. [Sept 2016](https://www-users.cs.umn.edu/~kumar/dmbook/ch6.pdf)
+
+- Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction to Data Mining. Boston: Pearson Addison Wesley, 2005. Print. Chapter 6: Association Analysis: Basic Concepts and Algorithms
+
+- Borne, Dr. Kirk. "Association Rule Mining – Not Your Typical Data Science Algorithm | MapR." Association Rule Mining – Not Your Typical Data Science Algorithm | MapR. N.p., 2014. Web. 25 Sept. 2016.
