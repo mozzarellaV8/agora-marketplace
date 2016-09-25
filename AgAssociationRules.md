@@ -3,6 +3,17 @@
 - _outputs from the file `agora-associations-03.R`_
 - basic info on [Association Rule Mining](AssociationBasics.md)
 
+Contents:
+
+- [Preparation](#preparation)
+- [Discretize Prices](#discretize-prices)
+- [Anonymize Vendors](#anonymize-vendors)
+- [Transactions](#as-transactions)
+- [Frequent Itemsets](#frequent-itemsets)
+- [Mine Association Rules](#mine-association-rules)
+- [Grouped Matrix Plots](#grouped-matrix-plot)
+- [Network Graphs](#network-graphs)
+
 ```{R}
 
 library(arules)
@@ -91,7 +102,7 @@ levels(ag$sc)
 
 ```
 
-## Discretize Prices
+# Discretize Prices
 
 Initially I'd been using `discretize` from the `arules` library to do this. I decided to discretize manually for the last round of rule mining, given new domain info (and maybe bc I kept running into a bug at this point in the RMarkdown file, refusing to knit `discretize` for some reason).
 
@@ -213,7 +224,7 @@ ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
        x = "", y = "", colour = "", fill = "")
 ```       
 
-## Anonymize Vendors
+# Anonymize Vendors
 
 ```{R}
 ag$v2 <- ag$vendor
@@ -235,42 +246,6 @@ summary(ag$v3)
 - category
 - subcategory (pasted subcat and subsubcat)
 - vendor (anonymized SHA256 and abbreviated)
-
-### Transactions - Full
-
-```{r}
-summary(a2)
-transactions as itemMatrix in sparse format with
- 2317353 rows (elements/itemsets/transactions) and
- 3395 columns (items) and a density of 0.001472754 
-
-most frequent items:
-   c=Drugs  p=$10-150 p=$150-600      f=USA  f=No Info    (Other) 
-   1605481    1086166     515111     497780     407122    7475105 
-
-element (itemset/transaction) length distribution:
-sizes
-      5 
-2317353 
-
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      5       5       5       5       5       5 
-
-includes extended item information - examples:
-          labels variables       levels
-1        p=$0-10         p        $0-10
-2      p=$10-150         p      $10-150
-3 p=$10000-20000         p $10000-20000
-
-includes extended transaction information - examples:
-  transactionID
-1             1
-2             2
-3             3
-```
-
-
-### Transactions - Unique
 
 
 ```{R}
@@ -303,8 +278,10 @@ includes extended transaction information - examples:
 3             3
 ```
 
-
 # Frequent Itemsets
+
+- minimum support: 0.0025
+- minumum length: 2
 
 ```{R}
 a2items <- apriori(a2, parameter = list(target = "frequent",
@@ -340,7 +317,16 @@ mining info:
    a2         30956  0.0025          1
 ```
 
+Yielding 738 itemsets, with decent distribution among lengths.
+
+
 # Mine Association Rules
+
+- minimum support: 0.0025
+- minimum confidence: 0.6
+- minumum length: 3
+
+Minimum length could be reduced to 2 on another run for more rules.
 
 ```{r}
 a2rules <- apriori(a2, parameter = list(support = 0.0025, confidence = 0.6,
@@ -448,7 +434,6 @@ Some quick new questions and thoughts:
 - Hydrocodone is likely to come from the USA and cost between 10-150 dollars.
 - the top rule is interesting; graphs and plots do not show many vendors - 'a26103 is likely to sell drugs and ship worldwide'.
 
-
 # Grouped Matrix Plot
 
 Initially I was plotting these individually and changing the list parameter `k` each time. Eventually I wrote a loop, and then would inspect the outputs in Adobe Bridge or Finder.
@@ -522,34 +507,9 @@ for (i in 1:80) {
   
   dev.off()
 }
-
-# individual plot by Support, Confidence, and Lift
-r1 <- head(sort(a2rules, by = c("support", "confidence", "lift")), 144)
-p1 <- plot(r1, method = "graph", 
-           main = "144 rules ~ support + confidence + lift (dh)", 
-           edge.color = "#00000025",
-           vertex.frame.color = "#00688B85",
-           vertex.color = pdpal(100),
-           vertex.label.color = "grey8", 
-           vertex.label.cex = 0.68, layout = layout_with_dh,
-           vertex.label.dist = 0)
-
 ```
 
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
