@@ -83,11 +83,6 @@ weekly$mw <- gsub("\\bw3\\b", "21", weekly$mw)
 weekly$mw <- gsub("\\bw4\\b", "28", weekly$mw)
 ```
 
-
-There is one drawback about the weekly count gathering - months were assumed to have 4 weeks, which leads to only 48 weeks/year. 
-
-# How much is there?
-
 Plot of observed weekly counts, with mean of counts and absolute differences bewtween mean and observed:
 
 ![observed](plots-01/1200px-ag-observed-01.jpeg)
