@@ -159,8 +159,6 @@ exp(c(4, 4.25, 4.5, 4.75, 5))
 
 Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
 
-**_aside_**: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that I don't consider an improvement. **_smh_**
-
 ![gg log price dist](plots/arules/usd-dist-02-log-gg.png)
 
 ```{R}
@@ -183,12 +181,12 @@ nrow(ag) - 703
 
 ```
 
-Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session). I plotted the distribution of the manually binned prices, fill opacity set to relative frequency (x2).
+**_aside_**: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that looks pretty much just like base graphics. **_smh_**
 
-![usd-disc-dist](plots/arules/usd-disc-dist.png)
+Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session).
 
 ```{R}
-# manually
+# manually discretize
 ag$p <- ag$usd
 ag$p <- ifelse(ag$p <= 10.00, "$0-10", 
                ifelse(ag$p > 10 & ag$p <= 150.00, "$10-150",
@@ -199,18 +197,10 @@ ag$p <- ifelse(ag$p <= 10.00, "$0-10",
 
 
 ag$p <- factor(ag$p)  # 6 levels
+```
+![usd-disc-dist](plots/arules/usd-disc-dist.png)
 
-summary(ag$p)
-#  $0-10      $10-150 $10000-20000     $150-600  $2000-10000    $600-2000 
-# 371235      1086166         7393       515111       106747       230701 
-
-371235/nrow(ag)   # 0.1601979
-1086166/nrow(ag)  # 0.4687098
-7393/nrow(ag)     # 0.003190278
-515111/nrow(ag)   # 0.2222842
-106747/nrow(ag)   # 0.04606419
-230701/nrow(ag)   # 0.09955367
-
+```{r}
 ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
   scale_fill_manual(values = c("#EE2C2C32", "#EE2C2C94", "#EE2C2C02", 
                                "#EE2C2C44", "#EE2C2C10", "#EE2C2C20"),
@@ -222,7 +212,22 @@ ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
         legend.position = "none") +
   labs(title = "Distribution of Discretized Prices", 
        x = "", y = "", colour = "", fill = "")
-```       
+```      
+
+Above is a histogram of the manually binned prices, fill opacity set to relative frequency (x2) by some quick calculations.
+
+``` {r}
+summary(ag$p)
+#  $0-10      $10-150 $10000-20000     $150-600  $2000-10000    $600-2000 
+# 371235      1086166         7393       515111       106747       230701 
+
+371235/nrow(ag)   # 0.1601979
+1086166/nrow(ag)  # 0.4687098
+7393/nrow(ag)     # 0.003190278
+515111/nrow(ag)   # 0.2222842
+106747/nrow(ag)   # 0.04606419
+230701/nrow(ag)   # 0.09955367
+```
 
 # Anonymize Vendors
 
