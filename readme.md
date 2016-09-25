@@ -126,4 +126,6 @@ _in progress_
 
 - ["Social Physics: How Good Ideas Spread"](https://youtu.be/HMBl0ttu-Ow), Alex Pentland. YouTube. Talks at Google, 2014. Web. 07 Sept. 2016.
 
+- Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction to Data Mining. Boston: Pearson Addison Wesley, 2005. Print. Chapter 6: Association Analysis: Basic Concepts and Algorithms.
+
 - UNITED STATES OF AMERICA -v.- BLAKE BENTHALL A/k/a "Defcon," Defendant. Southern District of New York. Benthall,%20Blake%20Complaint.pdf, justice.gov. 29 Oct. 2014. Web. [Sept. 2016](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
