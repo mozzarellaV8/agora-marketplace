@@ -13,6 +13,7 @@ Contents:
 - [Mine Association Rules](#mine-association-rules)
 - [Grouped Matrix Plots](#grouped-matrix-plot)
 - [Network Graphs](#network-graphs)
+- [Subset Locations](#subset-locations)
 - [References](#references)
 
 ```{R}
@@ -575,6 +576,73 @@ for (i in 1:80) {
 ```
 
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
+
+# Subset Locations
+
+```{R}
+# Subset by Location ----------------------------------------------------------
+
+# define palette
+pdpal2 <- colorRampPalette(c("#FFE4C485", "#FFFFFF75", "#CD107685"), alpha = 0.85)
+pdpal2(100)
+
+# subset: USA
+f.usa <- subset(a2rules, rhs %in% "f=USA" | lhs %in% "f=USA")
+
+for (i in 35:73) {
+  
+  tmp <- head(sort(f.usa, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/location/f1-usa-",i,".png"),
+      width = 1800, height = 1400, pointsize = 17, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(64)
+  plot(tmp, method = "graph", 
+       main = paste(i, "rules ~ support + confidence + lift: 'USA'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#00688B85",
+       vertex.color = pdpal2(100),
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+
+# subset: UK
+f.uk <- subset(a2rules, rhs %in% "f=UK" | lhs %in% "f=UK")
+f2 <- plot(f.uk, method = "graph",
+           main = "21 rules ~ support + confidence + lift: 'UK'",
+           edge.color = "#00000025",
+           vertex.frame.color = "#8B0A5085",
+           vertex.color = pdpal2(100),
+           vertex.label.color = "grey8", 
+           vertex.label.cex = 1, layout = layout_with_dh,
+           vertex.label.dist = 0)
+
+for (i in 1:21) {
+  
+  tmp <- head(sort(f.uk, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/location/f2-uk-",i,".png"),
+      width = 1800, height = 1400, pointsize = 20, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(12)
+  plot(tmp, method = "graph",
+       main = paste(i, "rules ~ support + confidence + lift: 'UK'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#8B0A5085",
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+```
 
 observations:
 
