@@ -333,14 +333,14 @@ element (itemset/transaction) length distribution:sizes
 #   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #  2.000   2.000   2.000   2.551   3.000   4.000 
 
-summary of quality measures:
-    support        
- Min.   :0.002520  
- 1st Qu.:0.003327  
- Median :0.004975  
- Mean   :0.010439  
- 3rd Qu.:0.009303  
- Max.   :0.323136  
+# summary of quality measures:
+#     support        
+#  Min.   :0.002520  
+#  1st Qu.:0.003327  
+#  Median :0.004975  
+#  Mean   :0.010439  
+#  3rd Qu.:0.009303  
+#  Max.   :0.323136  
 
 includes transaction ID lists: FALSE 
 
@@ -377,14 +377,14 @@ rule length distribution (lhs + rhs):sizes
 #   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #  3.000   3.000   3.000   3.178   3.000   4.000 
 
-summary of quality measures:
-    support           confidence          lift        
- Min.   :0.002520   Min.   :0.6028   Min.   : 0.7288  
- 1st Qu.:0.003295   1st Qu.:1.0000   1st Qu.: 1.1968  
- Median :0.004797   Median :1.0000   Median : 1.1968  
- Mean   :0.007822   Mean   :0.9575   Mean   : 5.0688  
- 3rd Qu.:0.008439   3rd Qu.:1.0000   3rd Qu.: 1.1968  
- Max.   :0.110156   Max.   :1.0000   Max.   :89.7731  
+# summary of quality measures:
+#     support           confidence          lift        
+#  Min.   :0.002520   Min.   :0.6028   Min.   : 0.7288  
+#  1st Qu.:0.003295   1st Qu.:1.0000   1st Qu.: 1.1968  
+#  Median :0.004797   Median :1.0000   Median : 1.1968  
+#  Mean   :0.007822   Mean   :0.9575   Mean   : 5.0688  
+#  3rd Qu.:0.008439   3rd Qu.:1.0000   3rd Qu.: 1.1968  
+#  Max.   :0.110156   Max.   :1.0000   Max.   :89.7731  
 
 mining info:
  data ntransactions support confidence
