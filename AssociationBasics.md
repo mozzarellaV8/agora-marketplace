@@ -12,7 +12,7 @@ Another thing the store could do is study these transactions to learn about nove
 
 ## Itemset Example
 
-From this simple table of transactions - resembling a market basket - we can see relationships between itemsets. These relationships are what form **_frequent itemsets_**and **_Association Rules-**.
+From this simple table of transactions - resembling a market basket - we can see relationships between itemsets. These relationships are what form **_frequent itemsets_** and **_Association Rules-**.
 
 ```
 -  TID    Items
@@ -35,13 +35,13 @@ The rule suggests a relationship between the pairing of Diapers and Beer, and pa
 
 The nice thing about association rules is that three main measures of quality for the rules also express themselves as probabilities. One set of items implies another set of items.
 
-**Support(_{Diapers, Beer} => {arules paper}_)** would be a measure of the total number of times **_{Diapers, Beer}_** and **_{arules paper}_** appeared in transactions together, divided by the total number of transactions in the population. From the above list, this transactions occurs 3 times out of a total 7 possible - for a support of 3/7 = 0.43.
+Support**(_{Diapers, Beer} => {arules paper}_)** would be a measure of the total number of times **_{Diapers, Beer}_** and **_{arules paper}_** appeared in transactions together, divided by the total number of transactions in the population. From the above list, this transactions occurs 3 times out of a total 7 possible - for a support of 3/7 = 0.43.
 
 Confidence gives an estimate for the conditional probability of an **_{arules paper}_** occuring in an itemset that also containes **_{Diapers, Beer}_**. It also expresses the strength of inference made by a rule - the higher the value (as close to 1 as possible), the most likely an **_{arules paper}_** is to appear in transactions with **_{Diapers, Beer}_**. Above we can again see 3 instances of this, out of a total 5 transactions that contain at least **{_Diapers, Beer_}**.
 
-- **support({Diapers, Beer}** => **{arules paper})**         = 3/7 = **0.43**
-- **confidence({_Diapers, Beer_}** => **{_arules paper_})**  = 3/5 = **0.60**
-- **lift({_Diapers, Beer_}** => **{_arules paper_})**        = (3)(7)/(5)(5) = 21/25 = **0.84**
+- support**({Diapers, Beer} => {arules paper})**         	= 3/7 = **0.43**
+- confidence**({_Diapers, Beer_} => {_arules paper_})**  	= 3/5 = **0.60**
+- lift**({_Diapers, Beer_} => {_arules paper_})**        	= (3)(7)/(5)(5) = 21/25 = **0.84**
 
 Another way to say it:
 
