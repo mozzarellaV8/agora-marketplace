@@ -473,7 +473,7 @@ for (i in 1:10) {
 
 # Network Graphs
 
-![r1-24 rules](plots/arules/a3-r1-24.jpg)
+Grouped Matrices were nice for getting a something of a high level overview of the `lhs` and `rhs` of the ruleset. Seeing pairings of `lhs` and `rhs` with high values for quality measures is good; but often the strongest rulesets in terms of quality measures would be obvious. To find less expected rulesets that form relationships nonetheless, looking across a network proved helpful.
 
 3 quality measure subsets were used for networks graphs:
 
@@ -481,12 +481,7 @@ for (i in 1:10) {
 - Lift
 - Support and Confidence
 
-Given the vast possibilities for numbers of rules, I'd generally plot the first 1:80 in a loop. 
-
-Again, would sort through the graphs in Finder to, 'chronologically' to see what might be interesting. One unexpected benefit to this method was being able to see hierarchically which rules were strongest. The strongest rules would plot first by this sorting, and more rules of less strength would get added to graphs down the loop. 
-
-From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because it's the same code for the other groupings, with the `by` argument in the `sort` method changed. 
-
+![r1-24 rules](plots/arules/a3-r1-24.jpg)
 
 ```{r}
 # get layouts
@@ -495,6 +490,48 @@ grep("^layout_", ls("package:igraph"), value = T)[-1]
 # define a palette
 pdpal <- colorRampPalette(c("#BFEFFF85", "#FFFFFF75", "#00688B85"), alpha = 0.85)
 pdpal(100)
+```
+
+Layout: I'd eventually settled on an older (1996) algorithm for undirected graph layout: DH, by Davidson and Harel<sup>[5](#references)</sup>. The algorithm itself beyond my ability to explain fully; but what I do understand is that it is flexible enough to not rely on the "spring method" of force-directed graph algorithms<sup>[6](#references)</sup>. 
+
+Mostly though - through trial and error - I found it visually clear in representing this particular ruleset. 
+
+The most popular that I've seen currently in searches has to be Fruchterman-Reingold<sup>[7](#references)</sup><sup>,</sup><sup>[8](#references)</sup>. `sfdp` also came up for large networks, which I believe could be implemented with the `DiagrammeR` packaage.
+
+(I realize 'my Google searches' is not a reliable metric.)
+
+```{R}
+
+# graph by support, confidence, lift
+r1 <- head(sort(a2rules, by = c("support", "confidence", "lift")), 78)
+p1 <- plot(r1, method = "graph", 
+           main = "78 rules ~ support + confidence + lift (dh)", 
+           edge.color = "#00000025",
+           vertex.frame.color="#00000025",
+           vertex.color = pdpal(100),
+           vertex.label.color = "grey8", 
+           vertex.label.cex = 0.74, layout = layout_with_dh,
+           vertex.label.dist = 0)
+
+# graph by lift
+r2 <- head(sort(a2rules, by = "lift"), 64)
+p2 <- plot(r2, method = "graph", 
+           main = "64 rules ~  lift (dh)", 
+           edge.color = "#00000025",
+           vertex.frame.color="#00000025",
+           vertex.label.color = "grey2", 
+           vertex.color = pdpal(100),
+           vertex.label.cex = 0.68, layout = layout_with_dh,
+           vertex.label.dist = 0)
+
+```
+
+Given the vast possibilities for numbers of rules, I'd generally plot the first 1:80 in a loop. 
+
+Again, would sort through the graphs in Finder to, 'chronologically' to see what might be interesting. One unexpected benefit to this method was being able to see hierarchically which rules were strongest. The strongest rules would plot first by this sorting, and more rules of less strength would get added to graphs down the loop. 
+
+From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because it's the same code for the other groupings, with the `by` argument in the `sort` method changed. 
+
 
 # 80 graphs by Support, Confidence, and Lift 
 
@@ -535,10 +572,17 @@ _in progress_
 
 <sup>4</sup> Economist, op. cit.
 
+<sup>5</sup> "R Igraph Manual Pages." Igraph R Manual Pages. N.p., n.d. Web. 25 [Sept. 2016.](http://igraph.org/r/doc/layout_with_dh.html)
+
+<sup>6</sup> Ron Davidson, David Harel: Drawing Graphs Nicely Using Simulated Annealing. ACM Transactions on Graphics 15(4), pp. 301-331, 1996. [Sept 2016](http://www.wisdom.weizmann.ac.il/~harel/SCANNED.PAPERS/DrawingGraphsNicely.pdf)
+
+<sup>7</sup> Gephi. "Gephi/gephi." GitHub. N.p., n.d. Web. 25 [Sept. 2016.](https://github.com/gephi/gephi/wiki/Fruchterman-Reingold)
+
+<sup>8</sup> Fruchterman, Thomas M. J., and Edward M. Reingold. "Graph Drawing by Force-directed Placement." Softw: Pract. Exper. Software: Practice and Experience 21.11 (1991): 1129-164. Web. [Sept 2016](http://reingold.co/force-directed.pdf).
+
 - Hahsler, Michael, Bettina Grün, and Kurt Hornik. "Arules - A Computational Environment for Mining Association Rules and Frequent Item Sets." Journal of Statistical Software J. Stat. Soft. 14.15 (2005): n. pag. [Web](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjG1oDFxqrPAhUE64MKHW0yA30QFggmMAA&url=https%3A%2F%2Fwww.jstatsoft.org%2Farticle%2Fview%2Fv014i15%2Fv14i15.pdf&usg=AFQjCNG3aCjcy7O3mvHx2byove-2DTLTRw&sig2=fhgTMeA9DKm16v575FdbWg).
 
 -  Tan, Pang-Ning; Michael, Steinbach; Kumar, Vipin (2005). "Chapter 6. Association Analysis: Basic Concepts and Algorithms" (PDF). Introduction to Data Mining. Addison-Wesley. ISBN 0-321-32136-7. [Sept 2016](https://www-users.cs.umn.edu/~kumar/dmbook/ch6.pdf)
-
 
 
 
