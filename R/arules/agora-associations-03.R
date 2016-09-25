@@ -147,11 +147,13 @@ levels(as.factor(ag$v3))
 ag$v3 <- factor(ag$v3)
 summary(ag$v3)
 
+# write out prepped data ------------------------------------------------------
+
 # plotting by count ref:
 # http://stackoverflow.com/questions/20204257/subset-data-frame-based-on-counts-of-items-in-one-variable
 
 # write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag20k.csv", row.names = F)
-ag <- fread("~/GitHub/agora-data/06-arules/ag20k.csv", stringsAsFactors = T)
+# ag <- fread("~/GitHub/agora-data/06-arules/ag20k.csv", stringsAsFactors = T)
 
 # Transactions Conversion -----------------------------------------------------
 
