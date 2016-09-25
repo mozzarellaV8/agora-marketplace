@@ -231,6 +231,8 @@ summary(ag$p)
 
 # Anonymize Vendors
 
+I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all nicknames, as seen in the case of one vendor<sup>3</sup> even with just a handle a real identity could be found out. 
+
 ```{R}
 ag$v2 <- ag$vendor
 ag$v2 <- anonymize(ag$v2, .algo = "sha256", .seed = 144, 
@@ -243,6 +245,9 @@ levels(as.factor(ag$v3))
 ag$v3 <- factor(ag$v3)
 summary(ag$v3)
 ```
+From reading the manual pages, `anonymize` salts then hashes a vector with a few choices for algorithms. `SHA256` felt the appropriate hashing algorithm, and in what might be an insecure method I abbreviated the output to 6 characters afterwards. 
+
+In practical terms though, anyone caring to download the dataset could easily find the vendor names. Anonymization, in this case, is done less for security and mostly out of respect for privacy. 
 
 # As Transactions
 
@@ -250,7 +255,7 @@ summary(ag$v3)
 - location
 - category
 - subcategory (pasted subcat and subsubcat)
-- vendor (anonymized SHA256 and abbreviated)
+- vendor (hashed SHA256 and abbreviated)
 
 
 ```{R}
