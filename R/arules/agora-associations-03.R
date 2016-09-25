@@ -537,7 +537,6 @@ f.germany <- subset(a2rules, rhs %in% "f=Germany" | lhs %in% "f=Germany")
 f.netherlands <- subset(a2rules, rhs %in% "f=Netherlands" | lhs %in% "f=Netherlands")
 f.sweden <- subset(a2rules, rhs %in% "f=Sweden" | lhs %in% "f=Sweden")
 
-
 # As Data Frame ---------------------------------------------------------------
 
 # convert to dataframe
@@ -546,7 +545,6 @@ a2rules.df <- as(a2rules, "data.frame")
 nations <- subset(a2rules.df, grepl("f=", a2rules.df$rules) == T)
 nations.rhs <- subset(a2rules.df, grepl("=>\\s\\{f=", a2rules.df$rules) == T)
 nations.rhs$rules
-
 
 # Extract Data Frame ----------------------------------------------------------
 
