@@ -385,7 +385,7 @@ p1 <- plot(r1, method = "graph",
 
 ```
 
-![r1-72 rules](master/plots/arules/a3-r1-72.jpg)
+![r1-72 rules](plots/arules/a3-r1-72.jpg)
 
 
 
