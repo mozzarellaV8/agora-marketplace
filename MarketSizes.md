@@ -1,6 +1,6 @@
 # Market Sizes
 
-The initial questions had been asked, `How large is this market?` and if left unchecked, `How large could it be?`. Using Poisson regression, a simple answer was obtained. In working to validate the model, it was observed that listing counts clustered into "tiers" over time.
+The initial questions had been asked, **How large is this market?** and if left unchecked, **How large could it be?**. Using Poisson regression, a simple answer was obtained. In working to validate the model, it was observed that listing counts clustered into "tiers" over time.
 
 Given domain information, it could be inferred that count data were affected by activity in other markets of similar scale - namely, other markets shutting down. 
 
