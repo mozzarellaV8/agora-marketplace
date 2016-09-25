@@ -28,6 +28,88 @@ ag$sc <- factor(ag$sc) # 106 levels
 
 ## Discretize Prices
 
+Initially I'd been using `discretize` from the `arules` library to do this. I decided to discretize manually for the last round of rule mining, given new domain info (and maybe bc I kept running into a bug at this point in the RMarkdown file, refusing to knit `discretize` for some reason).
+
+Using discretize there was choice of whether to bin values by equal intervals or cluster. To help decide, examined and plotted distributions of prices. 
+
+```{R}
+# discretize prices - but into cluster or interval?
+ag$usd <- round(ag$usd, 2)
+summary(ag$usd)
+#  Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# 0.00    24.28    84.97    426.40   290.20 20000.00
+
+quantile(ag$usd)
+#   0%      25%      50%      75%     100% 
+# 0.00    24.28    84.97   290.19 20000.00 
+```
+
+I'll venture that most of the values are towards the left...
+
+```{r}
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
+
+hist(ag$usd, breaks = 100, main = "n < $20,000", 
+     xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 100, xlim = c(0, 5000), 
+     main = "n < $5,000", xlab = "", ylab = "")
+hist(ag$usd, breaks = 1000, xlim = c(0, 1000), 
+     main = "n < $1,000", xlab = "price in USD", ylab = "Frequency")
+hist(ag$usd, breaks = 10000, xlim = c(0, 200),
+     main = "n < $200", xlab = "price in USD", ylab = "")
+```
+![usd dist x4](usd-dist-01.jpeg)
+
+As suspected. One more curiousity - although the summary above shows a mean price of $426.40, the feeling is that outliers on high end are pulling that value up - a mean above the 3rd quartile seems to indicate something...
+
+```{R}
+# heavy on the left/long tail - quick check of the log()
+ag$log.usd <- log(ag$usd)
+
+par(mfrow = c(1, 1), mar = c(6, 6, 6, 4), las = 1, family = "GillSans")
+hist(ag$log.usd, main = "log(usd) Distribution of Prices, n = 2316650",
+     breaks = 100, xlab = "", ylab = "")
+axis(1, at = seq(-5, 10, 1))
+
+summary(ag$log.usd)
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# -Inf   3.190   4.442    -Inf   5.671   9.903 
+
+exp(c(4, 4.25, 4.5, 4.75, 5))
+# 54.59815  70.10541  90.01713 115.58428 148.41316
+```
+![log dist usd](plots/arules/usd-dist-02-log.jpeg)
+
+Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 adn 4.75 out. The spike at _about_ 0 seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
+
+_aside_: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that I don't consider an improvement. _smh_
+
+![gg log price dist](plots/arules/usd-dist-02-log-gg.png)
+
+```{R}
+
+ggplot(ag, aes(x = log.usd)) + 
+  geom_histogram(binwidth = 0.25, color = "black", alpha = 0, size = 0.5) +
+  scale_x_continuous(breaks = seq(-5, 10, 1)) +
+  theme_minimal(base_size = 14, base_family = "GillSans") +
+  theme(axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 12),
+        panel.grid.major = element_line(color = "gray82"),
+        plot.margin = unit(c(1, 1, 1, 1), "cm")) +
+  labs(title = "log Distribution of Prices, n = 2316650",
+       x = "", y = "")
+
+# Warning message:
+# Removed 703 rows containing non-finite values (stat_bin)
+# so: n = ...
+nrow(ag) - 703
+
+```
+
+Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session). I plotted the distribution of the manually binned prices, fill opacity set to relative frequency (x2).
+
+![usd-disc-dist](plots/arules/usd-disc-dist.png)
+
 ```{R}
 # manually
 ag$p <- ag$usd
@@ -297,16 +379,15 @@ Some quick new questions and thoughts:
 
 - What kind of Speed costs less than $10?
 - What kind of Speed costs more than $600? (or how much Speed)
-- the top rule is interesting, graphs and plots do not show many vendors - a26103 is likely to sell drugs and ship worldwide.
 - Hydrocodone is likely to come from the USA and cost between 10-150 dollars.
+- the top rule is interesting; graphs and plots do not show many vendors - 'a26103 is likely to sell drugs and ship worldwide'.
 
 
 # Grouped Matrix Plot
 
-![a3-g1-2](plots/arules/a3-g1-2.jpg)
-
 Initially I was plotting these individually and changing the list parameter `k` each time. Eventually I wrote a loop, and then would inspect the outputs in Adobe Bridge or Finder.
 
+![a3-g1-2](plots/arules/a3-g1-2.jpg)
 
 ```{r}
 # individual
@@ -332,7 +413,7 @@ for (i in 1:10) {
 
 ![r1-24 rules](plots/arules/a3-r1-24.jpg)
 
-Used 3 quality measure subsets for networks graphs:
+3 quality measure subsets were used for networks graphs:
 
 - Support, Confidence, and Lift
 - Lift
@@ -390,6 +471,8 @@ p1 <- plot(r1, method = "graph",
 ```
 
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
+
+
 
 
 

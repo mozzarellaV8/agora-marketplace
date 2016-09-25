@@ -66,20 +66,24 @@ summary(log.usd)
 #  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # -Inf   3.190   4.442    -Inf   5.671   9.903 
 exp(4.25)
-
-ag$log.usd <- log.usd
-nrow(ag) - 703
+exp(seq(4, 5, 0.25))
+# 54.59815  70.10541  90.01713 115.58428 148.41316
 
 ggplot(ag, aes(x = log.usd)) + 
   geom_histogram(binwidth = 0.25, color = "black", alpha = 0, size = 0.5) +
   scale_x_continuous(breaks = seq(-5, 10, 1)) +
-  theme_minimal(base_size = 14, base_family = "GillSans") +
-  theme(axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 12),
-        panel.grid.major = element_line(color = "gray72"),
+  theme_minimal(base_size = 16, base_family = "GillSans") +
+  theme(axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        panel.grid.major = element_line(color = "gray82"),
         plot.margin = unit(c(1, 1, 1, 1), "cm")) +
   labs(title = "log Distribution of Prices, n = 2316650",
        x = "", y = "")
+
+# Warning message:
+# Removed 703 rows containing non-finite values (stat_bin)
+# so: n = nrow(ag)-703
+nrow(ag) - 703
 
 # prep - actually discretize --------------------------------------------------
 
@@ -231,7 +235,7 @@ a2rules
 summary(a2rules)
 arules::inspect(head(a2rules, 20))
 arules::inspect(tail(a2rules, 20))
-arules::inspect(a2rules)[30:40, ]
+arules::inspect(a2rules)[101:111, ]
 
 # Plot Rules - Group -----------------------------------------------------------
 # plot(a2rules, method = "matrix", measure = "lift", main = "207 rules ~ lift")
