@@ -27,8 +27,9 @@ ag$sc <- paste(ag$subcat, ag$subsubcat, sep = ", ")
 levels(as.factor(ag$sc))
 ag$sc <- gsub("\\b,\\s$", "", ag$sc)
 
-head(levels(as.factor(ag$sc)))
+levels(as.factor(ag$sc))
 ag$sc <- factor(ag$sc) # 106 levels
+levels(ag$sc)
 
 # prep - discretize prices -----------------------------------------------------
 # but into cluster or interval?
@@ -247,7 +248,7 @@ plot(a2rules, method = "grouped", control = list(k = 36))
 # loop
 for (i in 1:10) {
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/rule-groups/g1-",i,".jpeg"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/rule-groups/g1-",i,".png"),
       width = 1800, height = 1400, pointsize = 20, bg = "transparent")
   
   k = i * 12
@@ -374,16 +375,183 @@ for (i in 1:80) {
   dev.off()
 }
 
-# Subset Rules ----------------------------------------------------------------
+# Subset by Category ----------------------------------------------------------
 
-drugs <- subset(a2rules, rhs %in% "c=Drugs")
-inspect(head(drugs))
-summary(drugs)
+# by category
+levels(ag.u$c)
+table(ag.u$c)
 
-plot(drugs, method = "graph")
+c.drugs <- subset(a2rules, rhs %in% "c=Drugs" | lhs %in% "c=Drugs")
+inspect(head(c.drugs))
+summary(c.drugs)
+
+# plot loop: Drugs
+for (i in 1:80) {
+  
+  tmp <- head(sort(c.drugs, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/cat/d1-drugs-",i,".png"),
+      width = 1800, height = 1400, pointsize = 20, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(64)
+  plot(tmp, method = "graph", 
+       main = paste(i, "rules ~ support + confidence + lift: 'Drugs'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#00688B85",
+       vertex.color = pdpal(100),
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+
+par(mfrow = c(1, 1), mar = c(1, 1, 1, 1), family = "GillSans")
+d1 <- head(sort(c.drugs, by = c("support", "confidence", "lift")), 24)
+dp1 <- plot(d1, method = "graph", layout = layout_with_dh,
+            main = "24 rules ~ Support + Confidence + Lift: 'Drugs'")
+
+c.data <- subset(a2rules, rhs %in% "c=Data" | lhs %in% "c=Data")
+d2 <- head(sort(c.data, by = c("support", "confidence", "lift")), 24)
+dp2 <- plot(d2, method = "graph", layout = layout_with_fr, 
+            main = "2 rules ~ Support + Confidence + Lift: 'Data'")
+
+c.info <- subset(a2rules, rhs %in% "c=Information" | lhs %in% "c=Information")
+d3 <- head(sort(c.info, by = c("support", "confidence", "lift")), 24)
+dp3 <- plot(d3, method = "graph", layout = layout_with_fr, 
+            main = "7 rules ~ Support + Confidence + Lift: 'Info'")
+
+c.services <- subset(a2rules, rhs %in% "c=Services" | lhs %in% "c=Services")
+d4 <- head(sort(c.services, by = c("support", "confidence", "lift")), 24)
+dp4 <- plot(d4, method = "graph", layout = layout_with_dh, 
+            main = "7 rules ~ Support + Confidence + Lift: 'Services'")
+
+# no rules found:
+# c.chemicals <- subset(a2rules, rhs %in% "c=Chemicals" | lhs %in% "c=Chemicals")
+# c.counterfeits <- subset(a2rules, rhs %in% "c=Counterfeits" | lhs %in% "c=Counterfeits")
+# c.drug.para <- subset(a2rules, rhs %in% "c=Drug paraphernalia" | lhs %in% "c=Drug paraphernalia")
+# c.electronics <- subset(a2rules, rhs %in% "c=Electronics" | lhs %in% "c=Electronics")
+# c.forgeries <- subset(a2rules, rhs %in% "c=Forgeries" | lhs %in% "c=Forgeries")
+# c.eBooks <- subset(a2rules, rhs %in% "c=Info/eBooks" | lhs %in% "c=Info/eBooks")
+# c.weapons <- subset(a2rules, rhs %in% "c=Weapons" | lhs %in% "c=Weapons")
+
+# Subset by Location ----------------------------------------------------------
+
+# define palette
+pdpal2 <- colorRampPalette(c("#FFE4C485", "#FFFFFF75", "#CD107685"), alpha = 0.85)
+pdpal2(100)
+
+# subset: USA
+f.usa <- subset(a2rules, rhs %in% "f=USA" | lhs %in% "f=USA")
+
+for (i in 35:73) {
+  
+  tmp <- head(sort(f.usa, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/location/f1-usa-",i,".png"),
+      width = 1800, height = 1400, pointsize = 17, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(64)
+  plot(tmp, method = "graph", 
+       main = paste(i, "rules ~ support + confidence + lift: 'USA'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#00688B85",
+       vertex.color = pdpal2(100),
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+
+# subset: UK
+f.uk <- subset(a2rules, rhs %in% "f=UK" | lhs %in% "f=UK")
+f2 <- plot(f.uk, method = "graph",
+           main = "21 rules ~ support + confidence + lift: 'UK'",
+           edge.color = "#00000025",
+           vertex.frame.color = "#8B0A5085",
+           vertex.color = pdpal2(100),
+           vertex.label.color = "grey8", 
+           vertex.label.cex = 1, layout = layout_with_dh,
+           vertex.label.dist = 0)
+
+for (i in 1:21) {
+  
+  tmp <- head(sort(f.uk, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/location/f2-uk-",i,".png"),
+      width = 1800, height = 1400, pointsize = 20, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(12)
+  plot(tmp, method = "graph",
+       main = paste(i, "rules ~ support + confidence + lift: 'UK'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#8B0A5085",
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+
+# subset: AUS
+f.aus <- subset(a2rules, rhs %in% "f=Australia" | lhs %in% "f=Australia")
+
+for (i in 1:21) {
+  
+  tmp <- head(sort(f.aus, by = c("support", "confidence", "lift")), i)
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/location/f3-aus-",i,".png"),
+      width = 1800, height = 1400, pointsize = 20, bg = "transparent")
+  
+  par(family = "GillSans")
+  
+  set.seed(6)
+  plot(tmp, method = "graph",
+       main = paste(i, "rules ~ support + confidence + lift: 'Australia'"),
+       edge.color = "#00000025",
+       vertex.frame.color = "#8B0A5085",
+       vertex.label.color = "grey8", 
+       vertex.label.cex = 1, layout = layout_with_dh,
+       vertex.label.dist = 0)
+  
+  dev.off()
+}
+
+
+# subset: locations
+f.agora <- subset(a2rules, rhs %in% "f=Agora/Internet/Torland" | lhs %in% "f=Agora/Internet/Torland")
+f.belgium <- subset(a2rules, rhs %in% "f=Belgium" | lhs %in% "f=Belgium")
+f.canada <- subset(a2rules, rhs %in% "f=Canada" | lhs %in% "f=Canada")
+f.china <- subset(a2rules, rhs %in% "f=China" | lhs %in% "f=China")
+f.eu <- subset(a2rules, rhs %in% "f=EU" | lhs %in% "f=EU")
+f.germany <- subset(a2rules, rhs %in% "f=Germany" | lhs %in% "f=Germany")
+f.netherlands <- subset(a2rules, rhs %in% "f=Netherlands" | lhs %in% "f=Netherlands")
+f.sweden <- subset(a2rules, rhs %in% "f=Sweden" | lhs %in% "f=Sweden")
+
+
+
+
+
+# As Data Frame ---------------------------------------------------------------
+
+# convert to dataframe
+a2rules.df <- as(a2rules, "data.frame")
+
+nations <- subset(a2rules.df, grepl("f=", a2rules.df$rules) == T)
+nations.rhs <- subset(a2rules.df, grepl("=>\\s\\{f=", a2rules.df$rules) == T)
+nations.rhs$rules
+
+
 
 # Extract Data Frame ----------------------------------------------------------
 
-a2g <- get.data.frame(ig, "both")
+drugs.df <- get.data.frame(drugs.ig, "both")
 plot(p1, layout=layout_with_fr, vertex.size = 18, vertex.label.cex = 0.55,
      vertex.color = "#00688B80")
