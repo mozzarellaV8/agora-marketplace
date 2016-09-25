@@ -58,7 +58,7 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 ```
-![usd dist x4](usd-dist-01.jpeg)
+![usd dist x4](plots/arules/usd-dist-01.jpeg)
 
 As suspected. One more curiousity - although the summary above shows a mean price of $426.40, the feeling is that outliers on high end are pulling that value up - a mean above the 3rd quartile seems to indicate something...
 
@@ -80,9 +80,9 @@ exp(c(4, 4.25, 4.5, 4.75, 5))
 ```
 ![log dist usd](plots/arules/usd-dist-02-log.jpeg)
 
-Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 adn 4.75 out. The spike at _about_ 0 seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
+Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
 
-_aside_: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that I don't consider an improvement. _smh_
+**_aside_**: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that I don't consider an improvement. **_smh_**
 
 ![gg log price dist](plots/arules/usd-dist-02-log-gg.png)
 
