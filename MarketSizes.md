@@ -49,7 +49,7 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 # Endnotes
 
-<sup>1</sup> The case is actually that there were _many_ more than 3 darknet markets at any given time. But many were not large enough to warrant attention. For this analysis, consideration of 3 markets defined as major would suffice. This can also be confirmed by searching [deepdotweb](http://deepdotweb.com) or consulting the appropriate [reddit](http://reddit.com/r/darknetmarkets) forums.
+<sup>1</sup> The case is actually that there were _many_ more than 3 darknet markets at any given time. But most were not large enough to warrant attention. For this analysis, consideration of 3 markets defined as major would suffice. Support for this can be found by searching [deepdotweb](http://deepdotweb.com) or consulting the appropriate [reddit](http://reddit.com/r/darknetmarkets) forums.
 
 <sup>2</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
 
