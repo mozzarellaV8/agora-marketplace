@@ -27,7 +27,7 @@ ag$sc <- paste(ag$subcat, ag$subsubcat, sep = ", ")
 levels(as.factor(ag$sc))
 ag$sc <- gsub("\\b,\\s$", "", ag$sc)
 
-levels(as.factor(ag$sc))
+head(levels(as.factor(ag$sc)))
 ag$sc <- factor(ag$sc) # 106 levels
 
 # prep - discretize prices -----------------------------------------------------

@@ -1,6 +1,21 @@
-# Agora Associations 03
+# Agora Association Rules
 
-outputs from the file `agora-associations-03.R`
+_outputs from the file `agora-associations-03.R`_
+
+```{R}
+
+library(arules)
+library(arulesViz)
+library(data.table)
+library(igraph)
+library(geomnet)
+library(ggplot2)
+library(anonymizer)
+
+a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
+```
+
+Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and to look at probabilities for different classes occurring as a means to advise in selecting features. While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. There's less of a chance for surprises when the range of items doesn't span Amazon's entire catalog.
 
 # Preparation
 
@@ -10,20 +25,65 @@ outputs from the file `agora-associations-03.R`
 ag <- subset(a, a$usd <= 20000) # 2319949
 ```
 
+Why subset for prices under $20,000? 
+
+Often on Agora there will be products listed at exorbitant prices.
+
+While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked(_cite_ [1] Economist [2] Demant, et al). The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
+
+An example of this 'mingling': sorting by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. 
+
+In some ways, this can be seen as a 'waitlist' for certain products. As opposed to buying a rare or one-of-a-kind item, to maintain a placeholder listing suggests at the very least a perceived demand for the product listed and renewable supply...more on this in another document.
+
+
 ## Combine Subcategories
 
+
 ```{r}
+# convert NA to blank
 ag$subcat <- as.character(ag$subcat)
 ag$subsubcat <- as.character(ag$subsubcat)
 ag$subcat[is.na(ag$subcat)] <- ""
 ag$subsubcat[is.na(ag$subsubcat)] <- ""
 
+# combine subcategory and sub-subcategory
 ag$sc <- paste(ag$subcat, ag$subsubcat, sep = ", ")
 levels(as.factor(ag$sc))
 ag$sc <- gsub("\\b,\\s$", "", ag$sc)
 
+# convert to factor
 levels(as.factor(ag$sc))
 ag$sc <- factor(ag$sc) # 106 levels
+```
+
+From the HTML, generally 3 categories could be extracted from each listing. These would range from high-level description (e.g. '**Drugs**') to finer-grain sub- and sub-subcategories (e.g. '**Cannabis**', '**Concentrates**') further down the menu. Each is it's own variable in the data, but they're inextricably linked by the listing itself.
+
+For the purposes of association rule mining, I decided to aggregate sub- and sub-subcategories into one variable so as to avoid numerous superflous itemsets and rules. It also provides a nicer description when plotted and still comes out to right number of levels as a factor. A look at the top:
+
+```{R}
+
+levels(ag$sc)
+  [1] "Accessories"                "Accounts"                  
+  [3] "Advertising"                "Aliens/UFOs"               
+  [5] "Ammunition"                 "Anonymity"                 
+  [7] "Barbiturates"               "Barbiturates, Barbiturates"
+  [9] "Benzos"                     "Cannabis"                  
+ [11] "Cannabis, Concentrates"     "Cannabis, Edibles"         
+ [13] "Cannabis, Hash"             "Cannabis, Seeds"           
+ [15] "Cannabis, Shake/trim"       "Cannabis, Synthetics"      
+ [17] "Cannabis, Weed"             "Clothing"                  
+ [19] "Containers"                 "Disassociatives"           
+ [21] "Disassociatives, GBL"       "Disassociatives, GHB"      
+ [23] "Disassociatives, Ketamine"  "Disassociatives, MXE"      
+ [25] "Disassociatives, Other"     "Dissociatives, GBL"        
+ [27] "Dissociatives, GHB"         "Dissociatives, Ketamine"   
+ [29] "Dissociatives, MXE"         "Dissociatives, Other"      
+ [31] "Dissociatives, PCP"         "Doomsday"                  
+ [33] "eBooks"                     "Economy"                   
+ [35] "Ecstasy"                    "Ecstasy, Ecstasy"          
+ [37] "Ecstasy, MDA"               "Ecstasy, MDMA"
+ ...
+
 ```
 
 ## Discretize Prices
@@ -35,6 +95,7 @@ Using discretize there was choice of whether to bin values by equal intervals or
 ```{R}
 # discretize prices - but into cluster or interval?
 ag$usd <- round(ag$usd, 2)
+
 summary(ag$usd)
 #  Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 # 0.00    24.28    84.97    426.40   290.20 20000.00
