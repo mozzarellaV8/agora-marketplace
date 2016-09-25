@@ -580,6 +580,8 @@ for (i in 1:80) {
 
 ![a3-r1-50 rulies](plots/arules/a3-r1-50.jpg)
 
+It wouldn't be appropriate to say 'cluster', but it's interesting to note which nodes have multiple edges - such 'c=Drugs' and 'p=$10-150'. Of course this reinforces exploratory discoveries of price and category distributions.
+
 ![r1-72 rules](plots/arules/a3-r1-72.jpg)
 
 
@@ -668,6 +670,9 @@ for (i in 1:21) {
   dev.off()
 }
 ```
+
+- to do: subset by price
+- select classes to calculate probabilities
 
 
 # References
