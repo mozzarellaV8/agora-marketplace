@@ -7,8 +7,8 @@ Contents:
 
 - [Preparation](#preparation)
 - [Discretize Prices](#discretize-prices)
-- [Anonymize Vendors](#anonymize-vendors)
-- [Transactions](#as-transactions)
+- [Anonymize Vendors](#anonymize-vendor-names)
+- [Transaction Conversion](#transaction-conversion)
 - [Frequent Itemsets](#frequent-itemsets)
 - [Mine Association Rules](#mine-association-rules)
 - [Grouped Matrix Plots](#grouped-matrix-plot)
@@ -28,11 +28,11 @@ library(anonymizer)
 a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 ```
 
-Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and to look at probabilities for different classes occurring as a means to advise in selecting features. 
+Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and looking at probabilities for different classes occurring as a means to advise in selecting features. 
 
 While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes<sup>[1](#references)</sup> - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
 
-That said, finding rules that traverse the network should still prove informative and interesting.
+That said - finding rules that traverse the network should still prove informative and interesting.
 
 # Preparation
 
@@ -46,7 +46,7 @@ Why subset for prices under $20,000?
 
 Often on Agora there will be products listed at exorbitant prices.
 
-While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#references)</sup><sup>,<sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
+While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#references)</sup>,<sup><sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
 
 An example of this 'mingling': sorting by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. 
 
@@ -160,31 +160,7 @@ exp(c(4, 4.25, 4.5, 4.75, 5))
 
 Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
 
-![gg log price dist](plots/arules/usd-dist-02-log-gg.png)
-
-```{R}
-
-ggplot(ag, aes(x = log.usd)) + 
-  geom_histogram(binwidth = 0.25, color = "black", alpha = 0, size = 0.5) +
-  scale_x_continuous(breaks = seq(-5, 10, 1)) +
-  theme_minimal(base_size = 14, base_family = "GillSans") +
-  theme(axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 12),
-        panel.grid.major = element_line(color = "gray82"),
-        plot.margin = unit(c(1, 1, 1, 1), "cm")) +
-  labs(title = "log Distribution of Prices, n = 2316650",
-       x = "", y = "")
-
-# Warning message:
-# Removed 703 rows containing non-finite values (stat_bin)
-# so: n = ...
-nrow(ag) - 703
-
-```
-
-**_aside_**: Depending on the variable scale, it can be annoying to manually label axes in base graphics; but maybe more annoying is when I spend too much time tweaking ggplot2 parameters to get a result that looks pretty much just like base graphics. **_smh_**
-
-Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session).
+Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
 
 ```{R}
 # manually discretize
@@ -215,7 +191,7 @@ ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
        x = "", y = "", colour = "", fill = "")
 ```      
 
-Above is a histogram of the manually binned prices, fill opacity set to relative frequency (x2) by some quick calculations.
+Above is a histogram of the manually binned prices, fill opacity set to relative frequency (x2) by some quick calculations:
 
 ``` {r}
 summary(ag$p)
@@ -230,7 +206,7 @@ summary(ag$p)
 230701/nrow(ag)   # 0.09955367
 ```
 
-# Anonymize Vendors
+# Anonymize Vendor Names
 
 I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all nicknames, as seen in the case of one vendor<sup>[4]((#references)</sup> even with just a handle a real identity could be found out. 
 
@@ -250,7 +226,7 @@ From reading the manual pages, `anonymize` salts then hashes a vector with a few
 
 In practical terms though, anyone caring to download the dataset could easily find the vendor names. Anonymization, in this case, is done less for security and mostly out of respect for privacy. 
 
-# As Transactions
+# Transaction Conversion
 
 - price
 - location
@@ -273,8 +249,8 @@ sizes
     5 
 30956 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      5       5       5       5       5       5 
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#      5       5       5       5       5       5 
 
 includes extended item information - examples:
           labels variables       levels
@@ -288,6 +264,47 @@ includes extended transaction information - examples:
 2             2
 3             3
 ```
+
+Item Frequency Plots:
+
+```{R}
+# Item Frequency Plot ---------------------------------------------------------
+
+par(mfrow = c(1, 1), mar = c(4, 12, 4, 4), family = "GillSans")
+itemFrequencyPlot(a2, support = 0.025, cex.names = 0.8, col = "white", horiz = T,
+                  main = "Agora Marketplace: Frequent Items (support > 0.025)")
+```
+
+![ItemFreqPlot](plots/arules/a3-ItemFreq-025.png)
+
+After multiple mining sessions, I'd begun to find it faster to use `for()` loops to create multiple plots quickly with different parameters. Certainly feels much more efficient than manually changing argument values or repeating too many code chunks. 
+
+# Item Frequency Plot Loop ----------------------------------------------------
+
+# define support intervals
+sup <- seq(0.000, 0.1, by = 0.005)
+sup
+sup[[12]]
+
+# plot loop
+for (i in 1:length(sup)) {
+  
+  par(mfrow = c(1, 1), mar = c(4, 12, 4, 4), family = "GillSans")
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/ifp/ItemFreq", sup[i], ".png"),
+      width = 1800, height = 1400, pointsize = 18, bg = "transparent")
+  
+  itemFrequencyPlot(a2, support = sup[i], cex.names = 0.8, col = "white", horiz = T,
+                    main = paste("Agora Marketplace: Frequent Items (support >", 
+                                 sup[i], ")"))
+  
+  dev.off()
+  
+}
+
+![ItemFreq 0.005](plots/arules/a3-ItemFreq-005.png)
+
+Eventually I settled on a minumum support of 0.0025 - half the threshold of the plot above. As a minimum support it might seem low, but would allow for a large range of itemsets and rules to be mined. 
 
 # Frequent Itemsets
 
@@ -309,8 +326,8 @@ element (itemset/transaction) length distribution:sizes
   2   3   4 
 382 305  51 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  2.000   2.000   2.000   2.551   3.000   4.000 
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  2.000   2.000   2.000   2.551   3.000   4.000 
 
 summary of quality measures:
     support        
@@ -328,8 +345,7 @@ mining info:
    a2         30956  0.0025          1
 ```
 
-Yielding 738 itemsets, with decent distribution among lengths.
-
+Yielding 738 itemsets, with decent distribution among itemset lengths.
 
 # Mine Association Rules
 
@@ -354,8 +370,8 @@ rule length distribution (lhs + rhs):sizes
   3   4 
 245  53 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  3.000   3.000   3.000   3.178   3.000   4.000 
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  3.000   3.000   3.000   3.178   3.000   4.000 
 
 summary of quality measures:
     support           confidence          lift        
