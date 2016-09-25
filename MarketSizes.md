@@ -44,6 +44,9 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 # Endnotes
 
+
+<sup>1</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
+
 <sup>2</sup>[United States of America vs. Blake Benthall](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf), [deepdotweb Agora timeline]().
 
 
