@@ -1,6 +1,7 @@
 # Agora Association Rules
 
-_outputs from the file `agora-associations-03.R`_
+- _outputs from the file `agora-associations-03.R`_
+- basic info on [Association Rule Mining](AssocationBasics.md)
 
 ```{R}
 
@@ -15,7 +16,11 @@ library(anonymizer)
 a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 ```
 
-Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and to look at probabilities for different classes occurring as a means to advise in selecting features. While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. There's less of a chance for surprises when the range of items doesn't span Amazon's entire catalog.
+Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and to look at probabilities for different classes occurring as a means to advise in selecting features. 
+
+While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
+
+That said, finding rules that traverse the network should still prove informative and interesting.
 
 # Preparation
 
