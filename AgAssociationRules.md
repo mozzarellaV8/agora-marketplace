@@ -485,7 +485,7 @@ Given the vast possibilities for numbers of rules, I'd generally plot the first 
 
 Again, would sort through the graphs in Finder to, 'chronologically' to see what might be interesting. One unexpected benefit to this method was being able to see hierarchically which rules were strongest. The strongest rules would plot first by this sorting, and more rules of less strength would get added to graphs down the loop. 
 
-From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because its the same code for the other groupings, with the `by` argument in the `sort` method changed. 
+From there, I might plot a few individual graphs with over ~100 rules. This was to see a how a really dense network might cluster or form relationships. In this document I'll just show graphing for _Support, Confidence, and Lift_ because it's the same code for the other groupings, with the `by` argument in the `sort` method changed. 
 
 
 ```{r}
