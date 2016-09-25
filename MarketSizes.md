@@ -25,9 +25,9 @@ In T1 we have 3 major markets in effect: Agora, Evolution, and Silk Road 2. T2 a
 
 Looking at Silk Road 2 and Evolution, and how their shutdowns affected the number of listings on Agora. 
 
-Imagine a global market or network suddenly shutting down. For example, what if Amazon.com suddenly ceased operations over the course of a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? Or, what would Twitter or Instagram traffic look like if Facebook suddenly shut down? 
+Imagine a global market or network suddenly shutting down. For example, what if Amazon.com suddenly ceased operations over the course of a week? What would traffic on Alibaba/Taobao, eBay, or Rakuten look like? Or, what would Twitter or Instagram traffic look like if Facebook suddenly shut down?<sup>1</sup>
 
-As an abstraction, this is essentially the sort of condition that darknet market Agora faced when rival markets Silk Road 2 and Evolution shut down. How did this affect the size of the market?<sup>1</sup>
+As an abstraction, this is essentially the sort of condition that darknet market Agora faced when rival markets Silk Road 2 and Evolution shut down. How did this affect the size of the market?
 
 
 ### before the Silk Road 2 shutdown
@@ -47,9 +47,9 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 <sup>1</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
 
-<sup>2</sup>[United States of America vs. Blake Benthall](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf), 
+<sup>2</sup>United States of America vs. Blake Benthall a/k/a "Defcon", [justice.gov](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
 
-<sup>3</sup>deepdotweb search: [Agora](https://www.deepdotweb.com/?s=Agora).
+<sup>3</sup>deepdotweb search: [Agora](https://www.deepdotweb.com/?s=Agora)
 
 
 
