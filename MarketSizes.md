@@ -36,7 +36,7 @@ Given the overdispersion issues in the quasi/poisson regression models on weekly
 
 Why should this be significant? At any given time, several darknet markets may exist. But in practical terms, there generally have been only 2-4 major markets (high usage rate) at play simultaneously. Markets have a tendency to gain traction as usage goes up - trust is established, word of mouth and reliable feedback spread.
 
-It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>2</sup> 
+It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>2</sup><sup>3</sup>.
 
 
 
@@ -47,7 +47,9 @@ It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-1
 
 <sup>1</sup>_While not a perfect comparison with the situation faced by Agora, the point I'm trying to make is that if a major resource suddenly disappeared, what effect would that have?_
 
-<sup>2</sup>[United States of America vs. Blake Benthall](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf), [deepdotweb Agora timeline]().
+<sup>2</sup>[United States of America vs. Blake Benthall](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf), 
+
+<sup>3</sup>deepdotweb search: [Agora](https://www.deepdotweb.com/?s=Agora).
 
 
 
