@@ -89,6 +89,8 @@ summary(ag$v3)
 - vendor (anonymized SHA256 and abbreviated)
 
 ### Transactions - Full
+
+```{r}
 summary(a2)
 transactions as itemMatrix in sparse format with
  2317353 rows (elements/itemsets/transactions) and
@@ -117,6 +119,7 @@ includes extended transaction information - examples:
 1             1
 2             2
 3             3
+```
 
 
 ### Transactions - Unique
@@ -325,7 +328,7 @@ for (i in 1:10) {
 
 # Network Graphs
 
-![r1-24 rules](plots/arules/a3-r1-24.png)
+![r1-24 rules](plots/arules/a3-r1-24.jpg)
 
 Used 3 quality measure subsets for networks graphs:
 
@@ -382,7 +385,7 @@ p1 <- plot(r1, method = "graph",
 
 ```
 
-![r1-72 rules](plots/arules/a3-r1-72.png)
+![r1-72 rules](plots/arules/a3-r1-72.jpg)
 
 
 
