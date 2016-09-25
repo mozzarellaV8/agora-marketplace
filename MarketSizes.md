@@ -12,7 +12,29 @@ At the start of 2014, Agora was one of 3 major darknet markets for vendors to ch
 
 # QuasiPoisson Regression
 
-Facing overdispersion issues in my initial Poisson model on the population of counts, I received a few suggestions from my mentor. Given the choice between Generalized Boosted Modeling and Piecewise Regression, I opted for Piecewise. While interested in learning `gbm`, given domain knowledge of the variable clusters I fear the model could be overfit using `gbm`. Additionally, I recalled that competing darknet market Silk Road 2 shut down in early October 2014. This domain information could correlate to the overdispersion, and observed clustering of count data.
+Facing under- and over-dispersion issues in my initial Poisson model on the population of counts, I received a few suggestions from my mentor. Given the choice between Generalized Boosted Modeling and Piecewise Regression, I opted for Piecewise. While interested in learning `gbm`, given domain knowledge of the variable clusters I fear the model could be overfit using `gbm`. Additionally, I recalled that competing darknet market Silk Road 2 shut down in early October 2014. This domain information could correlate to the overdispersion, and observed clustering of count data.
+
+The original quasipoisson regression, on the population of weekly count data, a touch underdispersed but causing lots of problems when used to predict:
+
+```{r}
+qmw02 <- glm(count ~ week, data = wk, 
+             family = quasi(link = "log", variance = "mu^2"))
+
+summary(qmw02)
+#                 Estimate  Std. Error  t value           Pr(>|t|)
+#  (Intercept) -96.0231972  10.3609211  -9.268 0.00000000000007527 ***
+#  week          0.0064864   0.0006337  10.236 0.00000000000000128 ***
+#
+# (Dispersion parameter for quasi family taken to be 0.8623852)
+#
+#     Null deviance: 175.35  on 72  degrees of freedom
+# Residual deviance: 125.06  on 71  degrees of freedom
+# AIC: NA
+# Number of Fisher Scoring iterations: 13
+```
+
+
+
 
 With a piecewise regression, the goal will be to examine how shutdowns of other markets affects listing counts on Agora Market.
 
@@ -40,6 +62,8 @@ Given the overdispersion issues in the quasi/poisson regression models on weekly
 Why should this be significant? At any given time, several darknet markets may exist. But in practical terms, there generally have been only 2-4 major markets (high usage rate) at play simultaneously. Markets have a tendency to gain traction as usage goes up - trust is established, word of mouth and reliable feedback spread.
 
 It can be seen during the interval of SR2's shutdown (~2014-09-20 through 2014-10-10) that the number of product listings on Agora more than doubles, when it previously never had. The interval of the SR2 shutdown is set wide to account for spread of this knowledge - from LE filing to media reports <sup>3</sup><sup>,</sup><sup>4</sup>.
+
+
 
 ## after SR2
 
