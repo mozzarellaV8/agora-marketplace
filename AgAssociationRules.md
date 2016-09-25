@@ -280,6 +280,8 @@ itemFrequencyPlot(a2, support = 0.025, cex.names = 0.8, col = "white", horiz = T
 
 After multiple mining sessions, I'd begun to find it faster to use `for()` loops to create multiple plots quickly with different parameters. Certainly feels much more efficient than manually changing argument values or repeating too many code chunks. 
 
+```{R}
+
 # Item Frequency Plot Loop ----------------------------------------------------
 
 # define support intervals
@@ -302,6 +304,7 @@ for (i in 1:length(sup)) {
   dev.off()
   
 }
+```
 
 ![ItemFreq 0.005](plots/arules/a3-ItemFreq-005.png)
 
