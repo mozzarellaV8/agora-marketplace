@@ -6,9 +6,9 @@ Given domain information, it could be inferred that count data were affected by 
 
 At the start of 2014, Agora was one of 3 major darknet markets for vendors to choose from<sup>1</sup>. The other markets were Silk Road 2 and Evolution. Within the timeframe the data covers, both SR2 and Evolution shut down. 
 
--[QuasiPoisson Regression](#quasipoisson-regression)
--[External Market Influences](#external-market-influences)
--[Endnotes](#endnotes)
+- [QuasiPoisson Regression](#quasipoisson-regression)
+- [External Market Influences](#external-market-influences)
+- [Endnotes](#endnotes)
 
 # QuasiPoisson Regression
 
