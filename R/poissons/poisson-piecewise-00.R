@@ -28,21 +28,26 @@ wk$week <- as.Date(wk$week)
 
 # split is determined by Silk Road 2 (SR2) shut down date - 
 # an interval loosely defined between 2014-09-29 - 2014-11-06
-weekly00 <- wk[1:40, ]
-weekly01 <- wk[1:36, ]
-weekly02 <- wk[37:73, ]
-weekly03 <- wk[33:73, ]
-weekly04 <- wk[21:72, ]
+
+weekly00 <- wk[1:36, ]    # pre-SR2 - before complaint 
+weekly01 <- wk[1:41, ]    # through-SR2  (2014-11-06)
+weekly02 <- wk[36:73, ]   # through-post-SR2
+weekly03 <- wk[33:73, ]   # through-post-SR2
+weekly04 <- wk[41:73, ]   # post-SR2    (2014-11-07 - 2015-07-07)
+weekly05 <- wk[21:72, ]   # June 2014 to June 2015
 
 # date sequences for plot labels
-dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month")
-dates00 <- seq(as.Date("2014-01-01"), as.Date("2014-11-14"), by = "month")
-dates01 <- seq(as.Date("2014-01-01"), as.Date("2014-10-01"), by = "month")
-dates02 <- seq(as.Date("2014-10-01"), as.Date("2015-07-01"), by = "month")
-dates03 <- seq(as.Date("2014-09-01"), as.Date("2015-07-01"), by = "month")
-dates04 <- seq(as.Date("2014-06-01"), as.Date("2015-06-30"), by = "month")
+dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month") # population
 
-# observed values pre-SR shutdown ---------------------------------------------
+dates00 <- seq(as.Date("2014-01-01"), as.Date("2014-10-01"), by = "month") # pre-SR2
+dates01 <- seq(as.Date("2014-01-01"), as.Date("2014-11-07"), by = "month") # through-SR2
+dates02 <- seq(as.Date("2014-09-28"), as.Date("2015-07-07"), by = "month") # through-post-SR2
+dates03 <- seq(as.Date("2014-09-07"), as.Date("2015-07-07"), by = "month") # through-post-SR2
+
+dates04 <- seq(as.Date("2014-11-01"), as.Date("2015-07-07"), by = "month") # post-SR2
+dates05 <- seq(as.Date("2014-06-01"), as.Date("2015-06-30"), by = "month") # junes
+
+# observed values pre-SR wk00 -------------------------------------------------
 # for editing (consider - RUG as GRID):
 # tufte.breaks01 <- weekly01$count
 # tb02 <- weekly02$count
@@ -51,38 +56,15 @@ dates04 <- seq(as.Date("2014-06-01"), as.Date("2015-06-30"), by = "month")
 # tufte.sorted <- tufte.breaks01[order(tufte.breaks01, decreasing = T)]
 # write(tufte.sorted, file = "~/GitHub/agora-local-market/info/tufte.txt")
 
-wk01.01 <- ggplot(weekly01, aes(week, count)) +
-  geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
-#  geom_rug(aes(week, count), sides = "l", colour = "firebrick3", size = 0.5) +
-#  geom_line(aes(week, qm02.fitted), size = 0.75, alpha = 0.5,
-#            colour = "steelblue3", linetype = "dashed") +
-  
-  scale_y_continuous(limits = c(0, 40000)) +
-  scale_x_date(breaks = dates01, labels = c("2014 • January", "Feb", "Mar", "Apr", "May", 
-                                            "June", "July", "Aug", "Sept", "Oct")) + 
-  
-  theme_minimal(base_size = 12, base_family = "GillSans") +
-  theme(axis.text.x = element_text(size = 12, angle = 0, vjust = 1),
-        axis.text.y = element_text(size = 12),
-        axis.title.y = element_text(family = "Times New Roman", face = "italic",
-                                    margin = margin(0, 20, 0, 0))) +
-  theme(panel.grid.major = element_line(colour = "gray80"),
-        plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
-  labs(title = substitute(
-    paste("Observed Product Listings ~ Week (Jan 2014 - Oct 2014)")), 
-    x = "", y = "number of product listings")
-
-# observed values pre-SR shutdown expanded ------------------------------------
-
 wk01.00 <- ggplot(weekly00, aes(week, count)) +
   geom_point(size = 3.25, color = "firebrick3", alpha = 1) + 
 #  geom_line(aes(week, qm02.fitted), size = 0.75, alpha = 0.5, 
-#            colour = "steelblue3", linetype = "dashed") +
+#           colour = "steelblue3", linetype = "dashed") +
   
-  scale_y_continuous(limits = c(0, 100000)) +
+  scale_y_continuous(limits = c(0, 50000)) +
   scale_x_date(breaks = dates00, labels = c("2014 • January", "Feb", "Mar", 
                                             "Apr", "May", "June", "July", 
-                                            "Aug", "Sept", "Oct", "Nov")) + 
+                                            "Aug", "Sept", "Oct")) + 
   
   theme_minimal(base_size = 14, base_family = "GillSans") +
   theme(axis.text.x = element_text(size = 14, angle = 0, vjust = 1),
@@ -93,12 +75,47 @@ wk01.00 <- ggplot(weekly00, aes(week, count)) +
         plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
   
   labs(title = substitute(
-    paste("Observed Product Listings ~ Week (Jan 2014 - Nov 2014)")), x = "",
+    paste("Observed Product Listings ~ Week (Jan 2014 - Oct 2014)")), x = "",
     y = "number of product listings")
 
 wk01.00
 
-# observed values post-SR shutdown --------------------------------------------
+# observed values pre-SR shutdown wk01-----------------------------------------
+wk01.01 <- ggplot(weekly01, aes(week, count)) +
+  geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
+#  geom_rug(aes(week, count), sides = "l", colour = "firebrick3", size = 0.5) +
+#  geom_line(aes(week, qm02.fitted), size = 0.75, alpha = 0.5,
+#            colour = "steelblue3", linetype = "dashed") +
+  
+  scale_y_continuous(limits = c(0, 100000)) +
+  scale_x_date(breaks = dates01, labels = c("2014 • January", "Feb", "Mar", "Apr", "May", 
+                                            "June", "July", "Aug", "Sept", "Oct", "Nov")) + 
+  
+  theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(axis.text.x = element_text(size = 12, angle = 0, vjust = 1),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(family = "Times New Roman", face = "italic",
+                                    size = 13, margin = margin(0, 20, 0, 0)) ) +
+  theme(panel.grid.major = element_line(colour = "gray80"),
+        plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
+  labs(title = substitute(
+    paste("Observed Product Listings ~ Week (Jan 2014 - Nov 2014)")), 
+    x = "", y = "number of product listings")
+
+wk01.01 + annotate("text", x = as.Date("2014-09-25"), y = 38379, label = "SR2 complaint filed",
+                   family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) + 
+  annotate("segment", x = as.Date("2014-09-28"), xend = as.Date("2014-11-06"), y = 38379, yend = 38379,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-09-28"), xmax = as.Date("2014-11-06"), ymin = 0, ymax = 38379,
+           fill = "bisque3", alpha = 0.125) +
+  annotate("text", x = as.Date("2014-10-25"), y = 98240, label = "SR2 shut down",
+           family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) +
+  annotate("segment", x = as.Date("2014-10-28"), xend = as.Date("2014-11-06"), y = 98240, yend = 98240,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-10-28"), xmax = as.Date("2014-11-06"), ymin = 0, ymax = 98240,
+           fill = "bisque4", alpha = 0.125)
+
+# observed values post-SR wk02 ------------------------------------------------
 
 wk01.02 <- ggplot(weekly02, aes(week, count)) +
   geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
@@ -111,60 +128,115 @@ wk01.02 <- ggplot(weekly02, aes(week, count)) +
   scale_x_date(breaks = dates02, labels = c("Oct", "Nov", "December\n2014",
                                             "January\n2015", "Feb", "Mar", "Apr", 
                                             "May", "June", "July")) +
-  
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(panel.grid.major = element_line(colour = "gray85"),
         plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
   theme(axis.text.x = element_text(size = 12, angle = 0, vjust = 1),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(family = "Times New Roman", face = "italic",
-                                    margin = margin(0, 30, 0, 0))) +
-  
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
   labs(title = "Observed Product Listings ~ Week, post-SR2 shutdown (Oct 2014 - July 2015)", 
        x = "", y = "number of product listings") 
 
-# observed values - Population -----------------------------------------
+wk01.02 + annotate("text", x = as.Date("2014-09-28"), y = 40379, label = "SR2 complaint filed",
+                   family = "Times New Roman", fontface = "italic", size = 4, hjust = 0) + 
+  annotate("segment", x = as.Date("2014-09-28"), xend = as.Date("2014-11-06"), y = 38379, yend = 38379,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-09-28"), xmax = as.Date("2014-11-06"), ymin = 0, ymax = 38379,
+           fill = "bisque3", alpha = 0.125) +
+  annotate("text", x = as.Date("2014-10-25"), y = 98240, label = "SR2 shut down",
+           family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) +
+  annotate("segment", x = as.Date("2014-10-28"), xend = as.Date("2014-11-06"), y = 98240, yend = 98240,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-10-28"), xmax = as.Date("2014-11-06"), ymin = 0, ymax = 98240,
+           fill = "bisque4", alpha = 0.125)
+
+# observed values - postSR2 - wk03 --------------------------------------------
 # annotate with seperate script or below
 
 wk01.03 <- ggplot(weekly03, aes(week, count)) +
   geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
-  
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates03, labels = c("Sept", "Oct", "Nov", "December\n2014",
                                             "January\n2015", "Feb", "Mar", "Apr", 
                                             "May", "June", "July")) + 
-  
   theme_minimal(base_size = 12.5, base_family = "GillSans") +
-  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) 
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
   theme(axis.text.x = element_text(size = 12, angle = 0),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(family = "Times New Roman", face = "italic",
-                                    margin = margin(0, 30, 0, 0))) +
-  
-  labs(title = "Observed Listing Count ~ Week, post-SR2 shutdown (Oct 2014 - July 2015)", 
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
+  labs(title = "Observed Listing Count ~ Week, post-SR2 shutdown (Sept 2014 - July 2015)", 
        x = "", y = "number of product listings")
+
+wk01.03 + annotate("text", x = as.Date("2014-09-28"), y = 40379, label = "SR2 complaint filed",
+                   family = "Times New Roman", fontface = "italic", size = 4, hjust = 0) + 
+  annotate("segment", x = as.Date("2014-09-28"), xend = as.Date("2014-11-10"), y = 38379, yend = 38379,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-09-28"), xmax = as.Date("2014-11-10"), ymin = 0, ymax = 38379,
+           fill = "bisque3", alpha = 0.125) +
+  annotate("text", x = as.Date("2014-10-25"), y = 98240, label = "SR2 shut down",
+           family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) +
+  annotate("segment", x = as.Date("2014-10-28"), xend = as.Date("2014-11-10"), y = 98240, yend = 98240,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-10-28"), xmax = as.Date("2014-11-10"), ymin = 0, ymax = 98240,
+           fill = "bisque4", alpha = 0.125)
+
+# observed values - postSR2 - wk04 --------------------------------------------
+
+wk01.04 <- ggplot(weekly04, aes(week, count)) +
+  geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
+  scale_y_continuous(limits = c(0, 100000)) +
+  scale_x_date(breaks = dates04, labels = c("Nov", "December\n2014",
+                                            "January\n2015", "Feb", "Mar", "Apr", 
+                                            "May", "June", "July")) + 
+  theme_minimal(base_size = 12.5, base_family = "GillSans") +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.10, 0.25), "cm")) +
+  theme(axis.text.x = element_text(size = 12, angle = 0),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(family = "Times New Roman", face = "italic",
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
+  labs(title = "Observed Listing Count ~ Week, post-SR2 shutdown (Nov 2014 - July 2015)", 
+       x = "", y = "number of product listings")
+
+wk01.04 + annotate("text", x = as.Date("2014-11-11"), y = 98240, label = "SR2 shut down",
+           family = "Times New Roman", fontface = "italic", size = 4, hjust = 0) +
+  annotate("segment", x = as.Date("2014-10-28"), xend = as.Date("2014-11-08"), y = 98240, yend = 98240,
+           arrow = arrow(ends = "last", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-10-28"), xmax = as.Date("2014-11-08"), ymin = 0, ymax = 98240,
+           fill = "bisque4", alpha = 0.125)
 
 # plot observed population ----------------------------------------------------
 
-wk01.04 <- ggplot(wk, aes(week, count)) +
+wk01 <- ggplot(wk, aes(week, count)) +
   geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
-    
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates, labels = c("Jan", "Feb", "Mar", "Apr", "May", "June", 
                                             "July", "Aug", "Sept", "Oct", "Nov", "December\n2014",
                                             "January\n2015", "Feb", "Mar", "Apr", 
                                             "May", "June", "July")) +
-    
   theme_minimal(base_size = 12.5, base_family = "GillSans") +
   theme(plot.margin = unit(c(0.25, 0.75, 0.25, 0.25), "cm"),
         panel.border = element_rect(colour = "gray85", fill = NA, size = 0.5)) +
   theme(axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(family = "Times New Roman", face = "italic",
-                                    margin = margin(0, 30, 0, 0))) +
-    
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
   labs(title = "Observed Listing Count ~ Week (Jan 2014 - July 2015)", x = "", 
        y = "number of product listings")
+
+wk01 + annotate("text", x = as.Date("2014-09-24"), y = 38379, label = "SR2 complaint filed",
+                family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) + 
+  annotate("segment", x = as.Date("2014-09-28"), xend = as.Date("2014-11-08"), y = 38379, yend = 38379,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-09-28"), xmax = as.Date("2014-11-08"), ymin = 0, ymax = 38379,
+           fill = "bisque3", alpha = 0.125) +
+  annotate("text", x = as.Date("2014-10-25"), y = 98240, label = "SR2 shut down",
+           family = "Times New Roman", fontface = "italic", size = 4, hjust = 1) +
+  annotate("segment", x = as.Date("2014-10-28"), xend = as.Date("2014-11-08"), y = 98240, yend = 98240,
+           arrow = arrow(ends = "both", angle = 90, length = unit(0.3, "cm"))) +
+  annotate("rect", xmin = as.Date("2014-10-28"), xmax = as.Date("2014-11-08"), ymin = 0, ymax = 98240,
+           fill = "bisque4", alpha = 0.125)
 
 # POISSON REGRESSION MODELS ---------------------------------------------------
   
@@ -234,22 +306,35 @@ pop00p
 
 # pre-SR2 Poisson Regression 00 -----------------------------------------------  
 
+preSR2.00a <- glm(count ~ week, data = weekly00, family = "poisson")
+summary(preSR2.00a)
+#                  Estimate   Std. Error t value Pr(>|t|)  
+# (Intercept) -96.96243445   0.40821143  -237.5 <0.0000000000000002 ***
+# week          0.00653031   0.00002513   259.9 <0.0000000000000002 ***
+#     Null deviance: 341449  on 35  degrees of freedom
+# Residual deviance: 268766  on 34  degrees of freedom
+# AIC: 269099
+
+# Highly overdispersed but with strong effect.
+
 preSR2.00 <- glm(count ~ week, data = weekly00,
                  family = quasi(link = "log", variance = "mu^2"))
   
 summary(preSR2.00)
-#                  Estimate  Std. Error t value Pr(>|t|)    
-#   (Intercept) -124.034443   32.243948  -3.847 0.000444 ***
-#   week           0.008206    0.001987   4.129 0.000192 ***
-#   (Dispersion parameter for quasi family taken to be 1.211514)
-#     Null deviance: 127.24  on 39  degrees of freedom
-# Residual deviance: 103.71  on 38  degrees of freedom
+#                  Estimate Std. Error t value Pr(>|t|)  
+#   (Intercept) -91.379087  37.463816  -2.439   0.0201 *
+#   week          0.006186   0.002311   2.676   0.0114 *
+
+# (Dispersion parameter for quasi family taken to be 1.191639)
+
+#     Null deviance: 109.04  on 35  degrees of freedom
+# Residual deviance: 100.35  on 34  degrees of freedom
 # AIC: NA
 
-# Intersting Dispersion parameter: 1.21. Would seem to indicate slight
-# overdispersion. Small effect observed with null:resid deviances;
-# 104:38 resid deviance:degrees of freedom is higher than I would've guessed
-# with that parameter.
+# Number of Fisher Scoring iterations: 11
+
+# Just a touch overdispersed at 1.19 but very close.
+# But `week` is not showing up as significant...
 
 wk00 <- tidy(preSR2.00, conf.int = T)
 
@@ -269,6 +354,7 @@ tidy(pre00lm, conf.int = T)
 # plot Weekly00 ---------------------------------------------------------------
 
 weekly00$pre00.fitted <- preSR2.00$fitted.values
+weekly00$pre00pm.fitted <- preSR2.00$fitted.values
 weekly00$pre00lm.fitted <- pre00lm$fitted.values
 
 pre00p <- ggplot(weekly00, aes(week, count)) + 
@@ -282,7 +368,7 @@ pre00p <- ggplot(weekly00, aes(week, count)) +
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates00,
                labels = c("2014 • January", "Feb", "Mar", "Apr", "May", 
-                          "June", "July", "Aug", "Sept", "Oct", "Nov")) + 
+                          "June", "July", "Aug", "Sept", "Oct")) + 
   
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(panel.border = element_rect(color = "gray85", fill = NA, size = 0.5),
@@ -290,7 +376,7 @@ pre00p <- ggplot(weekly00, aes(week, count)) +
         axis.text.x = element_text(size = 13.8, angle = 0, vjust = 1),
         axis.text.y = element_text(size = 13.8),
         axis.title.y = element_text(family = "Times New Roman", face = "italic", 
-                                    margin = margin(0, 30, 0, 0))) +
+                                    size = 14,  margin = margin(0, 30, 0, 0))) +
   
   labs(title = substitute(
     paste("QuasiPoisson (", sigma^2, " = ", mu^2, ") Regressions on Product Listings ~ Week (pre-SR2 shutdown)")), 
@@ -302,54 +388,45 @@ preSR2.01 <- glm(count ~ week, data = weekly01,
                  family = quasi(link = "log", variance = "mu^2"))
 summary(preSR2.01)
 #                Estimate Std. Error t value Pr(>|t|)  
-#   (Intercept) -91.379087  37.463816  -2.439   0.0201 *
-#   week          0.006186   0.002311   2.676   0.0114 *
+#   (Intercept) -130.851987   30.722299  -4.259 0.000125 ***
+#   week           0.008628    0.001893   4.557  0.00005 ***
 
-# (Dispersion parameter for quasi family taken to be 1.191639)
+# (Dispersion parameter for quasi family taken to be 1.186086)
 
-# Null deviance: 109.04  on 35  degrees of freedom
-# Residual deviance: 100.35  on 34  degrees of freedom
+#     Null deviance: 132.68  on 40  degrees of freedom
+# Residual deviance: 104.33  on 39  degrees of freedom
 # AIC: NA
-# Number of Fisher Scoring iterations: 11
+# Number of Fisher Scoring iterations: 12
 
-# slight overdispersion: 1.19. This still ends up being the best model,
-# and falls in line with the hypothesis of utmost stability when 
-# other markets don't exert influence (aka collapse and send traffic).
-
-
-
-
-
-
-
-
+# slight overdispersion: 1.18. Week is deemed significant, and seeing a stronger
+# effect comparing the Null and Residual deviances.
 
 # pre-SR2 - Standard Poisson Regresssion 01 -----------------------------------
 pre01pm <- glm(count ~ week, data = weekly01, family = "poisson")
 summary(pre01pm)
 
 #                  Estimate   Std. Error z value            Pr(>|z|)
-# (Intercept) -96.96243445   0.40821143  -237.5 <0.0000000000000002 ***
-# week          0.00653031   0.00002513   259.9 <0.0000000000000002 ***
-#     Null deviance: 341449  on 35  degrees of freedom
-# Residual deviance: 268766  on 34  degrees of freedom
+# (Intercept) -171.10915966    0.31394739  -545.0 <0.0000000000000002 ***
+# week           0.01110211    0.00001926   576.5 <0.0000000000000002 ***
+#     Null deviance: 806719  on 40  degrees of freedom
+# Residual deviance: 379800  on 39  degrees of freedom
 
 mv <- c(mean(weekly01$count), var(weekly01$count))
-#  8199.167 82139887.229
+#  13441.76 373468348.04
 
-8199.167^2
-67226339/82139887.229
-# 0.8184372 - mean squared ends up as 82% of the variance.
+13441.76^2
+180680912/373468348.04
+# 0.4837918 - mean squared ends up as 48% of the variance.
 
 var(weekly01$count)/mean(weekly01$count)
-# 10018.08 times
+#  27784.19 times
 
 # 5% critical value for chi-squared with 34 d.f.
 qchisq(0.95, df.residual(pre01pm))
-# 48.60237
+# 54.57223
 
 deviance(pre01pm)
-# 268766.2
+# 379800.5
 
 pr <- residuals(pre01pm,"pearson")
 sum(pr^2)
@@ -371,42 +448,21 @@ summary(pre01qm)
 # week estimate pm/qpm
 0.00002513/0.002236
 
-
-# pre-SR2 Poisson Regression 02 -----------------------------------------------
-preSR2.02 <- glm(count ~ week + wk, data = weekly01, 
-                 family = quasi(link = "log", variance = "mu^2"))
-summary(preSR2.02)
-# Estimate Std. Error t value             Pr(>|t|)    
-# (Intercept) -87.950514  32.704284  -2.689              0.01142 *  
-#   week          0.005986   0.002019   2.965              0.00578 ** 
-#   wkw2          7.677865   0.447491  17.158 < 0.0000000000000002 ***
-#   wkw3         -0.234265   0.448160  -0.523              0.60488    
-#   wkw4          0.296537   0.449273   0.660              0.51410   
-
-# (Dispersion parameter for quasi family taken to be 0.9002182)
-
-# Null deviance: 109.04  on 35  degrees of freedom
-# Residual deviance: 234.42  on 31  degrees of freedom
-# AIC: NA
-# Number of Fisher Scoring iterations: 25
-
-# very slight underdispersion: 0.90
-
 # pre-SR2 Linear Model --------------------------------------------------------
 preSR2.lm01 <- lm(count ~ week, data = weekly01)
 summary(preSR2.lm01)
 #                 Estimate Std. Error t value Pr(>|t|)   
-#   (Intercept) -820405.77  281775.43  -2.912  0.00631 **
-#   week             51.12      17.38   2.941  0.00585 **
+#   (Intercept) -2043014.15   443146.05  -4.610 0.0000425 ***
+#   week             126.73       27.31   4.641 0.0000386 ***
 
 # Residual standard error: 8210 on 34 degrees of freedom
-# Multiple R-squared:  0.2028,	Adjusted R-squared:  0.1793 
-# F-statistic: 8.648 on 1 and 34 DF,  p-value: 0.005855
+# Multiple R-squared:  0.3558,	Adjusted R-squared:  0.3392  
+# F-statistic: 21.54 on 1 and 39 DF,  p-value: 0.00003865
 
 weekly01$qSR201.fitted <- preSR2.01$fitted.values
-weekly01$qSR202.fitted <- preSR2.02$fitted.values
 weekly01$lm.fitted <- preSR2.lm01$fitted.values
-write.csv(weekly01, file = "wk2-preSR2.csv", row.names = F)
+weekly01$pop.fitted <-wk$pop00.fitted[1:41]
+# write.csv(weekly01, file = "wk2-preSR2.csv", row.names = F)
 
 # plot Weekly 01  --------------------------------------------------------
 preSR2.01p <- ggplot(weekly01, aes(week, count)) + 
@@ -415,53 +471,51 @@ preSR2.01p <- ggplot(weekly01, aes(week, count)) +
   geom_point(size = 2.5, colour = "deepskyblue3", shape = 1, aes(week, qSR201.fitted)) +
   geom_line(colour = "deepskyblue3", linetype = "solid", size = 1.25,  aes(week, qSR201.fitted)) +
   geom_line(size = 0.5, alpha = 0.75, colour = "deepskyblue4", 
-            linetype = "dotted", aes(week, qm02.fitted)) +
-  
-  scale_y_continuous(limits = c(0, 40000)) +
+            linetype = "dotted", aes(week, pop.fitted)) +
+  scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates01,
                labels = c("2014 • January", "Feb", "Mar", "Apr", "May", 
-                          "June", "July", "Aug", "Sept", "Oct")) + 
-  
+                          "June", "July", "Aug", "Sept", "Oct", "Nov")) + 
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(panel.border = element_rect(color = "gray85", fill = NA, size = 0.5),
         plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
   theme(axis.text.x = element_text(size = 12, angle = 0, vjust = 1),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(family = "Times New Roman", face = "italic", 
-                                    margin = margin(0, 30, 0, 0))) +
-  
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
   labs(title = substitute(
     paste("QuasiPoisson (", sigma^2, " = ", mu^2, ") Regressions on Product Listings ~ Week (pre-SR2 shutdown)")), 
     x = "", y = "number of product listings")
 
 # post-SR2 Poisson Regression -------------------------------------------------
 
-post.sr2.q01 <- glm(count ~ week, data = weekly02, 
+post.sr2.q01 <- glm(count ~ week, data = weekly02,
                     family = quasi(link = "log", variance = "mu^2"))
 summary(post.sr2.q01)
 #                 Estimate Std. Error t value Pr(>|t|)    
-#   (Intercept) 37.178701  13.205921   2.815  0.00795 **
-#   week        -0.001594   0.000801  -1.990  0.05449 .
-# (Dispersion parameter for quasi family taken to be 0.7515571)
-#     Null deviance: 8.9039  on 36  degrees of freedom
-# Residual deviance: 8.3513  on 35  degrees of freedom
+#   (Intercept) 32.7194087 12.8119455   2.554   0.0150 *
+#   week        -0.0013239  0.0007773  -1.703   0.0971 .
+
+# (Dispersion parameter for quasi family taken to be 0.1582069)
+#     Null deviance: 9.0146  on 37  degrees of freedom
+# Residual deviance: 8.6089  on 36  degrees of freedom
 # AIC: NA
-# Number of Fisher Scoring iterations: 5
+# Number of Fisher Scoring iterations: 4
 
 # Highly Underdispersed - counts became unstable after the SR2 shutdown.
 
 post.sr2.q02 <- glm(count ~ week, data = weekly02, family = "poisson")
 summary(post.sr2.q02)
-#     Null deviance: 360363  on 36  degrees of freedom
-# Residual deviance: 333234  on 35  degrees of freedom
+#     Null deviance: 365738  on 37  degrees of freedom
+# Residual deviance: 346336  on 36  degrees of freedom
 
 # Highly overdispersed without the quasi parameter; model has weak effect.
 
 # linear model comparison
 post.sr2.lm01 <- lm(count ~ week, data = weekly02)
 summary(post.sr2.lm01)
-# Multiple R-squared:  0.08578,	Adjusted R-squared:  0.05966 
-# and no significance in the coefficients, (week$Pr(>|t| = 0.0785)),
+# Multiple R-squared:  0.05998,	Adjusted R-squared:  0.03387  
+# and no significance in the coefficients, (week$Pr(>|t| = 0.138)),
 # rather high.
 
 # post-SR2 Poisson Plot -------------------------------------------------------
@@ -469,16 +523,14 @@ summary(post.sr2.lm01)
 # manually fortify
 weekly02$postsr2q01.fitted <- post.sr2.q01$fitted.values
 weekly02$postsr2lm01.fitted <- post.sr2.lm01$fitted.values
-write.csv(weekly02, file = "wk2-postSR2.csv", row.names = F)
-
-weekly03$postsr2q01.fitted <- post.sr2.q01$fitted.values
-weekly03$postsr2lm01.fitted <- post.sr2.lm01$fitted.values
+weekly02$pop.fitted <- wk$pop00.fitted[36:73]
+# write.csv(weekly02, file = "wk2-postSR2.csv", row.names = F)
 
 # plot Weekly 02 Poisson ------------------------------------------------------
 postSR2.01p <- ggplot(weekly02, aes(week, count)) + 
   geom_point(size = 3.5, colour = "firebrick3", shape = 19) + 
-  geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, lm.fitted)) + 
-  geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, qm02.fitted)) +
+  geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, postsr2lm01.fitted)) + 
+  geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, pop.fitted)) +
   geom_point(size = 2.25, colour = "deepskyblue3", shape = 1, aes(week, postsr2q01.fitted)) +
   geom_line(colour = "deepskyblue3", linetype = "solid", size = 1.25,  aes(week, postsr2q01.fitted)) +
   
@@ -524,25 +576,22 @@ summary(pSR.lm01)
 
 # wow, that's the worst fit i've ever done.
 
-weekly03$postsr2q01.fitted <- post.sr2.q01$fitted.values
-weekly03$postsr2lm01.fitted <- post.sr2.lm01$fitted.values
 weekly03$pSR.q01.fitted <- pSR.q01$fitted.values
 weekly03$pSR.lm01.fitted <- pSR.lm01$fitted.values
+weekly03$pop.fitted <- wk$pop00.fitted[33:73]
 # write.csv(weekly03, file = "wk3-postSR2.csv", row.names = F)
 
 # plot Weekly 03 Poisson ------------------------------------------------------
 
 postSR2.02p <- ggplot(weekly03, aes(week, count)) + 
   geom_point(size = 3.5, colour = "firebrick3", shape = 19) + 
-  geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, qm02.fitted)) +
+  geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, pop.fitted)) +
   geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, pSR.lm01.fitted)) + 
   geom_line(size = 1.25, colour = "deepskyblue3", alpha = 0.95, linetype = "solid",  aes(week, pSR.q01.fitted)) +
   geom_point(size = 2, colour = "deepskyblue3", shape = 1, aes(week, pSR.q01.fitted)) +
-  
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates03, labels = c("Sept", "Oct", "Nov", "December\n2014", "January\n2015", "Feb", 
                                             "Mar", "Apr", "May", "June", "July")) + 
-  
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(panel.border = element_rect(colour = "gray85", fill = NA, size = 0.5),
         plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
@@ -550,7 +599,62 @@ postSR2.02p <- ggplot(weekly03, aes(week, count)) +
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(family = "Times New Roman", face = "italic", 
                                     margin = margin(0, 30, 0, 0))) +
-  
+  labs(title = substitute(
+    paste("QuasiPoisson (", sigma^2, " = ", mu^2, ") Regressions on Product Listings ~ Week (post-SR2 shutdown)")), 
+    x = "", y = "number of product listings") 
+
+# post-SR2 Poisson Regression 03 Weekly04 -------------------------------------
+
+# poisson model 
+pSR.q02 <- glm(count ~ week, data = weekly04,
+               family = quasi(link = "log", variance = "mu^2"))
+
+summary(pSR.q02)
+#                Estimate  Std. Error t value Pr(>|t|)
+#   (Intercept) 53.7923855 14.5202643   3.705 0.000824 ***
+#   week        -0.0025986  0.0008799  -2.953 0.005953 ** 
+
+# (Dispersion parameter for quasi family taken to be 0.1320363)
+
+#     Null deviance: 7.5085  on 32  degrees of freedom
+# Residual deviance: 6.3789  on 31  degrees of freedom
+# AIC: NA
+
+# quite underdispersed (0.13) and null and model deviance are essentially equal.
+# pretty pretty bad.
+
+# linear
+pSR.lm02 <- lm(count ~ week, data = weekly04)
+summary(pSR.lm02)
+#               Estimate Std. Error t value Pr(>|t|) 
+# (Intercept) 2389903.8   719518.8   3.322  0.00230 **
+# week           -141.4       43.6  -3.244  0.00282 **
+# Multiple R-squared:  0.2534,	Adjusted R-squared:  0.2294 
+
+
+weekly04$wk04.q02.fitted <- pSR.q02$fitted.values
+weekly04$wk04.lm02.fitted <- pSR.lm02$fitted.values
+weekly04$pop.fitted <- wk$pop00.fitted[41:73]
+# write.csv(weekly03, file = "wk3-postSR2.csv", row.names = F)
+
+# plot Weekly 04 Poisson ------------------------------------------------------
+
+postSR2.03p <- ggplot(weekly04, aes(week, count)) + 
+  geom_point(size = 3.5, colour = "firebrick3", shape = 19) + 
+  geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, pop.fitted)) +
+  geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, wk04.lm02.fitted)) + 
+  geom_line(size = 1.25, colour = "deepskyblue3", alpha = 0.95, linetype = "solid",  aes(week, wk04.q02.fitted)) +
+  geom_point(size = 2, colour = "deepskyblue3", shape = 1, aes(week, wk04.q02.fitted)) +
+  scale_y_continuous(limits = c(0, 100000)) +
+  scale_x_date(breaks = dates04, labels = c("Nov", "December\n2014", "January\n2015", "Feb", 
+                                            "Mar", "Apr", "May", "June", "July")) + 
+  theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(panel.border = element_rect(colour = "gray85", fill = NA, size = 0.5),
+        plot.margin = unit(c(0.25, 0.75, 0.10, 0.25), "cm")) +
+  theme(axis.text.x = element_text(size = 12, angle = 0),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(family = "Times New Roman", face = "italic", 
+                                    size = 13, margin = margin(0, 30, 0, 0))) +
   labs(title = substitute(
     paste("QuasiPoisson (", sigma^2, " = ", mu^2, ") Regressions on Product Listings ~ Week (post-SR2 shutdown)")), 
     x = "", y = "number of product listings") 
@@ -558,7 +662,7 @@ postSR2.02p <- ggplot(weekly03, aes(week, count)) +
 
 # observed values: June to June -----------------------------------------------
 
-junes <- ggplot(weekly04, aes(week, count)) +
+junes <- ggplot(weekly05, aes(week, count)) +
   geom_point(size = 3.25, color = "firebrick3", alpha = 1) +
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates04, labels = c("June", "July", "Aug", "Sept", "Oct", 
@@ -576,7 +680,7 @@ junes <- ggplot(weekly04, aes(week, count)) +
 
 # Junes Poisson Regression 01--------------------------------------------------
 
-junes01 <- glm(count ~ week, data = weekly04,
+junes01 <- glm(count ~ week, data = weekly05,
                family = quasi(link = "log", variance = "mu^2"))
 
 summary(junes01)
@@ -601,11 +705,9 @@ summary(jlm)
 # nothing to write home about here...but good as we're comparing
 # it to a hopefully more effective poisson model.
 
-weekly04$jq.fitted <- junes01$fitted.values
-weekly04$jlm.fitted <- jlm$fitted.values
+weekly05$jq.fitted <- junes01$fitted.values
+weekly05$jlm.fitted <- jlm$fitted.values
 # write.csv(weekly04, file = "weekly-04-junes.csv", row.names = F)
-
-library(broom)
 
 tidy(junes01)
 head(augment(junes01))
@@ -622,7 +724,7 @@ junes.b
 
 # plot Junes ------------------------------------------------------------------
 
-junes.p <- ggplot(weekly04, aes(week, count)) + 
+junes.p <- ggplot(weekly05, aes(week, count)) + 
   geom_point(size = 4, colour = "firebrick3", shape = 19) + 
   geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, qm02.fitted)) +
   geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, jlm.fitted)) + 
@@ -630,7 +732,7 @@ junes.p <- ggplot(weekly04, aes(week, count)) +
   geom_point(size = 2, colour = "deepskyblue3", shape = 1, aes(week, jq.fitted)) +
   
   scale_y_continuous(limits = c(0, 100000)) +
-  scale_x_date(breaks = dates04, labels = c("June", "July", "Aug", "Sept", "Oct", 
+  scale_x_date(breaks = dates05, labels = c("June", "July", "Aug", "Sept", "Oct", 
                                             "Nov", "December\n2014", "January\n2015", 
                                             "Feb", "Mar", "Apr", "May", "June")) +
   
