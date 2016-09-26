@@ -61,7 +61,9 @@ Looking at the counts with domain information, 3 "tiers" were observed:
 
 In T1 we have 3 major markets in effect: Agora, Evolution, and Silk Road 2. T2 arises after SR2's shutdown, leaving just Agora and Evolution. T3 is a tier only observed recently after the shutdowns of SR2 and Evolution. It could be inferred that these spikes in listing counts were the result of vendors coming to Agora in the iterim of a shutdown. 
 
+A look at the interval before Silk Road 2 was seized:
 
+![preSR2-00](plots/poisson/preSR2-00p-02.jpg)
 
 
 # External Market Influences
