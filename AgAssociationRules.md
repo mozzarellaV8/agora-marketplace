@@ -599,7 +599,7 @@ in order of appearance across the network:
 
 ![f1-usa-22](plots/arules/f1-usa-22.png)
 
-The probability of the United States being involved was higher than anywhere else by quite a margin. 73 rules in either the lhs or rhs including USA. 
+The probability of the United States being involved was higher than anywhere else by quite a margin. 73 rules in either the `lhs` or `rhs` that included USA. The next location closest to that amount of was the UK-- with just 21 appearances total.
 
 ```{R}
 # Subset by Location ----------------------------------------------------------
