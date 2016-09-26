@@ -72,10 +72,78 @@ Now including the time frame within which a formal complaint was lodged against 
 
 ![preSR2-01](plots/poisson/preSR2-01p-02.jpg)
 
+A slight upturn in the predictive curve of the Poisson fit; the linear model even seems slightly happier with an improved _adjusted r<sup>2</sup>_ going up to 0.34 from 0.29. 
+
+Of course, this is almost certainly the result of furthest two points on the right - which also happen to the furthest north in the plot too. [_to do_: test outlier significance in this interval]. 
+
+Why segment an interval to include these outlier points?
+
+- external factors of significance were at play and could not be ignored
+- it's another step in the piecewise regression; effects are meant to be observed
+
+What happens on the other side of November 2014?
+
+![postSR2-01](plots/poisson/postSR2-01p-wk02-02.jpg)
+
+Starting an interval that _directly_ follows the previous - we now have a Poisson fit that nearly completely covers the corresponding linear model. Gently sloping downward, it's a contrast to the initial quasipoisson fit on the population. 
+
+Perhaps it was too extreme an interval to look at immediately following the pre-SR2 shutdown periods? Extending the interval backwards to accomodate listing counts before the SR2 seizure:
+
+![postSR2-02](plots/poisson/postSR2-01p-wk03-02.jpg)
 
 
+Again the Poisson fit lies nearly directly atop the linear; and now with a slope near zero. Stability? Null effects? A look at the function call also has my initial reactions within comments:
+
+```{R}
+# poisson model 
+pSR.q01 <- glm(count ~ week, data = weekly03,
+               family = quasi(link = "log", variance = "mu^2"))
+
+summary(pSR.q01)
+#                Estimate  Std. Error t value Pr(>|t|)
+#   (Intercept)  8.3587833 13.5919852   0.615    0.542
+#   week         0.0001509  0.0008252   0.183    0.856
+
+# (Dispersion parameter for quasi family taken to be 0.2239512)
+
+#     Null deviance: 14.214  on 40  degrees of freedom
+# Residual deviance: 14.209  on 39  degrees of freedom
+# AIC: NA
+
+# quite underdispersed (0.23) and null and model deviance are essentially equal.
+# Could this be the NULL model??
+
+# linear model comparison
+pSR.lm01 <- lm(count ~ week, data = weekly03)
+summary(pSR.lm01)
+# Multiple R-squared:  0.0005229,	Adjusted R-squared:  -0.0251
+
+# wow, that's the worst fit i've ever done.
+```
+Beyond being a model that might have zero predictive power or use...it's a fit found within that data.
 
 
+And finally looking at the interval that is completely past the Silk Road 2 seizure:
+
+![postSR2-03](postSR2-03p-wk04-02.jpg)
+
+A similar downward trend, and little to no explanatory power.
+
+```{r}
+pSR.q02 <- glm(count ~ week, data = weekly04,
+               family = quasi(link = "log", variance = "mu^2"))
+
+summary(pSR.q02)
+#                Estimate  Std. Error t value Pr(>|t|)
+#   (Intercept) 53.7923855 14.5202643   3.705 0.000824 ***
+#   week        -0.0025986  0.0008799  -2.953 0.005953 ** 
+
+# (Dispersion parameter for quasi family taken to be 0.1320363)
+
+#     Null deviance: 7.5085  on 32  degrees of freedom
+# Residual deviance: 6.3789  on 31  degrees of freedom
+# AIC: NA
+```
 
 
 
