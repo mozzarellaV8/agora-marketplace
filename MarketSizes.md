@@ -1,11 +1,13 @@
-# Reliably Unstable
+# Reliably Unstable: Agora Market Growth
 
 The initial questions had been asked: 
 
 - **How large is this market?** and if left unchecked, 
 - **How large could it be?** 
 
-Using Poisson regression on monthly product listing count data, a simple answer was obtained. In working to validate the model, it was observed that listing counts clustered into "tiers" over time. Was this the result of Agora Market developing a growing user base, as a startup might in it's early years?  
+Monthly counts of product listings were taken as a measure of market size, and using Poisson Regression a simple answer was obtained. 
+
+In working to validate the model, it was observed that listing counts clustered into "tiers" over time. Was this the result of Agora Market developing a growing user base, as a startup might in it's early years?  
 
 Given domain information, it could be hypothesized that count data were affected by activity in other markets of similar scale - namely, other markets shutting down. 
 
