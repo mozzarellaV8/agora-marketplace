@@ -88,7 +88,6 @@ summary(preSR2.00)
 
 Now including the time frame within which a formal complaint was lodged against SR2, and ultimately seized:
 
-![](plots/poisson/observed-02-preSR2-wk1.png)
 ![preSR2-01](plots/poisson/preSR2-01p-02.jpg)
 
 ```{R}
@@ -118,7 +117,6 @@ Why segment an interval to include these outlier points?
 
 What happens on the other side of November 2014?
 
-![](plots/poisson/observed-03-postSR2-wk2.png)
 ![postSR2-01](plots/poisson/postSR2-01p-wk02-02.jpg)
 
 ```{R}
@@ -141,7 +139,6 @@ Starting an interval that _directly_ follows the previous - we now have a Poisso
 
 Perhaps it was too extreme an interval to look at immediately following the pre-SR2 shutdown periods? Extending the interval backwards to accomodate listing counts before the SR2 seizure:
 
-![](plots/poisson/observed-04-postSR2-wk3.png)
 ![postSR2-02](plots/poisson/postSR2-02p-wk03-02.jpg)
 
 Again the Poisson fit lies nearly directly atop the linear; and now with a slope near zero. Stability? Null effects? A look at the function call also has my initial reactions within comments:
@@ -177,7 +174,6 @@ Beyond being a model that might have zero predictive power or use...it's a fit f
 
 And finally looking at the interval that is completely past the Silk Road 2 seizure:
 
-![](plots/poisson/observed-05-postSR2-wk4.png)
 ![postSR2-03](plots/poisson/postSR2-03p-wk04-02.jpg)
 
 A similar downward trend, and little to no explanatory power.
