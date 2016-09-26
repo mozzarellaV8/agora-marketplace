@@ -67,10 +67,41 @@ A look at the interval before Silk Road 2 was seized:
 
 ![preSR2-00](plots/poisson/preSR2-00p-02.jpg)
 
+```{r}
+preSR2.00 <- glm(count ~ week, data = weekly00,
+                 family = quasi(link = "log", variance = "mu^2"))
+  
+summary(preSR2.00)
+#                  Estimate Std. Error t value Pr(>|t|)  
+#   (Intercept) -91.379087  37.463816  -2.439   0.0201 *
+#   week          0.006186   0.002311   2.676   0.0114 *
+
+# (Dispersion parameter for quasi family taken to be 1.191639)
+
+#     Null deviance: 109.04  on 35  degrees of freedom
+# Residual deviance: 100.35  on 34  degrees of freedom
+# AIC: NA
+```
 
 Now including the time frame within which a formal complaint was lodged against SR2, and ultimately seized:
 
 ![preSR2-01](plots/poisson/preSR2-01p-02.jpg)
+
+```{R}
+preSR2.01 <- glm(count ~ week, data = weekly01,
+                 family = quasi(link = "log", variance = "mu^2"))
+summary(preSR2.01)
+#                Estimate Std. Error t value Pr(>|t|)  
+#   (Intercept) -130.851987   30.722299  -4.259 0.000125 ***
+#   week           0.008628    0.001893   4.557  0.00005 ***
+
+# (Dispersion parameter for quasi family taken to be 1.186086)
+
+#     Null deviance: 132.68  on 40  degrees of freedom
+# Residual deviance: 104.33  on 39  degrees of freedom
+# AIC: NA
+# Number of Fisher Scoring iterations: 12
+```
 
 A slight upturn in the predictive curve of the Poisson fit; the linear model even seems slightly happier with an improved _adjusted r<sup>2</sup>_ going up to 0.34 from 0.29. 
 
@@ -85,12 +116,27 @@ What happens on the other side of November 2014?
 
 ![postSR2-01](plots/poisson/postSR2-01p-wk02-02.jpg)
 
+```{R}
+post.sr2.q01 <- glm(count ~ week, data = weekly02,
+                    family = quasi(link = "log", variance = "mu^2"))
+summary(post.sr2.q01)
+#                 Estimate Std. Error t value Pr(>|t|)    
+#   (Intercept) 32.7194087 12.8119455   2.554   0.0150 *
+#   week        -0.0013239  0.0007773  -1.703   0.0971 .
+
+# (Dispersion parameter for quasi family taken to be 0.1582069)
+#     Null deviance: 9.0146  on 37  degrees of freedom
+# Residual deviance: 8.6089  on 36  degrees of freedom
+# AIC: NA
+# Number of Fisher Scoring iterations: 4
+```
+
+
 Starting an interval that _directly_ follows the previous - we now have a Poisson fit that nearly completely covers the corresponding linear model. Gently sloping downward, it's a contrast to the initial quasipoisson fit on the population. 
 
 Perhaps it was too extreme an interval to look at immediately following the pre-SR2 shutdown periods? Extending the interval backwards to accomodate listing counts before the SR2 seizure:
 
 ![postSR2-02](plots/poisson/postSR2-01p-wk03-02.jpg)
-
 
 Again the Poisson fit lies nearly directly atop the linear; and now with a slope near zero. Stability? Null effects? A look at the function call also has my initial reactions within comments:
 
@@ -129,11 +175,11 @@ And finally looking at the interval that is completely past the Silk Road 2 seiz
 
 A similar downward trend, and little to no explanatory power.
 
-```{r}
-pSR.q02 <- glm(count ~ week, data = weekly04,
+```{R}
+postSR2.q03 <- glm(count ~ week, data = weekly04,
                family = quasi(link = "log", variance = "mu^2"))
 
-summary(pSR.q02)
+summary(postSR2.q03)
 #                Estimate  Std. Error t value Pr(>|t|)
 #   (Intercept) 53.7923855 14.5202643   3.705 0.000824 ***
 #   week        -0.0025986  0.0008799  -2.953 0.005953 ** 
