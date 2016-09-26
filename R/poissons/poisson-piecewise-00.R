@@ -401,6 +401,10 @@ summary(preSR2.01)
 # slight overdispersion: 1.18. Week is deemed significant, and seeing a stronger
 # effect comparing the Null and Residual deviances.
 
+# psedo r^2
+100 * ((132.68-104.33)/132.68)
+# 21.3672
+
 # pre-SR2 - Standard Poisson Regresssion 01 -----------------------------------
 pre01pm <- glm(count ~ week, data = weekly01, family = "poisson")
 summary(pre01pm)
@@ -576,6 +580,20 @@ summary(pSR.lm01)
 
 # wow, that's the worst fit i've ever done.
 
+# is this the NULL Model? ----------------------------------
+tidy(pSR.q01)
+postSR2_02 <- augment(pSR.q01)
+sum(postSR2_02$.resid^2)
+# 14.20857
+mean(postSR2_02$.fitted)
+# 10.84402
+deviance(pSR.q01)
+#  14.20857
+anova(pSR.q01, test = "Chisq")
+#       DfDeviance Resid.  Df Resid. Dev  Pr(>Chi)
+# NULL                     40     14.214         
+# week  1 0.0058212        39     14.209   0.8719
+
 weekly03$pSR.q01.fitted <- pSR.q01$fitted.values
 weekly03$pSR.lm01.fitted <- pSR.lm01$fitted.values
 weekly03$pop.fitted <- wk$pop00.fitted[33:73]
@@ -605,7 +623,7 @@ postSR2.02p <- ggplot(weekly03, aes(week, count)) +
 
 # post-SR2 Poisson Regression 03 Weekly04 -------------------------------------
 
-# poisson model 
+# quasipoisson model 
 pSR.q02 <- glm(count ~ week, data = weekly04,
                family = quasi(link = "log", variance = "mu^2"))
 
@@ -622,6 +640,16 @@ summary(pSR.q02)
 
 # quite underdispersed (0.13) and null and model deviance are essentially equal.
 # pretty pretty bad.
+
+# pseudo-r^2
+100*((7.5085-6.3789)/7.5085)
+
+
+
+# poisson
+pSR.p02 <- glm(count ~ week, data = weekly04,
+               family = poisson(link = "log"))
+summary(pSR.p02)
 
 # linear
 pSR.lm02 <- lm(count ~ week, data = weekly04)
