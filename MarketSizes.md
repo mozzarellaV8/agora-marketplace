@@ -68,6 +68,17 @@ A look at the interval before Silk Road 2 was seized:
 ![preSR2-00](plots/poisson/preSR2-00p-02.jpg)
 
 
+Now including the time frame within which a formal complaint was lodged against SR2, and ultimately seized:
+
+![preSR2-01](plots/poisson/preSR2-01p-02.jpg)
+
+
+
+
+
+
+
+
 # External Market Influences
 
 Looking at Silk Road 2 and Evolution, and how their shutdowns affected the number of listings on Agora. 
