@@ -19,7 +19,7 @@ At the start of 2014, Agora was one of 3 major darknet markets for vendors to ch
 
 # QuasiPoisson Regression
 
-Facing under- and over-dispersion issues in my initial Poisson model on the population of counts, I received a few suggestions from my mentor. Between the suggestions of Generalized Boosted Modeling and Piecewise Regression - Piecewise regression felt the most suited. 
+Facing under- and over-dispersion issues in my initial Poisson model on the population of counts, I received a few suggestions from my mentor. Between the suggestions of Generalized Boosted Modeling and Piecewise Regression - my hope was that Piecewise regression would be simpler and better suited.
 
 Additionally, I recalled that competing darknet market Silk Road 2 shut down in early October 2014. This domain information could correlate to the overdispersion, and observed clustering of count data.
 
@@ -125,7 +125,7 @@ Beyond being a model that might have zero predictive power or use...it's a fit f
 
 And finally looking at the interval that is completely past the Silk Road 2 seizure:
 
-![postSR2-03](plost/poisson/postSR2-03p-wk04-02.jpg)
+![postSR2-03](plots/poisson/postSR2-03p-wk04-02.jpg)
 
 A similar downward trend, and little to no explanatory power.
 
