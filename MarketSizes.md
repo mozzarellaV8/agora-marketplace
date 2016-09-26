@@ -136,7 +136,7 @@ Starting an interval that _directly_ follows the previous - we now have a Poisso
 
 Perhaps it was too extreme an interval to look at immediately following the pre-SR2 shutdown periods? Extending the interval backwards to accomodate listing counts before the SR2 seizure:
 
-![postSR2-02](plots/poisson/postSR2-01p-wk03-02.jpg)
+![postSR2-02](plots/poisson/postSR2-02p-wk03-02.jpg)
 
 Again the Poisson fit lies nearly directly atop the linear; and now with a slope near zero. Stability? Null effects? A look at the function call also has my initial reactions within comments:
 

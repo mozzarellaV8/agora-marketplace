@@ -29,12 +29,14 @@ wk$week <- as.Date(wk$week)
 # split is determined by Silk Road 2 (SR2) shut down date - 
 # an interval loosely defined between 2014-09-29 - 2014-11-06
 
-weekly00 <- wk[1:36, ]    # pre-SR2 - before complaint 
+
+weekly00 <- wk[1:36, ]    # pre-SR2 - before complaint
 weekly01 <- wk[1:41, ]    # through-SR2  (2014-11-06)
 weekly02 <- wk[36:73, ]   # through-post-SR2
 weekly03 <- wk[33:73, ]   # through-post-SR2
 weekly04 <- wk[41:73, ]   # post-SR2    (2014-11-07 - 2015-07-07)
 weekly05 <- wk[21:72, ]   # June 2014 to June 2015
+
 
 # date sequences for plot labels
 dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month") # population
@@ -557,10 +559,10 @@ postSR2.01p <- ggplot(weekly02, aes(week, count)) +
 # post-SR2 Poisson Regression 02 ----------------------------------------------
 
 # poisson model 
-pSR.q01 <- glm(count ~ week, data = weekly03,
+postSR2.q02 <- glm(count ~ week, data = weekly03,
                family = quasi(link = "log", variance = "mu^2"))
 
-summary(pSR.q01)
+summary(postSR2.q02)
 #                Estimate  Std. Error t value Pr(>|t|)
 #   (Intercept)  8.3587833 13.5919852   0.615    0.542
 #   week         0.0001509  0.0008252   0.183    0.856
@@ -581,20 +583,20 @@ summary(pSR.lm01)
 # wow, that's the worst fit i've ever done.
 
 # is this the NULL Model? ----------------------------------
-tidy(pSR.q01)
-postSR2_02 <- augment(pSR.q01)
+tidy(postSR2.q02)
+postSR2_02 <- augment(postSR2.q02)
 sum(postSR2_02$.resid^2)
 # 14.20857
 mean(postSR2_02$.fitted)
 # 10.84402
-deviance(pSR.q01)
+deviance(postSR2.q02)
 #  14.20857
-anova(pSR.q01, test = "Chisq")
+anova(postSR2.q02, test = "Chisq")
 #       DfDeviance Resid.  Df Resid. Dev  Pr(>Chi)
 # NULL                     40     14.214         
 # week  1 0.0058212        39     14.209   0.8719
 
-weekly03$pSR.q01.fitted <- pSR.q01$fitted.values
+weekly03$postSR2.q02.fitted <- postSR2.q02$fitted.values
 weekly03$pSR.lm01.fitted <- pSR.lm01$fitted.values
 weekly03$pop.fitted <- wk$pop00.fitted[33:73]
 # write.csv(weekly03, file = "wk3-postSR2.csv", row.names = F)
@@ -605,8 +607,8 @@ postSR2.02p <- ggplot(weekly03, aes(week, count)) +
   geom_point(size = 3.5, colour = "firebrick3", shape = 19) + 
   geom_line(size = 0.5, colour = "deepskyblue4", alpha = 0.75, linetype = "dotted", aes(week, pop.fitted)) +
   geom_line(size = 0.5, colour = "gold2", alpha = 0.75, linetype = "dashed",  aes(week, pSR.lm01.fitted)) + 
-  geom_line(size = 1.25, colour = "deepskyblue3", alpha = 0.95, linetype = "solid",  aes(week, pSR.q01.fitted)) +
-  geom_point(size = 2, colour = "deepskyblue3", shape = 1, aes(week, pSR.q01.fitted)) +
+  geom_line(size = 1.25, colour = "deepskyblue3", alpha = 0.95, linetype = "solid",  aes(week, postSR2.q02.fitted)) +
+  geom_point(size = 2, colour = "deepskyblue3", shape = 1, aes(week, postSR2.q02.fitted)) +
   scale_y_continuous(limits = c(0, 100000)) +
   scale_x_date(breaks = dates03, labels = c("Sept", "Oct", "Nov", "December\n2014", "January\n2015", "Feb", 
                                             "Mar", "Apr", "May", "June", "July")) + 
@@ -624,10 +626,10 @@ postSR2.02p <- ggplot(weekly03, aes(week, count)) +
 # post-SR2 Poisson Regression 03 Weekly04 -------------------------------------
 
 # quasipoisson model 
-pSR.q02 <- glm(count ~ week, data = weekly04,
+postSR2.q03 <- glm(count ~ week, data = weekly04,
                family = quasi(link = "log", variance = "mu^2"))
 
-summary(pSR.q02)
+summary(postSR2.q03)
 #                Estimate  Std. Error t value Pr(>|t|)
 #   (Intercept) 53.7923855 14.5202643   3.705 0.000824 ***
 #   week        -0.0025986  0.0008799  -2.953 0.005953 ** 
@@ -660,7 +662,7 @@ summary(pSR.lm02)
 # Multiple R-squared:  0.2534,	Adjusted R-squared:  0.2294 
 
 
-weekly04$wk04.q02.fitted <- pSR.q02$fitted.values
+weekly04$wk04.q02.fitted <- postSR2.q03$fitted.values
 weekly04$wk04.lm02.fitted <- pSR.lm02$fitted.values
 weekly04$pop.fitted <- wk$pop00.fitted[41:73]
 # write.csv(weekly03, file = "wk3-postSR2.csv", row.names = F)
