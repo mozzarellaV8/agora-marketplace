@@ -50,6 +50,8 @@ Annotations were made to the time intervals based on domain research. The main e
 
 ![quasipoisson original](plots/poisson/pop00-annotated.jpg)
 
+![pop00 observed](plots/poisson/observed-00-pop00.png)
+
 
 # Piecewise Poisson
 
@@ -65,6 +67,7 @@ In T1 we have 3 major markets in effect: Agora, Evolution, and Silk Road 2. T2 a
 
 A look at the interval before Silk Road 2 was seized:
 
+![](observed-01-preSR2-wk00.png)
 ![preSR2-00](plots/poisson/preSR2-00p-02.jpg)
 
 ```{r}
