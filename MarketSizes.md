@@ -125,7 +125,7 @@ Beyond being a model that might have zero predictive power or use...it's a fit f
 
 And finally looking at the interval that is completely past the Silk Road 2 seizure:
 
-![postSR2-03](postSR2-03p-wk04-02.jpg)
+![postSR2-03](plost/poisson/postSR2-03p-wk04-02.jpg)
 
 A similar downward trend, and little to no explanatory power.
 
@@ -144,7 +144,6 @@ summary(pSR.q02)
 # Residual deviance: 6.3789  on 31  degrees of freedom
 # AIC: NA
 ```
-
 
 
 # External Market Influences
