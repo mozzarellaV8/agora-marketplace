@@ -17,6 +17,7 @@ library(extrafontdb)
 agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 agora$date <- as.Date(agora$date)
 
+
 wk <- fread("data/counts/WeeklyCountsFitted.csv")
 wk$week <- as.Date(wk$week)
 
