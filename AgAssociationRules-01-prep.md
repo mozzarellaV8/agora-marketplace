@@ -220,7 +220,7 @@ In practical terms though, anyone caring to download the dataset could easily fi
 
 # Convert to Transactions
 
-next: [Variable Selection, Transaction Conversion, and Mining](#R/arules-md/agora-associations-04-02.md)
+next: [Variable Selection, Transaction Conversion, and Mining](R/arules-md/agora-associations-04-02.md)
 
 # References
 
