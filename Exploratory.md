@@ -95,34 +95,3 @@ Above $1000, there's a mix of 'placeholder' listings vendors will put up while t
 
 12. **to**: location product ships to
 
-## Feedback
-
-![](plots-00/counts/fb2-dist-violin-01.jpeg)
-
-![](plots-00/counts/fb-density-01.jpeg)
-
-aggregate some of these responses to see:
-
-``` {r}
-feedback$positive <- ifelse(feedback$great == T | feedback$good == T, 1, 0)
-feedback$neutral <- ifelse(feedback$ok == T | feedback$poor == T, 1, 0)
-feedback$negative <- ifelse(feedback$horrible == T | feedback$worst == T, 1, 0)
-
-fb <- subset(feedback, select = c("positive", "neutral", "negative", "none"))
-fb$none <- ifelse(fb$none == T, 1, 0)
-```
-
-![](plots-00/counts/fb2-dist-violin-02.jpeg)
-
-![](plots-00/counts/fb2-density-01.jpeg)
-
-## Counterfeits
-
-Counterfeits on offer, by location by month for 2014. Subset of the top 6 most active locations.
-
-![](plots-00/category-counterfeits/cf3p-cf3-LocationMonth-04.jpg)
-
-Counterfeits by brand:
-
-![](plots-00/category-counterfeits/cfb1-Brands-02.jpeg)
-
