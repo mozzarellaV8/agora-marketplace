@@ -18,7 +18,7 @@ library(anonymizer)
 # 2322961 obs of 18 variables
 
 # prepped data
-ag <- fread("~/GitHub/agora-data/06-arules/ag-arules-20k.csv", stringsAsFactors = T)
+ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k.csv", stringsAsFactors = T)
 
 # Transactions Conversion -----------------------------------------------------
 
