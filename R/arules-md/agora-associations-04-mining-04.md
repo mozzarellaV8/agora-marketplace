@@ -70,7 +70,7 @@ sizes
       4 
 2317353 
 
-    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
        4       4       4       4       4       4 
 
 includes extended item information - examples:
@@ -127,7 +127,7 @@ for (i in 1:length(sup)) {
 }
 ```
 
-![ifp-0.025](a4-04-ItemFreq-0.025.png)
+![ifp-0.025](plots/arules/a4-04-ItemFreq-0.025.png)
 
 Observed from a minimum support of 0.025:
 
@@ -137,7 +137,7 @@ Observed from a minimum support of 0.025:
 - two non-descript items, the category 'Other' and location 'EU' are just as likely to appear as one another; 
 - more affinities by relative frequency: Australia, the Netherlands, Benzodiazapines. Steroids, Germany, Cocaine, Ecstasy(MDMA), Ecstasy(Pills), Canada, listings from $2000-$10000. 
 
-![ifp-0.075](a4-04-ItemFreq-0.075.png)
+![ifp-0.075](plots/arules/a4-04-ItemFreq-0.075.png)
 
 
 
