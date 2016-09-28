@@ -172,7 +172,7 @@ _results_:
 
 _most frequent items_:
 
-| p=$10-150 | p=$150-600 | f=No Info | p=$0-10 | f=USA | (Other) |
+| p=$10-150 | p=$150-600 | f=No Info | p=$0-10 | f=USA | (other) |
 |-----------|------------|-----------|---------|-------|---------|
 |      165  |      78    |    77     |    74   |    59 |   920   |
 
@@ -197,17 +197,17 @@ element (itemset/transaction) length distribution:sizes
   2   3   4 
 377 173  25 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  2.000   2.000   2.000   2.388   3.000   4.000 
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    2.000   2.000   2.000   2.388   3.000   4.000 
 
 summary of quality measures:
     support        
- Min.   :0.002523  
- 1st Qu.:0.003314  
- Median :0.004777  
- Mean   :0.007629  
- 3rd Qu.:0.008004  
- Max.   :0.122478  
+ # Min.   :0.002523  
+ # 1st Qu.:0.003314  
+ # Median :0.004777  
+ # Mean   :0.007629  
+ # 3rd Qu.:0.008004  
+ # Max.   :0.122478  
 
 includes transaction ID lists: FALSE 
 
@@ -326,7 +326,7 @@ a3 <- subset(ag, select = c("p", "f", "sc", "v"))
 a4rules <- apriori(a4, parameter = list(support = 0.0025, confidence = 0.6, minlen = 3))
 ```
 
-Not wanted to have to prune to0 many redundant/obvious rules, I set the minumum rule length to 3. 
+Not wanted to have to prune too many redundant/obvious rules, I set the minumum rule length to 3. 
 
 
 ```{r}
@@ -337,17 +337,17 @@ rule length distribution (lhs + rhs):sizes
   3   4 
 200  68 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  3.000   3.000   3.000   3.254   4.000   4.000 
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    3.000   3.000   3.000   3.254   4.000   4.000 
 
 summary of quality measures:
     support           confidence          lift        
- Min.   :0.002524   Min.   :0.6019   Min.   :  1.284  
- 1st Qu.:0.003275   1st Qu.:0.7763   1st Qu.:  4.447  
- Median :0.004227   Median :0.9172   Median :  7.070  
- Mean   :0.005841   Mean   :0.8736   Mean   : 20.823  
- 3rd Qu.:0.006793   3rd Qu.:0.9923   3rd Qu.: 19.657  
- Max.   :0.029967   Max.   :1.0000   Max.   :243.955  
+ # Min.   :0.002524   Min.   :0.6019   Min.   :  1.284  
+ # 1st Qu.:0.003275   1st Qu.:0.7763   1st Qu.:  4.447  
+ # Median :0.004227   Median :0.9172   Median :  7.070  
+ # Mean   :0.005841   Mean   :0.8736   Mean   : 20.823  
+ # 3rd Qu.:0.006793   3rd Qu.:0.9923   3rd Qu.: 19.657  
+ # Max.   :0.029967   Max.   :1.0000   Max.   :243.955  
 
 mining info:
  data ntransactions support confidence
