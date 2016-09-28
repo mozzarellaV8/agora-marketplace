@@ -305,7 +305,7 @@ inspect(a4items)[48:56,]
 | minimum support       |  0.0025   |
 | minumum confidence    |  0.6      |
 | min rule length       |  3        |
-| max rule length       |  -        |
+| max rule length       |  --       |
 
 _results_:
 
@@ -355,7 +355,10 @@ mining info:
 ```
 
 Out of 268 rules generated:
-Just under 75% of the rules are of length 3; the rest 4. Median confidence is sitting nicely at 0.9172, and appears there are positive correlations across the board as seen in a minimum lift of 1.248. Support might be an issue, very low values observed here.
+
+- Just under 75% of the rules are of length 3; the rest 4. 
+- Median confidence is sitting nicely at 0.9172, and appears there are positive correlations across the board as seen in a minimum lift of 1.248. 
+- Support might be an issue - very low values observed here.
 
 
 ### Top and Bottom 10
@@ -369,8 +372,6 @@ Given a population of **N** transactions that contains itemsets **N<sub>X</sub>*
 | support     | N<sub>X ∪ Y</sub> / N                                   | 
 | confidence  | N<sub>X ∪ Y</sub> / N<sub>X</sub>                       | 
 | lift        | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   |
-| lift        | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   |  
-
 
 
 A quick `inspect` of the top and bottom 10 rules. 
@@ -392,6 +393,7 @@ arules::inspect(head(a4rules, 10))
 
 Support could be higher all around, but it was decided to keep that value low to generate more rules. Lift appears to be doing well - although many of the rules with very high lift might be too obvious to warrant investigation. Or rather, they should be looked into to make sure indepedence of variables is satisfied. 
 
+With some rules, there's a suspicion that that they are simply the values of the listings themselves. 
 
 ```{r}
 arules::inspect(tail(a4rules, 10))
@@ -408,6 +410,39 @@ arules::inspect(tail(a4rules, 10))
 268 {p=$0-10,sc=Other,v=056783}                   => {f=Agora/Internet/Torland} 0.005269806 1.0000000  12.028450
 ```
 
+# Visualizations - Grouped Matrices
+
+
+```{R}
+# individual
+plot(a4rules, method = "grouped", control = list(k = 48))
+```
+
+48 rules: 
+
+![48 Rule Group](plots/arules/a404-g1-4.png)
+
+
+# loop
+for (i in 1:10) {
+  
+  png(filename = paste("~/GitHub/agora-local-market/arules/groups/g1-",i,".png"),
+      width = 1800, height = 1400, pointsize = 20, bg = "transparent")
+  
+  k = i * 12
+  
+  plot(a4rules, method = "grouped", control = list(k = k), 
+       main = paste("k =", k))
+  
+  dev.off()
+  
+}
+```
+
+60 Rules: 
+![60 Rule Group](plots/arules/a404-g1-6.png)
+
+![24 Rule Group](plots/arules/a404-g1-2.png)
 
 
 # References and Notes
@@ -416,7 +451,7 @@ arules::inspect(tail(a4rules, 10))
 
 <sup>2</sup> While likely not following the strictest security protocol, this level of anonymization felt suited for the application. In practical terms, all of this data is publicly available so these measures were done out of a careful respect for privacy.
 
-<sup>3</sup> guides, books, hacking, ebooks, services.
+<sup>3</sup> the virtual location of Agora/Internet/Torland specializes in books, ebooks, hacking, guides, services.
 
 
 

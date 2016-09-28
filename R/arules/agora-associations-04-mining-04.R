@@ -106,7 +106,6 @@ arules::inspect(head(a4rules, 10))
 arules::inspect(tail(a4rules, 10))
 
 
-
 # Plot Rules - Group -----------------------------------------------------------
 
 # individual
@@ -115,7 +114,7 @@ plot(a4rules, method = "grouped", control = list(k = 36))
 # loop
 for (i in 1:10) {
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/groups/g1-",i,".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/groups/a404-g1-",i,".png"),
       width = 1800, height = 1400, pointsize = 20, bg = "transparent")
   
   k = i * 12
