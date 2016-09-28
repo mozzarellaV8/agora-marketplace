@@ -81,7 +81,23 @@ a4items <- apriori(a4, parameter = list(target = "frequent",
                                         supp = 0.0025, minlen = 2, maxlen = 5))
 
 summary(a4items)
-# set of 738 itemsets
+# set of 575 itemsets
+
+inspect(head(a4items, 8))
+inspect(tail(a4items, 8))
+
+a4items <- sort(a4items, by = "support", decreasing = T)
+
+inspect(head(a4items, 12))
+inspect(tail(a4items, 12))
+
+inspect(a4items)[123:128,]
+
+
+
+
+
+# Mine Association Rules ------------------------------------------------------
 
 a4 <- subset(ag, select = c("p", "f", "sc", "v"))
 levels(a4$sc)
@@ -92,6 +108,8 @@ a4rules <- apriori(a4, parameter = list(support = 0.0025, confidence = 0.6,
 summary(a4rules)
 arules::inspect(head(a4rules, 10))
 arules::inspect(tail(a4rules, 10))
+
+
 
 # Plot Rules - Group -----------------------------------------------------------
 
