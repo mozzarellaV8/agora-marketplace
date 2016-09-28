@@ -1,7 +1,9 @@
 # Agora Association Rules - Preparation
 
 - _outputs from the file `agora-associations-03.R`_
+- general application to different mining sessions
 - basic info on [Association Rule Mining](AssociationBasics.md)
+- forward to mining: [Agora Association Rules](AgAssociationRules-04-04.md)
 
 Contents:
 
@@ -28,7 +30,9 @@ Even though association rule mining is often written about in terms of finding n
 
 While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes<sup>[1](#references)</sup> - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
 
-That said - finding rules that traverse the network should still prove informative and interesting.
+That said - finding rules that traverse the network should still prove informative and interesting. 
+
+What does the probability of a specific cateogory appearing in the network reveal? And a specific price cluseter, or location? Or any combination of these factors?  
 
 # Preparation
 
@@ -220,7 +224,7 @@ In practical terms though, anyone caring to download the dataset could easily fi
 
 # Convert to Transactions
 
-next: [Variable Selection, Transaction Conversion, and Mining](R/arules-md/agora-associations-04-02.md)
+next: [Variable Selection, Transaction Conversion, and Mining](R/arules-md/agora-associations-04-04.md)
 
 # References
 
