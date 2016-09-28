@@ -10,7 +10,7 @@ _student work in R_ for [Foundations of Data Science](https://www.springboard.co
 - [the Data](#the-data)
 - [extraction notes](extraction/readme.md)
 - [extraction scripts](R/extraction)
-- [exploratory regression](#exploratory-regression) - *revise with Poisson models
+- [exploratory regression](#exploratory-regression)
 - [Works Cited](#works-cited)
 
 
@@ -99,13 +99,7 @@ Beyond that, Gwern himself has made clear that it's best to consider the crawls 
 
 But maybe one of the better reasons these plots are likely spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Maybe violating a few assumptions here. Just from looking at the plot, I can imagine a pretty large value on the residuals; the intercept appears biased towards values near the origin.
 
-To do:
 
-- Poisson Regression
-- 3-point moving average for days without counts? 
-- Time Series decompostions
-
-**_be back after the Poisson chapter ~_**
 
 ## Works Cited
 
@@ -128,4 +122,4 @@ _in progress_
 
 - Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction to Data Mining. Boston: Pearson Addison Wesley, 2005. Print. Chapter 6: Association Analysis: Basic Concepts and Algorithms.
 
-- UNITED STATES OF AMERICA -v.- BLAKE BENTHALL A/k/a "Defcon," Defendant. Southern District of New York. Benthall,%20Blake%20Complaint.pdf, justice.gov. 29 Oct. 2014. Web. [Sept. 2016](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
+- UNITED STATES OF AMERICA -v.- BLAKE BENTHALL A/k/a "Defcon," Defendant. Southern District of New York. justice.gov. 29 Oct. 2014. Web. [Sept. 2016](https://www.justice.gov/sites/default/files/usao-sdny/legacy/2015/03/25/Benthall,%20Blake%20Complaint.pdf)
