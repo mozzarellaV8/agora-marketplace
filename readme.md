@@ -97,7 +97,7 @@ It can't be assumed that every crawl represents a complete day's listings; the m
 
 Beyond that, Gwern himself has made clear that it's best to consider the crawls a [lower-bound for market activity](http://www.gwern.net/Black-market%20archives#interpreting-analyzing). A count might be a simple-enough measure, but it's probably best to also keep in mind the amount of scam-listings and general deception that can occur on anonymous marketplaces. 
 
-But maybe one of the better reasons these plots are likely spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Maybe violating a few assumptions here. Just from looking at the plot, I can imagine a pretty large value on the residuals; the intercept appears biased towards values near the origin.
+But maybe one of the better reasons these plots are likely spurious is that ordinary least squares regression isn't exactly suited for count data or time series modeling. Maybe violating a few assumptions here. Just from looking at the plot, I can imagine a pretty large value on the residuals; the intercept appears biased towards values near the origin. Variance appears to be increasing as the date does...
 
 
 
