@@ -70,8 +70,8 @@ sizes
       4 
 2317353 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      4       4       4       4       4       4 
+    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+       4       4       4       4       4       4 
 
 includes extended item information - examples:
           labels variables       levels
