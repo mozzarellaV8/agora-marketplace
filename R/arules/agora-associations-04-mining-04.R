@@ -91,10 +91,7 @@ a4items <- sort(a4items, by = "support", decreasing = T)
 inspect(head(a4items, 12))
 inspect(tail(a4items, 12))
 
-inspect(a4items)[123:128,]
-
-
-
+inspect(a4items)[48:56,]
 
 
 # Mine Association Rules ------------------------------------------------------
@@ -102,8 +99,7 @@ inspect(a4items)[123:128,]
 a4 <- subset(ag, select = c("p", "f", "sc", "v"))
 levels(a4$sc)
 
-a4rules <- apriori(a4, parameter = list(support = 0.0025, confidence = 0.6,
-                                        minlen = 2, maxlen = 5))
+a4rules <- apriori(a4, parameter = list(support = 0.0025, confidence = 0.6, minlen = 3))
 
 summary(a4rules)
 arules::inspect(head(a4rules, 10))
