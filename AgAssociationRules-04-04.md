@@ -2,8 +2,10 @@
 
 R script: **_agora-associations-04-mining-02.R_**
 
+
 - [Variable Selection](#variable-selection)
 - [Transaction Conversion](#transaction-conversion)
+- [Item Frequency / Frequent Itemsets](#item-frequency)
 - [Mining Association Rules](#mining-association-rules)
 - [Grouped Matrices]()
 - [Network Graphs]()
@@ -86,7 +88,7 @@ includes extended transaction information - examples:
 3             3
 ```
 
-# Item Frequency Plots
+# Item Frequency
 
 ``` {R}
 # Item Frequency Plot ---------------------------------------------------------
@@ -98,10 +100,12 @@ itemFrequencyPlot(a4, support = 0.0025, cex.names = 0.65, col = "white", horiz =
 
 ![itemFreq-0.005](plots/arules/a4-04-ItemFreq-0005.png)
 
-- prices within 10-150 show mup more than twice as much as the next nearest item - which is prices in the $150-600 range. It might be worth taking a look at the distribution of this subset. 
+quick observations at 0.005 minimum support:
+
+- prices within $10-$150 show up more than twice as much as the next nearest item - which is prices in the $150-$600 range. It might be worth taking a look at the distribution of this subset. 
 - the United States shows up nearly twice as much as the next location - the UK. 
 
-Wanting to see how different minimum supports affected item frequency, scripted a loop to plot a sequence of values.
+Moving forward - wanted to see how different minimum supports affected item frequency, so scripted a loop to plot a sequence of different values.
 
 ```{R}
 # Item Frequency Plot Loop ----------------------------------------------------
@@ -129,21 +133,22 @@ for (i in 1:length(sup)) {
 
 ![ifp-0.025](plots/arules/a4-04-ItemFreq-0.025.png)
 
-Observed from a minimum support of 0.025:
+Observed at a minimum support of 0.025:
 
 - cannabis shows up as frequently as listings in the price range $600-$2000; this price bin shows up half as much as the next bin ($150-$600), which shows up roughly half as much as the next bin ($10-150). $10-$150 listings are also the most likely to appear out of all items. 
-- roughly the same relative frequency: a prescription drug listing, the UK, China, and the location Agora/Internet/Torland<sup>3</sup>.
-- there are 3 vendors who have as many listings as the total number of listings for Research Chemicals.
-- two non-descript items, the category 'Other' and location 'EU' are just as likely to appear as one another; 
+- roughly the same relative frequency: a prescription drug listing, the UK, China, and the location Agora/Internet/Torland<sup>[3](#references-and-notes)</sup>.
+- there are 3 vendors who have as many listings as the number of listings for Research Chemicals.
+- two non-descript items, the category 'Other' and location 'EU' are just as likely to appear as one another.
 - more affinities by relative frequency: Australia, the Netherlands, Benzodiazapines. Steroids, Germany, Cocaine, Ecstasy(MDMA), Ecstasy(Pills), Canada, listings from $2000-$10000. 
 
 ![ifp-0.075](plots/arules/a4-04-ItemFreq-0.075.png)
 
+Relative frequency was the argument set for these plots; it'd be possible to do absolute, which makes me think I should plot distributions of each variable off the original dataframe.
 
 
 # Frequent Itemsets
 
-_arguments_:
+_arguments_ for `apriori`:
 
 | parameter             |  value    | 
 |-----------------------|-----------|
@@ -152,12 +157,6 @@ _arguments_:
 | min rule length       |  2        |
 | max rule length       |  5        |
 
-The call:
-
-```{r}
-a4items <- apriori(a4, parameter = list(target = "frequent",
-                                        supp = 0.0025, minlen = 2, maxlen = 5))
-```
 
 _results_:
 
@@ -176,6 +175,14 @@ _most frequent items_:
 | p=$10-150 | p=$150-600 | f=No Info | p=$0-10 | f=USA | (Other) |
 |-----------|------------|-----------|---------|-------|---------|
 |      165  |      78    |    77     |    74   |    59 |   920   |
+
+
+_the call_:
+
+```{r}
+a4items <- apriori(a4, parameter = list(target = "frequent",
+                                        supp = 0.0025, minlen = 2, maxlen = 5))
+```
 
 
 ```{r}
@@ -225,7 +232,7 @@ inspect(head(a4items, 8))
 8 {p=$0-10,v=d96493}        0.002805356
 ```
 
-lengths longer than 2 interest me more. 
+Lengths longer than 2 interest me more. 
 
 ```{R}
 inspect(tail(a4items, 8))
@@ -240,7 +247,7 @@ inspect(tail(a4items, 8))
 575 {p=$0-10,f=Agora/Internet/Torland,sc=Other,v=056783}  0.005269806
 ```
 
-Will any longer itemsets have a high support? 
+Will any longer itemsets have a high support? Sort, search.
 
 ```{R}
 a4items <- sort(a4items, by = "support", decreasing = T)
@@ -286,8 +293,6 @@ inspect(a4items)[48:56,]
 
 
 
-
-
 # Mining Association Rules
 
 
@@ -299,8 +304,8 @@ inspect(a4items)[48:56,]
 |-----------------------|-----------|
 | minimum support       |  0.0025   |
 | minumum confidence    |  0.6      |
-| min rule length       |  2        |
-| max rule length       |  5        |
+| min rule length       |  3        |
+| max rule length       |  -        |
 
 _results_:
 
@@ -318,36 +323,39 @@ _results_:
 
 a3 <- subset(ag, select = c("p", "f", "sc", "v"))
 
-a3rules <- apriori(a3, parameter = list(support = 0.0025, confidence = 0.6,
-                                        minlen = 2, maxlen = 5))
+a4rules <- apriori(a4, parameter = list(support = 0.0025, confidence = 0.6, minlen = 3))
 ```
+
+Not wanted to have to prune to0 many redundant/obvious rules, I set the minumum rule length to 3. 
 
 
 ```{r}
-summary(a3rules)
-
-set of 395 rules
+summary(a4rules)
+set of 268 rules
 
 rule length distribution (lhs + rhs):sizes
-  2   3   4 
-127 200  68 
+  3   4 
+200  68 
 
- #   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
-    2.000   2.000   3.000   2.851   3.000   4.000 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   3.000   3.000   3.254   4.000   4.000 
 
 summary of quality measures:
     support           confidence          lift        
- # Min.   :0.002524   Min.   :0.6011   Min.   :  1.284  
- # 1st Qu.:0.003277   1st Qu.:0.7594   1st Qu.:  3.881  
- # Median :0.004357   Median :0.9069   Median :  6.103  
- # Mean   :0.006679   Mean   :0.8662   Mean   : 19.707  
- # 3rd Qu.:0.007633   3rd Qu.:0.9859   3rd Qu.: 17.782  
- # Max.   :0.053784   Max.   :1.0000   Max.   :292.835  
+ Min.   :0.002524   Min.   :0.6019   Min.   :  1.284  
+ 1st Qu.:0.003275   1st Qu.:0.7763   1st Qu.:  4.447  
+ Median :0.004227   Median :0.9172   Median :  7.070  
+ Mean   :0.005841   Mean   :0.8736   Mean   : 20.823  
+ 3rd Qu.:0.006793   3rd Qu.:0.9923   3rd Qu.: 19.657  
+ Max.   :0.029967   Max.   :1.0000   Max.   :243.955  
 
 mining info:
  data ntransactions support confidence
-   a3       2317353  0.0025        0.6
+   a4       2317353  0.0025        0.6
 ```
+
+Out of 268 rules generated:
+Just under 75% of the rules are of length 3; the rest 4. Median confidence is sitting nicely at 0.9172, and appears there are positive correlations across the board as seen in a minimum lift of 1.248. Support might be an issue, very low values observed here.
 
 
 ### Top and Bottom 10
@@ -368,77 +376,39 @@ Given a population of **N** transactions that contains itemsets **N<sub>X</sub>*
 A quick `inspect` of the top and bottom 10 rules. 
 
 ```{r}
-arules::inspect(head(a3rules, 10))
-   lhs                rhs             support     confidence lift      
-1  {v=a74314}      => {f=USA}         0.002610306 0.9879144    4.599113
-2  {v=259334}      => {f=Netherlands} 0.002663384 1.0000000   17.685532
-3  {sc=Stashes}    => {p=$10-150}     0.002632745 0.9489812    2.024667
-4  {v=682306}      => {f=China}       0.002677624 0.9627618   12.248673
-5  {v=553007}      => {f=Poland}      0.002612895 0.9274008  292.834867
-6  {f=Poland}      => {v=553007}      0.002612895 0.8250443  292.834867
-7  {v=690113}      => {f=Sweden}      0.002845488 0.9996968   92.414646
-8  {sc=Containers} => {p=$10-150}     0.002651732 0.8862129    1.890750
-9  {v=d96493}      => {p=$0-10}       0.002805356 0.9273894    5.789025
-10 {v=b28893}      => {f=USA}         0.003046579 0.9980209    4.646163
+arules::inspect(head(a4rules, 10))
+   lhs                            rhs                support     confidence lift      
+1  {f=USA,v=b28893}            => {p=$10-150}        0.002812260 0.9230878    1.969423
+2  {p=$10-150,v=b28893}        => {f=USA}            0.002812260 0.9978564    4.645396
+3  {sc=Ecstasy-Pills,v=807510} => {f=Netherlands}    0.002829090 0.9989334   17.666669
+4  {f=Netherlands,v=807510}    => {sc=Ecstasy-Pills} 0.002829090 0.7924574   21.281765
+5  {sc=Prescription,v=764212}  => {f=UK}             0.003340881 0.8977273   10.910283
+6  {f=UK,v=764212}             => {sc=Prescription}  0.003340881 1.0000000   12.217300
+7  {f=UK,v=702924}             => {p=$10-150}        0.003346491 0.8661901    1.848031
+8  {p=$10-150,v=702924}        => {f=UK}             0.003346491 1.0000000   12.153227
+9  {sc=Smoked,v=105690}        => {f=UK}             0.003910065 1.0000000   12.153227
+10 {f=UK,v=105690}             => {sc=Smoked}        0.003910065 1.0000000  115.045078
 ```
 
-Rule length two at the head; longer rules at the bottom. Support could be higher all around, but it was decided to keep that value low to generate more rules. Confidence appears healthy with many values at or near 1.0. Lift also appears to be doing well - although many of the rules with very high lift might be too obvious to warrant investigation. An example from above being rule 5:
-
-  5  {v=553007}      => {f=Poland}      0.002612895 0.9274008  292.834867
-
-What can we learn from this other than a particular vendor operates out of Poland? Having a support near 0 and and large value for `N` could be inflating the lift for this particular rule. A more interesting rule, subjectively, might be number 8:
-  
-  8  {sc=Containers} => {p=$10-150}     0.002651732 0.8862129    1.890750
-
-There's an 88% chance that if the subcategory is `Containers`, the price will be within 10-150 USD. From exploratory plots, 
-
-
-N<sub>X ∪ Y</sub> / N = 0.002651732 
-
-N<sub>X ∪ Y</sub> / 2317353 = 0.002651732 
-
-N<sub>X ∪ Y</sub> = 0.002651732 * 2317353 = 6144.999
-
-
-
-N<sub>X ∪ Y</sub> / N<sub>X</sub> = 0.8862129 
-
-6144.999 / N<sub>X</sub> = 0.8862129 
-
-N<sub>X</sub> = 6144.999 / 0.8862129 
-
-N<sub>X</sub> = 6933.999
-
-
-
-N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub> = 1.890750
-
-6144.999 * 2317535 / N<sub>X</sub> * N<sub>Y</sub> = 1.890750
-
-14241250257 / (6933.999 * N<sub>Y</sub>) = 1.890750
-
-
-
-
-
-
-
+Support could be higher all around, but it was decided to keep that value low to generate more rules. Lift appears to be doing well - although many of the rules with very high lift might be too obvious to warrant investigation. Or rather, they should be looked into to make sure indepedence of variables is satisfied. 
 
 
 ```{r}
-arules::inspect(tail(a3rules, 10))
+arules::inspect(tail(a4rules, 10))
     lhs                                              rhs                        support     confidence lift     
-386 {f=Agora/Internet/Torland,sc=Guides,v=056783} => {p=$0-10}                  0.003633456 1.0000000   6.242280
-387 {p=$0-10,sc=Guides,v=056783}                  => {f=Agora/Internet/Torland} 0.003633456 1.0000000  12.028450
-388 {p=$0-10,f=Agora/Internet/Torland,sc=Guides}  => {v=056783}                 0.003633456 0.6367693  21.249052
-389 {p=$150-600,sc=RCs,v=653472}                  => {f=China}                  0.003118213 1.0000000  12.722433
-390 {p=$150-600,f=China,sc=RCs}                   => {v=653472}                 0.003118213 0.6099949  21.814071
-391 {p=$0-10,sc=Other,v=d36261}                   => {f=No Info}                0.007578043 0.9773486   5.563103
-392 {f=No Info,sc=Other,v=d36261}                 => {p=$0-10}                  0.007578043 0.7366500   4.598376
-393 {p=$10-150,sc=Other,v=d36261}                 => {f=No Info}                0.002662952 0.9049714   5.151130
-394 {f=Agora/Internet/Torland,sc=Other,v=056783}  => {p=$0-10}                  0.005269806 1.0000000   6.242280
-395 {p=$0-10,sc=Other,v=056783}                   => {f=Agora/Internet/Torland} 0.005269806 1.0000000  12.028450
+259 {f=Agora/Internet/Torland,sc=Guides,v=056783} => {p=$0-10}                  0.003633456 1.0000000   6.242280
+260 {p=$0-10,sc=Guides,v=056783}                  => {f=Agora/Internet/Torland} 0.003633456 1.0000000  12.028450
+261 {p=$0-10,f=Agora/Internet/Torland,sc=Guides}  => {v=056783}                 0.003633456 0.6367693  21.249052
+262 {p=$150-600,sc=RCs,v=653472}                  => {f=China}                  0.003118213 1.0000000  12.722433
+263 {p=$150-600,f=China,sc=RCs}                   => {v=653472}                 0.003118213 0.6099949  21.814071
+264 {p=$0-10,sc=Other,v=d36261}                   => {f=No Info}                0.007578043 0.9773486   5.563103
+265 {f=No Info,sc=Other,v=d36261}                 => {p=$0-10}                  0.007578043 0.7366500   4.598376
+266 {p=$10-150,sc=Other,v=d36261}                 => {f=No Info}                0.002662952 0.9049714   5.151130
+267 {f=Agora/Internet/Torland,sc=Other,v=056783}  => {p=$0-10}                  0.005269806 1.0000000   6.242280
+268 {p=$0-10,sc=Other,v=056783}                   => {f=Agora/Internet/Torland} 0.005269806 1.0000000  12.028450
 ```
+
+
 
 # References and Notes
 
