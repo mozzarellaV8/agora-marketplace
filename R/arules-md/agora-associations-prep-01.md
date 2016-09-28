@@ -42,7 +42,7 @@ Why subset for prices under $20,000?
 
 Often on Agora there will be products listed at exorbitant prices.
 
-While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#references)</sup><sup>,<sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
+While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked<sup>[2](#references)</sup><sup>,</sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
 
 An example of this 'mingling': sorting by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. 
 
