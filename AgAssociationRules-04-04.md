@@ -291,7 +291,7 @@ inspect(a4items)[48:56,]
 ```
 
 
-
+[back to top](#agora-associations-04-04)
 
 # Mining Association Rules
 
@@ -410,6 +410,8 @@ arules::inspect(tail(a4rules, 10))
 268 {p=$0-10,sc=Other,v=056783}                   => {f=Agora/Internet/Torland} 0.005269806 1.0000000  12.028450
 ```
 
+[back to top](#agora-associations-04-04)
+
 # Visualizations - Grouped Matrices
 
 
@@ -444,6 +446,7 @@ for (i in 1:10) {
 
 ![24 Rule Group](plots/arules/a404-g1-2.png)
 
+[back to top](#agora-associations-04-04)
 
 # References and Notes
 
