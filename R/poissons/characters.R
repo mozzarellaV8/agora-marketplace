@@ -1,5 +1,4 @@
-
-library(MASS)
+# character counts: product listings
 
 library(data.table)
 library(sandwich)
@@ -40,35 +39,35 @@ library(extrafontdb)
 # ag$cc <- nchar(as.character(ag$product))
 
 # load data -------------------------------------------------------------------
-ag <- fread("~/GitHub/agora-data/agora-02.csv", stringsAsFactors = T)
-ag$date <- as.Date(ag$date)
+agc <- fread("~/GitHub/agora-data/agora-02.csv", stringsAsFactors = T)
+agc$date <- as.Date(agc$date)
 
-summary(ag$has.num)
+summary(agc$has.num)
 #    Mode   FALSE    TRUE    NA's 
 # logical  501887 1821074       0 
 
-summary(ag$cc)
+summary(agc$cc)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 #    1.00   25.00   36.00   38.81   49.00  287.00      18
 
 par(mfrow = c(2, 1), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
-hist(ag$cc, breaks = 50, main = "character count: Product Listings",
+hist(agc$cc, breaks = 50, main = "character count: Product Listings",
      xlab = "number of characters", ylab = "")
-hist(log(ag$cc), breaks = 100, 
+hist(log(agc$cc), breaks = 100, 
      main = "(log) character count: Product Listings",
      xlab = "(log) number of characters", ylab = "")
 
 # do character counts vary over time?
-plot(ag$j, ag$cc)
+plot(agc$j, agc$cc)
 # do character counts vary over category?
-plot(ag$cat, ag$cc)
+plot(agc$cat, agc$cc)
 # vary over subcategory?
-plot(ag$cc, ag$subcat)
+plot(agc$cc, agc$subcat)
 # vary by drug?
-plot(ag$cc, ag$subsubcat)
+plot(agc$cc, agc$subsubcat)
 
 par(mfrow = c(1, 1), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
-plot(ag$has.num)
+plot(agc$has.num)
 
 
 # charcount over time ---------------------------------------------------------
@@ -78,7 +77,7 @@ dates <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "month")
 dw <- seq(as.Date("2014-01-01"), as.Date("2015-07-01"), by = "week")
 
 # plot
-p.cd <- ggplot(ag, aes(cc, date)) + 
+p.cd <- ggplot(agc, aes(cc, date)) + 
   geom_hex(aes(cc, date, color = cc), bins = 80) +
   
   scale_y_date(breaks = dw, labels = dw) +
@@ -102,7 +101,7 @@ p.cd <- ggplot(ag, aes(cc, date)) +
 p.cd
 
 # vertical
-p.cdv <- ggplot(ag, aes(date, cc)) + 
+p.cdv <- ggplot(agc, aes(date, cc)) + 
   geom_hex(aes(date, cc, color = cc), bins = 80) +
   
   scale_x_date(breaks = dw, labels = dw) +
@@ -122,7 +121,7 @@ p.cdv
 
 # charcount by location -------------------------------------------------------
 
-p.cl <- ggplot(ag, aes(cc, from)) + 
+p.cl <- ggplot(agc, aes(cc, from)) + 
   
   geom_tile(aes(cc, from, fill = cc),  color = "white") +
   
@@ -148,7 +147,7 @@ p.cl
 
 # charcount by category -------------------------------------------------------
 
-p.nchar0 <- ggplot(ag, aes(cc, cat)) + 
+p.nchar0 <- ggplot(agc, aes(cc, cat)) + 
   geom_tile(aes(cc, cat, fill = cc),  color = "white") +
   
   scale_fill_gradient2(low = "deepskyblue4", mid = "bisque2",
@@ -173,13 +172,13 @@ p.nchar0
 # charcount by subcategory ----------------------------------------------------
 
 # prep
-# ag$subcat <- as.character(ag$subcat)
-# ag$subcat[ag$subcat == "No Info/Other"] <- "Other"
-# ag$subcat <- factor(ag$subcat)
-# levels(ag$subcat)
+# agc$subcat <- as.character(agc$subcat)
+# agc$subcat[agc$subcat == "No Info/Other"] <- "Other"
+# agc$subcat <- factor(agc$subcat)
+# levels(agc$subcat)
 
 # plot
-p.nchar1 <- ggplot(ag, aes(cc, subcat)) + 
+p.nchar1 <- ggplot(agc, aes(cc, subcat)) + 
   geom_tile(aes(cc, subcat, fill = cc),  color = "white") +
   
   scale_fill_gradient2(low = "deepskyblue4", mid = "bisque2",
@@ -203,10 +202,10 @@ p.nchar1
 
 # charcount by sub-subcategory ------------------------------------------------
 
-# ag$subsubcat <- factor(ag$subsubcat)
-# levels(ag$subsubcat)
+# agc$subsubcat <- factor(agc$subsubcat)
+# levels(agc$subsubcat)
 
-p.nchar2 <- ggplot(ag, aes(cc, subsubcat)) + 
+p.nchar2 <- ggplot(agc, aes(cc, subsubcat)) + 
   geom_tile(aes(cc, subsubcat, fill = cc),  color = "white") +
   
   scale_fill_gradient2(low = " deepskyblue4", mid = "bisque2",
@@ -228,22 +227,25 @@ p.nchar2 <- ggplot(ag, aes(cc, subsubcat)) +
 
 p.nchar2
 
+plot.new()
+frame()
+
 # charcount by stacked category -----------------------------------------------
 
 # combine sub- and subsub-categories
-# ag$sc <- paste(ag$subcat, ag$subsubcat, sep = "-")
-# ag$sc <- gsub("-NA$", "", ag$sc)
-# ag$sc <- gsub("Methylone", "RCs", ag$sc)
-# ag$sc <- factor(ag$sc)
-# levels(ag$sc)
+# agc$sc <- paste(agc$subcat, agc$subsubcat, sep = "-")
+# agc$sc <- gsub("-NA$", "", agc$sc)
+# agc$sc <- gsub("Methylone", "RCs", agc$sc)
+# agc$sc <- factor(agc$sc)
+# levels(agc$sc)
 
 
 # plot
-p.nchar3 <- ggplot(ag, aes(sc, cc)) + 
+p.nchar3 <- ggplot(agc, aes(sc, cc)) + 
   geom_tile(aes(sc, cc, fill = cc),  color = "white", na.rm = T) +
   
-  scale_fill_gradient2(low = " deepskyblue4", mid = "bisque2",
-                       high = "firebrick3", midpoint = 150) +
+  scale_fill_gradient2(low = "deepskyblue", mid = "antiquewhite1",
+                       high = "firebrick3", midpoint = 125) +
   scale_y_continuous(breaks = seq(0, 300, 50)) +
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
@@ -258,39 +260,57 @@ p.nchar3 <- ggplot(ag, aes(sc, cc)) +
 
 p.nchar3
 
+p.nchar3b <- ggplot(agc, aes(cc, sc)) + 
+  geom_tile(aes(cc, sc, fill = cc),  color = "white", na.rm = T) +
+  
+  scale_fill_gradient2(low = "deepskyblue4", mid = "antiquewhite2",
+                       high = "firebrick4", midpoint = 125) +
+  scale_x_continuous(breaks = seq(0, 300, 25)) +
+  theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.5, 0.25), "cm"),
+        axis.text.y = element_text(size = 10),
+        axis.text.x = element_text(size = 11.25)) +
+  labs(title = "Product Listings: Character Count by Subcategories",
+       x = "", y = "", fill = "")
+
+p.nchar3b
+
+plot.new()
+frame()
+
 # charcount by all categories -------------------------------------------------
-# ag$all.c <- paste(ag$cat, ag$sc, sep = ": ")
-# ag$all.c <- gsub("Drugs: Methylone", "Drugs: RCs", ag$all.c)
-# ag$all.c <- factor(ag$all.c)
-# levels(ag$all.c)
+# agc$all.c <- paste(agc$cat, agc$sc, sep = ": ")
+# agc$all.c <- gsub("Drugs: Methylone", "Drugs: RCs", agc$all.c)
+# agc$all.c <- factor(agc$all.c)
+levels(agc$all.c)
 
 # horizontal 
-p.nchar4 <- ggplot(ag, aes(cc, all.c)) + 
+p.nchar4 <- ggplot(agc, aes(cc, all.c)) + 
   geom_tile(aes(cc, all.c, fill = cc),  color = "white", na.rm = T) +
   scale_fill_gradient2(low = " deepskyblue4", mid = "bisque2",
                        high = "firebrick3", midpoint = 150) +
   scale_x_continuous(breaks = seq(0, 300, 25)) +
   theme_minimal(base_size = 14, base_family = "GillSans") +
-  theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-        axis.text.y = element_text(size = 9.25, lineheight = 1.2,
-                                   hjust = 0),
-        axis.text.x = element_text(size = 12.75),
-        axis.title.x = element_text(family = "Times New Roman",
-                                    face = "italic",
-                                    margin = margin(20, 0, 0, 0)),
-        legend.text = element_text(size = 8),
-        legend.position = c(1, 1), legend.justfication = c(1, 1),
-        legend.key = element_) +
+  
+  theme(
+    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"), 
+    axis.text.y = element_text(size = 9.25, lineheight = 1.2, hjust = 0),
+    axis.text.x = element_text(size = 12.75),
+    axis.title.x = element_text(family = "Times New Roman", face = "italic", margin = margin(20, 0, 0, 0)),
+    legend.text = element_text(size = 8),
+    legend.position = c(1, 1), legend.justification = c(1, 1),
+    legend.key = element_blank()) +
+  
   labs(title = "Product Listings: Character Count by all Categories",
        x = "number of characters", y = "", fill = "character\ncount")
 
 p.nchar4
 
 # vertical 
-p.nchar5 <- ggplot(ag, aes(all.c, cc)) + 
+p.nchar5 <- ggplot(agc, aes(all.c, cc)) + 
   geom_tile(aes(all.c, cc, fill = cc),  color = "white", na.rm = T) +
-  scale_fill_gradient2(low = " deepskyblue4", mid = "bisque2",
-                       high = "firebrick3", midpoint = 150) +
+  scale_fill_gradient2(low = "deepskyblue4", mid = "antiquewhite2",
+                       high = "firebrick3", midpoint = 125) +
   scale_y_continuous(breaks = seq(0, 300, 25)) +
   theme_minimal(base_size = 12, base_family = "GillSans") +
   theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
@@ -305,4 +325,27 @@ p.nchar5 <- ggplot(ag, aes(all.c, cc)) +
   
 p.nchar5
 
-write.csv(ag, file = "~/GitHub/agora-data/agora-02.csv", row.names = F)
+plot.new()
+frame()
+
+# horizontal w/ 45-degree x-axis
+p.nchar6 <- ggplot(agc, aes(all.c, cc)) + 
+  geom_tile(aes(all.c, cc, fill = cc), color = "white", na.rm = T) +
+  scale_y_continuous(breaks = seq(0, 300, 25)) +
+  scale_fill_gradient2(
+    low = " deepskyblue4", mid = "antiquewhite2",
+    high = "firebrick4", midpoint = 125) +
+  theme_minimal(base_size = 12, base_family = "GillSans") +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
+        axis.text.y = element_text(size = 12.75, angle = 90, vjust = 1),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1),
+        legend.text = element_text(size = 10, angle = 90, hjust = 1,
+                                   margin = margin(c(0, 40, 40, 0))),
+        legend.position = "top",
+        legend.key = element_blank()) +
+  labs(title = "Product Listings: Character Count by all Categories",
+       y = "", x = "", fill = "")
+
+p.nchar6
+
+write.csv(agc, file = "~/GitHub/agora-data/agora-02.csv", row.names = F)
