@@ -86,8 +86,7 @@ includes extended transaction information - examples:
 3             3
 ```
 
-# Item Frequency Plot
-
+# Item Frequency Plots
 
 ``` {R}
 # Item Frequency Plot ---------------------------------------------------------
@@ -98,6 +97,9 @@ itemFrequencyPlot(a4, support = 0.0025, cex.names = 0.65, col = "white", horiz =
 ```
 
 ![itemFreq-0.005](plots/arules/a4-04-ItemFreq-0005.png)
+
+- prices within 10-150 show mup more than twice as much as the next nearest item - which is prices in the $150-600 range. It might be worth taking a look at the distribution of this subset. 
+- the United States shows up nearly twice as much as the next location - the UK. 
 
 Wanting to see how different minimum supports affected item frequency, scripted a loop to plot a sequence of values.
 
@@ -127,7 +129,161 @@ for (i in 1:length(sup)) {
 
 ![ifp-0.025](a4-04-ItemFreq-0.025.png)
 
+Observed from a minimum support of 0.025:
+
+- cannabis shows up as frequently as listings in the price range $600-$2000; this price bin shows up half as much as the next bin ($150-$600), which shows up roughly half as much as the next bin ($10-150). $10-$150 listings are also the most likely to appear out of all items. 
+- roughly the same relative frequency: a prescription drug listing, the UK, China, and the location Agora/Internet/Torland<sup>3</sup>.
+- there are 3 vendors who have as many listings as the total number of listings for Research Chemicals.
+- two non-descript items, the category 'Other' and location 'EU' are just as likely to appear as one another; 
+- more affinities by relative frequency: Australia, the Netherlands, Benzodiazapines. Steroids, Germany, Cocaine, Ecstasy(MDMA), Ecstasy(Pills), Canada, listings from $2000-$10000. 
+
 ![ifp-0.075](a4-04-ItemFreq-0.075.png)
+
+
+
+# Frequent Itemsets
+
+_arguments_:
+
+| parameter             |  value    | 
+|-----------------------|-----------|
+| target                |  frequent |
+| minimum support       |  0.0025   |
+| min rule length       |  2        |
+| max rule length       |  5        |
+
+The call:
+
+```{r}
+a4items <- apriori(a4, parameter = list(target = "frequent",
+                                        supp = 0.0025, minlen = 2, maxlen = 5))
+```
+
+_results_:
+
+| parameter             |  value        |
+|-----------------------|---------------|
+| yield                 |  575 itemsets |
+| itemset length 2      |  27           |
+| itemset length 3      |  200          |
+| itemset length 4      |  68           |
+| minumum support       |  0.002523     |
+| maximum support       |  0.122478     |
+
+
+_most frequent items_:
+
+| p=$10-150 | p=$150-600 | f=No Info | p=$0-10 | f=USA | (Other) |
+|-----------|------------|-----------|---------|-------|---------|
+|      165  |      78    |    77     |    74   |    59 |   920   |
+
+
+```{r}
+summary(a4items)
+set of 575 itemsets
+
+most frequent items:
+ p=$10-150 p=$150-600  f=No Info    p=$0-10      f=USA    (Other) 
+       165         78         77         74         59        920 
+
+element (itemset/transaction) length distribution:sizes
+  2   3   4 
+377 173  25 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  2.000   2.000   2.000   2.388   3.000   4.000 
+
+summary of quality measures:
+    support        
+ Min.   :0.002523  
+ 1st Qu.:0.003314  
+ Median :0.004777  
+ Mean   :0.007629  
+ 3rd Qu.:0.008004  
+ Max.   :0.122478  
+
+includes transaction ID lists: FALSE 
+
+mining info:
+ data ntransactions support confidence
+   a4       2317353  0.0025          1
+```
+
+
+Looking at the top of the itemset list; unsorted:
+
+```{R}
+inspect(head(a4items, 8))
+  items                     support    
+1 {f=USA,v=a74314}          0.002610306
+2 {f=Netherlands,v=259334}  0.002663384
+3 {p=$10-150,sc=Stashes}    0.002632745
+4 {f=China,v=682306}        0.002677624
+5 {f=Poland,v=553007}       0.002612895
+6 {f=Sweden,v=690113}       0.002845488
+7 {p=$10-150,sc=Containers} 0.002651732
+8 {p=$0-10,v=d96493}        0.002805356
+```
+
+lengths longer than 2 interest me more. 
+
+```{R}
+inspect(tail(a4items, 8))
+    items                                                 support    
+568 {p=$0-10,f=No Info,sc=eBooks,v=d36261}                0.003158345
+569 {p=$0-10,f=Agora/Internet/Torland,sc=eBooks,v=056783} 0.005032897
+570 {p=$0-10,f=No Info,sc=Guides,v=d36261}                0.007235842
+571 {p=$0-10,f=Agora/Internet/Torland,sc=Guides,v=056783} 0.003633456
+572 {p=$150-600,f=China,sc=RCs,v=653472}                  0.003118213
+573 {p=$0-10,f=No Info,sc=Other,v=d36261}                 0.007578043
+574 {p=$10-150,f=No Info,sc=Other,v=d36261}               0.002662952
+575 {p=$0-10,f=Agora/Internet/Torland,sc=Other,v=056783}  0.005269806
+```
+
+Will any longer itemsets have a high support? 
+
+```{R}
+a4items <- sort(a4items, by = "support", decreasing = T)
+inspect(head(a4items, 12))
+    items                              support   
+377 {p=$10-150,f=USA}                  0.12247810
+372 {p=$0-10,f=No Info}                0.07160325
+375 {p=$10-150,f=No Info}              0.05945836
+362 {p=$0-10,f=Agora/Internet/Torland} 0.05378421
+361 {p=$10-150,f=UK}                   0.05254443
+376 {p=$150-600,f=USA}                 0.05013004
+356 {p=$10-150,sc=Prescription}        0.04810359
+369 {p=$10-150,sc=Cannabis-Weed}       0.04644308
+367 {f=USA,sc=Cannabis-Weed}           0.04106970
+322 {p=$10-150,f=EU}                   0.03351367
+353 {f=No Info,sc=Prescription}        0.03234639
+306 {p=$10-150,sc=Steroids}            0.03210301
+```
+
+```{r}
+inspect(a4items)[123:128,]
+                           items     support
+240        {p=$10-150,sc=Guides} 0.009098743
+297  {f=Canada,sc=Cannabis-Weed} 0.009027110
+128  {f=USA,sc=Cannabis-Edibles} 0.009023226
+124           {p=$0-10,v=844130} 0.008994314
+310      {p=$2000-10000,f=China} 0.008985683
+429 {p=$0-10,f=No Info,v=844130} 0.008954613
+
+inspect(a4items)[48:56,]
+                               items    support
+186               {p=$0-10,v=723840} 0.01568686
+255                 {f=China,sc=RCs} 0.01568169
+462     {p=$0-10,f=No Info,v=723840} 0.01566701
+360                {p=$150-600,f=UK} 0.01565579
+373                  {p=$0-10,f=USA} 0.01561868
+339       {p=$150-600,f=Netherlands} 0.01510819
+301               {f=EU,sc=Steroids} 0.01509006
+328             {p=$10-150,sc=Other} 0.01450577
+214 {f=USA,sc=Cannabis-Concentrates} 0.01436769
+```
+
+
 
 
 
@@ -137,7 +293,7 @@ for (i in 1:length(sup)) {
 
 ## Parameters
 
-_`apriori` algorithm arguments_:
+`apriori` _algorithm arguments_:
 
 | parameter             |  value    | 
 |-----------------------|-----------|
@@ -148,12 +304,12 @@ _`apriori` algorithm arguments_:
 
 _results_:
 
-| parameter       |  value    |
-|-----------------------|---------------|
-| yield           |  395 rules  |
-| rules length 2      |  27     |
-| rules length 3    |  200      |
-| rules length 4    |  68     |
+| parameter             |  value      |
+|-----------------------|-------------|
+| yield                 |  395 rules  |
+| rules length 2        |  27         |
+| rules length 3        |  200        |
+| rules length 4        |  68         |
 
 
 ## Function Call and Summary
@@ -200,11 +356,12 @@ _Measures of Quality_
 
 Given a population of **N** transactions that contains itemsets **N<sub>X</sub>** and **N<sub>Y</sub>**, the rule **X ⇒ Y** can be measured by:
 
-| measure     | formula                           |
-|---------------|-----------------------------------------------------------|
-| support     | N<sub>X ∪ Y</sub> / N                   | 
-| confidence  | N<sub>X ∪ Y</sub> / N<sub>X</sub>             | 
-| lift      | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   | 
+| measure     | formula                                                 |
+|-------------|---------------------------------------------------------|
+| support     | N<sub>X ∪ Y</sub> / N                                   | 
+| confidence  | N<sub>X ∪ Y</sub> / N<sub>X</sub>                       | 
+| lift        | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   |
+| lift        | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   |  
 
 
 
@@ -289,7 +446,7 @@ arules::inspect(tail(a3rules, 10))
 
 <sup>2</sup> While likely not following the strictest security protocol, this level of anonymization felt suited for the application. In practical terms, all of this data is publicly available so these measures were done out of a careful respect for privacy.
 
-
+<sup>3</sup> guides, books, hacking, ebooks, services.
 
 
 
