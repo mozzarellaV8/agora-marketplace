@@ -97,9 +97,7 @@ levels(ag$sc)
 
 # Discretize Prices
 
-Initially I'd been using `discretize` from the `arules` library to do this. I decided to discretize manually for this round rule mining, given new domain info (and maybe bc I kept running into a bug at this point in the RMarkdown file, refusing to knit `discretize` for some reason).
-
-Using `discretize` previously involved a choice of whether to bin values by equal intervals or cluster. To inform that decision - examined and plotted distributions of prices. 
+Using `discretize` from the `arules` packsage previously involved a choice of whether to bin values by equal intervals or cluster. To inform that decision - a look at the distribution of list prices.
 
 ```{R}
 # discretize prices - but into cluster or interval?
@@ -114,7 +112,7 @@ quantile(ag$usd)
 # 0.00    24.28    84.97   290.19 20000.00 
 ```
 
-I'll venture that most of the values are towards the left...
+I'll venture that most of the values are towards the left...Although the summary shows a mean price of $426.40, a mean value well above the median _and_ 3rd quartile might be a strong indicator of left skew.
 
 ```{r}
 par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
@@ -128,12 +126,12 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 ```
-![usd dist x4](plots/arules/usd-dist-01.jpg)
+![usd dist x4](plots/arules/prerp-usd-dist-01.jpg)
 
-As suspected. One more curiousity - although the summary above shows a mean price of $426.40, the feeling is that outliers on high end are pulling that value up - a mean above the 3rd quartile seems to indicate something...
+As suspected. Lognormal? 
 
 ```{R}
-# heavy on the left/long tail - quick check of the log()
+# heavy on the left/long tail - quick check of the log
 ag$log.usd <- log(ag$usd)
 
 par(mfrow = c(1, 1), mar = c(6, 6, 6, 4), las = 1, family = "GillSans")
@@ -148,11 +146,13 @@ summary(ag$log.usd)
 exp(c(4, 4.25, 4.5, 4.75, 5))
 # 54.59815  70.10541  90.01713 115.58428 148.41316
 ```
-![log dist usd](plots/arules/usd-dist-02-log.jpeg)
+![log dist usd](plots/arules/prep-usd-dist-02-log.jpeg)
 
-Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
+Visually it appears the mean of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. 
 
-Eventually I decided to bin the prices myself (after using `cluster` in `discretize` on a previous mining session). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
+The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
+
+Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
 
 ```{R}
 # manually discretize
@@ -167,7 +167,7 @@ ag$p <- ifelse(ag$p <= 10.00, "$0-10",
 
 ag$p <- factor(ag$p)  # 6 levels
 ```
-![usd-disc-dist](plots/arules/usd-disc-dist.png)
+![usd-disc-dist](plots/arules/prep-discretized-distribution-01.png)
 
 ```{r}
 ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
@@ -200,7 +200,7 @@ summary(ag$p)
 
 # Anonymize Vendor Names
 
-I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all nicknames, as seen in the case of one vendor<sup>[4]((#references)</sup> even with just a handle a real identity could be found out. 
+I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all online handles - as seen in the case of one vendor, even with just a handle a real identity could be uncovered<sup>[4](#references)</sup>. 
 
 ```{R}
 ag$v2 <- ag$vendor
@@ -214,10 +214,13 @@ levels(as.factor(ag$v3))
 ag$v3 <- factor(ag$v3)
 summary(ag$v3)
 ```
-From reading the manual pages, `anonymize` salts then hashes a vector with a few choices for algorithms. `SHA256` felt the appropriate hashing algorithm, and in what might be an insecure method I abbreviated the output to 6 characters afterwards. 
+From reading the manual pages, `anonymize` salts then hashes a vector with a few choices for algorithms. `SHA256` felt the appropriate hashing algorithm, and in what might be an insecure method I abbreviated the output to 6 characters afterwards for clarity. 
 
 In practical terms though, anyone caring to download the dataset could easily find the vendor names. Anonymization, in this case, is done less for security and mostly out of respect for privacy. 
 
+# Convert to Transactions
+
+next: [Variable Selection, Transaction Conversion, and Mining](#R/arules-md/agora-associations-04-02.md)
 
 # References
 
