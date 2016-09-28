@@ -9,6 +9,7 @@ Contents:
 - [Discretize Prices](#discretize-prices)
 - [Anonymize Vendors](#anonymize-vendor-names)
 - [Transaction Conversion](#transaction-conversion)
+- [References](#references)
 
 ```{R}
 
@@ -220,3 +221,19 @@ summary(ag$v3)
 From reading the manual pages, `anonymize` salts then hashes a vector with a few choices for algorithms. `SHA256` felt the appropriate hashing algorithm, and in what might be an insecure method I abbreviated the output to 6 characters afterwards. 
 
 In practical terms though, anyone caring to download the dataset could easily find the vendor names. Anonymization, in this case, is done less for security and mostly out of respect for privacy. 
+
+
+# References
+
+_in progress_
+
+<sup>1</sup> Borne, Dr. Kirk. "Association Rule Mining – Not Your Typical Data Science Algorithm | MapR." Association Rule Mining – Not Your Typical Data Science Algorithm | MapR. N.p., 2014. Web. 25 [Sept. 2016](https://www.mapr.com/blog/association-rule-mining-not-your-typical-data-science-algorithm).
+
+<sup>2</sup> "Shedding Light on the Dark Web." The Economist. The Economist Newspaper, 2016. Web. 23 [Sept. 2016.](http://www.economist.com/news/international/21702176-drug-trade-moving-street-online-cryptomarkets-forced-compete)
+
+<sup>3</sup> Demant, Munksgaard, & Houborg 2016, “Personal use, social supply or redistribution? cryptomarket demand on Silk Road 2 and Agora” [August 2016](http://www.gwern.net/docs/sr/2016-demant.pdf)
+
+<sup>4</sup> Economist, op. cit.
+
+
+
