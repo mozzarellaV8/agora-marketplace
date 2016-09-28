@@ -97,7 +97,7 @@ levels(ag$sc)
 
 # Discretize Prices
 
-Initially I'd been using `discretize` from the `arules` library to do this. I decided to discretize manually for the last round of rule mining, given new domain info (and maybe bc I kept running into a bug at this point in the RMarkdown file, refusing to knit `discretize` for some reason).
+Initially I'd been using `discretize` from the `arules` library to do this. I decided to discretize manually for this round rule mining, given new domain info (and maybe bc I kept running into a bug at this point in the RMarkdown file, refusing to knit `discretize` for some reason).
 
 Using `discretize` previously involved a choice of whether to bin values by equal intervals or cluster. To inform that decision - examined and plotted distributions of prices. 
 
