@@ -30,8 +30,6 @@ head(ag)
 ag <- as.data.frame(ag)
 # write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag20k-go.csv", row.names = F)
 
-# convert to transactions method 01:
-
 # remove duplicates:
 ag.u <- ag[!duplicated(ag), ]
 nrow(ag.u) # 30954
@@ -39,13 +37,6 @@ head(ag.u)
 
 a2 <- as(ag.u, "transactions")
 summary(a2)
-
-# convert to transactions method 02:
-# write out - read in
-
-# write.csv(ag, file = "ag.csv", row.names = T)
-# a2 <-read.transactions("ag.csv", rm.duplicates=TRUE, format = "basket", sep = ",")
-# summary(a2)
 
 # Item Frequency Plot ---------------------------------------------------------
 
