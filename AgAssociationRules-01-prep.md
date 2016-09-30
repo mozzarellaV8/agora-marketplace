@@ -197,7 +197,6 @@ hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab =
 The trend sequence continues in prices through $2000: 200, 250, 300, 350, 400...
 
 
-
 ```{R}
 # distributions between 5000-20000
 hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
@@ -213,6 +212,8 @@ hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
 ![5000-20000](plots/arules/prep-dist-5k-20k.png)
 
 A closer reveals that many prices will be at intervals of 5 or 10 then 50 or 100 e.g. $50, $100, $500, $750. This trend goes from prices $0-$2000, and tails off at prices above $2000. Above $2k, frequencies also diminish, eventually under 150 listings. From $15k-20k prices, frequency drops to under 30 listings - sparse.
+
+### Actually Discretize
 
 Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
 
