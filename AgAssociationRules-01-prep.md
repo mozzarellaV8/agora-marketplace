@@ -103,6 +103,8 @@ levels(ag$sc)
 
 Using `discretize` from the `arules` packsage previously involved a choice of whether to bin values by equal intervals or cluster. To inform that decision - a look at the distribution of list prices.
 
+### Price Distributions
+
 ```{R}
 # discretize prices - but into cluster or interval?
 ag$usd <- round(ag$usd, 2)
@@ -154,7 +156,77 @@ exp(c(4, 4.25, 4.5, 4.75, 5))
 
 Visually it appears the mean of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. 
 
-The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
+The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings. But since that anomaly was observed, it might be a good idea to look more closely at distributions of prices by specific intervals.
+
+### Price Distributions by Interval
+
+```{R}
+# plot under 200 to under 10 dollar
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
+hist(ag200, breaks = 150, xlim = c(0, 200), main = "usd < $200", ylab = "")
+hist(ag100, breaks = 150, xlim = c(0, 100), main = "usd < $100", ylab = "")
+hist(ag50, breaks = 150, xlim = c(0, 50), 
+     main = "usd < $50", xlab = "price in USD", ylab = "")
+hist(ag10, breaks = 100, xlim = c(0, 10), 
+     xlab = "price in USD", main = "usd < $10", ylab = "")
+
+# look at densities under $200
+ag200 <- subset(ag$usd, ag$usd <= 200.00)
+ag100 <- subset(ag$usd, ag$usd <= 100.00)
+ag50 <- subset(ag$usd, ag$usd <= 50.000)
+ag10 <- subset(ag$usd, ag$usd <= 10.000)
+
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(ag200), main = "usd < $200")
+plot(density(ag100), main = "usd < $100", ylab = "")
+plot(density(ag50), main = "usd < $50")
+plot(density(ag10), main = "usd < $10", ylab = "")
+```
+
+![10-200](plots/arules/prep-dist-0-200.png)
+
+![10-200](plots/arules/prep-density-under200.png)
+
+
+``` {R}
+# look at densities between 500-5000
+ag5000 <- subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)
+ag2000 <- subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)
+ag1000 <- subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)
+ag600 <- subset(ag$usd, ag$usd > 200 & ag$usd <= 600)
+
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(ag5000), main = "$2000 < usd < $5000")
+plot(density(ag2000), main = "$1200 < usd < $2000", ylab = "")
+plot(density(ag1000), main = "$600 < usd < $1200")
+plot(density(ag600), main = "$200 < usd < $600", ylab = "")
+
+hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
+hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
+hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
+hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
+```
+
+![500-2000](plots/arules/prep-density-200-5000.png)
+
+![500-2000](plots/arules/prep-dist-200-5000.png)
+
+```{R}
+# distributions between 5000-20000
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
+hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
+     main = "$5000 < n < $7500", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(7500, 10000), ylim = c(0, 150),
+     main = "$7500 < n < $10,000", xlab = "", ylab = "")
+hist(ag$usd, breaks = 1000, xlim = c(10000, 15000), ylim = c(0, 150),
+     main = "$10,000 < n < $15,000", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
+     main = "$15,000 < n < $20,000", xlab = "", ylab = "")
+```
+
+![5000-20000](plots/arules/prep-dist-5k-20k.png)
+
+A closer reveals that many prices will be at intervals of 50 or 100 e.g. $50, $100, $500, $750. This trend goes from prices $0-$2000, and tails off at prices above $2000. Above $2k, frequencies also diminish, eventually under 150 listings. From $15k-20k prices, frequency drops to under 30 listings - sparse.
 
 Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
 
