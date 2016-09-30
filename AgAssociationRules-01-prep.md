@@ -103,7 +103,7 @@ levels(ag$sc)
 
 Using `discretize` from the `arules` packsage previously involved a choice of whether to bin values by equal intervals or cluster. To inform that decision - a look at the distribution of list prices.
 
-### Price Distributions
+## Price Distributions
 
 ```{R}
 # discretize prices - but into cluster or interval?
@@ -164,7 +164,7 @@ Visually it appears the mean of the log distribution of prices falls around 4.5 
 
 The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings. But since that anomaly was observed, it might be a good idea to look more closely at distributions of prices by specific intervals.
 
-### Price Distributions by Interval
+## Price Distributions by Interval
 
 ![10-200](plots/arules/prep-dist-0-200.png)
 
@@ -219,7 +219,7 @@ hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
 
 A closer reveals that many prices will be at intervals of 5 or 10 then 50 or 100 e.g. $50, $100, $500, $750. This trend goes from prices $0-$2000, and tails off at prices above $2000. Above $2k, frequencies also diminish, eventually under 150 listings. From $15k-20k prices, frequency drops to under 30 listings - sparse.
 
-### Actually Discretize
+## Actually Discretize Prices, Finally
 
 Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting more specifically for the inflated price frequencies under $100.
 
