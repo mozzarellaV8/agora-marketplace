@@ -522,7 +522,7 @@ p1 <- plot(r1, method = "graph",
 
 Graph of 36 rules sorted by lift alone, plotted using using Kamada & Kawai force-directed layout. It's possible to discern cliques beginning to form around locations, but these types of relationships are a bit too specific to be interesting. While it'd be possible to subset for specific classes, it might be better to revise variable selection and transformation. The minimum support to generate these rules was already quite low, and the dominance of vendor antecedents is less than encouraging.
 
-On to a5...
+On to a5...after revising the features selected.
 
 
 [back to top](#agora-associations-04-04)
