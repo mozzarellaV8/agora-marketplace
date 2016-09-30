@@ -13,7 +13,7 @@ R script: **_agora-associations-04-mining-02.R_**
 
 # Variable Selection
 
-dataframe: **a3**
+dataframe: **a4**
 
 2317353 observations of 4 variables:
 
@@ -447,6 +447,9 @@ for (i in 1:10) {
 ![24 Rule Group](plots/arules/a404-g1-2.png)
 
 [back to top](#agora-associations-04-04)
+
+
+
 
 # References and Notes
 

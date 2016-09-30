@@ -15,19 +15,19 @@ Another thing the store could do is study these transactions to learn about nove
 From this simple table of transactions - resembling a market basket - we can see relationships between itemsets. These relationships are what form **_frequent itemsets_** and **_Association Rules_**.
 
 ```
--  TID    Items
--   1  |  {Bread, Milk}
--   2  |  {Bread, Diapers, Beer, arules paper, Eggs}
--   3  |  {Thing for Dinner, Diapers, Beer, arules paper}
--   4  |  {Butter, Catnip, Beer, arules paper}
--   5  |  {Diapers, ANOVA paper, Beer, Milk}
--   6  |  {Bread, Diapers, Semicolon, Gluten Starch, Beer}
--   7  |  {Nail Polish, Diapers, Beer, arules paper}
+TID    Items
+1  |  {Bread, Milk}
+2  |  {Bread, Diapers, Beer, arules paper, Eggs}
+3  |  {Thing for Dinner, Diapers, Beer, arules paper}
+4  |  {Butter, Catnip, Beer, arules paper}
+5  |  {Diapers, ANOVA paper, Beer, Milk}
+6  |  {Bread, Diapers, Semicolon, Gluten Starch, Beer}
+7  |  {Nail Polish, Diapers, Beer, arules paper}
 ```
 
 We can form a **rule** with an **_antecedent_** (left-hand side) and **_consequent_** (right-hand side) from observing which items appear frequently together. A rule for this example can be expressed as:
 
-		{_Diapers, Beer_} => {_arules paper_}
+		{Diapers, Beer_ => {arules paper}
 
 The rule suggests a relationship between the pairing of Diapers and Beer, and papers on Association Rules. By looking at measures of quality, we can test the strength of this rule - or dismiss it altogher. 
 
