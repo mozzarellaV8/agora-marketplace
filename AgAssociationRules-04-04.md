@@ -110,7 +110,7 @@ Moving forward - wanted to see how different minimum supports affected item freq
 ```{R}
 # Item Frequency Plot Loop ----------------------------------------------------
 
-# define support intervals
+# define support values
 sup <- seq(0.000, 0.1, by = 0.005)
 sup
 
@@ -424,7 +424,7 @@ plot(a4rules, method = "grouped", control = list(k = 48))
 
 ![48 Rule Group](plots/arules/a404-g1-4.png)
 
-
+```{R}
 # loop
 for (i in 1:10) {
   
@@ -441,15 +441,22 @@ for (i in 1:10) {
 }
 ```
 
-60 Rules: 
+60 rules: 
 ![60 Rule Group](plots/arules/a404-g1-6.png)
 
+24 rules:
 ![24 Rule Group](plots/arules/a404-g1-2.png)
 
+# Network Graphs
+
+Admittedly my favorite visualization for association rules - seeing rules as nodes with sizes based on support, confidence, and/or lift. 
+
+
+
+
+
+
 [back to top](#agora-associations-04-04)
-
-
-
 
 # References and Notes
 
