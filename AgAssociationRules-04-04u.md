@@ -7,8 +7,8 @@ R script: [**_agora-associations-04-mining-04.R_**](R/arules/agora-associations-
 - [Transaction Conversion](#transaction-conversion)
 - [Item Frequency / Frequent Itemsets](#item-frequency)
 - [Mining Association Rules](#mining-association-rules)
-- [Vis: Grouped Matrices](#visualizations-grouped-matrices)
-- [Vis: Network Graphs](#visualizations-network-graphs)
+- [Vis: Grouped Matrices](#visualizations---grouped-matrices)
+- [Vis: Network Graphs](#visualizations---network-graphs)
 
 
 # Variable Selection
