@@ -173,16 +173,10 @@ hist(ag10, breaks = 100, xlim = c(0, 10),
      xlab = "price in USD", main = "usd < $10", ylab = "")
 
 # look at densities under $200
-ag200 <- subset(ag$usd, ag$usd <= 200.00)
-ag100 <- subset(ag$usd, ag$usd <= 100.00)
-ag50 <- subset(ag$usd, ag$usd <= 50.000)
-ag10 <- subset(ag$usd, ag$usd <= 10.000)
-
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
-plot(density(ag200), main = "usd < $200")
-plot(density(ag100), main = "usd < $100", ylab = "")
-plot(density(ag50), main = "usd < $50")
-plot(density(ag10), main = "usd < $10", ylab = "")
+plot(density(subset(ag$usd, ag$usd <= 200.00)), main = "usd < $200")
+plot(density(ag100 <- subset(ag$usd, ag$usd <= 100.00)), main = "usd < $100", ylab = "")
+plot(density(subset(ag$usd, ag$usd <= 50.000)), main = "usd < $50")
+plot(density(subset(ag$usd, ag$usd <= 10.000)), main = "usd < $10", ylab = "")
 ```
 
 ![10-200](plots/arules/prep-density-under200.png)
@@ -193,16 +187,14 @@ Spikes at certain denominations.
 
 ``` {R}
 # look at densities between 500-5000
-ag5000 <- subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)
-ag2000 <- subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)
-ag1000 <- subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)
-ag600 <- subset(ag$usd, ag$usd > 200 & ag$usd <= 600)
-
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
-plot(density(ag5000), main = "$2000 < usd < $5000")
-plot(density(ag2000), main = "$1200 < usd < $2000", ylab = "")
-plot(density(ag1000), main = "$600 < usd < $1200")
-plot(density(ag600), main = "$200 < usd < $600", ylab = "")
+plot(density(subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)), 
+     main = "$2000 < usd < $5000")
+plot(density(subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)), 
+     main = "$1200 < usd < $2000", ylab = "")
+plot(density(subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)), 
+     main = "$600 < usd < $1200")
+plot(density(subset(ag$usd, ag$usd > 200 & ag$usd <= 600)), 
+     main = "$200 < usd < $600", ylab = "")
 
 hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
 hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
@@ -214,7 +206,6 @@ hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab =
 
 ```{R}
 # distributions between 5000-20000
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
 hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
      main = "$5000 < n < $7500", xlab = "", ylab = "Frequency")
 hist(ag$usd, breaks = 1000, xlim = c(7500, 10000), ylim = c(0, 150),
