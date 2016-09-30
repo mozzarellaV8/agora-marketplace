@@ -100,11 +100,11 @@ So showing up most frequently are the location 'USA' and the four price bins und
 # Item Frequency Plot ---------------------------------------------------------
 
 par(mfrow = c(1, 1), mar = c(4, 12, 4, 4), family = "GillSans")
-itemFrequencyPlot(a4, support = 0.0025, cex.names = 0.65, col = "white", horiz = T,
-                  main = "Agora Marketplace: Frequent Items (support > 0.0025)")
+itemFrequencyPlot(a4, support = 0.005, cex.names = 0.65, col = "white", horiz = T,
+                  main = "Agora Marketplace: Frequent Items (support > 0.005)")
 ```
 
-![itemFreq-0.005](plots/arules/a4u-IFP-0025.png)
+![itemFreq-0.005](plots/arules/a4u-ItemFreq-005.png)
 
 quick observations at 0.005 minimum support:
 
@@ -137,17 +137,22 @@ for (i in 1:length(sup)) {
 }
 ```
 
-![ifp-0.025](plots/arules/a4-04-ItemFreq-0.025.png)
+![ifp-0.025](plots/arules/a4u-ItemFreq-025.png)
 
 Observed at a minimum support of 0.025:
 
-- cannabis shows up as frequently as listings in the price range $600-$2000; this price bin shows up half as much as the next bin ($150-$600), which shows up roughly half as much as the next bin ($10-150). $10-$150 listings are also the most likely to appear out of all items. 
-- roughly the same relative frequency: a prescription drug listing, the UK, China, and the location Agora/Internet/Torland<sup>[3](#references-and-notes)</sup>.
-- there are 3 vendors who have as many listings as the number of listings for Research Chemicals.
-- two non-descript items, the category 'Other' and location 'EU' are just as likely to appear as one another.
-- more affinities by relative frequency: Australia, the Netherlands, Benzodiazapines. Steroids, Germany, Cocaine, Ecstasy(MDMA), Ecstasy(Pills), Canada, listings from $2000-$10000. 
+- USA dominates all items.
+- price bins overwhelm categories and locations as items. 
 
-![ifp-0.075](plots/arules/a4-04-ItemFreq-0.075.png)
+Items observed as occuring with roughly the same relative frequency:
+
+- (~0.10): UK, Australia, listings at $0-$10, listings at $600-$1200.
+- (~0.075): Cocaine, MDMA, Netherlands, Germany.
+- (~0.05): Ecstacy in pill form, benzodiazepines, Cananda, EU, $2000-$5000, $1200-$2000
+- (< 0.05): speed, meth, LSD, presription drugs, opioids, hash, cannabis concentrates, and the location Agora/Internet/Torland<sup>[3](#references-and-notes)</sup>.
+
+
+![ifp-0.075](plots/arules/a4u-ItemFreq-075.png)
 
 Relative frequency was the argument set for these plots; it'd be possible to do absolute, which makes me think I should plot distributions of each variable off the original dataframe.
 
@@ -168,19 +173,19 @@ _results_:
 
 | parameter             |  value        |
 |-----------------------|---------------|
-| yield                 |  575 itemsets |
-| itemset length 2      |  27           |
-| itemset length 3      |  200          |
-| itemset length 4      |  68           |
-| minumum support       |  0.002523     |
-| maximum support       |  0.122478     |
+| yield                 |  300 itemsets |
+| itemset length 2      |  268          |
+| itemset length 3      |  32           |
+| itemset length 4      |  0            |
+| minumum support       |  0.002513     |
+| maximum support       |  0.060915     |
 
 
 _most frequent items_:
 
-| p=$10-150 | p=$150-600 | f=No Info | p=$0-10 | f=USA | (other) |
-|-----------|------------|-----------|---------|-------|---------|
-|      165  |      78    |    77     |    74   |    59 |   920   |
+| f=USA  | p=$10-$50  | p=$50-$100 | p=$100-$200 | p=$200-$600 | (other) |
+|--------|------------|------------|-------------|-------------|---------|
+| 63     |      40    |    36      |    34       |    33       |   426   |
 
 
 _the call_:
@@ -193,33 +198,33 @@ a4items <- apriori(a4, parameter = list(target = "frequent",
 
 ```{r}
 summary(a4items)
-set of 575 itemsets
+set of 300 itemsets
 
 most frequent items:
- p=$10-150 p=$150-600  f=No Info    p=$0-10      f=USA    (Other) 
-       165         78         77         74         59        920 
+      f=USA   p=$10-$50  p=$50-$100 p=$100-$200 p=$200-$600     (Other) 
+         63          40          36          34          33         426 
 
 element (itemset/transaction) length distribution:sizes
-  2   3   4 
-377 173  25 
+  2   3 
+268  32 
 
-#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    2.000   2.000   2.000   2.388   3.000   4.000 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  2.000   2.000   2.000   2.107   2.000   3.000 
 
 summary of quality measures:
     support        
- # Min.   :0.002523  
- # 1st Qu.:0.003314  
- # Median :0.004777  
- # Mean   :0.007629  
- # 3rd Qu.:0.008004  
- # Max.   :0.122478  
+ Min.   :0.002513  
+ 1st Qu.:0.003277  
+ Median :0.004969  
+ Mean   :0.007367  
+ 3rd Qu.:0.008404  
+ Max.   :0.060915  
 
 includes transaction ID lists: FALSE 
 
 mining info:
  data ntransactions support confidence
-   a4       2317353  0.0025          1
+   a4         44176  0.0025          1
 ```
 
 
@@ -227,30 +232,30 @@ Looking at the top of the itemset list; unsorted:
 
 ```{R}
 inspect(head(a4items, 8))
-  items                     support    
-1 {f=USA,v=a74314}          0.002610306
-2 {f=Netherlands,v=259334}  0.002663384
-3 {p=$10-150,sc=Stashes}    0.002632745
-4 {f=China,v=682306}        0.002677624
-5 {f=Poland,v=553007}       0.002612895
-6 {f=Sweden,v=690113}       0.002845488
-7 {p=$10-150,sc=Containers} 0.002651732
-8 {p=$0-10,v=d96493}        0.002805356
+  items                             support    
+1 {f=No Info,v=790426}              0.002512677
+2 {f=Worldwide,v=189448}            0.003078595
+3 {f=No Info,v=632118}              0.003282325
+4 {f=USA,c=Opioids-Hydrocodone}     0.004617892
+5 {f=No Info,c=Information: Guides} 0.002671134
+6 {p=$10-$50,c=Cannabis-Edibles}    0.002761681
+7 {f=USA,c=Cannabis-Edibles}        0.004844259
+8 {f=USA,c=Opioids-Fentanyl}        0.003938790
 ```
 
-Lengths longer than 2 interest me more. 
+Cannabis Edibles and Hydrocodone occur just about as frequently as each other from the USA.
 
 ```{R}
 inspect(tail(a4items, 8))
-    items                                                 support    
-568 {p=$0-10,f=No Info,sc=eBooks,v=d36261}                0.003158345
-569 {p=$0-10,f=Agora/Internet/Torland,sc=eBooks,v=056783} 0.005032897
-570 {p=$0-10,f=No Info,sc=Guides,v=d36261}                0.007235842
-571 {p=$0-10,f=Agora/Internet/Torland,sc=Guides,v=056783} 0.003633456
-572 {p=$150-600,f=China,sc=RCs,v=653472}                  0.003118213
-573 {p=$0-10,f=No Info,sc=Other,v=d36261}                 0.007578043
-574 {p=$10-150,f=No Info,sc=Other,v=d36261}               0.002662952
-575 {p=$0-10,f=Agora/Internet/Torland,sc=Other,v=056783}  0.005269806
+    items                                support    
+293 {p=$10-$50,f=USA,c=Ecstasy-MDMA}     0.002965411
+294 {p=$600-$1200,f=USA,c=Cannabis-Weed} 0.005613908
+295 {p=$50-$100,f=UK,c=Cannabis-Weed}    0.002739044
+296 {p=$10-$50,f=UK,c=Cannabis-Weed}     0.003055958
+297 {p=$200-$600,f=USA,c=Cannabis-Weed}  0.007243752
+298 {p=$100-$200,f=USA,c=Cannabis-Weed}  0.007198479
+299 {p=$50-$100,f=USA,c=Cannabis-Weed}   0.006021369
+300 {p=$10-$50,f=USA,c=Cannabis-Weed}    0.005613908
 ```
 
 Will any longer itemsets have a high support? Sort, search.
@@ -258,46 +263,50 @@ Will any longer itemsets have a high support? Sort, search.
 ```{R}
 a4items <- sort(a4items, by = "support", decreasing = T)
 inspect(head(a4items, 12))
-    items                              support   
-377 {p=$10-150,f=USA}                  0.12247810
-372 {p=$0-10,f=No Info}                0.07160325
-375 {p=$10-150,f=No Info}              0.05945836
-362 {p=$0-10,f=Agora/Internet/Torland} 0.05378421
-361 {p=$10-150,f=UK}                   0.05254443
-376 {p=$150-600,f=USA}                 0.05013004
-356 {p=$10-150,sc=Prescription}        0.04810359
-369 {p=$10-150,sc=Cannabis-Weed}       0.04644308
-367 {f=USA,sc=Cannabis-Weed}           0.04106970
-322 {p=$10-150,f=EU}                   0.03351367
-353 {f=No Info,sc=Prescription}        0.03234639
-306 {p=$10-150,sc=Steroids}            0.03210301
+    items                         support   
+268 {p=$10-$50,f=USA}             0.06091543
+267 {p=$50-$100,f=USA}            0.05403386
+266 {p=$100-$200,f=USA}           0.05032144
+265 {p=$200-$600,f=USA}           0.04676748
+260 {f=USA,c=Cannabis-Weed}       0.04343988
+244 {p=$600-$1200,f=USA}          0.02775263
+239 {p=$0-$10,f=USA}              0.02322528
+264 {p=$10-$50,f=No Info}         0.02254618
+254 {p=$10-$50,f=UK}              0.02229717
+257 {p=$100-$200,c=Cannabis-Weed} 0.02050887
+258 {p=$50-$100,c=Cannabis-Weed}  0.01996559
+256 {p=$200-$600,c=Cannabis-Weed} 0.01935440
 ```
+
+- 6% of all transactions are from the USA and costing between $10-$50. 
+- 4% of all transactions are from the USA and are under the category "Cannabis-Weed". 
+- 4% of all transactions are for Cannabis-Weed and cost between $50-200, another 2% are also for week by for $200-$600.
+- 2% of all transactions are from the UK and costing between $10-$50. 
 
 ```{r}
 inspect(a4items)[123:128,]
-                           items     support
-240        {p=$10-150,sc=Guides} 0.009098743
-297  {f=Canada,sc=Cannabis-Weed} 0.009027110
-128  {f=USA,sc=Cannabis-Edibles} 0.009023226
-124           {p=$0-10,v=844130} 0.008994314
-310      {p=$2000-10000,f=China} 0.008985683
-429 {p=$0-10,f=No Info,v=844130} 0.008954613
+                              items     support
+21          {f=USA,c=Opioids-Other} 0.005885549
+176       {p=$2000-$5000,f=No Info} 0.005727092
+90   {p=$10-$50,c=Stimulants-Speed} 0.005704455
+107   {p=$100-$200,c=Cannabis-Hash} 0.005704455
+191  {p=$1200-$2000,c=Ecstasy-MDMA} 0.005659181
+89  {p=$50-$100,c=Stimulants-Speed} 0.005613908
 
 inspect(a4items)[48:56,]
-                               items    support
-186               {p=$0-10,v=723840} 0.01568686
-255                 {f=China,sc=RCs} 0.01568169
-462     {p=$0-10,f=No Info,v=723840} 0.01566701
-360                {p=$150-600,f=UK} 0.01565579
-373                  {p=$0-10,f=USA} 0.01561868
-339       {p=$150-600,f=Netherlands} 0.01510819
-301               {f=EU,sc=Steroids} 0.01509006
-328             {p=$10-150,sc=Other} 0.01450577
-214 {f=USA,sc=Cannabis-Concentrates} 0.01436769
+                                  items    support
+223          {p=$50-$100,f=Netherlands} 0.01125045
+227        {f=Australia,c=Ecstasy-MDMA} 0.01086563
+232         {p=$50-$100,c=Ecstasy-MDMA} 0.01072981
+203             {p=$100-$200,f=Germany} 0.01061662
+217      {f=Netherlands,c=Ecstasy-MDMA} 0.01054871
+221         {p=$200-$600,f=Netherlands} 0.01048080
+44    {f=USA,c=Stimulants-Prescription} 0.01043553
+222         {p=$100-$200,f=Netherlands} 0.01039026
+111 {p=$0-$10,f=Agora/Internet/Torland} 0.01034498
 ```
 
-
-[back to top](#agora-associations-04-04)
+[back to top](#AgAssociationRules-04-04u.md)
 
 # Mining Association Rules
 
@@ -308,7 +317,7 @@ inspect(a4items)[48:56,]
 
 | parameter             |  value    | 
 |-----------------------|-----------|
-| minimum support       |  0.0025   |
+| minimum support       |  0.0005   |
 | minumum confidence    |  0.6      |
 | min rule length       |  3        |
 | max rule length       |  --       |
@@ -317,10 +326,10 @@ _results_:
 
 | parameter             |  value      |
 |-----------------------|-------------|
-| yield                 |  395 rules  |
-| rules length 2        |  27         |
-| rules length 3        |  200        |
-| rules length 4        |  68         |
+| yield                 |  417 rules  |
+| rules length 2        |  386        |
+| rules length 3        |  31         |
+| rules length 4        |  0          |
 
 
 ## Function Call and Summary
@@ -337,34 +346,35 @@ Not wanted to have to prune too many redundant/obvious rules, I set the minumum 
 
 ```{r}
 summary(a4rules)
-set of 268 rules
+set of 417 rules
 
 rule length distribution (lhs + rhs):sizes
-  3   4 
-200  68 
+  2   3 
+386  31 
 
-#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    3.000   3.000   3.000   3.254   4.000   4.000 
+  #   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     2.000   2.000   2.000   2.074   2.000   3.000 
 
 summary of quality measures:
-    support           confidence          lift        
- # Min.   :0.002524   Min.   :0.6019   Min.   :  1.284  
- # 1st Qu.:0.003275   1st Qu.:0.7763   1st Qu.:  4.447  
- # Median :0.004227   Median :0.9172   Median :  7.070  
- # Mean   :0.005841   Mean   :0.8736   Mean   : 20.823  
- # 3rd Qu.:0.006793   3rd Qu.:0.9923   3rd Qu.: 19.657  
- # Max.   :0.029967   Max.   :1.0000   Max.   :243.955  
+    support            confidence          lift        
+    Min.   :0.0005206   Min.   :0.6000   Min.   :  2.018  
+ #  1st Qu.:0.0005886   1st Qu.:0.8043   1st Qu.:  3.357  
+    Median :0.0007017   Median :0.9310   Median :  9.821  
+    Mean   :0.0008885   Mean   :0.8884   Mean   : 24.901  
+ #  3rd Qu.:0.0008828   3rd Qu.:1.0000   3rd Qu.: 14.676  
+    Max.   :0.0181094   Max.   :1.0000   Max.   :981.689  
 
 mining info:
  data ntransactions support confidence
-   a4       2317353  0.0025        0.6
+   a4         44176  0.0005        0.6
 ```
 
-Out of 268 rules generated:
+Out of 417 rules generated:
 
-- Just under 75% of the rules are of length 3; the rest 4. 
-- Median confidence is sitting nicely at 0.9172, and appears there are positive correlations across the board as seen in a minimum lift of 1.248. 
-- Support might be an issue - very low values observed here.
+- 93% of rules of length 2; 
+- Median confidence is sitting nicely at 0.9310, and appears there are positive correlations across the board as seen in a minimum lift of 2.018. 
+- The max lift is skewing the distribution of lift values; the mean of 24.901 is well higher than the 3rd quartile of 14.676.
+- Support might be an issue - very low values observed here. On the other hand, there are so many listings that it might make sense such sparsity is observed.
 
 
 ### Top and Bottom 10
@@ -379,42 +389,52 @@ Given a population of **N** transactions that contains itemsets **N<sub>X</sub>*
 | confidence  | N<sub>X ∪ Y</sub> / N<sub>X</sub>                       | 
 | lift        | N<sub>X ∪ Y</sub> * N / N<sub>X</sub> * N<sub>Y</sub>   |
 
-
-A quick `inspect` of the top and bottom 10 rules. 
+Sorting by support and checking the top rules mined:
 
 ```{r}
+a4rules <- sort(a4items, by = "support", decreasing = T)
 arules::inspect(head(a4rules, 10))
-   lhs                            rhs                support     confidence lift      
-1  {f=USA,v=b28893}            => {p=$10-150}        0.002812260 0.9230878    1.969423
-2  {p=$10-150,v=b28893}        => {f=USA}            0.002812260 0.9978564    4.645396
-3  {sc=Ecstasy-Pills,v=807510} => {f=Netherlands}    0.002829090 0.9989334   17.666669
-4  {f=Netherlands,v=807510}    => {sc=Ecstasy-Pills} 0.002829090 0.7924574   21.281765
-5  {sc=Prescription,v=764212}  => {f=UK}             0.003340881 0.8977273   10.910283
-6  {f=UK,v=764212}             => {sc=Prescription}  0.003340881 1.0000000   12.217300
-7  {f=UK,v=702924}             => {p=$10-150}        0.003346491 0.8661901    1.848031
-8  {p=$10-150,v=702924}        => {f=UK}             0.003346491 1.0000000   12.153227
-9  {sc=Smoked,v=105690}        => {f=UK}             0.003910065 1.0000000   12.153227
-10 {f=UK,v=105690}             => {sc=Smoked}        0.003910065 1.0000000  115.045078
+    lhs                                      rhs           support     confidence lift     
+386 {c=Cannabis-Concentrates}             => {f=USA}       0.018109381 0.6677796   2.241799
+385 {c=Cannabis-Edibles}                  => {f=USA}       0.004844259 0.6011236   2.018028
+384 {c=Opioids-Hydrocodone}               => {f=USA}       0.004617892 0.8259109   2.772661
+417 {p=$10-$50,c=Cannabis-Concentrates}   => {f=USA}       0.003644513 0.6708333   2.252051
+416 {p=$50-$100,c=Cannabis-Concentrates}  => {f=USA}       0.003418146 0.6265560   2.103407
+383 {v=632118}                            => {f=No Info}   0.003282325 0.7923497   6.551159
+381 {v=189448}                            => {f=Worldwide} 0.003078595 0.9927007  43.290767
+415 {p=$100-$200,c=Cannabis-Concentrates} => {f=USA}       0.003010685 0.6244131   2.096214
+414 {p=$200-$600,c=Cannabis-Concentrates} => {f=USA}       0.002988048 0.6346154   2.130464
+378 {v=790426}                            => {f=No Info}   0.002512677 0.9406780   7.777539
 ```
 
-Support could be higher all around, but it was decided to keep that value low to generate more rules. Lift appears to be doing well - although many of the rules with very high lift might be too obvious to warrant investigation. Or rather, they should be looked into to make sure indepedence of variables is satisfied. 
+Dominated by the USA on the rhs; Cannabis concentrates under $600 all over the USA. 
 
-With some rules, there's a suspicion that that they are simply the values of the listings themselves. 
+- Coming across Hydrocodone, there's an 82% chance it originates from the United States. Cannabis concentrates also are linked with the United States with a 67% probability. Cannabis edibles spread out further than that USA with a 60% probability. 
+
+- With Cannabis-Concentrates in the price randge of $10-$50, there's a 67% chance they originate from the USA.
+
+- there's a 99% chance that if the vendor is 189448, he or she is from Worldwide; which is basically near certainty on the information the most vague information possible in the data.
+
 
 ```{r}
 arules::inspect(tail(a4rules, 10))
-    lhs                                              rhs                        support     confidence lift     
-259 {f=Agora/Internet/Torland,sc=Guides,v=056783} => {p=$0-10}                  0.003633456 1.0000000   6.242280
-260 {p=$0-10,sc=Guides,v=056783}                  => {f=Agora/Internet/Torland} 0.003633456 1.0000000  12.028450
-261 {p=$0-10,f=Agora/Internet/Torland,sc=Guides}  => {v=056783}                 0.003633456 0.6367693  21.249052
-262 {p=$150-600,sc=RCs,v=653472}                  => {f=China}                  0.003118213 1.0000000  12.722433
-263 {p=$150-600,f=China,sc=RCs}                   => {v=653472}                 0.003118213 0.6099949  21.814071
-264 {p=$0-10,sc=Other,v=d36261}                   => {f=No Info}                0.007578043 0.9773486   5.563103
-265 {f=No Info,sc=Other,v=d36261}                 => {p=$0-10}                  0.007578043 0.7366500   4.598376
-266 {p=$10-150,sc=Other,v=d36261}                 => {f=No Info}                0.002662952 0.9049714   5.151130
-267 {f=Agora/Internet/Torland,sc=Other,v=056783}  => {p=$0-10}                  0.005269806 1.0000000   6.242280
-268 {p=$0-10,sc=Other,v=056783}                   => {f=Agora/Internet/Torland} 0.005269806 1.0000000  12.028450
+    lhs                                    rhs                        support      confidence lift     
+85  {v=425141}                          => {p=$0-$10}                 0.0005206447 0.8214286   9.617659
+95  {v=995595}                          => {f=USA}                    0.0005206447 0.7931034   2.662523
+140 {v=293369}                          => {f=Germany}                0.0005206447 0.7187500  10.979080
+163 {v=570526}                          => {f=USA}                    0.0005206447 0.6969697   2.339793
+177 {v=726347}                          => {f=USA}                    0.0005206447 0.6969697   2.339793
+217 {v=c40969}                          => {f=Agora/Internet/Torland} 0.0005206447 0.6216216  17.682393
+387 {f=Agora/Internet/Torland,v=425141} => {p=$0-$10}                 0.0005206447 0.8214286   9.617659
+388 {p=$0-$10,v=425141}                 => {f=Agora/Internet/Torland} 0.0005206447 1.0000000  28.445589
+399 {p=$0-$10,v=632118}                 => {f=No Info}                0.0005206447 0.6052632   5.004324
+407 {p=$200-$600,c=Cannabis-Edibles}    => {f=USA}                    0.0005206447 0.6571429   2.206090
 ```
+
+- 65% probability that if an item is listed under 'Cannabis-Edibles' and falls in the price range from $200-$600, it will be from the USA.
+- 82% probability that if vendor 425141 is selling something, it will cost less than $10 and be available for delivery online.
+
+Overall with this particular grouping of variables and discretized bins for prices: a lot of vendors appear within the rules. It'll take more time to draw conclusions from this, but perhaps some visualizations can help identify rules that offer more on location, category, and price.
 
 [back to top](#agora-associations-04-04)
 
@@ -423,12 +443,12 @@ arules::inspect(tail(a4rules, 10))
 
 ```{R}
 # individual
-plot(a4rules, method = "grouped", control = list(k = 48))
+plot(a4rules, method = "grouped", control = list(k = 36))
 ```
 
-48 rules: 
+36 rules: 
 
-![48 Rule Group](plots/arules/a404-g1-4.png)
+![36 Rule Group](plots/arules/a4u-g1-3.png)
 
 ```{R}
 # loop
@@ -446,12 +466,11 @@ for (i in 1:10) {
   
 }
 ```
+48 rule grouping: 
+![48 Rule Group](plots/arules/a4u-g1-4.png)
 
-60 rules: 
-![60 Rule Group](plots/arules/a404-g1-6.png)
-
-24 rules:
-![24 Rule Group](plots/arules/a404-g1-2.png)
+96 rule grouping:
+![96 Rule Group](plots/arules/a4u-g1-8.png)
 
 # Network Graphs
 
