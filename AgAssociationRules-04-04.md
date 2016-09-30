@@ -24,7 +24,7 @@ dataframe: **a4**
 | `sc`  | subcategory   | 105       | subcategory as labeled on Agora               |
 | `v`   | vendor    | 3183          | anonymized with SHA256 hashing algorithm      |
 
-Price `p` ranged from $0-20,000 and was discretized manually into 6 bins: 
+Price `p` ranged from $0-20,000 and was discretized manually into 10 bins: 
 
 - $0-10
 - $10-50
@@ -42,16 +42,16 @@ While not in equal intervals, these bins reflect the distribution of prices on t
 Although vendors did not use given names, there have been cases where even a vendor's online name could be used to identify them<sup>[1](#references-and-notes)</sup>. To avoid this implication, names were run through the function `anonymize`. This salted and then hashed the names using SHA256, and from there names were abbreviated for clarity. While likely not following the strictest security protocol, this level of anonymization felt suited for the application. In practical terms - all of this data is publicly available, so these measures were taken out of a careful respect for privacy.
 
 ```{r}
-ag <- subset(ag, select = c("p", "from", "sc", "v3"))
-colnames(ag) <- c("p", "f", "sc", "v")
+ag <- subset(ag, select = c("p", "from", "all.c", "v3"))
+colnames(ag) <- c("p", "f", "c", "v")
 head(ag)
-             p       f                 sc      v
-1 $10000-20000   China              Other e63948
-2      $10-150 No Info             Guides 189622
-3      $10-150 No Info             Guides 447418
-4    $600-2000   China                RCs a00543
-5      $10-150     USA Stimulants-Cocaine e99113
-6      $10-150 No Info             Guides 189622
+               p       f                   c      v
+1: $10000-$20000   China               Other e63948
+2:       $10-$50 No Info Information: Guides 189622
+3:       $10-$50 No Info Information: Guides 447418
+4:   $1200-$2000   China                 RCs a00543
+5:       $10-$50     USA  Stimulants-Cocaine e99113
+6:       $10-$50 No Info Information: Guides 189622
 ```
 
 # Transaction Conversion
