@@ -1,6 +1,6 @@
 # Agora Association Rules - Preparation
 
-- _outputs from the file `agora-associations-03.R`_
+- _outputs from the file_ [`agora-associations-04-cleanse.R`](R/agora-associations-04-cleanse.R)
 - general application to different mining sessions
 - basic info on [Association Rule Mining](AgAssociation-Basics.md)
 - forward to mining: [Agora Association Rules](AgAssociationRules-04-04.md)
