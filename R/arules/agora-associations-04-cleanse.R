@@ -9,11 +9,11 @@ library(ggplot2)
 library(anonymizer)
 
 # population
-a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
-# 2322961 obs of 18 variables
+a <- fread("~/GitHub/agora-data/agora-02.csv", stringsAsFactors = T)
+# 2322961 obs of 24 variables
 
 # prepped data
-ag <- fread("~/GitHub/agora-data/06-arules/ag-arules-20k.csv", stringsAsFactors = T)
+ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k.csv", stringsAsFactors = T)
 
 # subset under 20k ------------------------------------------------------------
 summary(ag$usd)
@@ -59,64 +59,6 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 
-# plot under 200 to under 10 dollar
-par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
-hist(ag$usd, breaks = 25000, xlim = c(0, 200),
-     main = "n < $200", xlab = "", ylab = "Frequency")
-hist(ag$usd, breaks = 500000, xlim = c(0, 100), 
-     main = "n < $100", xlab = "", ylab = "")
-hist(ag$usd, breaks = 100000, xlim = c(0, 50), 
-     main = "n < $50", xlab = "price in USD", ylab = "Frequency")
-hist(ag$usd, breaks = 100000, xlim = c(0, 10),
-     main = "n < 10", xlab = "price in USD", ylab = "")
-
-# look at densities under $200
-ag200 <- subset(ag$usd, ag$usd <= 200.00)
-ag100 <- subset(ag$usd, ag$usd <= 100.00)
-ag50 <- subset(ag$usd, ag$usd <= 50.000)
-ag10 <- subset(ag$usd, ag$usd <= 10.000)
-
-hist(ag200, breaks = 150, xlim = c(0, 200), main = "usd < $200", ylab = "")
-hist(ag100, breaks = 150, xlim = c(0, 100), main = "usd < $100", ylab = "")
-hist(ag50, breaks = 150, xlim = c(0, 50), 
-     main = "usd < $50", xlab = "price in USD", ylab = "")
-hist(ag10, breaks = 100, xlim = c(0, 10), 
-     xlab = "price in USD", main = "usd < $10", ylab = "")
-
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
-plot(density(ag200), main = "usd < $200")
-plot(density(ag100), main = "usd < $100", ylab = "")
-plot(density(ag50), main = "usd < $50")
-plot(density(ag10), main = "usd < $10", ylab = "")
-
-# look at densities between 500-5000
-ag5000 <- subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)
-ag2000 <- subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)
-ag1000 <- subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)
-ag600 <- subset(ag$usd, ag$usd > 200 & ag$usd <= 600)
-
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
-plot(density(ag5000), main = "$2000 < usd < $5000")
-plot(density(ag2000), main = "$1200 < usd < $2000", ylab = "")
-plot(density(ag1000), main = "$600 < usd < $1200")
-plot(density(ag600), main = "$200 < usd < $600", ylab = "")
-
-hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
-hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
-hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
-hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
-
-# distributions between 5000-20000
-par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
-hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
-     main = "$5000 < n < $7500", xlab = "", ylab = "Frequency")
-hist(ag$usd, breaks = 1000, xlim = c(7500, 10000), ylim = c(0, 150),
-     main = "$7500 < n < $10,000", xlab = "", ylab = "")
-hist(ag$usd, breaks = 1000, xlim = c(10000, 15000), ylim = c(0, 150),
-     main = "$10,000 < n < $15,000", xlab = "", ylab = "Frequency")
-hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
-     main = "$15,000 < n < $20,000", xlab = "", ylab = "")
-
 # heavy on the left/long tail - quick check of the log()
 ag$log.usd <- log(ag$usd)
 
@@ -148,42 +90,99 @@ ggplot(ag, aes(x = log.usd)) +
 # so: n = nrow(ag)-703
 nrow(ag) - 703
 
+# prep - price distribution by intervals --------------------------------------
 
+# plot under 200 to under 10 dollar
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
+hist(ag200, breaks = 150, xlim = c(0, 200), main = "usd < $200", ylab = "")
+hist(ag100, breaks = 150, xlim = c(0, 100), main = "usd < $100", ylab = "")
+hist(ag50, breaks = 150, xlim = c(0, 50), 
+     main = "usd < $50", xlab = "price in USD", ylab = "")
+hist(ag10, breaks = 100, xlim = c(0, 10), 
+     xlab = "price in USD", main = "usd < $10", ylab = "")
+
+# look at densities under $200
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(subset(ag$usd, ag$usd <= 200.00)), main = "usd < $200")
+plot(density(ag100 <- subset(ag$usd, ag$usd <= 100.00)), main = "usd < $100", ylab = "")
+plot(density(subset(ag$usd, ag$usd <= 50.000)), main = "usd < $50")
+plot(density(subset(ag$usd, ag$usd <= 10.000)), main = "usd < $10", ylab = "")
+
+# look at densities between 500-5000
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)), 
+     main = "$2000 < usd < $5000")
+plot(density(subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)), 
+     main = "$1200 < usd < $2000", ylab = "")
+plot(density(subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)), 
+     main = "$600 < usd < $1200")
+plot(density(subset(ag$usd, ag$usd > 200 & ag$usd <= 600)), 
+     main = "$200 < usd < $600", ylab = "")
+
+hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
+hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
+hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
+hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
+
+# distributions between 5000-20000
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
+hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
+     main = "$5000 < n < $7500", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(7500, 10000), ylim = c(0, 150),
+     main = "$7500 < n < $10,000", xlab = "", ylab = "")
+hist(ag$usd, breaks = 1000, xlim = c(10000, 15000), ylim = c(0, 150),
+     main = "$10,000 < n < $15,000", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
+     main = "$15,000 < n < $20,000", xlab = "", ylab = "")
 
 # prep - actually discretize --------------------------------------------------
 
 # manually
 ag$p <- ag$usd
-ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
-               ifelse(ag$p > 10 & ag$p <= 100.00, "$10-$100",
-                      ifelse(ag$p > 100 & ag$p <= 200, "$100-$200", 
-                             ifelse(ag$p > 200 & ag$p <= 600.00, "$200-$600",
-                                    ifelse(ag$p > 600 & ag$p <= 2000.00, "$600-$2000",
-                                           ifelse(ag$p > 2000 & ag$p <= 10000, "$2000-10000",
-                                                  ifelse(ag$p > 10000, "$10000-$20000", NA)))))))
-            
 
-ag$p <- factor(ag$p)  # 6 levels
+ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
+               ifelse(ag$p > 10 & ag$p <= 50, "$10-$50",
+                      ifelse(ag$p > 50 & ag$p <= 100, "$50-$100",
+                             ifelse(ag$p > 100 & ag$p <= 200, "$100-$200", 
+                                    ifelse(ag$p > 200 & ag$p <= 600.00, "$200-$600",
+         ifelse(ag$p > 600 & ag$p <= 1200.00, "$600-$1200",
+                ifelse(ag$p > 1200 & ag$p <= 2000, "$1200-$2000",
+                       ifelse(ag$p > 2000 & ag$p <= 5000, "$2000-$5000", 
+                              ifelse(ag$p > 5000 & ag$p <= 10000, "$5000-$10000",
+                                     ifelse(ag$p > 10000, "$10000-$20000", NA))))))))))
+            
+ag$p <- factor(ag$p, levels = c("$0-$10", "$10-$50",  "$50-$100", "$100-$200", "$200-$600",
+                                "$600-$1200", "$1200-$2000", "$2000-$5000", "$5000-$10000",
+                                "$10000-$20000"))
+levels(ag$p)
 
 summary(ag$p)
-#  $0-10      $10-150 $10000-20000     $150-600  $2000-10000    $600-2000 
-# 371235      1086166         7393       515111       106747       230701 
+# $0-$10       $10-$50      $50-$100     $100-$200     $200-$600    $600-$1200   $1200-$2000   $2000-$5000 
+# 371235        510361        376526        328828        385562        152533         78168         81873
+# $5000-$10000 $10000-$20000
+#        24874          7393 
+
 
 371235/nrow(ag)   # 0.1601979
-1086166/nrow(ag)  # 0.4687098
+510361/nrow(ag)   # 0.2202345
+376526/nrow(ag)   # 0.1624811
+328828/nrow(ag)   # 0.2222842
+385562/nrow(ag)   # 0.1418981
+152533/nrow(ag)   # 0.06582208
+78168/nrow(ag)    # 0.03373159
+81873/nrow(ag)    # 0.0353304
+24874/nrow(ag)    # 0.0107338
 7393/nrow(ag)     # 0.003190278
-515111/nrow(ag)   # 0.2222842
-106747/nrow(ag)   # 0.04606419
-230701/nrow(ag)   # 0.09955367
 
 ggplot(ag, aes(reorder(p), fill = p)) + 
-  geom_bar(color = "gray45", size = 0.25) + coord_flip() +
-  scale_fill_manual(values = c("#00688B32", "#00688B94", "#00688B02", 
-                               "#00688B44", "#00688B10", "#00688B20"),
+  geom_bar(color = "gray32", size = 0.25) +
+  scale_fill_manual(values = c("#00688B32", "#00688B44", "#00688B32", "#00688B44",
+                               "#00688B28", "#00688B12", "#00688B10", "#00688B10",
+                               "#00688B10", "#00688B10"),
                     guide = F) +
   theme_minimal(base_size = 14, base_family = "GillSans") +
   theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
-        panel.grid.major = element_line(color = "gray80"),
+        panel.grid.major = element_line(color = "gray85"),
         axis.text.y = element_text(size = 12.75),
         axis.text.x = element_text(size = 12.75),
         legend.position = "none") +
@@ -217,3 +216,4 @@ length(levels(as.factor(ag$v3))) # 3183
 ag$v3 <- factor(ag$v3)
 summary(ag$v3)
 
+write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag-arules20k.csv", row.names = F)
