@@ -114,7 +114,7 @@ quick observations at 0.005 minimum support:
 Moving forward - wanted to see how different minimum supports affected item frequency, so scripted a loop to plot a sequence of different values.
 
 ```{R}
-# Item Frequency Plot Loop ----------------------------------------------------
+# Item Frequency Plot Loop
 
 # define support values
 sup <- seq(0.000, 0.1, by = 0.005)
@@ -149,7 +149,7 @@ Items observed as occuring with roughly the same relative frequency:
 - (~0.10): UK, Australia, listings at $0-$10, listings at $600-$1200.
 - (~0.075): Cocaine, MDMA, Netherlands, Germany.
 - (~0.05): Ecstacy in pill form, benzodiazepines, Cananda, EU, $2000-$5000, $1200-$2000
-- (< 0.05): speed, meth, LSD, presription drugs, opioids, hash, cannabis concentrates, and the location Agora/Internet/Torland<sup>[3](#references-and-notes)</sup>.
+- (< 0.05): speed, meth, LSD, presription drugs, opioids, hash, cannabis concentrates, and the location Agora/Internet/Torland<sup>[2](#references-and-notes)</sup>.
 
 
 ![ifp-0.075](plots/arules/a4u-ItemFreq-075.png)
@@ -208,17 +208,17 @@ element (itemset/transaction) length distribution:sizes
   2   3 
 268  32 
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  2.000   2.000   2.000   2.107   2.000   3.000 
+#     Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     2.000   2.000   2.000   2.107   2.000   3.000 
 
 summary of quality measures:
     support        
- Min.   :0.002513  
- 1st Qu.:0.003277  
- Median :0.004969  
- Mean   :0.007367  
- 3rd Qu.:0.008404  
- Max.   :0.060915  
+# Min.   :0.002513  
+# 1st Qu.:0.003277  
+# Median :0.004969  
+# Mean   :0.007367  
+# 3rd Qu.:0.008404  
+# Max.   :0.060915  
 
 includes transaction ID lists: FALSE 
 
@@ -243,7 +243,7 @@ inspect(head(a4items, 8))
 8 {f=USA,c=Opioids-Fentanyl}        0.003938790
 ```
 
-Cannabis Edibles and Hydrocodone occur just about as frequently as each other from the USA.
+Cannabis-Edibles and Hydrocodone occur just about as frequently as each other, from the USA.
 
 ```{R}
 inspect(tail(a4items, 8))
@@ -262,6 +262,7 @@ Will any longer itemsets have a high support? Sort, search.
 
 ```{R}
 a4items <- sort(a4items, by = "support", decreasing = T)
+
 inspect(head(a4items, 12))
     items                         support   
 268 {p=$10-$50,f=USA}             0.06091543
@@ -278,9 +279,9 @@ inspect(head(a4items, 12))
 256 {p=$200-$600,c=Cannabis-Weed} 0.01935440
 ```
 
-- 6% of all transactions are from the USA and costing between $10-$50. 
+- 6% of all transactions are from the USA and listing for between $10-$50. 
 - 4% of all transactions are from the USA and are under the category "Cannabis-Weed". 
-- 4% of all transactions are for Cannabis-Weed and cost between $50-200, another 2% are also for week by for $200-$600.
+- 4% of all transactions are for Cannabis-Weed and cost between $50-200; another 2% are also for Weed but for $200-$600. Accorinding to the [THMQ index](https://gist.github.com/mozzarellaV8/d24012b98490a24135ce307f56dff716) published by High Times<sup>[3](#references-and-notes)</sup>, these would like be prices for a single ounce of marijuana. 
 - 2% of all transactions are from the UK and costing between $10-$50. 
 
 ```{r}
@@ -487,9 +488,9 @@ Admittedly my favorite visualization for association rules - seeing rules as nod
 
 <sup>1</sup> "Shedding Light on the Dark Web." The Economist. The Economist Newspaper, 2016. Web. 23 [Sept. 2016.](http://www.economist.com/news/international/21702176-drug-trade-moving-street-online-cryptomarkets-forced-compete)
 
-<sup>2</sup> While likely not following the strictest security protocol, this level of anonymization felt suited for the application. In practical terms, all of this data is publicly available so these measures were done out of a careful respect for privacy.
+<sup>2</sup> the virtual location of Agora/Internet/Torland specializes in books, ebooks, hacking, guides, services.
 
-<sup>3</sup> the virtual location of Agora/Internet/Torland specializes in books, ebooks, hacking, guides, services.
+<sup>3</sup> [Trans High Market Quotations](http://hightimes.com/?s=thmq) published monthly by High Times; data available online goes back to March 2014.
 
 
 
