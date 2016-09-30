@@ -140,17 +140,23 @@ As suspected. Lognormal?
 # heavy on the left/long tail - quick check of the log
 ag$log.usd <- log(ag$usd)
 
-par(mfrow = c(1, 1), mar = c(6, 6, 6, 4), las = 1, family = "GillSans")
-hist(ag$log.usd, main = "log(usd) Distribution of Prices, n = 2316650",
-     breaks = 100, xlab = "", ylab = "")
-axis(1, at = seq(-5, 10, 1))
-
 summary(ag$log.usd)
 #  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # -Inf   3.190   4.442    -Inf   5.671   9.903 
 
 exp(c(4, 4.25, 4.5, 4.75, 5))
 # 54.59815  70.10541  90.01713 115.58428 148.41316
+
+ggplot(ag, aes(x = log.usd)) + 
+  geom_histogram(binwidth = 0.20, color = "black", alpha = 0, size = 0.5) +
+  scale_x_continuous(breaks = seq(-5, 10, 1)) +
+  theme_minimal(base_size = 16, base_family = "GillSans") +
+  theme(axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        panel.grid.major = element_line(color = "gray82"),
+        plot.margin = unit(c(1, 1, 1, 1), "cm")) +
+  labs(title = "log Distribution of Prices, n = 2317353",
+       x = "", y = "")
 ```
 ![log dist usd](plots/arules/prep-usd-dist-02-log-gg.png)
 
