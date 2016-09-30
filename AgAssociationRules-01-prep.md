@@ -181,21 +181,11 @@ plot(density(subset(ag$usd, ag$usd <= 10.000)), main = "usd < $10", ylab = "")
 
 ![10-200](plots/arules/prep-density-under200.png)
 
-Spikes at certain denominations.
+Spikes at certain denominations: 1, 5, 10, 15, 20, 25, 30, 35...
 
-![500-2000](plots/arules/prep-density-200-5000.png)
 
 ``` {R}
-# look at densities between 500-5000
-plot(density(subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)), 
-     main = "$2000 < usd < $5000")
-plot(density(subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)), 
-     main = "$1200 < usd < $2000", ylab = "")
-plot(density(subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)), 
-     main = "$600 < usd < $1200")
-plot(density(subset(ag$usd, ag$usd > 200 & ag$usd <= 600)), 
-     main = "$200 < usd < $600", ylab = "")
-
+# look at distributions between 500-5000
 hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
 hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
 hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
@@ -203,6 +193,10 @@ hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab =
 ```
 
 ![500-2000](plots/arules/prep-dist-200-5000.png)
+
+The trend sequence continues in prices through $2000: 200, 250, 300, 350, 400...
+
+
 
 ```{R}
 # distributions between 5000-20000
@@ -218,7 +212,7 @@ hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
 
 ![5000-20000](plots/arules/prep-dist-5k-20k.png)
 
-A closer reveals that many prices will be at intervals of 50 or 100 e.g. $50, $100, $500, $750. This trend goes from prices $0-$2000, and tails off at prices above $2000. Above $2k, frequencies also diminish, eventually under 150 listings. From $15k-20k prices, frequency drops to under 30 listings - sparse.
+A closer reveals that many prices will be at intervals of 5 or 10 then 50 or 100 e.g. $50, $100, $500, $750. This trend goes from prices $0-$2000, and tails off at prices above $2000. Above $2k, frequencies also diminish, eventually under 150 listings. From $15k-20k prices, frequency drops to under 30 listings - sparse.
 
 Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
 
