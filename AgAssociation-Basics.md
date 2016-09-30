@@ -1,6 +1,6 @@
 # Association Rule Mining - Basics
 
-_(please [skip](AgAssociations.md) if familiar - i'm practicing my explaining skills.)_
+_(please [skip](AgAssociationRules-01-prep.md) if familiar - i'm practicing my explaining skills.)_
 
 Let's say you have a set of items that could be on their own, or in groups. (and also pairs)
 
