@@ -160,6 +160,8 @@ The spike at at/near zero seems to indicate a number of $1 listings. From explor
 
 ### Price Distributions by Interval
 
+![10-200](plots/arules/prep-dist-0-200.png)
+
 ```{R}
 # plot under 200 to under 10 dollar
 par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
@@ -183,10 +185,11 @@ plot(density(ag50), main = "usd < $50")
 plot(density(ag10), main = "usd < $10", ylab = "")
 ```
 
-![10-200](plots/arules/prep-dist-0-200.png)
-
 ![10-200](plots/arules/prep-density-under200.png)
 
+Spikes at certain denominations.
+
+![500-2000](plots/arules/prep-density-200-5000.png)
 
 ``` {R}
 # look at densities between 500-5000
@@ -206,8 +209,6 @@ hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", y
 hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
 hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
 ```
-
-![500-2000](plots/arules/prep-density-200-5000.png)
 
 ![500-2000](plots/arules/prep-dist-200-5000.png)
 
