@@ -76,6 +76,11 @@ ag100 <- subset(ag$usd, ag$usd <= 100.00)
 ag50 <- subset(ag$usd, ag$usd <= 50.000)
 ag10 <- subset(ag$usd, ag$usd <= 10.000)
 
+hist(ag200, breaks = 150, xlim = c(0, 200), main = "usd < $200", ylab = "")
+hist(ag100, breaks = 150, xlim = c(0, 100), main = "usd < $100", ylab = "")
+hist(ag50, breaks = 150, xlim = c(0, 50), main = "usd < $50", ylab = "")
+hist(ag10, breaks = 100, xlim = c(0, 10), main = "usd < $10", ylab = "")
+
 par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
 plot(density(ag200), main = "usd < $200")
 plot(density(ag100), main = "usd < $100", ylab = "")
@@ -99,6 +104,16 @@ hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", y
 hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
 hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
 
+# distributions between 5000-20000
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), las = 1, family = "GillSans")
+hist(ag$usd, breaks = 1000, xlim = c(5000, 7500), ylim = c(0, 400),
+     main = "$5000 < n < $7500", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(7500, 10000), ylim = c(0, 150),
+     main = "$7500 < n < $10,000", xlab = "", ylab = "")
+hist(ag$usd, breaks = 1000, xlim = c(10000, 15000), ylim = c(0, 150),
+     main = "$10,000 < n < $15,000", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 1000, xlim = c(15000, 20000), ylim = c(0, 30),
+     main = "$15,000 < n < $20,000", xlab = "", ylab = "")
 
 # heavy on the left/long tail - quick check of the log()
 ag$log.usd <- log(ag$usd)
