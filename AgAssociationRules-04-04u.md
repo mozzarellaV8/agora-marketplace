@@ -7,8 +7,8 @@ R script: [**_agora-associations-04-mining-04.R_**](R/arules/agora-associations-
 - [Transaction Conversion](#transaction-conversion)
 - [Item Frequency / Frequent Itemsets](#item-frequency)
 - [Mining Association Rules](#mining-association-rules)
-- [Grouped Matrices]()
-- [Network Graphs]()
+- [Vis: Grouped Matrices](#visualizations-grouped-matrices)
+- [Vis: Network Graphs](#visualizations-network-graphs)
 
 
 # Variable Selection
@@ -22,7 +22,7 @@ dataframe: **a4**
 | `p`   | price         | 10        | discretized into 10 bins                      |
 | `f`   | from          | 85        | product origin location                       |
 | `sc`  | subcategory   | 105       | subcategory as labeled on Agora               |
-| `v`   | vendor    | 3183          | anonymized with SHA256 hashing algorithm      |
+| `v`   | vendor        | 3183      | anonymized with SHA256 hashing algorithm      |
 
 Price `p` ranged from $0-20,000 and was discretized manually into 10 bins: 
 
@@ -451,6 +451,12 @@ plot(a4rules, method = "grouped", control = list(k = 36))
 
 ![36 Rule Group](plots/arules/a4u-g1-3.png)
 
+What initially stands out looking at a grouped matrix of 36 is the trend for rules to follow a pattern of {vendor} => {location}. While locations are welcome on the rhs to get 'portraits' of what a country might offer, strict {vendor} => {location} might be too specific to be interesting. Despite that, a few prices and categories come through on the lhs that might be interesting:
+
+- in the lowest price bin of $0-$10 as antecedent, there are a total of 49 rules that result in UK as consequent. Originally the expectation was that items in this price range would be deliverables online e.g. eBooks, information, or pirated software. 
+
+- Hyrdrocodone and Cannabis-Concentrates are antecendent for 81 rules which result in rhs of USA. Will have to see if the other items in the lhs are redundacies creating more rules or are leading to more relationships.
+
 ```{R}
 # loop
 for (i in 1:10) {
@@ -470,16 +476,53 @@ for (i in 1:10) {
 48 rule grouping: 
 ![48 Rule Group](plots/arules/a4u-g1-4.png)
 
+Again, reinforcement of the trend for {vendor} => {location} rulesets observed in the 36 rule matrix. The observations on {$0-$10} => {UK},  
+{Hyrdocodone} => {USA}, and {Cannabis-Concentrates} => continue to hold as well. 
+
 96 rule grouping:
 ![96 Rule Group](plots/arules/a4u-g1-8.png)
 
-# Network Graphs
+Looking at 96 rules, much of what was observed earlier continues to hold. 
 
-Admittedly my favorite visualization for association rules - seeing rules as nodes with sizes based on support, confidence, and/or lift. 
+- Info/eBooks: eBooks and Info/eBooks: IT appear in antecedents with prices between $0-$10 as consequent - as stated earlier, to be expected.
+- Cannabis class opens up to include Cannabis-Edibles, and again USA is the consequent (6 rules)
+- Vendors continue to make up most of the LHS - taking counts, Netherlands has 9 vendors in LHS, Germany: 7, China 5, and Sweden: 2.
+- {Vendor => UK}: 13
+- {Vendor => USA}: 10
+- in the antecedent of rhs {$0-$10}: UK, Agora/Internet/Torland, No Info (location), Info/eBooks:eBooks, and Info/eBooks: IT - affinities across location and category by price.
 
+# Visualizations - Network Graphs
 
+Network graphs were plotted from rules, which were sorted by the 3 quality measures in different quantities.
 
+- sort by support, confidence, and lift
+- sort by lift
+- sort by support and confidence
 
+For better or worse, this selection/treatment of variables yielded many vendors - making it a bit difficult to see how classes of category, location, and price relate.
+
+82 rules by support, confidence, and lift. Layout DH, more vendors than desired.
+
+![a4u-r1-82](plots/arules/a4u-r1-SCL-82.png)
+
+```{r}
+# plot by Support, Confidence, and Lift
+r1 <- head(sort(a4rules, by = c("support", "confidence", "lift")), 82)
+p1 <- plot(r1, method = "graph", 
+           main = "82 rules ~ support + confidence + lift (dh)", 
+           edge.color = "#00000025",
+           vertex.frame.color = "#00688B85",
+           vertex.color = pdpal(100),
+           vertex.label.color = "grey8", 
+           vertex.label.cex = 0.68, layout = layout_with_dh,
+           vertex.label.dist = 0)
+```
+
+![a4u-r2-36](plots/arules/a4u-r2-36.png)
+
+Graph of 36 rules sorted by lift alone, plotted using using Kamada & Kawai force-directed layout. It's possible to discern cliques beginning to form around locations, but these types of relationships are a bit too specific to be interesting. While it'd be possible to subset for specific classes, it might be better to revise variable selection and transformation. The minimum support to generate these rules was already quite low, and the dominance of vendor antecedents is less than encouraging.
+
+On to a5...
 
 
 [back to top](#agora-associations-04-04)
