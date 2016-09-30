@@ -238,7 +238,7 @@ ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
                               ifelse(ag$p > 5000 & ag$p <= 10000, "$5000-$10000",
                                      ifelse(ag$p > 10000, "$10000-$20000", NA))))))))))
 ```
-![usd-disc-dist](plots/arules/prep-discretized-distribution-01.png)
+![usd-disc-dist](plots/arules/prep-discretized-distribution-02.png)
 
 ```{r}
 ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
