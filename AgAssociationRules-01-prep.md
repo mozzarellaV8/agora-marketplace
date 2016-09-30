@@ -215,7 +215,7 @@ A closer reveals that many prices will be at intervals of 5 or 10 then 50 or 100
 
 ### Actually Discretize
 
-Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting for the inflated price frequency near zero. 
+Eventually I decided to bin the prices myself (after trying by `cluster` and `interval` on previous mining sessions). The bins were mostly following the results of discretizing by cluster, but accounting more specifically for the inflated price frequencies under $100.
 
 ```{R}
 # manually discretize
