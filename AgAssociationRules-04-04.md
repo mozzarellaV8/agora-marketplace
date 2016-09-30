@@ -1,6 +1,6 @@
 # Agora Associations 04-04
 
-R script: **_agora-associations-04-mining-02.R_**
+R script: [**_agora-associations-04-mining-04.R_**](R/arules/agora-associations-04-mining-04.R)
 
 
 - [Variable Selection](#variable-selection)
