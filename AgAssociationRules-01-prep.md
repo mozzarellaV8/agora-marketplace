@@ -2,7 +2,7 @@
 
 - _outputs from the file `agora-associations-03.R`_
 - general application to different mining sessions
-- basic info on [Association Rule Mining](AssociationBasics.md)
+- basic info on [Association Rule Mining](AgAssociation-Basics.md)
 - forward to mining: [Agora Association Rules](AgAssociationRules-04-04.md)
 
 Contents:
