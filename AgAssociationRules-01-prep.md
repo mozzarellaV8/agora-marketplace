@@ -254,14 +254,15 @@ ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
        x = "", y = "", colour = "", fill = "")
 ```      
 
-Above is a histogram of the manually binned prices, fill opacity set to relative frequency (x2) by some quick calculations:
+Above is a histogram of the manually binned prices, fill opacity set to relative frequency (x2).
 
 ``` {r}
 summary(ag$p)
-# $0-$10       $10-$50      $50-$100     $100-$200     $200-$600    $600-$1200   $1200-$2000   $2000-$5000 
-# 371235        510361        376526        328828        385562        152533         78168         81873
-# $5000-$10000 $10000-$20000
-#        24874          7393
+# $0-$10       $10-$50      $50-$100     $100-$200     $200-$600    $600-$1200   $1200-$2000
+# 371235        510361        376526        328828        385562        152533         78168
+
+# $2000-$5000     $5000-$10000   $10000-$20000
+#       81873             4874            7393
 ```
 
 # Anonymize Vendor Names
