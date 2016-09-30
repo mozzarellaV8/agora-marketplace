@@ -20,15 +20,20 @@ library(ggplot2)
 ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k.csv", stringsAsFactors = T)
 summary(ag$usd)
 
+
 # Transactions Conversion -----------------------------------------------------
 
+levels(as.factor(ag$all.c))
+ag$all.c <- gsub("\\bDrugs:\\s", "", ag$all.c)
+ag$all.c <- factor(ag$all.c)
+
 # subset variables
-ag <- subset(ag, select = c("p", "from", "sc", "v3"))
-colnames(ag) <- c("p", "f", "sc", "v")
+ag <- subset(ag, select = c("p", "from", "all.c", "v3"))
+colnames(ag) <- c("p", "f", "c", "v")
 head(ag)
 
 ag <- as.data.frame(ag)
-# write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag20k-go.csv", row.names = F)
+# write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag20k-4var-go.csv", row.names = F)
 
 # remove duplicates:
 ag.u <- ag[!duplicated(ag), ]
