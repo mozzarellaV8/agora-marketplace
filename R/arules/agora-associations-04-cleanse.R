@@ -16,6 +16,7 @@ a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 ag <- fread("~/GitHub/agora-data/06-arules/ag-arules-20k.csv", stringsAsFactors = T)
 
 # subset under 20k ------------------------------------------------------------
+summary(ag$usd)
 above <- subset(a, a$usd > 20000)
 ag <- subset(a, a$usd <= 20000) # 2317353
 ag <- as.data.frame(ag)
@@ -58,6 +59,47 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 
+# plot under 200 to under 10 dollar
+par(mfrow = c(2, 2), mar = c(6, 6, 6, 6), family = "GillSans")
+hist(ag$usd, breaks = 25000, xlim = c(0, 200),
+     main = "n < $200", xlab = "", ylab = "Frequency")
+hist(ag$usd, breaks = 500000, xlim = c(0, 100), 
+     main = "n < $100", xlab = "", ylab = "")
+hist(ag$usd, breaks = 100000, xlim = c(0, 50), 
+     main = "n < $50", xlab = "price in USD", ylab = "Frequency")
+hist(ag$usd, breaks = 100000, xlim = c(0, 10),
+     main = "n < 10", xlab = "price in USD", ylab = "")
+
+# look at densities under $200
+ag200 <- subset(ag$usd, ag$usd <= 200.00)
+ag100 <- subset(ag$usd, ag$usd <= 100.00)
+ag50 <- subset(ag$usd, ag$usd <= 50.000)
+ag10 <- subset(ag$usd, ag$usd <= 10.000)
+
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(ag200), main = "usd < $200")
+plot(density(ag100), main = "usd < $100", ylab = "")
+plot(density(ag50), main = "usd < $50")
+plot(density(ag10), main = "usd < $10", ylab = "")
+
+# look at densities between 500-5000
+ag5000 <- subset(ag$usd, ag$usd <= 5000 & ag$usd > 2000)
+ag2000 <- subset(ag$usd, ag$usd > 1200 & ag$usd <= 2000)
+ag1000 <- subset(ag$usd, ag$usd > 600 & ag$usd <= 1200)
+ag600 <- subset(ag$usd, ag$usd > 200 & ag$usd <= 600)
+
+par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
+plot(density(ag5000), main = "$2000 < usd < $5000")
+plot(density(ag2000), main = "$1200 < usd < $2000", ylab = "")
+plot(density(ag1000), main = "$600 < usd < $1200")
+plot(density(ag600), main = "$200 < usd < $600", ylab = "")
+
+hist(ag5000, breaks = 200, xlim = c(2000, 5000), main = "$2000 < usd < $5000")
+hist(ag2000, breaks = 200, xlim = c(1200, 2000), main = "$1200 < usd < $2000", ylab = "")
+hist(ag1000, breaks = 150, xlim = c(600, 1200), main = "$600 < usd < $1200")
+hist(ag600, breaks = 150, xlim = c(200, 600), main = "$200 < usd < $600", ylab = "")
+
+
 # heavy on the left/long tail - quick check of the log()
 ag$log.usd <- log(ag$usd)
 
@@ -95,13 +137,14 @@ nrow(ag) - 703
 
 # manually
 ag$p <- ag$usd
-ag$p <- ifelse(ag$p <= 10.00, "$0-10", 
-               ifelse(ag$p > 10 & ag$p <= 150.00, "$10-150",
-                      ifelse(ag$p > 150 & ag$p <= 600.00, "$150-600",
-                             ifelse(ag$p > 600 & ag$p <= 2000.00, "$600-2000",
-                                    ifelse(ag$p > 2000 & ag$p <= 10000, "$2000-10000",
-                                           ifelse(ag$p > 10000, "$10000-20000", NA))))))
-
+ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
+               ifelse(ag$p > 10 & ag$p <= 100.00, "$10-$100",
+                      ifelse(ag$p > 100 & ag$p <= 200, "$100-$200", 
+                             ifelse(ag$p > 200 & ag$p <= 600.00, "$200-$600",
+                                    ifelse(ag$p > 600 & ag$p <= 2000.00, "$600-$2000",
+                                           ifelse(ag$p > 2000 & ag$p <= 10000, "$2000-10000",
+                                                  ifelse(ag$p > 10000, "$10000-$20000", NA)))))))
+            
 
 ag$p <- factor(ag$p)  # 6 levels
 
