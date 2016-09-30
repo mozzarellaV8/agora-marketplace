@@ -19,7 +19,7 @@ dataframe: **a4**
 
 | name  | variable      | levels    |   notes                                       |
 |-------|---------------|-----------|-----------------------------------------------|
-| `p`   | price         | 6         | discretized into 6 bins                       |
+| `p`   | price         | 10        | discretized into 10 bins                      |
 | `f`   | from          | 85        | product origin location                       |
 | `sc`  | subcategory   | 105       | subcategory as labeled on Agora               |
 | `v`   | vendor    | 3183          | anonymized with SHA256 hashing algorithm      |
@@ -27,10 +27,14 @@ dataframe: **a4**
 Price `p` ranged from $0-20,000 and was discretized manually into 6 bins: 
 
 - $0-10
-- $10-150
-- $150-600
-- $600-2000
-- $2000-10000
+- $10-50
+- $50-100
+- $100-200
+- $200-600
+- $600-1200
+- $1200-2000
+- $2000-5000
+- $5000-10000
 - $10000-20000
 
 While not in equal intervals, these bins reflect the distribution of prices on the market and take into account a large number of listings under 10- and 200- USD.
