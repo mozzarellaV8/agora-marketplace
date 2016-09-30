@@ -241,14 +241,17 @@ ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
 ![usd-disc-dist](plots/arules/prep-discretized-distribution-02.png)
 
 ```{r}
-ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
-  scale_fill_manual(values = c("#EE2C2C32", "#EE2C2C94", "#EE2C2C02", 
-                               "#EE2C2C44", "#EE2C2C10", "#EE2C2C20"),
+ggplot(ag, aes(reorder(p), fill = p)) + 
+  geom_bar(size = 0.25) +
+  scale_fill_manual(values = c("#00688B64", "#00688B88", "#00688B64", "#00688B56",
+                               "#00688B56", "#00688B24", "#00688B23", "#00688B22",
+                               "#00688B21", "#00688B18"),
                     guide = F) +
-  theme_minimal(base_size = 16, base_family = "GillSans") +
-  theme(plot.margin = unit(c(2, 2, 2, 2), "cm"),
-        axis.text.y = element_text(size = 14.75),
-        axis.text.x = element_text(size = 14.75),
+  theme_minimal(base_size = 14, base_family = "GillSans") +
+  theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
+        panel.grid.major = element_line(color = "gray90"),
+        axis.text.y = element_text(size = 12.75),
+        axis.text.x = element_text(size = 12.75, angle = 35, hjust = 1),
         legend.position = "none") +
   labs(title = "Distribution of Discretized Prices", 
        x = "", y = "", colour = "", fill = "")
