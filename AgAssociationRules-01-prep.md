@@ -158,7 +158,7 @@ ggplot(ag, aes(x = log.usd)) +
   labs(title = "log Distribution of Prices, n = 2317353",
        x = "", y = "")
 ```
-![log dist usd](plots/arules/prep-usd-dist-02-log-gg.png)
+![log dist usd](plots/arules/prep-log-dist-gg.png)
 
 Visually it appears the mean of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. 
 
