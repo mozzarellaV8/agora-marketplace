@@ -226,15 +226,17 @@ Eventually I decided to bin the prices myself (after trying by `cluster` and `in
 ```{R}
 # manually discretize
 ag$p <- ag$usd
-ag$p <- ifelse(ag$p <= 10.00, "$0-10", 
-               ifelse(ag$p > 10 & ag$p <= 150.00, "$10-150",
-                      ifelse(ag$p > 150 & ag$p <= 600.00, "$150-600",
-                             ifelse(ag$p > 600 & ag$p <= 2000.00, "$600-2000",
-                                    ifelse(ag$p > 2000 & ag$p <= 10000, "$2000-10000",
-                                           ifelse(ag$p > 10000, "$10000-20000", NA))))))
 
-
-ag$p <- factor(ag$p)  # 6 levels
+ag$p <- ifelse(ag$p <= 10.00, "$0-$10",
+               ifelse(ag$p > 10 & ag$p <= 50, "$10-$50",
+                      ifelse(ag$p > 50 & ag$p <= 100, "$50-$100",
+                             ifelse(ag$p > 100 & ag$p <= 200, "$100-$200", 
+                                    ifelse(ag$p > 200 & ag$p <= 600.00, "$200-$600",
+         ifelse(ag$p > 600 & ag$p <= 1200.00, "$600-$1200",
+                ifelse(ag$p > 1200 & ag$p <= 2000, "$1200-$2000",
+                       ifelse(ag$p > 2000 & ag$p <= 5000, "$2000-$5000", 
+                              ifelse(ag$p > 5000 & ag$p <= 10000, "$5000-$10000",
+                                     ifelse(ag$p > 10000, "$10000-$20000", NA))))))))))
 ```
 ![usd-disc-dist](plots/arules/prep-discretized-distribution-01.png)
 
@@ -256,15 +258,10 @@ Above is a histogram of the manually binned prices, fill opacity set to relative
 
 ``` {r}
 summary(ag$p)
-#  $0-10      $10-150 $10000-20000     $150-600  $2000-10000    $600-2000 
-# 371235      1086166         7393       515111       106747       230701 
-
-371235/nrow(ag)   # 0.1601979
-1086166/nrow(ag)  # 0.4687098
-7393/nrow(ag)     # 0.003190278
-515111/nrow(ag)   # 0.2222842
-106747/nrow(ag)   # 0.04606419
-230701/nrow(ag)   # 0.09955367
+# $0-$10       $10-$50      $50-$100     $100-$200     $200-$600    $600-$1200   $1200-$2000   $2000-$5000 
+# 371235        510361        376526        328828        385562        152533         78168         81873
+# $5000-$10000 $10000-$20000
+#        24874          7393
 ```
 
 # Anonymize Vendor Names
