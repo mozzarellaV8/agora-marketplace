@@ -130,7 +130,7 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 ```
-![usd dist x4](plots/arules/prerp-usd-dist-01.jpg)
+![usd dist x4](plots/arules/prep-usd-dist-01.jpg)
 
 As suspected. Lognormal? 
 

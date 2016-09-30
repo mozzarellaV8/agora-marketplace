@@ -78,8 +78,10 @@ ag10 <- subset(ag$usd, ag$usd <= 10.000)
 
 hist(ag200, breaks = 150, xlim = c(0, 200), main = "usd < $200", ylab = "")
 hist(ag100, breaks = 150, xlim = c(0, 100), main = "usd < $100", ylab = "")
-hist(ag50, breaks = 150, xlim = c(0, 50), main = "usd < $50", ylab = "")
-hist(ag10, breaks = 100, xlim = c(0, 10), main = "usd < $10", ylab = "")
+hist(ag50, breaks = 150, xlim = c(0, 50), 
+     main = "usd < $50", xlab = "price in USD", ylab = "")
+hist(ag10, breaks = 100, xlim = c(0, 10), 
+     xlab = "price in USD", main = "usd < $10", ylab = "")
 
 par(mfrow = c(2, 2), mar = c(5, 5, 5, 5), family = "GillSans")
 plot(density(ag200), main = "usd < $200")
