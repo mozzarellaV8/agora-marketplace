@@ -152,7 +152,7 @@ summary(ag$log.usd)
 exp(c(4, 4.25, 4.5, 4.75, 5))
 # 54.59815  70.10541  90.01713 115.58428 148.41316
 ```
-![log dist usd](plots/arules/prep-usd-dist-02-log.jpeg)
+![log dist usd](plots/arules/prep-usd-dist-02-log-gg.png)
 
 Visually it appears the mean of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. 
 
