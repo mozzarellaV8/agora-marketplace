@@ -16,8 +16,9 @@ library(ggplot2)
 # a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 # 2322961 obs of 18 variables
 
-# prepped data
+# prepped data: anonymized vendors
 ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k.csv", stringsAsFactors = T)
+summary(ag$usd)
 
 # Transactions Conversion -----------------------------------------------------
 
