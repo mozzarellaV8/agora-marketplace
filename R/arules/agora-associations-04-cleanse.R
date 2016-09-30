@@ -184,7 +184,7 @@ ggplot(ag, aes(reorder(p), fill = p)) +
   theme(plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "cm"),
         panel.grid.major = element_line(color = "gray90"),
         axis.text.y = element_text(size = 12.75),
-        axis.text.x = element_text(size = 12.75),
+        axis.text.x = element_text(size = 12.75, angle = 35, hjust = 1),
         legend.position = "none") +
   labs(title = "Distribution of Discretized Prices", 
        x = "", y = "", colour = "", fill = "")
