@@ -290,7 +290,7 @@ In practical terms though, anyone caring to download the dataset could easily fi
 
 # Convert to Transactions
 
-next: [Variable Selection, Transaction Conversion, and Mining](R/arules-md/AgAssociationRules-04-04.md)
+next: [Variable Selection, Transaction Conversion, and Mining](AgAssociationRules-04-04.md)
 
 # References
 
