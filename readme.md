@@ -80,7 +80,7 @@ sum(pv$vendor)
 
 ```
 
-![](plots-00/RDraft/pgDist-lm-product-01.png)
+![](plots/readme/pgDist-lm-product-01.png)
 
 ``` r
 p.lm <- (product ~ date, data = pv)
