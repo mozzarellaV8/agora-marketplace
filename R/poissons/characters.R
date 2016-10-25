@@ -10,7 +10,7 @@ library(extrafont)
 library(extrafontdb)
 
 # load data -------------------------------------------------------------------
-# agora <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
+# agora <- fread("~/GitHub/agora-data/agora-02.csv", stringsAsFactors = T)
 # agora$date <- as.Date(agora$date)
 # agora$usd <- round(agora$usd, 2)
 
@@ -27,12 +27,11 @@ library(extrafontdb)
 #            "price", "usd", "cat", "subcat", "subsubcat",
 #            "fb", "feedback", "from", "list")]
 
-# 00 - which product listings have numbers? -------------------
+# 00 - which product listings have numbers? -----------------------------------
 # ag$has.num<- grepl("[0-9]+", ag$product)
 
 # ag.n <- subset(ag, ag$pnum == T) # 1821074
 # ag.c <- subset(ag, ag$pnum == F) # 501887
-
 
 # 00 - length of product description ------------------------------------------
 # ag$product <- as.character(ag$product)

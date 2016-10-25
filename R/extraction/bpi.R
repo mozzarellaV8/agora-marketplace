@@ -15,8 +15,6 @@ write.table(bpiAg, file = "data/bpi-Agora.csv", sep = ",", row.names = F)
 bpi.inv <- read.csv("data/bpi/bpi-investing.csv")
 bpi.inv$Date <- as.Date(bpi.inv$Date)
 
-
-
 # compute daily high-low difference:
 # bpi_DD <- data.frame()
 # for (i in 1:length(bpi)) {
@@ -81,3 +79,50 @@ v14a <- as.data.frame(v14a)
 v14a <- v14a[c(2, 1, 3, 4, 5, 12, 11, 6, 7, 8, 9, 10)]
 
 write.csv(v14a, file = "~/GitHub/agora-data/v14-00d.csv", row.names = F)
+
+# add Oil + High Times indices ------------------------------------------------
+
+# High Times Marijuana Index ------------------------------
+summary(high$Index)
+plot(high$Month, high$Index)
+
+high$Month <- ifelse(high$Month < 10, paste0("0", high$Month), high$Month)
+
+high$ym <- paste(high$Year, high$Month, sep = "-")
+a$ym <- paste(a$year, a$month, sep = "-")
+
+a <- as.data.frame(a)
+a <- left_join(a, high, by = "ym")
+a$Year <- NULL
+a$Month <- NULL
+
+summary(a$Index)                       # NA's: 35286
+nrow(subset(a, a$date < "2014-03-01")) # 35286
+
+# write.csv(a, file = "~/GitHub/agora-data/agora-03.csv", row.names = F)
+
+# Brent Crude Oil Futures ---------------------------------
+
+brent$Date <- as.Date(brent$Date)
+brent <- subset(brent, select = c("Date", "Price"))
+colnames(brent) <- c("date", "brent.oil")
+
+a <- left_join(a, brent, by = "date")
+a$brent.oil <- na.locf(a$brent.oil)
+summary(a$brent.oil)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  46.59   57.87   63.20   69.87   82.34  115.10
+
+# WTI Crude Oil Futures -----------------------------------
+
+wti$Date <- as.Date(wti$Date)
+wti <- subset(wti, select = c("Date", "Price"))
+colnames(wti) <- c("date", "wti.oil")
+
+a <- left_join(a, wti, by = "date")
+a$wti.oil <- na.locf(a$wti.oil)
+summary(a$wti.oil)
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 43.46   50.52   58.58   64.44   77.40  106.90
+
+write.csv(a, file = "~/GitHub/agora-data/agora-04.csv", row.names = F)

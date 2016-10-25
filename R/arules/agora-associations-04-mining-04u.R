@@ -1,7 +1,7 @@
 # Agora Marketplace Analysis
 # Association Rules - Agora Population
 # a4: 2,317,353 observations of 5 variables:
-# price, from (location), (main) category, subcategory, vendor
+# price, from (location), all categories, vendor
 
 # load data -------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 # Agora Marketplace Analysis
 # Association Rules - Agora Population
-# a4: 2,317,353 observations of 5 variables:
-# price, from (location), (main) category, subcategory, vendor
+# a6: 2,317,353 observations of 5 variables:
+# price, from (location), subcategories
 
 # load data -------------------------------------------------------------------
 
@@ -17,37 +17,31 @@ library(ggplot2)
 # 2322961 obs of 18 variables
 
 # prepped data: anonymized vendors
-ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k.csv", stringsAsFactors = T)
+ag <- fread("~/GitHub/agora-data/06-arules/ag-arules20k-a5.csv", stringsAsFactors = T)
 summary(ag$usd)
-
 
 # Transactions Conversion -----------------------------------------------------
 
-levels(as.factor(ag$all.c))
-ag$all.c <- gsub("\\bDrugs:\\s", "", ag$all.c)
-ag$all.c <- factor(ag$all.c)
-
 # subset variables
-ag <- subset(ag, select = c("p", "from", "all.c", "v3"))
+ag <- subset(ag, select = c("p", "from", "sc", "v3"))
 colnames(ag) <- c("p", "f", "c", "v")
 head(ag)
 
 ag <- as.data.frame(ag)
-# write.csv(ag, file = "~/GitHub/agora-data/06-arules/ag20k-4var-go.csv", row.names = F)
 
 # remove duplicates:
-ag.u <- ag[!duplicated(ag), ]
-nrow(ag.u) # 44176
-head(ag.u)
+ag <- ag[!duplicated(ag), ]
+nrow(ag) # 44176
+head(ag)
 
-a4 <- as(ag.u, "transactions")
-summary(a4)
+a5 <- as(ag, "transactions")
+summary(a5)
 
 # Item Frequency Plot ---------------------------------------------------------
 
 par(mfrow = c(1, 1), mar = c(4, 12, 4, 4), family = "GillSans")
-itemFrequencyPlot(a4, support = 0.0025, cex.names = 0.65, col = "white", horiz = T,
-                  main = "Agora Marketplace: Frequent Items (support > 0.0025)")
+itemFrequencyPlot(a5, support = 0.005, cex.names = 0.70, col = "white", horiz = T,
+                  main = "Agora Marketplace: Frequent Items (support > 0.005)")
 
 # Item Frequency Plot Loop ----------------------------------------------------
 
@@ -60,10 +54,10 @@ for (i in 1:length(sup)) {
   
   par(mfrow = c(1, 1), mar = c(4, 12, 4, 4), family = "GillSans")
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/ifp/a4u-ItemFreq", sup[i], ".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/ifp/a5-ItemFreq", sup[i], ".png"),
       width = 1800, height = 1400, pointsize = 18, bg = "transparent")
   
-  itemFrequencyPlot(a4, support = sup[i], cex.names = 0.8, col = "#FFFFFF00", horiz = T,
+  itemFrequencyPlot(a5, support = sup[i], cex.names = 0.8, col = "#FFFFFF00", horiz = T,
                     main = paste("Agora Marketplace: Frequent Items (support >", 
                                  sup[i], ")"))
   
@@ -75,57 +69,64 @@ for (i in 1:length(sup)) {
 
 # 'find an interesting support (have at least 500 observations)'
 # via Michael Hahsler seminar tutorial: NYPD stop-and-frisk
-# nrow(a4)
-# 500/nrow(a4) # 0.000215522
+# nrow(a5)
+# 500/nrow(a5) # 0.000215522
 
 # Looking at the itemFreqPlot outputs, 0.005 a sa minsup yielded a wide 
 # but not overwhelmingly large range of transactions. I plotted 0.0025
 # manually and noticed vendors appear in this range - so let's set the 
 # - so let's set the minsup to that for now.
 
-a4items <- apriori(a4, parameter = list(target = "frequent",
+a5items <- apriori(a5, parameter = list(target = "frequent",
                                         supp = 0.0025, minlen = 2, maxlen = 5))
 
-summary(a4items)
+summary(a5items)
 # set of 575 itemsets
 
-inspect(head(a4items, 8))
-inspect(tail(a4items, 8))
+a5items <- sort(a5items, by = "support", decreasing = T)
+inspect(head(a5items, 12))
+inspect(tail(a5items, 12))
 
-a4items <- sort(a4items, by = "support", decreasing = T)
-inspect(head(a4items, 12))
-inspect(tail(a4items, 12))
-
-inspect(a4items)[48:56,]
+inspect(a5items)[48:56,]
 
 
 # Mine Association Rules ------------------------------------------------------
 
-a4rules <- apriori(a4, parameter = list(support = 0.0005, confidence = 0.6, minlen = 2))
+# minlength: 2
+a5rules <- apriori(a5, parameter = list(support = 0.0025, confidence = 0.6, minlen = 2))
+summary(a5rules)
 
-summary(a4rules)
+a5rules <- sort(a5rules, by = "support", decreasing = T)
+arules::inspect(head(a5rules, 10))
+arules::inspect(tail(a5rules, 10))
+inspect(a5rules)[123:128,]
+inspect(a5rules)[48:56,]
 
-a4rules <- sort(a4rules, by = "support", decreasing = T)
-arules::inspect(head(a4rules, 10))
-arules::inspect(tail(a4rules, 10))
-inspect(a4rules)[123:128,]
-inspect(a4rules)[48:56,]
+# minlength: 3
+a5r2 <- apriori(a5, parameter = list(support = 0.0025, confidence = 0.6, minlen = 3))
+summary(a5r2)
+
+a5rules <- sort(a5r2, by = "support", decreasing = T)
+arules::inspect(head(a5r2, 10))
+arules::inspect(tail(a5r2, 10))
+inspect(a5r2)[123:128,]
+inspect(a5r2)[48:56,]
 
 
 # Plot Rules - Group -----------------------------------------------------------
 
 # individual
-plot(a4rules, method = "grouped", control = list(k = 36))
+plot(a5rules, method = "grouped", control = list(k = 36))
 
 # loop
 for (i in 1:10) {
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/groups/a4u-g1-",i,".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/groups/a5u-g1-",i,".png"),
       width = 1800, height = 1400, pointsize = 20, bg = "transparent")
   
   k = i * 12
   
-  plot(a4rules, method = "grouped", control = list(k = k), 
+  plot(a5rules, method = "grouped", control = list(k = k), 
        main = paste("k =", k))
   
   dev.off()
@@ -141,7 +142,7 @@ grep("^layout_", ls("package:igraph"), value = T)[-1]
 pdpal <- colorRampPalette(c("#B2DFEE85", "#FFFFFF75", "#00688B85"), alpha = 0.85)
 
 # plot by Support, Confidence, and Lift
-r1 <- head(sort(a4rules, by = c("support", "confidence", "lift")), 36)
+r1 <- head(sort(a5rules, by = c("support", "confidence", "lift")), 36)
 p1 <- plot(r1, method = "graph", 
            main = "36 rules ~ support + confidence + lift (dh)", 
            edge.color = "#00000025",
@@ -158,7 +159,7 @@ largest_cliques(p1)
 
 
 # plot by Lift
-r2 <- head(sort(a4rules, by = "lift"), 36)
+r2 <- head(sort(a5rules, by = "lift"), 36)
 p2 <- plot(r2, method = "graph", 
            main = "36 rules ~  lift (kk)", 
            edge.color = "#00000025",
@@ -169,7 +170,7 @@ p2 <- plot(r2, method = "graph",
            vertex.label.dist = 0)
 
 # plot by Support and confidence
-r3 <- head(sort(a4rules, by = c("support", "confidence")), 48)
+r3 <- head(sort(a5rules, by = c("support", "confidence")), 48)
 p3 <- plot(r3, method = "graph", 
            main = "48 rules ~ support + confidence (kk)", 
            edge.color = "#00000025",
@@ -199,9 +200,9 @@ visNetwork(
 
 for (i in 24:98) {
   
-  log <- head(sort(a4rules, by = c("support", "confidence", "lift")), i)
+  log <- head(sort(a5rules, by = c("support", "confidence", "lift")), i)
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a4u-r1-SCL-",i,".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a5u-r1-SCL-",i,".png"),
       width = 1800, height = 1400, pointsize = 18, bg = "transparent")
   
   par(family = "GillSans")
@@ -224,9 +225,9 @@ even <- seq(2, 100, 2)
 
 for (i in 1:length(even)) {
   
-  tmp <- head(sort(a4rules, by = "lift"), even[i])
+  tmp <- head(sort(a5rules, by = "lift"), even[i])
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a4b-r2-Lift-",even[i],".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a5b-r2-Lift-",even[i],".png"),
       width = 1800, height = 1400, pointsize = 16, bg = "transparent")
   
   par(family = "GillSans")
@@ -248,9 +249,9 @@ for (i in 1:length(even)) {
 
 for (i in 48:144) {
   
-  tmp <- head(sort(a4rules, by = c("support", "confidence")), i)
+  tmp <- head(sort(a5rules, by = c("support", "confidence")), i)
   
-  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a4-r3-SC-",i,".png"),
+  png(filename = paste("~/GitHub/agora-local-market/arules/igraphs/a5-r3-SC-",i,".png"),
       width = 1800, height = 1400, pointsize = 16, bg = "transparent")
   
   par(family = "GillSans")
