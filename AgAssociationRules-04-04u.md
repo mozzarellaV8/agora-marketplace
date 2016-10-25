@@ -108,7 +108,6 @@ itemFrequencyPlot(a4, support = 0.005, cex.names = 0.65, col = "white", horiz = 
 
 quick observations at 0.005 minimum support:
 
-- prices within $10-$150 show up more than twice as much as the next nearest item - which is prices in the $150-$600 range. It might be worth taking a look at the distribution of this subset. 
 - the United States shows up nearly twice as much as the next location - the UK. 
 
 Moving forward - wanted to see how different minimum supports affected item frequency, so scripted a loop to plot a sequence of different values.
