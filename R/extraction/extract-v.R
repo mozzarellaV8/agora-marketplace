@@ -3,8 +3,8 @@
 
 # load ------------------------------------------------------------------------
 
-pkg <- c("rvest", "magrittr", "tm", "tidyr", "ggplot2", "dplyr", "plyr")
-install.packages(pkg)
+# pkg <- c("rvest", "magrittr", "tm", "tidyr", "ggplot2", "dplyr", "plyr")
+# install.packages(pkg)
 
 library(data.table)
 library(rvest)
@@ -17,7 +17,7 @@ library(tidyr)
 ##########################
 
 getwd()
-vDir <- "~/GitHub/ag-Vendor/2014-12-d1"
+vDir <- "~/GitHub/ag-Vendor/2015-01-d1"
 setwd(vDir)
 
 # extract vendor products via table, by month ---------------------------------
