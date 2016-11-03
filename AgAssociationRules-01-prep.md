@@ -26,13 +26,19 @@ library(anonymizer)
 a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 ```
 
-Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on seeing what traverses this market network, what relationships might exist, and looking at probabilities for different classes occurring as a means to advise in selecting features. 
+Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on 
+
+-seeing what traverses this market network
+- what relationships might exist, and 
+- looking at probabilities for different classes occurring 
+
+as a means to advise in selecting features. 
 
 While the market is large, you might say the products on offer fall into 'niche' categories. I think of looking for novel itemsets/rules here as being akin to doing so at a supermarket but limiting yourself to only the produce section. Basically, I'm not hoping to find out something akin to sales of Pop-Tarts spiking before hurricanes<sup>[1](#references)</sup> - and nevermind about diapers and beer. There's less of a chance for "surprises" when the range of items doesn't span Amazon's entire catalog. 
 
 That said - finding rules that traverse the network should still prove informative and interesting. 
 
-What does the probability of a specific cateogory appearing in the network reveal? And a specific price cluseter, or location? Or any combination of these factors?  
+What does the probability of a specific cateogory appearing in the network reveal? And a specific price cluster, or location? Or any combination of these factors?  
 
 # Preparation
 
@@ -46,9 +52,9 @@ Why subset for prices under $20,000?
 
 Often on Agora there will be products listed at exorbitant prices.
 
-While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked <sup>[2](#references)</sup><sup>,</sup><sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined were it an issue. 
+While on the surface they may resemble scams, it's been observed that these prices are here for vendors to keep their listings active while waiting for their supply to be restocked <sup>[2](#references)</sup><sup>,</sup><sup>[3](#references)</sup>. The prices are set high to discourage transactions, but keep their listings active to maintain their market presence and 'advertise' for the near-future when supply is replenished. While there is some gray area where 'placeholders' will mingle amongst potentially legitimate listings, the number of these listings is quite small compared to the population and can be easily subsetted and examined if it were an issue. 
 
-An example of this 'mingling': sorting the data by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. One being an outrageous price for quantity, and other being just about fair street value. 
+An example of this 'mingling': sorting the data by price might show a $45,000 gram of cannabis, next to a $47,000 listing for a kilogram of cocaine. One being an outrageous price for quantity, and the other being just about fair street value. 
 
 
 ## Combine Subcategories
@@ -69,7 +75,7 @@ levels(as.factor(ag$sc))
 ag$sc <- factor(ag$sc) # 106 levels
 ```
 
-From the HTML, 3 categories could be extracted from each page/listing. These would range from high-level description (e.g. '**Drugs**') to finer-grain sub- and sub-subcategories (e.g. '**Cannabis**', '**Concentrates**') further down the menu. Each is it's own variable in the data, but they're inextricably linked by the listing itself.
+From the raw HTML containing the data, 3 categories could be extracted from each page/listing. These would range from high-level description (e.g. '**Drugs**') to finer-grain sub- and sub-subcategories (e.g. '**Cannabis**', '**Concentrates**') further down the menu. Each is it's own variable in the data, but they're inextricably linked by the listing itself.
 
 For the purposes of association rule mining, it was decided to aggregate sub- and sub-subcategories into one variable to avoid superflous itemsets and rules. It also provides a nicer description when plotted and still comes out to right number of levels as a factor. A look at the top:
 
@@ -162,7 +168,7 @@ ggplot(ag, aes(x = log.usd)) +
 
 Visually it appears the mean of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. 
 
-The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings. But since that anomaly was observed, it might be a good idea to look more closely at distributions of prices by specific intervals.
+The spike at at/near zero seems to indicate a large number of listings <= $1. From exploratory plots, this spike is likely the result of eBook listings. Since that spike was observed, it might be a good idea to look more closely at distributions of prices by specific intervals.
 
 ## Price Distributions by Interval
 
@@ -188,6 +194,8 @@ plot(density(subset(ag$usd, ag$usd <= 10.000)), main = "usd < $10", ylab = "")
 ![10-200](plots/arules/prep-density-under200.png)
 
 Spikes at certain denominations: 1, 5, 10, 15, 20, 25, 30, 35...
+
+It might be worth looking at distributions in other price intervals also.
 
 
 ``` {R}
@@ -270,7 +278,7 @@ summary(ag$p)
 
 # Anonymize Vendor Names
 
-I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names before using them as variables in mining. Even though vendor names provided were all online handles - as seen in the case of one vendor, even with just a handle a real identity could be uncovered<sup>[4](#references)</sup>. 
+I'm no expert or even novice at cryptography; but decided it was worth the extra measure of anonymizing vendor names in the event of using them as variables in mining. Even though vendor names provided were all online handles - as seen in the case of one vendor, even with just a handle a real identity could be uncovered<sup>[4](#references)</sup>. 
 
 ```{R}
 ag$v2 <- ag$vendor
@@ -290,7 +298,7 @@ In practical terms though, anyone caring to download the dataset could easily fi
 
 # Convert to Transactions
 
-next: [Variable Selection, Transaction Conversion, and Mining](AgAssociationRules-04-04.md)
+next: [Variable Selection, Transaction Conversion, and Mining](AgAssociationRules-02-mining.md)
 
 # References
 
