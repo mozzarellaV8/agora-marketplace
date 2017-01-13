@@ -3,13 +3,9 @@
 _...domain writing, question refinement, plots, & data analysis_
 
 - [Agora and Anonymous Marketplaces](#agora-and-anonymous-marketplaces)
-- [dj's questions](#djs-questions)
 - [what's in the data?](#whats-in-the-data)
-
-Categories and Variables:
 - [variables of interest](#variables-of-interest)
-- [Feedback](#feedback) - feedback field; convert to histograms(counts)
-- [Counterfeits](#counterfeits) - high level category
+
 
 ## Agora and Anonymous Marketplaces
 
@@ -18,14 +14,6 @@ Agora was chosen as a market to analyze because of it's immense popularity and h
 This is in contrast to other markets of similar scale. The largest examples are Silk Road's demise at the hands of law enforcement; darknet markets [Evolution](https://www.deepdotweb.com/2015/03/18/evolution-marketplace-exit-scam-biggest-exist-scam-ever/) and [Sheep](https://www.deepdotweb.com/2013/11/30/sheep-marketplace-scammed-over-40000000-in-the-biggets-darknet-scam-ever/) turning out to be massive exit-scams.
 
 It's a stretch to say (and impossible to prove) that Agora's administrators were completely altruisitic in their voluntary shutdown; but such protections of themselves and their clients might suggest that conducting business professionally was a priority above others. 
-
-## dj's questions
-
-**_What do you want me to take away?_** Anonymous marketplaces are places of business.
-
-**_What do you want me to do?_** Be able to order from black markets with confidence.
-
-**_How do you want me to feel?_** Safe, assured, maybe _relaxed_. 
 
 
 ## What's in the data?
