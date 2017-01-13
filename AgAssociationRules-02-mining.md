@@ -142,7 +142,7 @@ for (i in 1:length(sup)) {
 }
 ```
 
-![ifp-0.025](plots/arules/a6u-ItemFreq-025.png)
+![ifp-0.025](plots/arules-a6/a6-ItemFreq-025.png)
 
 Observed at a minimum support of 0.025:
 
@@ -156,7 +156,7 @@ Items observed as occuring with roughly the same relative frequency:
 - (< 0.05): 3 vendors, RCs, Guides, steroids, ecstasy: MDMA, ecstasy: pills, Canada
 
 
-![ifp-0.075](plots/arules/a6u-ItemFreq-075.png)
+![ifp-0.075](plots/arules-a6/a6-ItemFreq-075.png)
 
 With a mininum support of 0.075, it becomes clear the most frequently occuring of the frequent items.
 
@@ -454,7 +454,7 @@ plot(a6rules, method = "grouped", control = list(k = 36))
 
 36 rules: 
 
-![36 Rule Group](plots/arules/a6u-g1-3.png)
+![36 Rule Group](plots/arules-a6/a6-g1-3.png)
 
 There's a balanced distribution of categories, locations, and prices in the antecedents, along with acceptable balance in the consequents. 
 
@@ -518,12 +518,12 @@ for (i in 1:10) {
 }
 ```
 48 rule grouping: 
-![48 Rule Group](plots/arules/a6u-g1-4.png)
+![48 Rule Group](plots/arules-a6/a6-g1-4.png)
 
 The {$0-$10} price range traverses more than a few categories, and originates mostly from {Agora/Internet/Torland} and anonymously from {No Info}. Categories in the consequent remain constant with {Watches}, {Weed}, and {Prescription} being the 3.
 
 24 rule grouping:
-![24 Rule Group](plots/arules/a6u-g1-8.png)
+![24 Rule Group](plots/arules-a6/a6-g1-8.png)
 
 
 # Visualizations - Network Graphs
@@ -537,7 +537,7 @@ Network graphs were plotted from rules, which were sorted by the 3 quality measu
 A first graph sorted by all 3 quality measures shows what appears to be a community beginning to form around a central node of {$0-$10}.
 Before going too much further, it might be worth comparing the plot outputs given these 3 quality measure quantities and 2 graph layouts.
 
-![a6u-r1-82](plots/arules/a6u-r1-SCL-82.png)
+![a6-r1-82](plots/arules-a6/a6-r1-SCL-82.png)
 
 ```{r}
 # plot by Support, Confidence, and Lift
@@ -552,9 +552,9 @@ p1 <- plot(r1, method = "graph",
            vertex.label.dist = 0)
 ```
 
-![a6u-r2-36](plots/arules/a6u-r2-36.png)
+![a6-r2-32](plots/arules-a6/a6-r2-Lift-32.png)
 
-Graph of 36 rules sorted by lift alone, plotted using using Kamada & Kawai force-directed layout. It's possible to discern cliques beginning to form around locations, but these types of relationships are a bit too specific to be interesting. While it'd be possible to subset for specific classes, it might be better to revise variable selection and transformation. The minimum support to generate these rules was already quite low, and the dominance of vendor antecedents is less than encouraging.
+Graph of 32 rules sorted by lift alone, plotted using using Kamada & Kawai force-directed layout. It's possible to discern cliques beginning to form around locations, but these types of relationships are a bit too specific to be interesting. While it'd be possible to subset for specific classes, it might be better to revise variable selection and transformation. The minimum support to generate these rules was already quite low, and the dominance of vendor antecedents is less than encouraging.
 
 On to a6...after revising the features selected.
 
