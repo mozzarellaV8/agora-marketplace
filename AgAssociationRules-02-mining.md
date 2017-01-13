@@ -522,9 +522,6 @@ for (i in 1:10) {
 
 The {$0-$10} price range traverses more than a few categories, and originates mostly from {Agora/Internet/Torland} and anonymously from {No Info}. Categories in the consequent remain constant with {Watches}, {Weed}, and {Prescription} being the 3.
 
-24 rule grouping:
-![24 Rule Group](plots/arules-a6/a6-g1-8.png)
-
 
 # Visualizations - Network Graphs
 
