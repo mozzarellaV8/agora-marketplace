@@ -578,11 +578,11 @@ for (i in 1:80) {
 }
 ```
 
-![a3-r1-50 rulies](plots/arules/a3-r1-50.jpg)
+![a3-r1-50 rulies](/plots/arules/a3-r1-50.jpg)
 
 It wouldn't be appropriate to say 'cluster', but it's interesting to note which nodes have multiple edges - such 'c=Drugs' and 'p=$10-150'. Of course this reinforces exploratory discoveries of price and category distributions.
 
-![r1-72 rules](plots/arules/a3-r1-72.jpg)
+![r1-72 rules](/plots/arules/a3-r1-72.jpg)
 
 
 # Subset Locations
@@ -597,7 +597,7 @@ in order of appearance across the network:
 
 - UK: 1. Cannabis, Weed 2. Cocaine 3. MDMA 3. 4. Benzos 5. Cannabis, Hash 6. Ecstacy, Pills 7. Prescription 8. Ketamine 9. LSD 10. Opiods 11. Meth (@ 21 rules graphed)
 
-![f1-usa-22](plots/arules/f1-usa-22.png)
+![f1-usa-22](/plots/arules/f1-usa-22.png)
 
 The probability of the United States being involved was higher than anywhere else by quite a margin. 73 rules in either the `lhs` or `rhs` that included USA. The next location closest to that amount of was the UK-- with just 21 appearances total.
 
@@ -633,7 +633,7 @@ for (i in 35:73) {
 }
 ```
 
-![](plots/arules/f2-uk-21.png)
+![](/plots/arules/f2-uk-21.png)
 
 Total rules generated that had `UK` in either the lhs or rhs totalled 21. 
 
