@@ -137,7 +137,7 @@ hist(ag$usd, breaks = 1000, xlim = c(0, 1000),
 hist(ag$usd, breaks = 10000, xlim = c(0, 200),
      main = "n < $200", xlab = "price in USD", ylab = "")
 ```
-![usd dist x4](plots/arules/usd-dist-01.jpg)
+![usd dist x4](/plots/arules/usd-dist-01.jpg)
 
 As suspected. One more curiousity - although the summary above shows a mean price of $426.40, the feeling is that outliers on high end are pulling that value up - a mean above the 3rd quartile seems to indicate something...
 
@@ -157,7 +157,7 @@ summary(ag$log.usd)
 exp(c(4, 4.25, 4.5, 4.75, 5))
 # 54.59815  70.10541  90.01713 115.58428 148.41316
 ```
-![log dist usd](plots/arules/usd-dist-02-log.jpeg)
+![log dist usd](/plots/arules/usd-dist-02-log.jpeg)
 
 Visually it appears the 'mean' of the log distribution of prices falls around 4.5 - of course, visually, that might change depending on the number of breaks/binwidth. But assuming that's case, prices can be observed in a range from about $60-$100 near the mean. This is judging from exponentiating 4.25 and 4.75 out. The spike at at/near zero seems to indicate a number of $1 listings. From exploratory plots, this spike is likely the result of eBook listings.
 
@@ -176,7 +176,7 @@ ag$p <- ifelse(ag$p <= 10.00, "$0-10",
 
 ag$p <- factor(ag$p)  # 6 levels
 ```
-![usd-disc-dist](plots/arules/usd-disc-dist.png)
+![usd-disc-dist](/plots/arules/usd-disc-dist.png)
 
 ```{r}
 ggplot(ag, aes(reorder(p), color = "black", fill = p)) + geom_bar() +
@@ -276,7 +276,7 @@ itemFrequencyPlot(a2, support = 0.025, cex.names = 0.8, col = "white", horiz = T
                   main = "Agora Marketplace: Frequent Items (support > 0.025)")
 ```
 
-![ItemFreqPlot](plots/arules/a3-ItemFreq-025.png)
+![ItemFreqPlot](/plots/arules/a3-ItemFreq-025.png)
 
 After multiple mining sessions, I'd begun to find it faster to use `for()` loops to create multiple plots quickly with different parameters. Certainly feels much more efficient than manually changing argument values or repeating too many code chunks. 
 
@@ -306,7 +306,7 @@ for (i in 1:length(sup)) {
 }
 ```
 
-![ItemFreq 0.005](plots/arules/a3-ItemFreq-005.png)
+![ItemFreq 0.005](/plots/arules/a3-ItemFreq-005.png)
 
 Eventually I settled on a minumum support of 0.0025 - half the threshold of the plot above. As a minimum support it might seem low, but would allow for a large range of itemsets and rules to be mined. 
 
@@ -469,7 +469,7 @@ Some quick new questions and thoughts:
 
 Initially I was plotting these individually and changing the list parameter `k` each time. Eventually I wrote a loop, and then would inspect the outputs in Adobe Bridge or Finder.
 
-![a3-g1-2](plots/arules/a3-g1-2.jpg)
+![a3-g1-2](/plots/arules/a3-g1-2.jpg)
 
 ```{r}
 # individual
@@ -501,7 +501,7 @@ Grouped Matrices were nice for getting a something of a high level overview of t
 - Lift
 - Support and Confidence
 
-![r1-24 rules](plots/arules/a3-r1-24.jpg)
+![r1-24 rules](/plots/arules/a3-r1-24.jpg)
 
 ```{r}
 # get layouts
