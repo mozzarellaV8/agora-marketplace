@@ -28,7 +28,7 @@ a <- fread("~/GitHub/agora-data/agora-01b.csv", stringsAsFactors = T)
 
 Even though association rule mining is often written about in terms of finding novel itemsets and rules, I'm going to be focusing more on 
 
--seeing what traverses this market network
+- seeing what traverses this market network
 - what relationships might exist, and 
 - looking at probabilities for different classes occurring 
 
