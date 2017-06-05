@@ -556,7 +556,7 @@ Graph of 32 rules sorted by lift alone, plotted using using Kamada & Kawai force
 On to a6...after revising the features selected.
 
 
-[back to top](#agora-associations-04-04)
+[back to top](#02-arules-mining.md)
 
 # References and Notes
 
