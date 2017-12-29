@@ -1,7 +1,6 @@
 # Agra Marketplace Analysis
 # Exploratory: Product & Feedback Variables
 
-
 # load data -------------------------------------------------------------------
 
 library(data.table)
@@ -44,7 +43,7 @@ nrow(fbc)
 nchar("Feedbacks: No feedbacks found.")
 hist(fbc$f.chars, breaks = 200)
 
-# word counts
+# Word Counts -----------------------------------------------------------------
 a$p.words <- word_count(a$product, byrow = T, digit.remove = F)
 summary(a$p.words)
 hist(a$p.words) # normal, wow
