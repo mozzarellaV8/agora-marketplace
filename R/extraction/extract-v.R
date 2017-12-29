@@ -17,7 +17,7 @@ library(tidyr)
 ##########################
 
 getwd()
-vDir <- "~/GitHub/ag-Vendor/2015-01-d1"
+vDir <- "~/GitHub/ag-Vendor/2015-02-d4"
 setwd(vDir)
 
 # extract vendor products via table, by month ---------------------------------
@@ -34,12 +34,19 @@ system.time(
       html_table(header = T, fill = T)
     
     vTab <- as.data.frame(vTab)
-    vTab$date <- sub(" *\\__.*", "", vList[i])
     vTab$list <- vList[i]
     
     vTab$vendor <- log %>%
       html_nodes("#middlestuff strong") %>%
       extract2(1) %>%
+      html_text()
+    
+    vTab$verification <- log %>%
+      html_nodes(xpath = "//*[@id=\"middlestuff\"]/div/div[1]") %>%
+      html_text()
+    
+    vTab$bio <- log %>%
+      html_nodes(xpath = "//*[@id=\"middlestuff\"]/div/div[3]") %>%
       html_text()
     
     vTab$product <- log %>%
@@ -54,10 +61,13 @@ system.time(
   }
 )
 
+# 2015-01-d : 244.549 seconds
 nrow(v)/length(vList)
 
+
 # CHECK THE FILENAME ############################################################
-write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv", row.names = F)
+
+write.csv(v, file = "~/GitHub/agora-data/03-vendor/v-2015-02-d3.csv", row.names = F)
 # v <- fread("~/GitHub/agora-data/03-vendor/v-2014-12-d1.csv")
 # v <- as.data.frame(v)
 

@@ -13,7 +13,7 @@ library(dplyr)
 
 # CHECK THE DIRECTORY
 getwd()
-pDir <- "~/GitHub/ag-Product/2014-05-01"
+pDir <- "~/GitHub/ag-Product/2014/2014-01"
 setwd(pDir)
 
 # intialize -------------------------------------------------------------------
@@ -40,6 +40,10 @@ system.time(
     
     pTab$price <- pLog %>%
       html_nodes(".product-page-price") %>%
+      html_text()
+    
+    pTab$description <- pLog %>%
+      html_nodes("#single-product.nofirstmargin") %>%
       html_text()
     
     pTab$cat <- pLog %>%

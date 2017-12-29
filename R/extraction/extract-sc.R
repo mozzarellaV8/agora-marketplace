@@ -10,7 +10,7 @@ library(data.table)
 # SET DIRECTORY -------------------------------------------
 
 getwd()
-pDir <- "~/GitHub/ag-Product/2014/2014-02-01"
+pDir <- "~/GitHub/ag-Product/2014/2014-01"
 setwd(pDir)
 
 # SET FILE NAME -------------------------------------------
@@ -50,13 +50,13 @@ system.time(
 bind <- dplyr::left_join(p, subcat, by = "list")
 is.na(bind$pTab2)
 
-bind <- bind[c(1, 2, 3, 4, 5, 6, 10, 7, 8, 9)]
-colnames(bind) <- c("list", "date", "vendor", "product", "price", 
-                           "cat", "subcat", "feedback", "from", "to")
+bind <- bind[c(1, 2, 3, 4, 5, 6, 7, 11, 8, 9, 10)]
+colnames(bind) <- c("list", "date", "vendor", "product", "price", "description",
+                    "cat", "subcat", "feedback", "from", "to")
 
 p <- bind
 
 # SET FILE NAME ####################################################
 # SET FILE NAME ####################################################
 # SET FILE NAME ####################################################
-write.csv(p, file = "p-2014-02-01.csv", row.names = F)
+write.csv(p, file = "~/GitHub/ag-pd/pd/p-2014-01-01.csv", row.names = F)
